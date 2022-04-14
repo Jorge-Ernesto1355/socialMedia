@@ -1,5 +1,8 @@
 const express = require('express')
 const connectDB = require('./db/Connect')
+const morgan = require('helmet')
+const Auth = require('./auth/authUser.routes')
+const UserRoute = require('./users/infrastructure/User.routes')
 
 
 
@@ -16,21 +19,18 @@ class Server{
   } 
 
   middlewares(){
-   
     this.app.use(express.json())
-   
-    
+    this.app.use(express.urlencoded({extended:true}))
+    this.app.use(morgan('dev'))
   }
 
   DBconnection(){
      connectDB()
-     
-
   }
 
   router(){
-  
-    
+    this.app.use('/api/v1/auth' , Auth )
+    this.app.use('/api/v1/users', UserRoute)
   }
 
 
