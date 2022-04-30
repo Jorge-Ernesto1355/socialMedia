@@ -21,23 +21,24 @@ const User = new Schema({
         required:true,
         min:6
         },
-       coverPicture:{
-         type:String,
-         default:""
-       },
-       followers:{
+       coverPicture:{url:String, public_id:String},
+       friends:{
          type:Array,
          default:[]
        },
-       followings:{
-         type:Array,
+       friendsWaiting:{
+         type:Array, 
          default:[]
-       },
+       }, 
       desription:{
         type: String, 
         max:80, 
         trim:true
       },
+      posts:[{
+        ref:"Post", 
+        type:Schema.Types.ObjectId
+      }], 
       imageProfile:{
         url:String,
         public_id:String
@@ -50,12 +51,28 @@ const User = new Schema({
       default:""
       
     },
-      relationShip:{
+    relationShipWaiting:[{
+      ref:'User',
+      type:Schema.Types.ObjectId
+    }], 
+
+    relationShip:{
         type:Object,
-        default:{}
+        default:{user:Schema.Types.ObjectId}
        
       }
   }, {
     timestamps:true
   })
+
+  User.set('toJSON', {
+    transform:(document,returnObject)=>{
+      returnObject.id = returnObject._id
+      delete returnObject._id
+      delete returnObject._v
+
+    }
+  })
+
+  
   module.exports = model('User', User)
