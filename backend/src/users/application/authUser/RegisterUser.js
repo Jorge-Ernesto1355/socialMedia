@@ -10,7 +10,7 @@ const {Token, encryptPassword} = require('../../../auth/application/auth')
  
 
 const RegisteryUser = async (req, res, next)=>{
-  const {username, email, password} = req.body
+  const {username, email, password, curp} = req.body
 
 
 
@@ -30,8 +30,8 @@ const RegisteryUser = async (req, res, next)=>{
           return checkDuplicateUsernameOrEmail(req,res, next)
         }
       
-        const newuser = await new User({username, email, password: await encryptPassword(password) })
-         await newuser.save()
+        const newuser = await new User({username, email, password: await encryptPassword(password) }, curp)
+        await newuser.save()
 
 
         return res.status(201).json({
