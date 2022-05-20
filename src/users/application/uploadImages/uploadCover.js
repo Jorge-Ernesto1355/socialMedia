@@ -31,7 +31,7 @@ const UploadCover = async (req, res)=>{
         }
   } catch (error) {
 
-    res.status(500).json({message:"algo salio mal"})
+    return res.status(500).json({message:"algo salio mal"})
     
   }
 

@@ -9,16 +9,12 @@ const UploadProfilePicture = async (req, res)=>{
 
     try {
 
-      
         user = await User.findById(userId)
       
-
-
       if(!user){
         return res.status(404).json({message:"user no encontrado"})
       }
     
-
     if(!req.files.image){
   
        res.status(404).json({message:"envio un archivo valido"})
