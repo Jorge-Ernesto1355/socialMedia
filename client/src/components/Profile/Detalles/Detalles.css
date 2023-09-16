@@ -1,0 +1,66 @@
+.detalles {
+  width: 80%;
+  height: 500px;
+}
+
+.detalles h3 {
+  margin: 10px;
+}
+
+.detalles .card {
+  background: var(--color-white);
+  height: max-content;
+  max-height: 500px;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: -1px -1px 5px 0px rgba(0, 0, 0, 0.19);
+  -webkit-box-shadow: -1px -1px 5px 0px rgba(0, 0, 0, 0.19);
+  -moz-box-shadow: -1px -1px 5px 0px rgba(0, 0, 0, 0.19);
+}
+
+.detalles .ubicacion {
+  margin: 2rem 0;
+}
+
+.detalles .card .editDetails {
+  background-color: var(--color-light);
+  border-radius: 4px;
+  padding: 4px;
+  width: 100%;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.detalles .icons {
+  display: flex;
+  margin-top: 25px;
+}
+
+.detalles .icons img {
+  width: 30px;
+  margin-right: 30px;
+}
+
+.detalles .edit {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 40px;
+  margin: 1rem 0;
+  border: none;
+}
+
+.detalles .buttons {
+  margin: 5rem 0;
+}
+
+.detalles .buttons button {
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.detalles button h5 {
+  font-size: 0.9rem;
+  color: #4c4c4c;
+}

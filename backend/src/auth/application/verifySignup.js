@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken")
 const User = require('../../users/domain/UserModel')
-const SECRET = require('../../../dotenv');
+const SECRET = require('../../dotenv');
 
 
 const verifyToken = async (req, res, next)=>{
@@ -16,7 +16,6 @@ const verifyToken = async (req, res, next)=>{
   req.userId = decoded.id
 
   const user = await  User.findById(req.userId, {password:0})
-  console.log(user)
 
   if(!user) return res.json(404).json({message:'no user found'})
 

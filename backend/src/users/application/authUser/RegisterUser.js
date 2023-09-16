@@ -1,50 +1,47 @@
 const User = require('../../domain/UserModel')
-const {checkDuplicateUsernameOrEmail} = require('../../../middleware/middleware')
-const {validationResult} = require('express-validator')
+
 const {Token, encryptPassword} = require('../../../auth/application/auth')
 
 
 
 
-
- 
-
 const RegisteryUser = async (req, res, next)=>{
   const {username, email, password, curp} = req.body
 
-
-
   try{
 
-    
-    const errors = validationResult(req)
-    if(!errors.isEmpty()){
-      
-      return res.status(500).json({errors:errors.array()})
-    }
-
+   
     
     
-        if(errors.isEmpty()){
+     const user = await User.findOne({ username: username });
+    if (user)
+      return res.status(400).json({ message: "nombre ya esta en uso" });
+    const emailFound = await User.findOne({ email: email });
+    if (emailFound)
+      return res.status(400).json({ message: "correo ya esta en uso" });
+    const curpFound = await User.findOne({curp:curp})
+    if(curpFound) 
+       return res.status(400).json({ message: "curp ya esta en uso" }); 
+    
+   
+    const newuser = await new User({username, email,curp, password: await encryptPassword(password) } )
+    await newuser.save()
 
-          return checkDuplicateUsernameOrEmail(req,res, next)
-        }
-      
-        const newuser = await new User({username, email, password: await encryptPassword(password) }, curp)
-        await newuser.save()
-
-
-        return res.status(201).json({
+    
+    return res.status(201).json({
           token: Token(newuser._id),
-          user:newuser
-        })
+          user: newuser
+             })
+
     
 
   }catch(e){
-    return res.status(500).json({message:"algo salio mal"})
+   
+    return res.status(500).json(e)
+    
   }
 }
 
-module.exports =  RegisteryUser
+module.exports = RegisteryUser
  
   

@@ -1,6 +1,6 @@
 const User = require('../../users/domain/UserModel')
 const jwt = require('jsonwebtoken')
-const {SecretRefreshToken, SECRET} = require('../../../dotenv')
+const {SecretRefreshToken, SECRET} = require('../../dotenv')
 
 const RefreshToken = async (req, res)=>{
 

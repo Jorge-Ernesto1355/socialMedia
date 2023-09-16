@@ -1,0 +1,30 @@
+.friend-request {
+  margin-top: 2rem;
+}
+
+.friend-request h4 {
+  color: var(--color-gray);
+
+  padding: 10px;
+}
+
+.friend-request .request {
+  background: var(--color-white);
+  padding: var(--card-padding);
+  border-radius: var(--card-border-radius);
+}
+
+.friend-request .request .info {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 10px;
+}
+
+.friend-request .request .action {
+  display: flex;
+  gap: 1rem;
+}
+
+.friend-request .request .action button {
+  border: none;
+}

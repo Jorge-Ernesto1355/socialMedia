@@ -1,4 +1,4 @@
-const {Server}  = require('./src/config')
+const {Server} = require('./config')
 const dotenv  = require('dotenv')
 
   dotenv.config()

@@ -1,0 +1,50 @@
+.search-bar-friends {
+  position: relative;
+  background: var(--color-white);
+  margin: 0.5rem;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.search-bar-friends .input {
+  display: flex;
+  background-color: var(--color-light);
+  border-radius: 10px;
+}
+
+.search-bar-friends .searchFriends {
+  background: transparent;
+  width: 30vw;
+  margin-left: 10px;
+  outline: none;
+  border: none;
+  font-size: 0.9rem;
+  color: var(--color-dark);
+}
+
+.search-bar-friends .searchFriendsUl {
+  background-color: var(--color-light);
+  padding: var(--card-padding);
+  border-radius: var(--card-border-radius);
+  width: 200px;
+  height: max-content;
+  display: none;
+}
+.search-bar-friends .searchFriendsUl.active {
+  display: block;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.listItem .message-body {
+  margin-left: 10px;
+}
+
+.listItem .profile-photo img {
+  object-fit: fill;
+  width: 40px;
+}

@@ -30,6 +30,10 @@ const User = new Schema({
          type:Array, 
          default:[]
        }, 
+       curp:{
+          type:String, 
+          required:true
+       },
       desription:{
         type: String, 
         max:80, 
@@ -67,7 +71,8 @@ const User = new Schema({
         type:Schema.Types.ObjectId, 
         default:['6273909ca278e8cc7379c54f']
       }
-    ]
+    ], 
+    favorites:{type:Array, default:[]},
       
    
   }, {

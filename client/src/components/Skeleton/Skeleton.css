@@ -1,0 +1,124 @@
+.postSk {
+  background: var(--color-white);
+  border-radius: var(--card-border-radius);
+  padding: var(--card-padding);
+  margin: 1rem 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  background: white;
+  z-index: 0;
+  box-shadow: var(--card-shadow);
+  height: max-content;
+  width: 90%;
+  animation: skeleton 1s ease infinite alternate;
+}
+
+@keyframes skeleton {
+  to {
+    opacity: 0.7;
+  }
+}
+
+.headSk {
+  display: flex;
+  justify-content: space-between;
+}
+
+.editSK {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #313131;
+}
+
+.userSk {
+  width: 100%;
+  display: flex;
+}
+
+.imgSk {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #313131;
+}
+
+.infoSk {
+  width: 50%;
+  background-color: #313131;
+}
+
+.usernameSK {
+  margin-left: 40px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  width: 200px;
+  height: 20px;
+  background-color: #313131;
+}
+
+.smallSK {
+  width: 150px;
+  border-radius: 4px;
+  height: 20px;
+  margin-left: 40px;
+  background-color: #313131;
+}
+
+.photoSK {
+  margin-top: 20px;
+  margin-left: 20px;
+  border-radius: 5px;
+  width: 90%;
+  height: 250px;
+  background-color: #313131;
+}
+
+.action-butonSK {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.interacions-buttonsSK {
+  width: 65%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.interacions-buttonsSK span {
+  width: 30px;
+  height: 30px;
+  margin-top: 10px;
+  border-radius: 50%;
+  background-color: #313131;
+}
+
+.bookMarkSK {
+  width: 30px;
+  height: 30px;
+  margin-top: 10px;
+  border-radius: 50%;
+  background-color: #313131;
+  margin-right: 50px;
+}
+
+.captionSK {
+  width: 100%;
+  margin: 15px 0;
+}
+
+.captionSK p:nth-child(1) {
+  width: 70%;
+  height: 20px;
+  border-radius: 4px;
+  background-color: #313131;
+}
+
+.captionSK .div {
+  width: 30%;
+  height: 20px;
+  border-radius: 4px;
+  margin-top: 10px;
+  background-color: #313131;
+}

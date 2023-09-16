@@ -2,7 +2,7 @@
 const FindAllUsers = require('./find/FindAllUsers')
 const FindUserById = require('./find/FindUserById')
 const FindAllFollowers = require('./find/FindAllFollowers')
-const FindUserPost = require('./find/FindUserPosts')
+const FindUserPosts = require('./find/FindUserPosts')
 const AcceptFriends = require('./makeFriends/friends/AcceptFriends')
 const addFriend = require('./makeFriends/friends/AddFriends')
 const deleteFriend  = require('../application/makeFriends/friends/deleteFriends')
@@ -13,9 +13,10 @@ const AcceptRelationShip = require('../application/makeFriends/relationship/Acce
 const deleteRelationShip = require('../application/makeFriends/relationship/deleteRelationShip')
 const giveRoles = require('../../roles/application/giveRoles')
 const deleteRoles = require('../../roles/application/removeRoles')
+const FindUsersActions = require('../application/find/FindUsersActions')
 
 module.exports = {
-FindUserPost,
+FindUserPosts,
 FindAllUsers, 
 FindUserById,
 FindAllFollowers, 
@@ -28,11 +29,9 @@ addRelationShip,
 deleteRelationShip, 
 AcceptRelationShip , 
 giveRoles,
-deleteRoles
-
-
-
-
+deleteRoles,
+FindUserPosts, 
+FindUsersActions
 }
 
 

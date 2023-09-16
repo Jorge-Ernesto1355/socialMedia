@@ -1,0 +1,203 @@
+.Profile .card {
+  width: 100%;
+  height: max-content;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+}
+
+.Profile .body {
+  display: grid;
+  padding: 50px 100px;
+  grid-template-columns: 30vw 1fr;
+}
+
+.Profile .body .left {
+  position: sticky;
+  top: 100px;
+}
+
+.Profile .card .head {
+  width: 100%;
+  height: 100%;
+  padding-bottom: 100px;
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
+  background-color: var(--color-white);
+  padding: var(--card-padding);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.Profile .card .head .portada {
+  position: relative;
+}
+.Profile .portada .addFrontPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: -90px;
+  right: 20px;
+  width: 200px;
+  height: 30px;
+  padding: 4px;
+  border-radius: 2px;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  cursor: pointer;
+}
+
+.Profile .portada .addFrontPage img {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+.Profile .head-down {
+  margin-top: 120px;
+  position: relative;
+  width: 50%;
+  padding: var(--card-padding);
+  display: flex;
+  justify-content: center;
+  justify-content: space-evenly;
+}
+
+.Profile .head-down .left {
+  display: flex;
+}
+
+.Profile .head-down .left .profile-photo {
+  width: 15%;
+  position: absolute;
+  top: -50px;
+  left: 20px;
+  border: 2px solid white;
+}
+
+.Profile .head-down .left .add-profile {
+  position: absolute;
+  left: 80px;
+  top: 20px;
+  cursor: pointer;
+  z-index: 1111;
+  background-color: var(--color-white);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid var(--color-white);
+  box-shadow: -1px -1px 5px 0px rgba(0, 0, 0, 0.19);
+  -webkit-box-shadow: -1px -1px 5px 0px rgba(0, 0, 0, 0.19);
+  -moz-box-shadow: -1px -1px 5px 0px rgba(0, 0, 0, 0.19);
+}
+.Profile .head-down .left .add-profile img {
+  width: 90%;
+  height: auto;
+}
+
+.Profile .righe .create {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.Profile .righe .create .postt {
+  display: flex;
+  align-items: center;
+  box-shadow: var(--card-shadow);
+  width: 60%;
+  background-color: var(--color-primary);
+  padding: 5px;
+  color: var(--color-white);
+  height: 30px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.righe div img {
+  width: 10px;
+}
+
+.Profile .righe .create .edit {
+  display: flex;
+  align-items: center;
+  box-shadow: var(--card-shadow);
+  width: 100%;
+  padding: 5px 10px;
+  height: 30px;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.Profile .couple {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.Profile .couple .couples {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.Profile .couple .couples .heart {
+  width: 50px;
+  height: 50px;
+}
+
+.Profile .profile-photo {
+  border: 2px solid var(--color-white);
+  box-shadow: -1px -1px 5px 0px rgba(0, 0, 0, 0.19);
+  -webkit-box-shadow: -1px -1px 5px 0px rgba(0, 0, 0, 0.19);
+  -moz-box-shadow: -1px -1px 5px 0px rgba(0, 0, 0, 0.19);
+}
+
+.Profile .couple .profile-photo .img {
+  min-width: 100%;
+  height: auto;
+  object-fit: cover;
+  cursor: pointer;
+  position: relative;
+}
+
+.Profile .portada {
+  width: 50%;
+  height: 300px;
+}
+
+.Profile .portada img {
+  border-radius: 10px;
+}
+
+.profiles-Friends span img {
+  width: 30px;
+  border-radius: 50%;
+}
+
+.profiles-Friends span {
+  display: block;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid white;
+  margin-left: -0.6rem;
+}
+
+.profiles-Friends div {
+  display: flex;
+}
+
+.profiles-Friends div span {
+  width: 25px;
+  height: 25px;
+  background-color: #a9a9a9;
+}

@@ -1,5 +1,5 @@
 const User = require('../../../domain/UserModel')
-const redisClient = require('../../../../redis/redisClient')
+
 
 const makeRelationShip =  async (req, res)=>{
 

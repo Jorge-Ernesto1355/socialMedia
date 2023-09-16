@@ -1,12 +1,12 @@
-const Post = require("../../../../Post/dominio/Post")
+const Post = require('../../../Post/dominio/Post')
 
 
 
 const FindUserPost = async (req, res)=>{
 
   
-  const {userId} = req.query
-  
+  const {userId} = req.params
+ 
   if(userId){
 
     try {
@@ -15,7 +15,8 @@ const FindUserPost = async (req, res)=>{
         if(!userPost){
           return res.status(404).json({message:"recurso no encontrado"})
         }
-        res.status(200).json(userPost)
+
+       return  res.status(200).json(userPost)
         
   
     } catch (error) {
@@ -24,13 +25,7 @@ const FindUserPost = async (req, res)=>{
 
   }
 
-
-
-  
-
-  res.status(200).json(user.posts)
-
-  
+  return res.status(200).json({message:"algo salio mal "})
 
 }
 

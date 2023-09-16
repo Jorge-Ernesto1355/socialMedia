@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const {SecretRefreshToken,Secret} = require('../../../dotenv')
+const {SecretRefreshToken,Secret} = require('../../dotenv')
 
 
 

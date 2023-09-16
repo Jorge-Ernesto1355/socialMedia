@@ -1,0 +1,47 @@
+.cardNavbar {
+  background-color: var(--color-light);
+  padding: var(--card-padding);
+  border-radius: var(--card-border-radius);
+  width: 300px;
+  height: max-conten;
+
+  top: -200px;
+  box-shadow: var(--card-shadow);
+  display: none;
+}
+
+.cardNavbar.active {
+  display: block;
+}
+
+.ItemPeople {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.ItemPeople:hover {
+  background-color: #d8d7d7;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.ItemPeople .message-body {
+  margin-left: 10px;
+}
+.ItemPeople .message-body {
+  font-size: 1.2rem;
+}
+
+.ItemPeople .message-body span {
+  font-size: 0.9rem;
+  font: 600;
+}
+
+.ItemPeople .profile-photo img {
+  object-fit: fill;
+  width: 40px;
+}
+.item .profile-photo {
+  width: 40px;
+}

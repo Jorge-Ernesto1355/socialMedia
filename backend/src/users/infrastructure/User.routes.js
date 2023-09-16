@@ -4,7 +4,7 @@ const indexAuth = require('../application/authUser/indexAuth')
 const DeleteUser = require('../application/Delete/DeleteUserById')
 const UpdateUserProfile = require('../application/Update/UpdateUserProfile')
 const verifyToken = require('../../auth/application/verifySignup')
-const use = require('../../handleErros/globalError')
+
 
 const router = Router()
 
@@ -24,6 +24,7 @@ router.put('/password',indexAuth.NewPassword)
 router.put('/friend/acceptfriend', index.AcceptFriends)
 
 router.put('/friend/addfriend', index.addFriend)
+
 //update User
 router.put('/:id', UpdateUserProfile)
 
@@ -47,6 +48,11 @@ router.delete('/relationShip/del', index.deleteRelationShip)
 router.put('/roles/add', index.giveRoles )
 
 router.delete('/roles/del', index.deleteRoles)
+
+router.get('/userPosts/:userId', index.FindUserPosts)
+
+router.get('/actions/getUsers/:id', index.FindUsersActions)
+
 
 
 

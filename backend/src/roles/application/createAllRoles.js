@@ -18,9 +18,9 @@ const createRoles = async () => {
       new Role({ name: "admin" }).save(),
     ]);
 
-    console.log(values);
+ 
   } catch (error) {
-    console.error(error);
+    
   }
 };
 
@@ -38,7 +38,7 @@ const createAdmin = async () => {
       password: await bcrypt.hash("admin", 10),
       roles: roles.map((role) => role._id),
     });
-    console.log('Admin User Created!')
+    
   }
 };
 

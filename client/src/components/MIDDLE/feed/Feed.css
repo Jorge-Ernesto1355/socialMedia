@@ -1,0 +1,8 @@
+.feeds {
+  height: 100%;
+  width: 534px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

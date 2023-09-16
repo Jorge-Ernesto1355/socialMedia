@@ -1,0 +1,23 @@
+.category {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+  justify-content: space-eve nly;
+}
+
+.category h5 {
+  width: 100%;
+  text-align: center;
+  border-bottom: 4px solid var(--color-light);
+  padding-bottom: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.category .active {
+  border-color: var(--color-dark);
+  border-radius: 4px;
+}
+
+.category .message-request {
+  color: var(--color-primary);
+}

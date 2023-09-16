@@ -1,0 +1,86 @@
+.dropdown {
+  position: relative;
+  width: 180px;
+  height: 20px;
+  margin-right: 20px;
+}
+
+.dropdown input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 70%;
+  height: 100%;
+  cursor: pointer;
+  background: #fff;
+  border: none;
+  outline: none;
+  box-shadow: 1px 0px 5px -2px rgba(0, 0, 0, 0.13);
+  -webkit-box-shadow: 1px 0px 5px -2px rgba(0, 0, 0, 0.13);
+  -moz-box-shadow: 1px 0px 5px -2px rgba(0, 0, 0, 0.13);
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+
+.dropdown .show {
+  width: 30px;
+  position: absolute;
+  right: 20px;
+  top: -8px;
+  padding: -10px;
+}
+
+.dropdown::before {
+  content: '';
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border: 2px solid #333;
+  right: 5px;
+  top: 3px;
+  z-index: 1000;
+  border-top: 2px solid #fff;
+  border-right: 2px solid #fff;
+  transform: rotate(-45deg);
+  transition: 0.5s;
+  pointer-events: none;
+}
+
+.dropdown.active::before {
+  top: 10px;
+  transform: rotate(-225deg);
+}
+
+.dropdown .option {
+  position: absolute;
+  top: 40px;
+  width: 100%;
+  background: var(--color-white);
+  box-shadow: 1px 0px 5px -2px rgba(0, 0, 0, 0.13);
+  -webkit-box-shadow: 1px 0px 5px -2px rgba(0, 0, 0, 0.13);
+  -moz-box-shadow: 1px 0px 5px -2px rgba(0, 0, 0, 0.13);
+  border-radius: 10px;
+  transition: 0.5s;
+  overflow: hidden;
+  display: none;
+  z-index: 100000;
+}
+
+.dropdown.active .option {
+  display: block;
+  z-index: 100000;
+}
+.dropdown .option div {
+  padding: 5px 10px;
+  cursor: pointer;
+  display: flex;
+}
+
+.dropdown .option div:hover {
+  background-color: var(--color-light);
+}
+
+.dropdown .option div img {
+  width: 20px;
+  margin-right: 10px;
+}

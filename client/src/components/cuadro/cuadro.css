@@ -1,0 +1,53 @@
+.danger {
+  position: absolute;
+  padding: 5px 7px;
+  margin: 2px;
+  border-radius: 6px;
+  background-color: black;
+  right: -220px;
+  width: min-content;
+  width: 200px;
+  -webkit-box-shadow: 0px 0px 31px -11px rgba(0, 0, 0, 0.82);
+  box-shadow: 0px 0px 31px -11px rgba(0, 0, 0, 0.82);
+  background: #fff;
+  font-size: smaller;
+  font-weight: 600;
+  color: #ff3535;
+}
+
+.right {
+  position: absolute;
+  padding: 5px 7px;
+  margin: 2px;
+  border-radius: 6px;
+  background-color: black;
+  width: max-content;
+  left: -190px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+  background: #fff;
+  font-size: smaller;
+  font-weight: 600;
+  color: #ff6767;
+}
+
+.danger::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 8px;
+  width: 10px;
+  height: 10px;
+  transform: rotate(45deg);
+  background-color: white;
+}
+
+.right::before {
+  content: '';
+  position: absolute;
+  right: -5px;
+  top: 8px;
+  width: 10px;
+  height: 10px;
+  transform: rotate(45deg);
+  background-color: white;
+}

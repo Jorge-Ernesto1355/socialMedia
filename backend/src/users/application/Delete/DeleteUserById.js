@@ -1,4 +1,4 @@
-const Post = require("../../../../Post/dominio/Post")
+const Post = require("../../../Post/dominio/Post")
 const User = require("../../domain/UserModel")
 
 

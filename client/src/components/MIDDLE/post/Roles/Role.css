@@ -1,0 +1,63 @@
+.Role {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin-right: 20px;
+  box-shadow: -1px 1px 8px -4px rgba(0, 0, 0, 1);
+  -webkit-box-shadow: -1px 1px 8px -4px rgba(0, 0, 0, 1);
+  -moz-box-shadow: -1px 1px 8px -4px rgba(0, 0, 0, 1);
+  transition: 0.5s;
+}
+
+.admin {
+  background: #ff0;
+}
+
+.admin:hover {
+  background: #ff0;
+}
+
+.plantel {
+  background: #ff3c3c;
+  width: 15px;
+}
+
+.plantel:hover {
+  background: #ff3c3c;
+  width: 15px;
+}
+
+.Role img,
+h6 {
+  opacity: 0;
+}
+
+.Role img {
+  width: 30%;
+  margin-left: 0.3rem;
+  margin-bottom: 7px;
+}
+
+.Roles h6 {
+  font-size: 0.7rem;
+}
+
+.Role:hover {
+  opacity: 1;
+  width: 70px;
+  height: 40px;
+  transform: translateY(-30px);
+  border-radius: 10px;
+  background: var(--color-white);
+}
+
+.Role:hover h6 {
+  opacity: 1;
+}
+
+.Role:hover img {
+  opacity: 1;
+}

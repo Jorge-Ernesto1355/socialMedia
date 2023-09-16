@@ -1,0 +1,13 @@
+.comment-post{
+    cursor: pointer;
+}
+
+.comment-text{
+    font-weight: 500;
+    color: gray;
+    
+}
+.comment-length{
+    color: gray;
+    font-weight: 500;
+}

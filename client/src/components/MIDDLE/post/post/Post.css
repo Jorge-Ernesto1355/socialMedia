@@ -1,0 +1,287 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.feed {
+  width: 100%;
+  max-height: max-content;
+  border-radius: var(--card-border-radius);
+  padding: var(--card-padding);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  background: var(--color-white);
+  
+  box-shadow: var(--card-shadow);
+  margin-top: 2rem;
+}
+
+.feed .head {
+  display: flex;
+  justify-content: space-between;
+}
+
+.feed .user {
+  display: flex;
+  gap: 1rem;
+}
+
+.feed .user small {
+  color: #7b7b7b;
+  font-weight: 500;
+}
+
+.feed .feeling {
+  font-weight: 500;
+  color: #7b7b7b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.feed .feeling img {
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
+}
+
+.feed .votes-post {
+  width: 100%;
+  height: max-content;
+  display: grid;
+  grid-template-columns: repeat(3, 31%);
+  row-gap: 0.5rem;
+}
+
+.feed .vote-post {
+  height: max-content;
+  font-weight: 500;
+  background-color: #f0f0f0;
+  border-radius: 3px;
+  color: #6e6e6e;
+  padding: 5px;
+  cursor: pointer;
+  text-align: center;
+  margin-left: 1rem;
+}
+
+.feed .photo {
+  border-radius: var(--card-border-radius);
+  overflow: hidden;
+  margin: 0.7rem 0;
+}
+
+.traze {
+  width: 97%;
+  height: 1px;
+  background-color: var(--color-light);
+}
+
+.feed .info-post {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  height: 20px;
+  margin-bottom: 5px;
+}
+
+.feed .info-post .comment-shared {
+ display: flex;
+ justify-content: end;
+}
+
+
+
+.feed .interacions-buttons {
+  display: flex;
+  width: 70%;
+  height: max-content;
+  justify-content: space-evenly;
+  align-items: center;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 10px
+}
+.feed .action-buton img {
+  width: 30px;
+  height: 30px;
+}
+
+.feed .action-buton {
+  display: flex;
+
+  align-items: center;
+  font-size: 1.4rem;
+}
+
+.feed .icon-bookMark {
+  margin-right: 4rem;
+}
+
+.feed .action-buton .interacions-buttons .ratingIcon {
+  z-index: 111;
+}
+
+.feed .makeComment .img img {
+  max-width: 40%;
+  max-height: 40%;
+  margin-left: 4rem;
+  border-radius: 5px;
+}
+
+.feed .ratingIcon .ratings {
+  width: 1rem;
+  height: 1rem;
+  /* left: 100px; */
+  position: absolute;
+  z-index: 10;
+}
+
+.feed .ratingIcon .actionsActivated {
+  display: flex;
+  width: fit-content;
+  justify-content: center;
+  align-items: center;
+}
+
+.feed .ratingIcon .actionsActivated span {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #7b7b7b;
+}
+
+/* los colores de los actions */
+
+.feed .ratingIcon .actionsActivated .gusta {
+  color: #ff6399;
+}
+.feed .ratingIcon .actionsActivated .encanta {
+  color: #ff5151;
+}
+.feed .ratingIcon .actionsActivated .asombra {
+  color: #ffda51;
+}
+.feed .ratingIcon .actionsActivated .entristece {
+  color: #ffda51;
+}
+.feed .ratingIcon .actionsActivated .divierte {
+  color: #ffda51;
+}
+
+.feed .ratingIcon .actionsActivated img {
+  width: 25px;
+  height: 25px;
+  margin-right: 0.4rem;
+}
+
+.feed .edit {
+  margin: 5px;
+}
+
+.feed .caption {
+  margin: 20px 0;
+}
+
+.feed .liked-by span {
+  width: 1.4rem;
+  height: 1.4rem;
+  display: block;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--color-white);
+  margin-left: -0.6rem;
+}
+
+.feed .text-muted {
+  width: 30%;
+}
+.feed .text-muted:hover {
+  border-bottom: 1px solid var(--color-light);
+  cursor: pointer;
+}
+
+
+
+.feed .Ellipsi {
+  position: absolute;
+  right: 20px;
+}
+
+.item .feed {
+  width: 300px;
+}
+
+.item .feed .action-buton {
+  display: none;
+}
+
+.item .feed .Ellipsi {
+  display: none;
+}
+
+.item .feed .user .ingo small {
+  display: none;
+}
+
+.item .feed .comments {
+  display: none;
+}
+
+.item .feed .liked-by {
+  display: none;
+}
+
+.item .feed .roles {
+  display: none;
+}
+
+.previousPost-post {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.previousPost-post .makeComment {
+  display: none;
+}
+
+.previousPost-post .feed .Ellipsi {
+  display: none;
+}
+
+.previousPost-post .feed .action-buton {
+  display: none;
+}
+
+.previousPost-post .feed .traze {
+  display: none;
+}
+
+.previousPost-post .feed .comment-shared {
+  display: none;
+}
+
+.previousPost-post .feed .roles {
+  display: none;
+}
+
+.previousPost-post .feed .info-post {
+  display: none;
+}
+.previousPost-post .feed {
+  border-radius: 10px;
+  min-width: 100%;
+}
+
+.previousPost-info .feed .caption {
+  margin: 20px 0;
+}
+
+.previousPost-post .previousPost-info {
+  width: 80%;
+  padding: 1rem;
+}

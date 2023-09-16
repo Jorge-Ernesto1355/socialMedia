@@ -20,7 +20,7 @@ const checkRolesExisted = (req, res, next) => {
    
     for (let i = 0; i < req.body.roles.length; i++) {
       if (!roles.includes(req.body.roles[i])) {
-        return res.status(40).json({
+        return res.status(400).json({
           message: `Role ${req.body.roles[i]} no existe`,
         });
       }

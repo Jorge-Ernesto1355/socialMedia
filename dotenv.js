@@ -1,5 +1,5 @@
 module.exports = {
-  SECRET:"User-Api",
+  Secret:"User-Api",
   SecretRefreshToken:"Refresh-Token",
   JWTSecretReset:"Reset-Token",
   fsdwknkdjzdzrfdh:"fsdwknkdjzdzrfdh"

@@ -1,0 +1,165 @@
+.container-action {
+  width: 44.3vw;
+  height: 21.3vw;
+  position: absolute;
+  bottom: 0;
+  z-index: 9999999;
+  top: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  background-color: var(--color-white);
+  padding: var(--card-padding);
+  border-radius: var(--card-border-radius);
+  box-shadow: -1px -1px 5px 0px rgba(0, 0, 0, 0.19);
+  -webkit-box-shadow: -1px -1px 5px 0px rgba(0, 0, 0, 0.19);
+  -moz-box-shadow: -1px -1px 5px 0px rgba(0, 0, 0, 0.19);
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+
+.container-action .head-action {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 20px;
+}
+
+.culo {
+  margin-top: 1rem;
+  border-bottom: 1px solid #cdcccc;
+  position: relative;
+}
+
+.container-action .head-action .first {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 20px;
+}
+
+.container-action .head-action .first div {
+  display: flex;
+  margin-left: 2.2rem;
+  width: 1rem;
+  height: 1rem;
+
+  position: relative;
+}
+.watchAll {
+  position: relative;
+}
+
+.head-action .first h3 .underline {
+  background-color: var(--color-primary);
+  width: 50px;
+  border-radius: 3px;
+  height: 3px;
+  bottom: -13px;
+  right: 20px;
+  position: absolute;
+  z-index: 111;
+}
+
+.head-action .first div .underline {
+  background-color: var(--color-primary);
+  width: 50px;
+  border-radius: 3px;
+  height: 3px;
+  bottom: -22px;
+  right: -30px;
+  position: absolute;
+  z-index: 111;
+}
+.container-action .head-action .first div img {
+  transition: all ease 0.25s;
+}
+.container-action .head-action .first div h5:hover + img:hover {
+  cursor: pointer;
+  transform: translateY(-10px);
+}
+
+.container-action .head-action .first div img:active {
+  transform: scale(1.2);
+}
+
+.container-action .head-action .first div h5.gusta {
+  color: #ff4da1;
+}
+.container-action .head-action .first div h5.encanta {
+  color: #fc2f32;
+}
+
+.container-action .head-action .first div h5.amarillo {
+  color: #f3fc2f;
+}
+
+.container-action img {
+  width: 30px;
+  height: 30px;
+}
+.head-action .second .cross-action {
+  border: none;
+  border-radius: 50%;
+  padding: 5px;
+  background-color: var(--color-light);
+}
+.head-action .second .cross-action img {
+  width: 20px;
+  height: 20px;
+}
+
+.body-action {
+  width: 100%;
+  height: 80%;
+}
+
+.body-action ul {
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
+.body-action ul li {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.body-action ul li .profile-action {
+  position: relative;
+}
+
+.body-action ul li .profile-action .icon {
+  position: absolute;
+
+  width: 20px;
+  height: 20px;
+  top: 27px;
+  right: 1px;
+}
+
+.body-action ul li .profile-action .icon.iconEncanta {
+  position: absolute;
+  background-color: #fff;
+  width: 20px;
+  height: 20px;
+  top: 27px;
+  right: 1px;
+}
+
+.body-action ul li .profile-action img {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin-right: 1rem;
+}
+.body-action ul li .info h4 {
+  color: #424242;
+}
+
+.body-action ul li .info span {
+  font-weight: 500;
+  font-size: 0.7rem;
+  color: #6c6c6c;
+}

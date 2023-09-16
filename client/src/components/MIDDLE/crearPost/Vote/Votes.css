@@ -1,0 +1,69 @@
+.votes{
+  width: 70%;
+  height: max-content;
+  border: 1px solid gray;
+  border-radius: 15px;
+  margin-top:20px ;
+
+
+}
+
+.poll-votes{
+  display: grid;
+  grid-template-columns: 90% 10%;
+}
+
+.poll-votes.expand{
+  display: grid;
+  grid-template-columns:  100%;
+}
+
+.form-votes{
+  padding: 10px;
+}
+.button-form-votes{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: end;
+  background-color: transparent;
+}
+
+.button-form-votes button{
+  background-color: transparent;
+  margin-bottom: 12.5px;
+  padding: 5px;
+  margin-right: 5px;
+}
+
+.button-form-votes button:hover{
+  border-radius: 50%;
+  background-color: #E8FFFE;
+  transition: all 250ms;
+
+}
+
+
+
+.delete-votes{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #FF2020;
+  font-size: large;
+  font-weight: 500;
+  padding: 7px;
+  border-top:1px solid gray; ;
+  cursor: pointer;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+
+.delete-votes:hover{
+background-color: #FFEBEB;
+transition: all 250ms;
+}
+
+
+

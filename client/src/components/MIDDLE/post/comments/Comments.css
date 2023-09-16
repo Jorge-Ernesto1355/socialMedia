@@ -1,0 +1,13 @@
+.comments{
+  min-height: 150px;
+}
+
+.comments-responded{
+  margin-left: 2rem;
+  overflow: none;
+}
+
+.comments-responded .comment {
+  padding: 10px;
+  margin-left: 1rem;
+}

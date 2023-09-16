@@ -2,7 +2,7 @@ const User = require('../../domain/UserModel')
 const jwt  = require('jsonwebtoken')
 const { validate } = require('class-validator')
 const {encryptPassword} = require('./RegisterUser')
-const  { JWTSecretReset } = require('../../../../dotenv')
+const  { JWTSecretReset } = require('../../../dotenv')
 
 
 const NewPassword = async (req, res)=>{

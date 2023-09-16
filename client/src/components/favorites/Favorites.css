@@ -1,0 +1,125 @@
+.Favorites {
+  width: 90vw;
+  height: 60vh;
+  position: fixed;
+  top: -20px;
+  left: 30px;
+  z-index: 100;
+  text-align: center;
+  display: grid;
+  place-items: center;
+  font-size: 0.9rem;
+}
+
+.Favorites.active {
+  display: grid;
+}
+
+.Favorites .card {
+  padding: 2rem;
+  margin: 2rem;
+  margin-top: 6rem;
+  border-radius: var(--card-border-radius);
+  width: 90vw;
+  text-align: center;
+  position: relative;
+}
+.Favorites .card .return {
+  position: absolute;
+  top: -40px;
+  left: 20px;
+  color: #3f3f3f;
+}
+.Favorites .card .return img {
+  width: 40px;
+  height: 40px;
+}
+
+.Favorites .noPosts {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 900px;
+  height: 30px;
+  border-radius: 4px;
+  padding: 5px;
+  position: absolute;
+  left: 200px;
+  color: #3f3f3f;
+}
+
+.Favorites .noPosts .info {
+  display: flex;
+
+  align-items: center;
+}
+
+.Favorites .noPosts .fav {
+  width: 30%;
+  margin-top: 2rem;
+  padding: 5px;
+  border-radius: 4px;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  box-shadow: -1px -1px 5px 0px rgba(0, 0, 0, 0.19);
+  -webkit-box-shadow: -1px -1px 5px 0px rgba(0, 0, 0, 0.19);
+  -moz-box-shadow: -1px -1px 5px 0px rgba(0, 0, 0, 0.19);
+}
+
+.Favorites .noPosts img {
+  width: 60px;
+  height: 60px;
+  margin: 0 3rem;
+}
+
+.Favorites .favorites {
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
+  margin-top: 30px;
+}
+
+.Favorites .item {
+  display: block;
+}
+
+.Favorites .item .head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.Favorites .item .head .delete {
+  width: 30px;
+  margin-right: 10px;
+  background-color: transparent;
+}
+
+.Favorites .item .head .watch {
+  border-radius: 5px;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  padding: 5px;
+  cursor: pointer;
+}
+
+.layout {
+  width: max-content;
+  height: max-content;
+  margin: 200px 60px;
+  background: #fff;
+  border-radius: var(--border-radius-1);
+  box-shadow: var(--box-shadow);
+  position: absolute;
+  top: 0;
+
+  right: 200px;
+  left: 340px;
+  bottom: 0;
+}
+.layout .imgla {
+  width: 100%;
+  height: 30vh;
+  object-fit: cover;
+  border-radius: 1rem;
+}

@@ -3,14 +3,46 @@ const FindAllPost = require('./find/FindAllPost')
 const FindPostById = require('./find/FindPostById')
 const UpdatePost = require('./UpdatePost')
 const createPost = require('./createPost/createPost')
-const GiveLike  = require('./interact//likes/GiveLike')
-const comment = require('./interact/Comment')
-const Share = require('./interact/shares/Share')
 const FindCurrentPost = require('./find/FindCurrentPost')
-const allUsersHasGivenLiked = require('../application/interact/likes/allUsersHasGivenLiked')
-const allShared = require('../application/interact/shares/AllUserHasGivenShared')
+
 const Votes = require('./interact/votes/Vote')
 const AllVotes = require('../application/interact/votes/AllUserGivenVote')
+
+//actionsPost
+
+//like
+const GiveLike  = require('./interact/actions/likes/GiveLike')
+
+
+//shares
+const allShared = require('../application/interact/shares/AllUserHasGivenShared')
+const Share = require('./interact/shares/Share')
+
+//comment
+const comment = require('./interact/comments/Comment')
+const FindCommentsFromPost = require('./find/FindCommentsFromPost')
+const getReactionComment = require('./interact/comments/getReactionComment')
+const getReactionCommentView = require('./interact/comments/getReactionView')
+
+
+
+//favorites 
+const favorite = require('./interact/favorites/Favorites')
+const AllFavorite = require('./interact/favorites/AllFavorites')
+
+const FindAllReactionsPost = require('./find/FindAllReactionPost')
+const FindReactionPost = require('./find/FindReactionPost')
+const FindReactionPostView = require('./find/FindReactionsView')
+
+
+const ActionsComment = require('./interact/comments/ActionComment')
+const  getReactionsComment = require('./interact/comments/getReactionsComment')
+const getAllCommentsResponded = require('./interact/comments/getAllCommentsResponded')
+
+
+const updateComment = require('../application/interact/comments/updateComment')
+
+const deleteComment = require('./interact/comments/deleteComment')
 
 module.exports = {
   DeletePost, 
@@ -22,9 +54,25 @@ module.exports = {
   comment, 
   Share,
   FindCurrentPost,
-  allUsersHasGivenLiked, 
   allShared, 
   Votes, 
-  AllVotes
+  AllVotes, 
+  favorite,
+  FindCommentsFromPost, 
+  AllFavorite, 
+  FindAllReactionsPost,
+  FindReactionPostView,
+  getReactionCommentView,
+  FindReactionPost,
+  ActionsComment, 
+  getReactionComment, 
+  getReactionsComment,
+  getAllCommentsResponded, 
+  updateComment, 
+  deleteComment, 
+  
+  
+  
+
 }
 

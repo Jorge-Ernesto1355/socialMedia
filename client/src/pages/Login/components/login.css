@@ -1,0 +1,162 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.cuadro1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f8f8f8;
+}
+
+.login {
+  position: relative;
+  width: 400px;
+  height: 600px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.login i {
+  position: absolute;
+  top: 40px;
+  left: -25px;
+  width: 360px;
+  height: 50px;
+  background: #67ff59;
+  border-radius: 30px;
+  border-bottom-left-radius: 0;
+}
+
+.title {
+  position: absolute;
+  top: 40px;
+  left: 90px;
+  color: #fff;
+}
+
+.login i::before {
+  content: '';
+  position: absolute;
+  top: 50px;
+  width: 25px;
+  height: 30px;
+  background: #65e704;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  z-index: 2;
+}
+
+.login i::after {
+  content: '';
+  position: absolute;
+  top: 50px;
+  width: 25px;
+  height: 30px;
+  background: #67ff59;
+  border-bottom-left-radius: 20px;
+}
+
+.logo {
+  width: 100px;
+  height: 100px;
+  background-color: white;
+  margin: 20px;
+  margin-bottom: 20px;
+}
+
+.logocbta81 {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: 45px;
+  right: 150px;
+}
+
+.logocbta {
+  width: 40px;
+  height: 40px;
+}
+
+.icon-atras {
+  position: absolute;
+  color: #929292;
+  font-size: 1.5rem;
+  left: 25px;
+  top: 5px;
+  transition: 0.4s;
+}
+
+.icon-atras:hover {
+  transform: translateX(-10px);
+  transition: 0.4s;
+}
+
+.input {
+  padding: 10px;
+}
+
+.icon {
+  color: #929292;
+}
+
+.text {
+  font-size: 1rem;
+  color: #929292;
+  margin-bottom: 5px;
+}
+
+.submit {
+  border: none;
+  width: 150px;
+  height: 40px;
+  margin-top: 30px;
+  border-radius: 10px;
+  color: #ffffff;
+  background-color: #67ff59;
+  position: absolute;
+  right: 140px;
+  bottom: 50px;
+}
+
+.checkBox {
+  display: flex;
+  align-items: center;
+  width: 250px;
+}
+.span-guardarSesion {
+  font-size: small;
+  font-weight: 500;
+  margin-right: 15px;
+  color: #656665;
+}
+
+.submit:hover {
+  transform: scale(1.1);
+  transition: 0.4s;
+}
+
+.recuperar {
+  position: absolute;
+  color: #656665;
+  bottom: 10px;
+  right: 20px;
+  font-size: small;
+  font-weight: 500;
+  margin-right: 15px;
+  border-bottom: 4px dotted #65e704;
+  transition: 0.4s;
+}
+
+.recuperar:hover {
+  padding-bottom: 4px;
+  transition: 0.4s;
+}

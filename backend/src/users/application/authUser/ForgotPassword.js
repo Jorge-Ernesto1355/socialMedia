@@ -1,6 +1,6 @@
 const User = require('../../domain/UserModel')
 const {Token} =  require('./RegisterUser')
-const {JWTSecretReset} = require('../../../../dotenv')
+const {JWTSecretReset} = require('../../../dotenv')
 const SendEmail = require('../../../nodemailer/sendEmail')
 
 const ForgotPassword = async (req, res)=>{
