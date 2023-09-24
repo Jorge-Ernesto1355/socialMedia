@@ -1,5 +1,5 @@
-import React from 'react';
-import './Skeleton.css';
+import React from "react";
+import "./Skeleton.css";
 
 export default function Skeleton({ type }) {
   const COUNTER = 8;
@@ -93,15 +93,15 @@ export default function Skeleton({ type }) {
             <div className="foto">
               <img alt="" />
               <span></span>
-            </div>{' '}
+            </div>{" "}
             <div className="foto">
               <img alt="" />
               <span></span>
-            </div>{' '}
+            </div>{" "}
             <div className="foto">
               <img alt="" />
               <span></span>
-            </div>{' '}
+            </div>{" "}
             <div className="foto">
               <img alt="" />
               <span></span>
@@ -142,10 +142,10 @@ export default function Skeleton({ type }) {
       <span className="customText">Loading...</span>
     </div>
   );
-  if (type === 'left') return <ProfileLeft />;
-  if (type === 'feed') return Array(COUNTER).fill(<FeedSkeleton />);
-  if (type === 'top') return <TopSkeleton />;
-  if (type === 'menu') return <MenuSkeleton />;
-  if (type === 'circle') return <Circle />;
-  if (type === 'custom') return <CustomLoading />;
+  if (type === "left") return <ProfileLeft />;
+  if (type === "feed") return Array(COUNTER).fill(<FeedSkeleton />);
+  if (type === "top") return <TopSkeleton />;
+  if (type === "menu") return <MenuSkeleton />;
+  if (type === "circle") return <Circle />;
+  if (type === "custom") return <CustomLoading />;
 }

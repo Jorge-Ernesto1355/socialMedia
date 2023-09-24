@@ -10,11 +10,12 @@ const createImagen = require('../../createPost/createImagen')
 const comments = async (req, res)=>{
 
    const {commentId} = req.query
-   const {id:postId} = req.params
+   const {postId} = req.params
    const { text, userId} = req.body
-   console.log({commentId, postId, text, userId})
-   
   
+
+  
+
     if(!postId) return res.status(500).json({message:"algo salio mal "})
     const post = await Post.findById(postId)
 
@@ -52,8 +53,8 @@ const comments = async (req, res)=>{
     return res.status(201).json({message:'se ha creado un comment'})
 
    } catch (error) {
-     console.log(error)
-   return   res.status(500).json({message:"algo salio mal commentpa"})
+     
+   return   res.status(500).json({message:"algo salio mal "})
    }
 }
 

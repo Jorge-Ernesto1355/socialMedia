@@ -1,7 +1,7 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import rem from '../../../assets/rem.jpg';
-import './Perfil.css';
+import React from "react";
+import { useSelector } from "react-redux";
+import rem from "../../../assets/rem.jpg";
+import "./Perfil.css";
 
 const Perfil = () => {
   const { user } = useSelector((state) => state.user.currentUser);

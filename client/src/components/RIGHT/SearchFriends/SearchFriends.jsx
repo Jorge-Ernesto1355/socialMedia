@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 
-import rem from '../../../assets/rem.jpg';
+import rem from "../../../assets/rem.jpg";
 
-import search from '../../../assets/search.png';
-import './SearchFriends.css';
-import { Users } from './User';
+import search from "../../../assets/search.png";
+import "./SearchFriends.css";
+import { Users } from "./User";
 
 const SearchFriends = () => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
 
   return (
     <div className="search-bar-friends">
@@ -24,9 +24,9 @@ const SearchFriends = () => {
         />
       </div>
 
-      <motion.ul className={`searchFriendsUl ${query ? 'active' : ''}`}>
+      <motion.ul className={`searchFriendsUl ${query ? "active" : ""}`}>
         {Users.filter((user) =>
-          user.username.toLowerCase().includes(query)
+          user.username.toLowerCase().includes(query),
         ).map((user) => (
           <li key={user.id} className="listItem">
             <div className="profile-photo">

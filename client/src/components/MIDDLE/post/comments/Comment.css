@@ -10,9 +10,6 @@
   position: relative;
 }
 
-
-
-
 .comment .head {
   max-width: 50%;
   max-width: fit-content;
@@ -40,47 +37,20 @@
 
 .comment .body {
   width: 100%;
- 
+
   display: grid;
   grid-template-columns: 10% 90%;
-}
-
-.comment .body img {
-  border-radius: 20px;
-  max-width: 45%;
-  margin-left: 3rem;
-}
-
-
-.comment .more {
-  margin-left: 1rem;
-}
-
-.comment:hover .more {
-  display: flex;
-}
-
-.comment .more .Ellipsis-comment {
-  width: 35px;
-  border-radius: 50%;
-  cursor: pointer;
-  padding: 2px;
-  transition: all 0.2s;
-}
-
-.comment .more .Ellipsis-comment:hover {
-  background: #e1e1e1;
 }
 
 .comment .actions-comments {
   width: 100%;
   max-width: 100%;
   display: flex;
- margin-left: 1rem;
+  margin-left: 1rem;
   align-items: center;
 }
 
-.comment .actions-comments span {
+.comment .actions-comment-text {
   font-size: 0.8rem;
   font-weight: 600;
   color: #6d6d6d;
@@ -90,12 +60,12 @@
 
 .comment .watchCommentsResponded {
   height: 10px;
-    top: 111px;
-    left: 85px;
-    justify-content: flex-start;
-    align-items: center;
-    position: absolute;
-    cursor: pointer;
+  top: 110px;
+  left: 85px;
+  justify-content: flex-start;
+  align-items: center;
+  position: absolute;
+  cursor: pointer;
 }
 
 .comment .watchCommentsResponded {
@@ -123,8 +93,6 @@
   font-weight: 400;
   color: #bbbbbb;
 }
-
-
 
 .comment .showquantity-actions {
   height: max-content;
@@ -174,7 +142,6 @@
 }
 
 @media screen and (max-width: 1200px) {
-  
   .comment .actions-comments span {
     margin-right: 5px;
   }
@@ -203,4 +170,20 @@
   }
 }
 
+.comment-makecomment-container {
+  margin-top: 1rem;
+}
 
+.container-image-comment {
+  height: 40%;
+  width: 40%;
+  object-fit: cover;
+  margin-left: 2rem;
+}
+
+.container-image-comment img {
+  height: 110%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 1rem;
+}

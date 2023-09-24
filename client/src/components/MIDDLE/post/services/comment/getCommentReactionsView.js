@@ -1,16 +1,12 @@
-import { userRequest } from '../../../../../utilities/requestMethod';
+import { userRequest } from "../../../../../utilities/requestMethod";
 
-const getCommentReactionsView = async ({id}) => {
-  if (id === null || id === undefined || typeof id !== 'string') {
-    throw new Error('Invalid commentId');
+const getCommentReactionsView = async ({ id }) => {
+  if (id === null || id === undefined || typeof id !== "string") {
+    throw new Error("Invalid commentId");
   }
 
-  
   try {
-    const data = await userRequest.get(
-      `/post/reaction/comment/view/${id}`
-    );
-    
+    const data = await userRequest.get(`/post/reaction/comment/view/${id}`);
 
     return data;
   } catch (error) {
@@ -18,4 +14,4 @@ const getCommentReactionsView = async ({id}) => {
   }
 };
 
-export default getCommentReactionsView
+export default getCommentReactionsView;

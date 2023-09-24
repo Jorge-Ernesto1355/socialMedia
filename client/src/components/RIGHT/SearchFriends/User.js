@@ -1,72 +1,72 @@
 export const Users = [
   {
     id: 1,
-    username: 'Emiline',
+    username: "Emiline",
 
-    email: 'emcclune0@xrea.com',
-    gender: 'Female'
+    email: "emcclune0@xrea.com",
+    gender: "Female",
   },
   {
     id: 2,
-    username: 'Felix',
+    username: "Felix",
 
-    email: 'fingleston1@hibu.com',
-    gender: 'Female'
+    email: "fingleston1@hibu.com",
+    gender: "Female",
   },
   {
     id: 3,
-    username: 'Travus',
+    username: "Travus",
 
-    email: 'tbergstram2@pbs.org',
-    gender: 'Female'
+    email: "tbergstram2@pbs.org",
+    gender: "Female",
   },
   {
     id: 4,
-    username: 'Holly-anne',
+    username: "Holly-anne",
 
-    email: 'hknighton3@booking.com',
-    gender: 'Female'
+    email: "hknighton3@booking.com",
+    gender: "Female",
   },
   {
     id: 5,
-    username: 'Sollie',
+    username: "Sollie",
 
-    email: 'snaulty4@hud.gov',
-    gender: 'Male'
+    email: "snaulty4@hud.gov",
+    gender: "Male",
   },
   {
     id: 6,
-    username: 'Annie',
+    username: "Annie",
 
-    email: 'acockayme5@tuttocitta.it',
-    gender: 'Male'
+    email: "acockayme5@tuttocitta.it",
+    gender: "Male",
   },
   {
     id: 7,
-    username: 'Celinda',
+    username: "Celinda",
 
-    email: 'csharvill6@narod.ru',
-    gender: 'Male'
+    email: "csharvill6@narod.ru",
+    gender: "Male",
   },
   {
     id: 8,
-    username: 'Lamond',
+    username: "Lamond",
 
-    email: 'lricket7@washington.edu',
-    gender: 'Male'
+    email: "lricket7@washington.edu",
+    gender: "Male",
   },
   {
     id: 9,
-    username: 'Florida',
+    username: "Florida",
 
-    email: 'flicciardiello8@sina.com.cn',
-    gender: 'Female'
+    email: "flicciardiello8@sina.com.cn",
+    gender: "Female",
   },
   {
     id: 10,
-    username: 'Gerianne',
+    username: "Gerianne",
 
-    email: 'flicciardiello8@sina.com.cn',
-    gender: 'Female'
-  }
+    email: "flicciardiello8@sina.com.cn",
+    gender: "Female",
+  },
 ];

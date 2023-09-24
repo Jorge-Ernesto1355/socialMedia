@@ -1,12 +1,12 @@
 const actionAdapter = (actions) => {
   if (actions === undefined) {
     return {
-      gusta: [{ label: '' }],
-      encanta: [{ label: '' }],
-      asombra: [{ label: '' }],
-      entristece: [{ label: '' }],
-      divierte: [{ label: '' }],
-      actionsActivated: [{ label: '' }]
+      gusta: [{ label: "" }],
+      encanta: [{ label: "" }],
+      asombra: [{ label: "" }],
+      entristece: [{ label: "" }],
+      divierte: [{ label: "" }],
+      actionsActivated: [{ label: "" }],
     };
   }
   let gusta = [];
@@ -18,27 +18,27 @@ const actionAdapter = (actions) => {
   let actionsActivated = [];
 
   actions.forEach((action) => {
-    if (action.label === 'gusta') gusta = [...gusta, action];
-    if (action.label === 'encanta') encanta = [...encanta, action];
-    if (action.label === 'asombra') asombra = [...asombra, action];
-    if (action.label === 'entristece') entristece = [...entristece, action];
-    if (action.label === 'divierte') divierte = [...divierte, action];
+    if (action.label === "gusta") gusta = [...gusta, action];
+    if (action.label === "encanta") encanta = [...encanta, action];
+    if (action.label === "asombra") asombra = [...asombra, action];
+    if (action.label === "entristece") entristece = [...entristece, action];
+    if (action.label === "divierte") divierte = [...divierte, action];
   });
 
   if (gusta.length > 0) {
-    actionsActivated = [...actionsActivated, { label: 'gusta' }];
+    actionsActivated = [...actionsActivated, { label: "gusta" }];
   }
   if (encanta.length > 0) {
-    actionsActivated = [...actionsActivated, { label: 'encanta' }];
+    actionsActivated = [...actionsActivated, { label: "encanta" }];
   }
   if (asombra.length > 0) {
-    actionsActivated = [...actionsActivated, { label: 'asombra' }];
+    actionsActivated = [...actionsActivated, { label: "asombra" }];
   }
   if (entristece.length > 0) {
-    actionsActivated = [...actionsActivated, { label: 'entristece' }];
+    actionsActivated = [...actionsActivated, { label: "entristece" }];
   }
   if (divierte.length > 0) {
-    actionsActivated = [...actionsActivated, { label: 'divierte' }];
+    actionsActivated = [...actionsActivated, { label: "divierte" }];
   }
 
   return {
@@ -48,7 +48,7 @@ const actionAdapter = (actions) => {
     entristece,
     divierte,
     allActions: actions,
-    actionsActivated
+    actionsActivated,
   };
 };
 

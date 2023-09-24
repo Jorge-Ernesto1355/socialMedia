@@ -31,7 +31,7 @@
 }
 
 .danger::before {
-  content: '';
+  content: "";
   position: absolute;
   left: -5px;
   top: 8px;
@@ -42,7 +42,7 @@
 }
 
 .right::before {
-  content: '';
+  content: "";
   position: absolute;
   right: -5px;
   top: 8px;

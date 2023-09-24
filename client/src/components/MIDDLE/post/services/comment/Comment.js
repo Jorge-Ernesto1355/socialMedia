@@ -1,20 +1,21 @@
-import { userRequest } from '../../../../../utilities/requestMethod';
+import { userRequest } from "../../../../../utilities/requestMethod";
 
 const CommentAxios = async (commentToSend) => {
   const form = new FormData();
-  
-  for (let key in commentToSend) {
+
+  for (const key in commentToSend) {
     form.append(key, commentToSend[key]);
   }
+  console.log(commentToSend);
 
   const data = await userRequest.put(
-    '/post/comment?postId=' + commentToSend.postId,
+    `/post/comment/${commentToSend.postId}`,
     form,
     {
       headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    }
+        "Content-Type": "multipart/form-data",
+      },
+    },
   );
 
   console.log(data);

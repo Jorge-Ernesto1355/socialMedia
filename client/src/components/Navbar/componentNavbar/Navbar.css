@@ -8,7 +8,7 @@
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   color: var(--color-dark);
   background: var(--color-light);
   overflow-x: hidden;
@@ -35,7 +35,7 @@ nav .search-bar {
   padding: var(--search-padding);
 }
 
-nav .search-bar input[type='search'] {
+nav .search-bar input[type="search"] {
   background: transparent;
   width: 30vw;
   margin-left: 1rem;
@@ -47,7 +47,7 @@ nav .searchingPeople {
   position: absolute;
 }
 
-nav .search-bar input[type='search']::placeholder {
+nav .search-bar input[type="search"]::placeholder {
   color: var(--color-gray);
 }
 

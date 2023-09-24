@@ -1,37 +1,36 @@
-import './login.css';
+import "./login.css";
 
-//librerias
-import toast, { Toaster } from 'react-hot-toast';
+// librerias
+import toast, { Toaster } from "react-hot-toast";
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { Formik, Form, ErrorMessage } from 'formik';
+import { Formik, Form, ErrorMessage } from "formik";
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 
-//components
+// components
 
-import Register from '../services/Register';
+import Register from "../services/Register";
 
-import Cuadro from '../../../components/cuadro/Cuadro';
+import Cuadro from "../../../components/cuadro/Cuadro";
 
-import Input from './Input';
+import Input from "./Input";
 
-import validateCURP from '../../../utilities/ExpresionRegularCurp';
+import validateCURP from "../../../utilities/ExpresionRegularCurp";
 
-import validateContraseña from '../../../utilities/ExpresionRegularContraseña';
+import validateContraseña from "../../../utilities/ExpresionRegularContraseña";
 
-import Loading from '../../../stylesComponents/Loading/Loaging';
 
-import cbta from '../../../assets/CBTA.png';
+import cbta from "../../../assets/CBTA.png";
 
-//emoticons
+// emoticons
 
-import { FaArrowLeft, FaUser } from 'react-icons/fa';
+import { FaArrowLeft, FaUser } from "react-icons/fa";
 
-import { MdEmail, MdOutlineDocumentScanner } from 'react-icons/md';
+import { MdEmail, MdOutlineDocumentScanner } from "react-icons/md";
 
-import { GiPadlock } from 'react-icons/gi';
+import { GiPadlock } from "react-icons/gi";
 
 function Login() {
   const [selectCheck, setSelectCheck] = useState(false);
@@ -44,7 +43,7 @@ function Login() {
 
   const toastNoti = (err) => {
     toast.error(err, {
-      position: 'top-right'
+      position: "top-right",
     });
   };
 
@@ -67,57 +66,57 @@ function Login() {
 
         <Formik
           validate={(values) => {
-            let errors = {};
+            const errors = {};
 
             const { correo, nombre, contraseña, curp } = values;
 
-            //validacion de correo
+            // validacion de correo
 
             if (!correo) {
-              errors.correo = 'introduce un correo';
+              errors.correo = "introduce un correo";
             } else if (
               !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
-                values.correo
+                values.correo,
               )
             ) {
               errors.correo =
-                'el correo solo puede contener letras, numeros, puntos, guiones, guion bajo.';
+                "el correo solo puede contener letras, numeros, puntos, guiones, guion bajo.";
             }
 
-            //validacion de nombre
+            // validacion de nombre
 
             if (!nombre) {
-              errors.nombre = 'introduce un nombre';
+              errors.nombre = "introduce un nombre";
             } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(nombre)) {
-              errors.nombre = 'el nombre solo puede contener letras y esapcios';
+              errors.nombre = "el nombre solo puede contener letras y esapcios";
             }
             if (!contraseña) {
-              //validacion contraseña
+              // validacion contraseña
 
-              errors.contraseña = 'introduce una contraseña';
+              errors.contraseña = "introduce una contraseña";
             } else if (!validateContraseña(contraseña)) {
               errors.contraseña =
-                'Minimo 8 ,caracteres Maximo 15, Al menos una letra mayúscula, Al menos una letra minuscula, Al menos un dígito, No espacios en blanco,  Al menos 1 caracter especial';
+                "Minimo 8 ,caracteres Maximo 15, Al menos una letra mayúscula, Al menos una letra minuscula, Al menos un dígito, No espacios en blanco,  Al menos 1 caracter especial";
             }
 
-            //validacion de crup
+            // validacion de crup
 
             if (!curp) {
-              errors.curp = 'introduce un curp';
+              errors.curp = "introduce un curp";
             } else if (!validateCURP(curp)) {
-              errors.curp = 'introduce una curp valida';
+              errors.curp = "introduce una curp valida";
             }
 
             return errors;
           }}
           initialValues={{
-            correo: '',
+            correo: "",
 
-            nombre: '',
+            nombre: "",
 
-            contraseña: '',
+            contraseña: "",
 
-            curp: ''
+            curp: "",
           }}
           onSubmit={async (values, { resetForm }) => {
             const { correo, nombre, contraseña, curp } = values;
@@ -126,7 +125,7 @@ function Login() {
               email: correo,
               username: nombre,
               password: contraseña,
-              curp
+              curp,
             });
           }}
         >
@@ -137,7 +136,7 @@ function Login() {
                 <ErrorMessage
                   name="correo"
                   component={() => (
-                    <Cuadro text={errors.correo} danger={'danger'} />
+                    <Cuadro text={errors.correo} danger={"danger"} />
                   )}
                 />
 
@@ -159,7 +158,7 @@ function Login() {
                 <ErrorMessage
                   name="nombre"
                   component={() => (
-                    <Cuadro text={errors.nombre} danger={'danger'} />
+                    <Cuadro text={errors.nombre} danger={"danger"} />
                   )}
                 />
 
@@ -182,7 +181,7 @@ function Login() {
                 <ErrorMessage
                   name="contraseña"
                   component={() => (
-                    <Cuadro text={errors.contraseña} danger={'danger'} />
+                    <Cuadro text={errors.contraseña} danger={"danger"} />
                   )}
                 />
 
@@ -206,7 +205,7 @@ function Login() {
                 <ErrorMessage
                   name="curp"
                   component={() => (
-                    <Cuadro text={errors.curp} danger={'danger'} />
+                    <Cuadro text={errors.curp} danger={"danger"} />
                   )}
                 />
 

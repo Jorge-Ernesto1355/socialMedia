@@ -16,7 +16,7 @@
 }
 
 .notification-popup.active::before {
-  content: '';
+  content: "";
   width: 1.2rem;
   height: 1.2rem;
   display: block;

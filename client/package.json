@@ -1,0 +1,99 @@
+{
+	"name": "client",
+	"version": "0.1.0",
+	"private": true,
+	"dependencies": {
+		"@algolia/autocomplete-core": "^1.11.0",
+		"@algolia/autocomplete-preset-algolia": "^1.11.0",
+		"@fortawesome/fontawesome-svg-core": "^6.1.1",
+		"@fortawesome/free-solid-svg-icons": "^6.1.1",
+		"@fortawesome/react-fontawesome": "^0.1.18",
+		"@react-icons/all-files": "^4.1.0",
+		"@reduxjs/toolkit": "^1.8.1",
+		"@svgr/plugin-jsx": "^6.2.1",
+		"@svgr/plugin-prettier": "^6.1.2",
+		"@testing-library/user-event": "^13.5.0",
+		"algoliasearch": "^4.20.0",
+		"emoji-picker-react": "^4.5.1",
+		"formik": "^2.2.9",
+		"framer-motion": "^6.3.4",
+		"moment": "^2.29.3",
+		"react": "^18.1.0",
+		"react-classlist": "^1.1.2",
+		"react-dom": "^18.1.0",
+		"react-hot-toast": "^2.2.0",
+		"react-icons": "^4.3.1",
+		"react-infinite-scroll-component": "^6.1.0",
+		"react-instantsearch-hooks": "^6.47.3",
+		"react-loader-spinner": "^5.4.5",
+		"react-query": "^3.39.1",
+		"react-redux": "^8.0.1",
+		"react-router-dom": "^6.3.0",
+		"react-scripts": "5.0.1",
+		"redux-mock-store": "^1.5.4",
+		"redux-persist": "^6.0.0",
+		"textarea-caret": "^3.1.0",
+		"underscore": "^1.13.3",
+		"uuid": "^8.3.2",
+		"web-vitals": "^2.1.4"
+	},
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\"",
+		"eject": "react-scripts eject",
+		"format": "prettier --write .",
+		"lint": "eslint . --fix --ext .js,.jsx",
+		"prepare": "husky install"
+	},
+	"eslintConfig": {
+		"extends": [
+			"react-app"
+		]
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	},
+	"devDependencies": {
+		"@babel/core": "^7.22.17",
+		"@babel/preset-env": "^7.22.15",
+		"@babel/register": "^7.22.15",
+		"@svgr/core": "^6.2.1",
+		"@testing-library/jest-dom": "^5.17.0",
+		"@testing-library/react": "^13.4.0",
+		"axios": "^1.5.0",
+		"axios-mock-adapter": "^1.22.0",
+		"babel-eslint": "^10.1.0",
+		"babel-jest": "^29.6.4",
+		"eslint": "^8.50.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-config-standard": "^17.1.0",
+		"eslint-plugin-import": "^2.28.1",
+		"eslint-plugin-jsx-a11y": "^6.5.1",
+		"eslint-plugin-n": "^16.1.0",
+		"eslint-plugin-prettier": "^4.0.0",
+		"eslint-plugin-promise": "^6.1.1",
+		"eslint-plugin-react": "^7.33.2",
+		"husky": "^8.0.3",
+		"identity-obj-proxy": "^3.0.0",
+		"jest": "^27.5.1",
+		"prettier": "^3.0.3"
+	},
+	"jest": {
+		"moduleNameMapper": {
+			".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "identity-obj-proxy"
+		}
+	},
+	"lint-staged": {
+		"*.{js,jsx}": "eslint --cache --fix"
+	}
+}

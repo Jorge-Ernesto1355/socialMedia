@@ -1,6 +1,6 @@
-import React from 'react';
-import './Role.css';
-import king from '../../../../assets/iconsPost/king.png';
+import React from "react";
+import "./Role.css";
+import king from "../../../../assets/iconsPost/king.png";
 
 const Roles = ({ role }) => {
   return (

@@ -1,21 +1,14 @@
-import {
-   
-    parseAlgoliaHitHighlight,
-  } from '@algolia/autocomplete-preset-algolia';
-import { Fragment } from 'react';
+import { parseAlgoliaHitHighlight } from "@algolia/autocomplete-preset-algolia";
+import { Fragment } from "react";
 function Highlight({ hit, attribute }) {
   const si = parseAlgoliaHitHighlight({
     hit,
     attribute,
-  })
-  console.log(hit)
-  console.log(si)
-  
-    return (
-      <>
-        
-      </>
-    );
-  }
+  });
+  console.log(hit);
+  console.log(si);
 
-  export default Highlight
+  return <></>;
+}
+
+export default Highlight;

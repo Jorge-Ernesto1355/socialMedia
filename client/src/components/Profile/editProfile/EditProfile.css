@@ -108,7 +108,7 @@
 }
 
 .container-edit .head-edit .profile-edit .change-profile::before {
-  content: '';
+  content: "";
   width: 0.7rem;
   height: 0.7rem;
   display: block;
@@ -295,7 +295,7 @@
   .all-input
   .input-slide
   .input
-  input[type='password'] {
+  input[type="password"] {
   outline: none;
   background-color: var(--color-light);
   padding-right: 1rem;
@@ -368,7 +368,7 @@
 }
 
 .container-edit .body-edit .coverPicture .change::before {
-  content: '';
+  content: "";
   width: 0.7rem;
   height: 0.7rem;
   display: block;

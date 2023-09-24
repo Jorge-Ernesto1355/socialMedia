@@ -1,6 +1,5 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
-.container-createPost{
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
+.container-createPost {
   width: 100%;
   background-color: #fff;
   height: max-content;
@@ -10,17 +9,14 @@
   position: relative;
 }
 
-
-.info-createPost{
+.info-createPost {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: start;
- 
-
 }
 
-.info-name{
+.info-name {
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -29,7 +25,7 @@
   margin-left: 10px;
 }
 
-.post-everyone{
+.post-everyone {
   display: flex;
   padding: 2px;
   border: 1px solid gray;
@@ -37,12 +33,12 @@
   margin-top: 5px;
 }
 
-.post-everyone img{
+.post-everyone img {
   width: 1.5rem;
   height: 1.5rem;
 }
 
-.input-createPost{
+.input-createPost {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -52,55 +48,45 @@
   margin-left: 30px;
 }
 
-.input-createPost input{
+.input-createPost input {
   width: 100%;
   height: max-content;
   outline: none;
   background-color: transparent;
 }
 
-.input-createPost input::placeholder{
+.input-createPost input::placeholder {
   width: 100%;
-  font-size:1.3rem;
- font-weight: 500;
+  font-size: 1.3rem;
+  font-weight: 500;
   margin-left: 10px;
   color: gray;
 }
 
-.divisor{
+.divisor {
   width: 100%;
   height: 2px;
   background-color: rgb(240, 239, 239);
   border-radius: 5px;
   margin-top: 10px;
-  
 }
 
-.down-createPost{
+.down-createPost {
   width: 100%;
   display: flex;
   justify-content: space-between;
-
 }
 
-.options-createPost{
+.options-createPost {
   width: 100px;
   display: flex;
   justify-content: start;
   align-items: center;
   margin-top: 10px;
   cursor: pointer;
-
 }
 
-.options-createPost img{
-  margin-left: 20px;
-  width: 1.4rem;
-  height: 1.4rem;
-
-}
-
-.button-post-createPost{
+.button-post-createPost {
   margin-top: 10px;
   display: flex;
   padding: 15px;
@@ -108,14 +94,18 @@
   align-items: center;
   outline: none;
   padding: 10px;
-  background-color: aquamarine;
+  background-color: var(--color-primary);
   box-shadow: var(--card-shadow);
   color: #fff;
   width: 5rem;
   height: 2.2rem;
-  border-radius:10px;
+  border-radius: 10px;
   font-weight: 600;
   font-size: large;
 }
 
-
+.options-createPost-icon {
+  width: 1.8rem;
+  height: 1.8rem;
+  margin-left: 1rem;
+}

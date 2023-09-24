@@ -1,5 +1,4 @@
-
-import { useInfiniteQuery } from 'react-query'
+import { useInfiniteQuery } from "react-query";
 
 /**
  * Custom hook that implements infinite scrolling functionality using the `useInfiniteQuery` hook from the `react-query` library.
@@ -12,35 +11,34 @@ import { useInfiniteQuery } from 'react-query'
 const useInfiniteScroll = ({ name, id, request, label }) => {
   // Check if the required parameters are provided
   if (!name) {
-    throw new Error('Missing name parameter');
+    throw new Error("Missing name parameter");
   }
-  
+
   if (!request) {
-    throw new Error('Missing request parameter');
+    throw new Error("Missing request parameter");
   }
 
   // Use the useInfiniteQuery hook to fetch the data
-  const { data, isLoading, isError, hasNextPage, fetchNextPage } = useInfiniteQuery(
-    [`${name}-${id}`, id],
-    ({ pageParam = 1 }) => request({name, id, label, limit:5, page:pageParam}),
-    {
-      getNextPageParam: ({ data }) => {
-        if (!data || data.page === data.totalPages) {
-          return false;
-        }
-        return data.page + 1;
-      }
-    }
-  );
-
-  
+  const { data, isLoading, isError, hasNextPage, fetchNextPage } =
+    useInfiniteQuery(
+      [name, id],
+      ({ pageParam = 1 }) =>
+        request({ name, id, label, limit: 5, page: pageParam }),
+      {
+        getNextPageParam: ({ data }) => {
+          if (!data || data.page === data.totalPages) {
+            return false;
+          }
+          return data.page + 1;
+        },
+      },
+    );
 
   // Flatten the paginated results into a single array
-  const results = data?.pages?.flatMap(page => page.data.docs) ?? [];
+  const results = data?.pages?.flatMap((page) => page.data?.docs ?? []) ?? [];
 
   // Return the paginated results, loading state, error state, and pagination information
   return { results, isLoading, isError, hasNextPage, fetchNextPage };
 };
 
 export default useInfiniteScroll;
-

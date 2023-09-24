@@ -8,7 +8,7 @@ function validateCURP(curp) {
   var e6 = /[0-9A-Z]{1}[0-9]{1}$/;
 
   var regex = new RegExp(
-    e1.source + e2.source + e3.source + e4.source + e5.source + e6.source
+    e1.source + e2.source + e3.source + e4.source + e5.source + e6.source,
   );
 
   return regex.test(curp);

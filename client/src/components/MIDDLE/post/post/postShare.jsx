@@ -1,61 +1,58 @@
-import React, { useEffect, useState } from 'react';
-import './Post.css';
+import React, { useEffect, useState } from "react";
+import "./Post.css";
 
 //librarys
-import rem from '../../../../assets/rem.jpg';
-import { motion } from 'framer-motion';
-import { useDispatch, useSelector } from 'react-redux';
+import rem from "../../../../assets/rem.jpg";
+import { motion } from "framer-motion";
+import { useDispatch, useSelector } from "react-redux";
 
 //icons
-import like from '../../../../assets/iconsPost/likePost.png';
-import comment from '../../../../assets/iconsPost/comment.png';
-import share from '../../../../assets/iconsPost/share.png';
-import BookMark from '../../../../assets/iconsPost/bookmark.png';
+import like from "../../../../assets/iconsPost/likePost.png";
+import comment from "../../../../assets/iconsPost/comment.png";
+import share from "../../../../assets/iconsPost/share.png";
+import BookMark from "../../../../assets/iconsPost/bookmark.png";
 
-import more from '../../../../assets/iconsPost/more.png';
-
+import more from "../../../../assets/iconsPost/more.png";
 
 //functions
 import {
   DeletePostMutation,
   MutationFavorite,
   MutationShare,
-  VotesPostMutate
-} from '../useQuery/mutation/Mutations';
+  VotesPostMutate,
+} from "../useQuery/mutation/Mutations";
 
 //utilities
-import { FailureAdapter, UserAdapterSucces } from '../../../Profile/useAdapter';
-import GetUser from '../../../../services/GetUser.service';
-
+import { FailureAdapter, UserAdapterSucces } from "../../../Profile/useAdapter";
+import GetUser from "../../../../services/GetUser.service";
 
 //components
-import Comments from '../comments/Comments';
-import Roles from '../Roles/Roles';
+import Comments from "../comments/Comments";
+import Roles from "../Roles/Roles";
 
-import Ellipsis from '../more/Ellipsis';
-import MakeAComment from '../comments/MakeAComment';
-import { Toaster } from 'react-hot-toast';
-import { imgsFeelings } from '../../crearPost/PreviewPost/imgsFeelings';
-import moment from 'moment';
-import { EditPostMutation } from '../useQuery/mutation/Mutations';
-import { getPreviusVote } from './getPreviusVote';
-import { PreviewActive, sharedPost } from '../../../../redux/PreviewPostRedux';
-import Reaction from '../Rating2.0/Reaction';
-import LikePost from '../Rating2.0/LIkePost';
-import { ReactionPost } from '../services/actions/actions';
-
+import Ellipsis from "../more/Ellipsis";
+import MakeAComment from "../comments/MakeAComment";
+import { Toaster } from "react-hot-toast";
+import { imgsFeelings } from "../../crearPost/PreviewPost/imgsFeelings";
+import moment from "moment";
+import { EditPostMutation } from "../useQuery/mutation/Mutations";
+import { getPreviusVote } from "./getPreviusVote";
+import { PreviewActive, sharedPost } from "../../../../redux/PreviewPostRedux";
+import Reaction from "../Rating2.0/Reaction";
+import LikePost from "../Rating2.0/LIkePost";
+import { ReactionPost } from "../services/actions/actions";
 
 const PostShare = ({ post }) => {
   //userId del usuario que hizo la accion
   const { _id: currentUser } = useSelector(
-    (state) => state.user.currentUser.user
+    (state) => state.user.currentUser.user,
   );
   //objeto de acciones para cambiar de imagen
 
   const dispatch = useDispatch();
   //state de actions de posts
   const [changeActions, setChangeActions] = useState(null);
-  const [actions, setActions] = useState([{ label: '' }]);
+  const [actions, setActions] = useState([{ label: "" }]);
 
   //useState para obtener todas los users de las acciones
   const [userOfActions, setUsersOfActions] = useState({});
@@ -76,7 +73,7 @@ const PostShare = ({ post }) => {
   const [loading, setLoading] = useState(true);
 
   const [descriptionState, setDescription] = useState(
-    'escribe el nuevo texto aqui'
+    "escribe el nuevo texto aqui",
   );
 
   const {
@@ -89,7 +86,7 @@ const PostShare = ({ post }) => {
     createdAt,
     edit,
     feeling,
-    _id: postId
+    _id: postId,
   } = post;
 
   const mutateDelete = DeletePostMutation(postId);
@@ -131,12 +128,7 @@ const PostShare = ({ post }) => {
     dispatch(sharedPost(postId));
   };
 
- 
-
   //obtener todas las acciones del post con sus respectivos users
-
-
-
 
   useEffect(() => {
     const getUserById = async () => {
@@ -155,13 +147,13 @@ const PostShare = ({ post }) => {
     <motion.div className="feed">
       <Toaster
         toastOptions={{
-          className: '',
+          className: "",
           style: {
-            marginTop: '620px',
-            marginLeft: '600px',
-            padding: '10px',
-            boxShadow: '1px 0px 5px -2px rgba(0, 0, 0, 0.13)  '
-          }
+            marginTop: "620px",
+            marginLeft: "600px",
+            padding: "10px",
+            boxShadow: "1px 0px 5px -2px rgba(0, 0, 0, 0.13)  ",
+          },
         }}
       />
       <div className="head">
@@ -173,8 +165,8 @@ const PostShare = ({ post }) => {
             />
           </div>
           <div className="ingo">
-            <h3>{user?.username ? user?.username : 'sin nombre'}</h3>
-            <small>{moment(createdAt).format('ll')} </small>
+            <h3>{user?.username ? user?.username : "sin nombre"}</h3>
+            <small>{moment(createdAt).format("ll")} </small>
             {edit ? <small>-</small> : null}
             {edit ? <small className="edit">editado</small> : null}
           </div>
@@ -204,7 +196,7 @@ const PostShare = ({ post }) => {
       <div className="caption">
         {editPost ? (
           <>
-            {' '}
+            {" "}
             <input
               type="text"
               value={descriptionState}
@@ -227,15 +219,8 @@ const PostShare = ({ post }) => {
         <img src={image?.url} alt="" />
       </div>
 
-      
-    
-
       <div className="info-post">
-        <div className="liked-by" onClick={() => setShowAllActions(true)}>
-         
-
-         
-        </div>
+        <div className="liked-by" onClick={() => setShowAllActions(true)}></div>
 
         <div className="comment-shared">
           {comments.length > 0 ? (
@@ -256,15 +241,14 @@ const PostShare = ({ post }) => {
       <div className="action-buton">
         <div className="interacions-buttons">
           <div className="ratingIcon">
-          <Reaction 
-                  name="reactionsView"
-                  id={postId}
-                  userId={currentUser}
-                  request={ReactionPost}
-                  >
-                  
-                  <LikePost/>
-                  </Reaction>
+            <Reaction
+              name="reactionsView"
+              id={postId}
+              userId={currentUser}
+              request={ReactionPost}
+            >
+              <LikePost />
+            </Reaction>
           </div>
           <span>
             <img className="icon" src={comment} alt="" />

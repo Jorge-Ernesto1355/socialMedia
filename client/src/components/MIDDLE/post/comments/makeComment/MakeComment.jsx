@@ -1,84 +1,139 @@
-import React, {  useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from "react";
 
-import './makeComment.css';
-import rem from '../../../../../assets/rem.jpg';
-import gallery from '../../../crearPost/icons/gallery.png';
-import smile from '../../../crearPost/icons/smile.png';
-import GetUser from '../../../../../services/GetUser.service';
-import useMutationRequest from '../../../../../hooks/useMutationRequest';
-import paperPlaneBlue from '../icons/paperPlaneBlue.png'
-import paperPlaneGray from '../icons/paperPlaneGray.png'
-import { useQuery } from 'react-query';
-import { UserAdapterSucces } from '../../../../Profile/useAdapter';
-import AutoComplete from '../../../../Autocomplete/AutoComplete';
-import store from '../../../../../hooks/useStore/createStore';
+import "./makeComment.css";
+import rem from "../../../../../assets/rem.jpg";
+import gallery from "../../../crearPost/icons/gallery.png";
 
-const MakeComment = ({
-  id,
-  userforDisplay,
-  name,
-  userId,
-  request, 
-  componentId
-}, ref) => {
+import GetUser from "../../../../../services/GetUser.service";
+import useMutationRequest from "../../../../../hooks/useMutationRequest";
+import paperPlaneBlue from "../icons/paperPlaneBlue.png";
+import paperPlaneGray from "../icons/paperPlaneGray.png";
+import { useQuery } from "react-query";
+import AutoComplete from "../../../../Autocomplete/AutoComplete";
+import { useStore } from "../../../../../hooks/useStore/useStore";
+import { ThreeDotsLoader } from "./ThreeDotsLoader";
+import EmojiPickerWithIcon from "../../../../EmojiPicker/EmojiPickerWithIcon";
+import warning from "../icons/warning.png";
+import { isDefined } from "../../../../../utilities/isDefined";
 
-  
-  
-  const mutateRequest = useMutationRequest(request, {id, name})
-  
-  
-  const {data:userData, isLoading, isError} = useQuery(['user', userId], ()=> GetUser(userforDisplay), {
-    enabled: userforDisplay ? true : false
-  })
-  const user = userData?.data?.data ?? UserAdapterSucces() 
-  const [comment, setComment] = useState('')
-  const CommentCallback = useCallback(()=> {
-    console.log(comment)
-    // if(!request) return 
-    // if(!isError)  mutateRequest.mutate({postId:id, userId, text:comment, componentId})
-  }, [comment])
-  const isText = useMemo(()=> comment.length, [comment])
-console.log(comment)
+const MakeComment = (
+  {
+    id,
+    userforDisplay,
+    name,
+    userId,
+    request,
+    componentId,
+    showComments,
+    hideMakeComments,
 
+  },
+  inputFile,
+) => {
+  const { mutate, isLoadingMutation, isError, reset } = useMutationRequest(
+    request,
+    { id, name },
+  );
+
+  const { store, set, get, state } = useStore();
+
+
+  const { data: userData } = useQuery(
+    ["user", userforDisplay],
+    () => GetUser(userforDisplay),
+    {
+      enabled: isDefined(userforDisplay),
+    },
+  );
+
+  const user = userData?.data?.data ?? {};
+
+  const CommentCallback = useCallback(() => {
+    if (!request) return;
+    if (state)
+      mutate(
+        {
+          postId: id,
+          userId,
+          text: state,
+          commentId: componentId,
+          image: inputFile.current.files[0],
+        },
+        {
+          onSuccess: () => {
+            showComments && showComments(true);
+            hideMakeComments && hideMakeComments(false);
+            set("");
+            if (store.current) store.current.value = "";
+          },
+        },
+      );
+  }, [state, inputFile]);
+
+  const isText = useMemo(
+    () => (state?.length ? state?.length : false),
+    [state],
+  );
 
   return (
-    <div >
-      {isError && <div>error</div>}
-      {!isLoading ?
-       <div className='comment-container'>
-        <div className="photo-makeComment">
+    <div className="comment-container">
+      <div className="photo-makeComment">
         <img src={rem} alt="" />
       </div>
-
       <div className="field-write-card">
         <div className="field-write">
-          <AutoComplete placeholder={'Escribe algo...'} rows={1} cols={38} handleToComponent={setComment}/>
+          {store && (
+            <AutoComplete
+              placeholder={"Escribe un comentario..."}
+              rows={1}
+              cols={40}
+              ref={store}
+              set={set}
+              username={user?.username}
+              stateValue={get}
+            />
+          )}
+
           <div className="adjuncts">
             <img src={gallery} alt="gallery emoticon" />
             <input
               type="file"
-              ref={ref}
+              ref={inputFile}
               id="fileInput"
               className="input-file-makeComment"
               accept="image/png, image/jpeg, image/jpg, /image.jfif"
             />
-            
-            <img src={smile} alt="smile emoticon" />
-            <button className='comment-button' onClick={()=> CommentCallback() }>
-              <img src={isText ? paperPlaneBlue : paperPlaneGray } alt="" />
+            <EmojiPickerWithIcon store={store} set={set} />
+            <button
+              className="comment-button"
+              onClick={() => CommentCallback()}
+              disabled={isError}
+            >
+              {isError ? (
+                <img
+                  className="rise-shake"
+                  src={warning}
+                  alt="error-makeComment"
+                  onClick={() => reset()}
+                />
+              ) : (
+                <>
+                  {isLoadingMutation ? (
+                    <ThreeDotsLoader />
+                  ) : (
+                    <img
+                      src={isText ? paperPlaneBlue : paperPlaneGray}
+                      alt=""
+                    />
+                  )}
+                </>
+              )}
             </button>
           </div>
         </div>
       </div>
-
-       </div> :  <div>loading</div>}
-      
-    
-     
-
-
     </div>
   );
 };
 
-export default React.forwardRef(MakeComment)
+export default React.forwardRef(MakeComment);

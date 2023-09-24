@@ -1,19 +1,16 @@
-import React from 'react';
-import './Feed.css';
+import React from "react";
+import "./Feed.css";
 
-//components
-import Post from '../post/post/Post';
+// components
+import Post from "../post/post/Post";
 
+// librarys
+import { useSelector } from "react-redux";
 
-//librarys
-import { useSelector } from 'react-redux';
-
-
-//service
-import GetPosts from '../../../services/getPosts.services';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import useInfiniteScroll from '../../../hooks/useInfiniteScroll/useInfiniteScroll';
-
+// service
+import GetPosts from "../../../services/getPosts.services";
+import InfiniteScroll from "react-infinite-scroll-component";
+import useInfiniteScroll from "../../../hooks/useInfiniteScroll/useInfiniteScroll";
 
 /**
  * Renders a feed of posts using infinite scroll.
@@ -23,10 +20,11 @@ import useInfiniteScroll from '../../../hooks/useInfiniteScroll/useInfiniteScrol
 export default function Feed({ limit }) {
   const active = useSelector((state) => state.PreviewPost.active);
 
-  const { results, isLoading, isError, hasNextPage, fetchNextPage } = useInfiniteScroll({
-    name: 'posts',
-    request: GetPosts,
-  });
+  const { results, isLoading, isError, hasNextPage, fetchNextPage } =
+    useInfiniteScroll({
+      name: "posts",
+      request: GetPosts,
+    });
 
   if (isError) {
     return <div>Error</div>;
@@ -36,8 +34,8 @@ export default function Feed({ limit }) {
     <InfiniteScroll
       dataLength={results.length}
       hasMore={hasNextPage || isLoading}
-      loader={'loading'}
-      next={()=>fetchNextPage()}
+      loader={"loading"}
+      next={() => fetchNextPage()}
     >
       <ul className="feeds">
         {isError && <div>error</div>}
@@ -48,6 +46,3 @@ export default function Feed({ limit }) {
     </InfiniteScroll>
   );
 }
-    
-    
-  

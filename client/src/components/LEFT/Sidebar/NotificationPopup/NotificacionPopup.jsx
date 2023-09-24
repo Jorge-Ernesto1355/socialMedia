@@ -1,18 +1,18 @@
-import React from 'react';
-import './NotificacionPopup.css';
+import React from "react";
+import "./NotificacionPopup.css";
 
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
 const NotificacionPopup = () => {
   const { notification } = useSelector((state) => state.Navigate);
 
   return (
-    <div className={`notification-popup ${notification ? 'active' : ''}`}>
+    <div className={`notification-popup ${notification ? "active" : ""}`}>
       <div>
         <div className="profile-photo">
           <img
             src={
-              'https://assets.pokemon.com/assets/cms2/img/pokedex/full/039.png'
+              "https://assets.pokemon.com/assets/cms2/img/pokedex/full/039.png"
             }
             alt=""
           />
@@ -26,7 +26,7 @@ const NotificacionPopup = () => {
         <div className="profile-photo">
           <img
             src={
-              'https://styles.redditmedia.com/t5_gdma4/styles/communityIcon_ptc21cczol981.png'
+              "https://styles.redditmedia.com/t5_gdma4/styles/communityIcon_ptc21cczol981.png"
             }
             alt=""
           />
@@ -39,7 +39,7 @@ const NotificacionPopup = () => {
       <div>
         <div className="profile-photo">
           <img
-            src={'https://a.wattpad.com/useravatar/laritauu.256.805400.jpg'}
+            src={"https://a.wattpad.com/useravatar/laritauu.256.805400.jpg"}
             alt=""
           />
         </div>
@@ -52,7 +52,7 @@ const NotificacionPopup = () => {
         <div className="profile-photo">
           <img
             src={
-              'https://i.pinimg.com/474x/ce/65/f5/ce65f525164f66aeba56149ae3becd62.jpg'
+              "https://i.pinimg.com/474x/ce/65/f5/ce65f525164f66aeba56149ae3becd62.jpg"
             }
             alt=""
           />

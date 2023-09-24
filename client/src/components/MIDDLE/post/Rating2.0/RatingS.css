@@ -19,9 +19,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-size: 13.125rem;
-  border-radius: 21.25rem;
-  margin: 0.425rem 0.6rem;
+  background-size: 5rem;
+  border-radius: 50%;
+  margin: 0.25rem 0.3rem;
   transition: all ease 0.25s;
 }
 .fbRating div:hover {
@@ -34,4 +34,9 @@
 
 .fbRating div:active {
   transform: scale(1.2);
+}
+
+.icon-reaction-rating {
+  width: 2rem;
+  height: 2rem;
 }

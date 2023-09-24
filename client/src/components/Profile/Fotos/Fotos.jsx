@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import './Fotos.css';
+import React, { useEffect, useState } from "react";
+import "./Fotos.css";
 
-import FindAllUserPost from '../../../services/FindAllUserPost';
-import Slider from '../slider/Slider';
+import FindAllUserPost from "../../../services/FindAllUserPost";
+import Slider from "../slider/Slider";
 
 const Fotos = ({ user }) => {
   const [PhotoActive, setPhotoActive] = useState(false);
@@ -10,7 +10,7 @@ const Fotos = ({ user }) => {
   let photos = [];
 
   function filtrarPorID(obj) {
-    if ('image' in obj && typeof obj.image === 'object') {
+    if ("image" in obj && typeof obj.image === "object") {
       return true;
     } else {
       return false;
@@ -29,7 +29,6 @@ const Fotos = ({ user }) => {
       const { data, error } = await FindAllUserPost(user._id);
       if (error === null) {
         setPosts(data.data);
-      } else {
       }
     };
 
@@ -49,7 +48,7 @@ const Fotos = ({ user }) => {
         <div className="fotoImg">
           {photos.length === 0 ? (
             <span className="text-muted without-photos">
-              {'no hay fotos ;('}
+              {"no hay fotos ;("}
             </span>
           ) : (
             <>

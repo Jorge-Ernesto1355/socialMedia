@@ -10,11 +10,11 @@
   padding: 5px;
 }
 
-.vote.warning{
-  background-color: #FED6D6;
+.vote.warning {
+  background-color: #fed6d6;
 }
 
-.vote-input span{
+.vote-input span {
   width: 100%;
   height: 100%;
 
@@ -23,28 +23,27 @@
   align-items: center;
 }
 
-.vote.warning .vote-input input[type='text']{
-  color: #FF8989;
+.vote.warning .vote-input input[type="text"] {
+  color: #ff8989;
 }
 
-.vote-input input[type='text'] {
+.vote-input input[type="text"] {
   margin: 5px;
   font-size: 1rem;
 }
 
-.vote-input{
+.vote-input {
   width: 100%;
   display: grid;
   grid-template-columns: 90% 5%;
-
 }
-.vote-input span{
-  color: #AFAFAF;
+.vote-input span {
+  color: #afafaf;
 }
 
 .vote input::placeholder {
   font-weight: 400;
-  font-size: 1rem
+  font-size: 1rem;
 }
 
 .vote button {

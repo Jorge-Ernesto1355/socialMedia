@@ -1,13 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const userSlice = createSlice({
-  name: 'Navigate',
+  name: "Navigate",
   initialState: {
     notification: false,
     messages: false,
     theme: false,
     favorites: false,
-    settings: false
+    settings: false,
   },
   reducers: {
     Notification: (state, action) => {
@@ -27,8 +27,8 @@ const userSlice = createSlice({
     },
     closeTheme: (state) => {
       state.theme = false;
-    }
-  }
+    },
+  },
 });
 
 export const {
@@ -37,6 +37,6 @@ export const {
   Theme,
   Messages,
   Favorite,
-  SettingsRedux
+  SettingsRedux,
 } = userSlice.actions;
 export default userSlice.reducer;

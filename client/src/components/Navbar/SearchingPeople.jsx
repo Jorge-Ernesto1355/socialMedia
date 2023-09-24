@@ -1,8 +1,8 @@
-import React from 'react';
-import './SearchingPeople.css';
-import rem from '../../assets/rem.jpg';
-import { motion } from 'framer-motion';
-import { v4 as uuidv4 } from 'uuid';
+import React from "react";
+import "./SearchingPeople.css";
+import rem from "../../assets/rem.jpg";
+import { motion } from "framer-motion";
+import { v4 as uuidv4 } from "uuid";
 
 const SearchingPeople = ({ Users, query }) => {
   // const show = (user) => {
@@ -22,7 +22,6 @@ const SearchingPeople = ({ Users, query }) => {
   //     return <div>no hay </div>;
   //   }
   // };
-
   // return (
   //   <motion.div className={`cardNavbar ${query ? 'active' : ''} `}>
   //     <ul className="listUsers" key={uuidv4()}>

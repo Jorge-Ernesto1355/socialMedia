@@ -1,56 +1,56 @@
-import React from 'react';
-import './Sidebar.css';
-import NotificacionPopup from './NotificationPopup/NotificacionPopup';
-import { AiOutlineHome, AiOutlineMessage } from 'react-icons/ai';
-import { MdOutlineExplore } from 'react-icons/md';
-import { IoIosNotificationsOutline } from 'react-icons/io';
-import { BsBookmark } from 'react-icons/bs';
-import { HiOutlineColorSwatch } from 'react-icons/hi';
-import { FiSettings } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import React from "react";
+import "./Sidebar.css";
+import NotificacionPopup from "./NotificationPopup/NotificacionPopup";
+import { AiOutlineHome, AiOutlineMessage } from "react-icons/ai";
+import { MdOutlineExplore } from "react-icons/md";
+import { IoIosNotificationsOutline } from "react-icons/io";
+import { BsBookmark } from "react-icons/bs";
+import { HiOutlineColorSwatch } from "react-icons/hi";
+import { FiSettings } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
-//redux
+// redux
 import {
   Notification,
   Messages,
   Theme,
-  Favorite,
-  SettingsRedux
-} from '../../../redux/NavigationRedux';
-import { PreviewActive } from '../../../redux/PreviewPostRedux';
-import { useDispatch, useSelector } from 'react-redux';
+
+  SettingsRedux,
+} from "../../../redux/NavigationRedux";
+import { PreviewActive } from "../../../redux/PreviewPostRedux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
-  const menuItem = document.querySelectorAll('.sidebar a ');
+  const menuItem = document.querySelectorAll(".sidebar a ");
   const { _id: userId } = useSelector((state) => state.user.currentUser.user);
 
   const removeClassList = () => {
     menuItem.forEach((size) => {
-      size.classList.remove('active');
+      size.classList.remove("active");
     });
   };
 
   menuItem.forEach((menu) => {
-    menu.addEventListener('click', () => {
+    menu.addEventListener("click", () => {
       removeClassList();
-      menu.classList.toggle('active');
+      menu.classList.toggle("active");
     });
   });
 
   const handleNotification = (action) => {
-    if (action === 'theme') {
+    if (action === "theme") {
       dispatch(Theme());
     }
-    if (action === 'notification') {
+    if (action === "notification") {
       dispatch(Notification());
     }
 
-    if (action === 'messages') {
+    if (action === "messages") {
       dispatch(Messages());
     }
 
-    if (action === 'settings') {
+    if (action === "settings") {
       dispatch(SettingsRedux());
     }
   };
@@ -73,7 +73,7 @@ const Sidebar = () => {
 
       <a
         className="menu-item"
-        onClick={() => handleNotification('notification')}
+        onClick={() => handleNotification("notification")}
       >
         <span>
           <IoIosNotificationsOutline />
@@ -86,7 +86,7 @@ const Sidebar = () => {
         <NotificacionPopup />
       </a>
 
-      <a className="menu-item" onClick={() => handleNotification('messages')}>
+      <a className="menu-item" onClick={() => handleNotification("messages")}>
         <span>
           <AiOutlineMessage />
         </span>
@@ -100,14 +100,14 @@ const Sidebar = () => {
         <h3>Favoritos</h3>
       </Link>
 
-      <a className="menu-item" onClick={() => handleNotification('theme')}>
+      <a className="menu-item" onClick={() => handleNotification("theme")}>
         <span>
           <HiOutlineColorSwatch />
         </span>
         <h3>Theme</h3>
       </a>
 
-      <a className="menu-item" onClick={() => handleNotification('settings')}>
+      <a className="menu-item" onClick={() => handleNotification("settings")}>
         <span>
           <FiSettings />
         </span>

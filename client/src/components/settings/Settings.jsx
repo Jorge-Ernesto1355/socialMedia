@@ -1,9 +1,9 @@
-import React from 'react';
-import './Settings.css';
+import React from "react";
+import "./Settings.css";
 
-import { motion } from 'framer-motion';
-import { useSelector, useDispatch } from 'react-redux';
-import { SettingsRedux } from '../../redux/NavigationRedux';
+import { motion } from "framer-motion";
+import { useSelector, useDispatch } from "react-redux";
+import { SettingsRedux } from "../../redux/NavigationRedux";
 
 const Settings = () => {
   const { settings } = useSelector((state) => state.Navigate);
@@ -11,22 +11,22 @@ const Settings = () => {
 
   const variantLogin = {
     show: {
-      opacity: 1
+      opacity: 1,
     },
     hidden: {
       opacity: 0,
       y: -500,
       x: 3,
       transition: {
-        duration: 0.3
-      }
-    }
+        duration: 0.3,
+      },
+    },
   };
 
   return (
-    <div className={`settings ${settings ? 'active' : ''}`}>
+    <div className={`settings ${settings ? "active" : ""}`}>
       <motion.div
-        animate={settings ? 'show' : 'hidden'}
+        animate={settings ? "show" : "hidden"}
         variants={variantLogin}
         className="card"
       >

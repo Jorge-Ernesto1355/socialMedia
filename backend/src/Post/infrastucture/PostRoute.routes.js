@@ -6,7 +6,7 @@ const route = Router()
 
 route.get('/',PostIndex.FindAllPost )
 
-route.put('/comment/:id', PostIndex.comment)
+route.put('/comment/:postId', PostIndex.comment)
 
 route.get('/comment/all/:id', PostIndex.FindCommentsFromPost)
 

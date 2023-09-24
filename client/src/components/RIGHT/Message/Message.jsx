@@ -1,6 +1,6 @@
-import React from 'react';
-import './Message.css';
-import rem from '../../../assets/rem.jpg';
+import React from "react";
+import "./Message.css";
+import rem from "../../../assets/rem.jpg";
 
 const Message = () => {
   return (
@@ -9,7 +9,7 @@ const Message = () => {
         <div className="profile-photo">
           <img
             src={
-              'https://pbs.twimg.com/profile_images/819242810167525376/Ffl1qVn9_400x400.jpg'
+              "https://pbs.twimg.com/profile_images/819242810167525376/Ffl1qVn9_400x400.jpg"
             }
             alt=""
           />
@@ -24,7 +24,7 @@ const Message = () => {
         <div className="profile-photo">
           <img
             src={
-              'https://i.pinimg.com/474x/ce/65/f5/ce65f525164f66aeba56149ae3becd62.jpg'
+              "https://i.pinimg.com/474x/ce/65/f5/ce65f525164f66aeba56149ae3becd62.jpg"
             }
             alt=""
           />

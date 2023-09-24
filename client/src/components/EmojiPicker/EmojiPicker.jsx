@@ -1,24 +1,55 @@
 import "./EmojiPicker.css";
-import EmojiPicker, { Emoji } from 'emoji-picker-react';
-import { useCallback, useState } from "react";
+import EmojiPicker from "emoji-picker-react";
+import { Suspense } from "react";
+import { motion } from "framer-motion";
+import Loader from "../../utilities/Loader";
 
-export default function EmojiPickerComponent() {
-    
-    const [emojis, setEmojis] = useState([])
- 
-   const onClickEmojis = useCallback((event)=>{
-    const {names, unified} = event
-    setEmojis((prev)=>{
-       return {
-         ...prev,
-         [names[0]]:unified
-       }
-    })
-   }, [emojis])
+const variants = {
+  show: {
+    opacity: 1,
+    scale: 1,
+    duration: {},
+  },
+  hide: {
+    opacity: 0,
+    scale: 0,
+  },
+};
+
+export default function EmojiPickerComponent({
+  isOpen,
+  store,
+  set,
+  className,
+}) {
+  const onClickEmojis = (event) => {
+    const { unified } = event;
+    if (!store.current) return;
+    store.current.focus();
+    const sym = unified.split("-");
+    const codesArray = [];
+    sym.forEach((el) => codesArray.push("0x" + el));
+    const emoji = String.fromCodePoint(...codesArray);
+
+    const start = store.current.value.substr(0, store.current.selectionStart);
+    const end = store.current.value.substr(store.current.selectionStart);
+    const text = start + emoji + end;
+    set && set(text);
+  };
 
   return (
-    < div className="App">
-      <EmojiPicker onEmojiClick={onClickEmojis} />
-    </div>
+    <>
+      {isOpen && (
+        <Suspense fallback={<Loader />}>
+          <motion.div
+            variants={variants}
+            animate={`${isOpen ? "show" : "hide"}`}
+            className={`EmojiPickerReact ${className ?? ''} `}
+          >
+            <EmojiPicker onEmojiClick={onClickEmojis} />
+          </motion.div>
+        </Suspense>
+      )}
+    </>
   );
 }

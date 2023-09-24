@@ -1,7 +1,7 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import userReducer from './UserRedux';
-import PreviewPostReducer from './PreviewPostRedux';
-import NavigationReducer from './NavigationRedux';
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import userReducer from "./UserRedux";
+import PreviewPostReducer from "./PreviewPostRedux";
+import NavigationReducer from "./NavigationRedux";
 import {
   persistStore,
   persistReducer,
@@ -10,20 +10,20 @@ import {
   PAUSE,
   PERSIST,
   PURGE,
-  REGISTER
-} from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+  REGISTER,
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
   version: 1,
-  storage
+  storage,
 };
 
 const rootReducer = combineReducers({
   user: userReducer,
   PreviewPost: PreviewPostReducer,
-  Navigate: NavigationReducer
+  Navigate: NavigationReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -34,9 +34,9 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
-      }
-    })
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
 
-export let persistor = persistStore(store);
+export const persistor = persistStore(store);

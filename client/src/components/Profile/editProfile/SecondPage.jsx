@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import lock from '../../../assets/lock.png';
-import hide from '../../../assets/visibilityhide.png';
-import hide1 from '../../../assets/visibility.png';
-import key from '../../../assets/key.png';
+import React, { useState } from "react";
+import lock from "../../../assets/lock.png";
+import hide from "../../../assets/visibilityhide.png";
+import hide1 from "../../../assets/visibility.png";
+import key from "../../../assets/key.png";
 const SecondPage = ({ handleForm, form }) => {
   const [visibility1, setVisibility1] = useState(false);
   const [visibility2, setVisibility2] = useState(false);
@@ -18,7 +18,7 @@ const SecondPage = ({ handleForm, form }) => {
               <input
                 onChange={(e) => handleForm(e)}
                 name="password1"
-                type={`${visibility1 ? 'text' : 'password'}`}
+                type={`${visibility1 ? "text" : "password"}`}
                 placeholder="contraseña"
               />
               <img
@@ -37,7 +37,7 @@ const SecondPage = ({ handleForm, form }) => {
               <input
                 onChange={(e) => handleForm(e)}
                 name="password2"
-                type={`${visibility2 ? 'text' : 'password'}`}
+                type={`${visibility2 ? "text" : "password"}`}
                 placeholder="contrasena otra vez"
               />
               <img

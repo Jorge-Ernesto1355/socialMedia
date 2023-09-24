@@ -1,11 +1,11 @@
 const ConcatUserWithActions = (actions, usersOfActions) => {
   if (actions === undefined || usersOfActions === undefined) {
     return {
-      gusta: [{ label: '', userId: null }],
-      encanta: [{ label: '', userId: null }],
-      asombra: [{ label: '', userId: null }],
-      entristece: [{ label: '', userId: null }],
-      divierte: [{ label: '', userId: null }]
+      gusta: [{ label: "", userId: null }],
+      encanta: [{ label: "", userId: null }],
+      asombra: [{ label: "", userId: null }],
+      entristece: [{ label: "", userId: null }],
+      divierte: [{ label: "", userId: null }],
     };
   }
 
@@ -19,7 +19,7 @@ const ConcatUserWithActions = (actions, usersOfActions) => {
   if (actions?.gusta && usersOfActions?.gustaActions) {
     for (let i = 0; i < actions.gusta.length; i++) {
       if (actions.gusta[i].userId === usersOfActions.gustaActions[i]._id) {
-        let user = usersOfActions.gustaActions[i];
+        const user = usersOfActions.gustaActions[i];
         gusta = [{ ...actions.gusta[i], user }];
       }
     }
@@ -28,7 +28,7 @@ const ConcatUserWithActions = (actions, usersOfActions) => {
   if (actions?.encanta && usersOfActions?.encantaActions) {
     for (let i = 0; i < actions.encanta.length; i++) {
       if (actions.encanta[i].userId === usersOfActions.encantaActions[i]._id) {
-        let user = usersOfActions.encantaActions[i];
+        const user = usersOfActions.encantaActions[i];
         encanta = [{ ...actions.encanta[i], user }];
       }
     }
@@ -39,7 +39,7 @@ const ConcatUserWithActions = (actions, usersOfActions) => {
       if (
         actions.divierte[i].userId === usersOfActions.divierteActions[i]._id
       ) {
-        let user = usersOfActions.divierteActions[i];
+        const user = usersOfActions.divierteActions[i];
         divierte = [{ ...actions.divierte[i], user }];
       }
     }
@@ -48,7 +48,7 @@ const ConcatUserWithActions = (actions, usersOfActions) => {
   if (actions?.asombra && usersOfActions?.asombraActions) {
     for (let i = 0; i < actions.asombra.length; i++) {
       if (actions.asombra[i].userId === usersOfActions.asombraActions[i]._id) {
-        let user = usersOfActions.asombraActions[i];
+        const user = usersOfActions.asombraActions[i];
         asombra = [{ ...actions.asombra[i], user }];
       }
     }
@@ -59,7 +59,7 @@ const ConcatUserWithActions = (actions, usersOfActions) => {
       if (
         actions.entristece[i].userId === usersOfActions.entristeceActions[i]._id
       ) {
-        let user = usersOfActions.entristeceActions[i];
+        const user = usersOfActions.entristeceActions[i];
         entristece = [{ ...actions.entristece[i], user }];
       }
     }

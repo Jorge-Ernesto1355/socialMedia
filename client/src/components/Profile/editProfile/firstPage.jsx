@@ -1,10 +1,10 @@
-import React from 'react';
-import userPhoto from '../../../assets/user.png';
-import correo from '../../../assets/correo.png';
-import folder from '../../../assets/folder.png';
-import ufo from '../../../assets/ufo.png';
-import photo from '../../../assets/photos.png';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from "react";
+import userPhoto from "../../../assets/user.png";
+import correo from "../../../assets/correo.png";
+import folder from "../../../assets/folder.png";
+import ufo from "../../../assets/ufo.png";
+import photo from "../../../assets/photos.png";
+import { motion, AnimatePresence } from "framer-motion";
 const FirstPage = ({ handleForm, form, frontPage, changeImg }) => {
   return (
     <div className="body-info">
@@ -59,8 +59,8 @@ const FirstPage = ({ handleForm, form, frontPage, changeImg }) => {
       <div className="rigth-edit">
         <div className="coverPicture">
           <img
-            className={`${frontPage ? 'frontPage' : ''}`}
-            src={frontPage ? frontPage : ufo}
+            className={`${frontPage ? "frontPage" : ""}`}
+            src={frontPage ?? ufo}
             alt=""
           />
 
@@ -77,7 +77,7 @@ const FirstPage = ({ handleForm, form, frontPage, changeImg }) => {
               type="file"
               id="fileInput"
               className="input-file"
-              onChange={(e) => changeImg(e, 'frontPage')}
+              onChange={(e) => changeImg(e, "frontPage")}
               accept="image/png, image/jpeg, image/jpg, /image.jfif"
             />
             <h4>cambiar portada</h4>

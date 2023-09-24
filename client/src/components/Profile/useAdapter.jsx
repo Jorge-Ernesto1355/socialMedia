@@ -2,37 +2,37 @@ export const FailureAdapter = () => {
   return {
     coverPicture: {},
     imageProfile: {},
-    _id: '',
-    username: 'sin nombre',
-    email: '',
-    password: '',
+    _id: "",
+    username: "sin nombre",
+    email: "",
+    password: "",
     friends: [],
     friendsWaiting: [],
-    curp: '',
+    curp: "",
     posts: [],
     Admin: false,
-    resetToken: '',
+    resetToken: "",
     relationShipWaiting: [],
     relationShip: [],
     roles: [],
-    createdAt: '',
-    updatedAt: ''
+    createdAt: "",
+    updatedAt: "",
   };
 };
 
 export const UserAdapterSucces = (user) => {
   return {
-    coverPicture: '',
-    imageProfile: '',
-    _id: '',
-    username: '',
-    email: '',
-    friends: '',
-    friendsWaiting: '',
-    posts: '',
-    Admin: '',
-    relationShipWaiting: '',
-    relationShip: '',
-    roles:''
+    coverPicture: "",
+    imageProfile: "",
+    _id: "",
+    username: "",
+    email: "",
+    friends: "",
+    friendsWaiting: "",
+    posts: "",
+    Admin: "",
+    relationShipWaiting: "",
+    relationShip: "",
+    roles: "",
   };
 };

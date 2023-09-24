@@ -1,9 +1,9 @@
-import React from 'react';
-import './ShowPostShared.css';
-import Post from '../post/Post';
-import cross from '../../../../assets/cross.png';
-import { GetAllPostsSharedQuery } from '../useQuery/useQuerys';
-import { motion } from 'framer-motion';
+import React from "react";
+import "./ShowPostShared.css";
+import Post from "../post/Post";
+import cross from "../../../../assets/cross.png";
+import { GetAllPostsSharedQuery } from "../useQuery/useQuerys";
+import { motion } from "framer-motion";
 
 const ShowPostShared = ({ postId, showPostsShared, changePostShared }) => {
   const { data: postsShared } = GetAllPostsSharedQuery(postId);
@@ -12,22 +12,22 @@ const ShowPostShared = ({ postId, showPostsShared, changePostShared }) => {
     visible: {
       scale: 1,
       transition: {
-        duration: 0.2
-      }
+        duration: 0.2,
+      },
     },
     hidden: {
       scale: 0,
       y: -100,
       transition: {
-        duration: 0.2
-      }
-    }
+        duration: 0.2,
+      },
+    },
   };
 
   return (
     <motion.div
       variants={variantsPhotos}
-      animate={showPostsShared ? 'visible' : 'hidden'}
+      animate={showPostsShared ? "visible" : "hidden"}
       className="card-showPostsShared"
     >
       <div className="showPostsShared">

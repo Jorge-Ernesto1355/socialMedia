@@ -1,4 +1,4 @@
-import './input.css';
+import "./input.css";
 
 function Input({
   inputValue,
@@ -7,7 +7,7 @@ function Input({
   name,
   onFocusInput,
   handleChange,
-  handleBlur
+  handleBlur,
 }) {
   return (
     <div className="input1">
@@ -21,7 +21,7 @@ function Input({
         name={name}
         onChange={handleChange}
         onBlur={handleBlur}
-        onFocus={() => (onFocusInput === undefined ? '' : onFocusInput())}
+        onFocus={() => (onFocusInput === undefined ? "" : onFocusInput())}
       />
     </div>
   );

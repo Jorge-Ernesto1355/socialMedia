@@ -1,11 +1,11 @@
-import { userRequest } from '../utilities/requestMethod';
+import { userRequest } from "../utilities/requestMethod";
 
 const GetUser = async (userId) => {
   let data;
   let error = null;
 
   try {
-    data = await userRequest.get('/users/' + userId);
+    data = await userRequest.get("/users/" + userId);
   } catch (cathedError) {
     error = cathedError.response.data;
   }

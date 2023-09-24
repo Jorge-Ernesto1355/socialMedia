@@ -1,4 +1,4 @@
-import { userRequest } from '../../../../../utilities/requestMethod';
+import { userRequest } from "../../../../../utilities/requestMethod";
 
 /// Favorites ///
 
@@ -8,7 +8,7 @@ export const addToFavorite = async (favorite) => {
 
   try {
     data = await userRequest.put(
-      `/post/action/favorite/${favorite.postId}?userId=${favorite.currentUser}`
+      `/post/action/favorite/${favorite.postId}?userId=${favorite.currentUser}`,
     );
   } catch (errorCaugthed) {
     error = errorCaugthed;
@@ -25,7 +25,7 @@ export const addToShare = async (favorite) => {
 
   try {
     data = await userRequest.put(
-      `/post/share/${favorite.postId}?userId=${favorite.currentUser}`
+      `/post/share/${favorite.postId}?userId=${favorite.currentUser}`,
     );
   } catch (errorCaugthed) {
     error = errorCaugthed;
@@ -51,14 +51,14 @@ export const Comment = async (favorite) => {
 
 // Action //
 
-export const ReactionPost = async ({id, userId, toSend}) => {
+export const ReactionPost = async ({ id, userId, toSend }) => {
   let data;
   let error = null;
 
   try {
     data = await userRequest.put(
       `/post/reaction/${id}?userid=${userId}`,
-      toSend
+      toSend,
     );
   } catch (errorCaugthed) {
     error = errorCaugthed;
@@ -69,15 +69,17 @@ export const ReactionPost = async ({id, userId, toSend}) => {
 
 // Action //
 
-export const GetAllReactions = async ({id, limit, page}) => {
+export const GetAllReactions = async ({ id, limit, page }) => {
   if (!id || !limit || !page) {
-    throw new Error('Missing required input parameters');
+    throw new Error("Missing required input parameters");
   }
   let data;
   let error = null;
 
   try {
-    data = await userRequest.get(`/post/reactions/all/${id}?limit=${limit}&page=${page}`);
+    data = await userRequest.get(
+      `/post/reactions/all/${id}?limit=${limit}&page=${page}`,
+    );
   } catch (errorCaugthed) {
     error = errorCaugthed;
   }
@@ -85,28 +87,22 @@ export const GetAllReactions = async ({id, limit, page}) => {
   return data;
 };
 
-
-
-export const getAllCommentsResponded = async ({id}) => {
-  console.log(id)
+export const getAllCommentsResponded = async ({ id }) => {
+  console.log(id);
   try {
-    const data = await userRequest.get(
-      `/post/comments/responded/all/${id}`
-    );
+    const data = await userRequest.get(`/post/comments/responded/all/${id}`);
     return data;
   } catch (errorCaugthed) {
     return errorCaugthed.response;
   }
 };
 
-
-export const GetReactionsView = async ({id}) => {
+export const GetReactionsView = async ({ id }) => {
   let data;
   let error = null;
 
   try {
     data = await userRequest.get(`/post/reaction/view/${id}`);
-
   } catch (errorCaugthed) {
     error = errorCaugthed;
   }
@@ -114,13 +110,12 @@ export const GetReactionsView = async ({id}) => {
   return data;
 };
 
-export const GetReactionsCommentView = async ({id}) => {
+export const GetReactionsCommentView = async ({ id }) => {
   let data;
   let error = null;
 
   try {
     data = await userRequest.get(`/post/reaction/comment/view/${id}`);
-
   } catch (errorCaugthed) {
     error = errorCaugthed;
   }
@@ -128,18 +123,17 @@ export const GetReactionsCommentView = async ({id}) => {
   return data;
 };
 
-
-
-export const GetReactionsSelected = async ({id, label, limit, page }) => {
+export const GetReactionsSelected = async ({ id, label, limit, page }) => {
   if (!id || !label || !limit || !page) {
-    throw new Error('Missing required input parameters');
+    throw new Error("Missing required input parameters");
   }
   let data;
   let error = null;
 
   try {
-    data = await userRequest.get(`/post/reaction/${id}?label=${label}&limit=${limit}&page=${page}`);
-  
+    data = await userRequest.get(
+      `/post/reaction/${id}?label=${label}&limit=${limit}&page=${page}`,
+    );
   } catch (errorCaugthed) {
     error = errorCaugthed;
     data = undefined;
@@ -147,4 +141,3 @@ export const GetReactionsSelected = async ({id, label, limit, page }) => {
 
   return data;
 };
-

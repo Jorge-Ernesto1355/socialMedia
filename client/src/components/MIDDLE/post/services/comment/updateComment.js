@@ -1,9 +1,9 @@
-import { userRequest } from '../../../../../utilities/requestMethod';
+import { userRequest } from "../../../../../utilities/requestMethod";
 
 const UpdateComment = async (commentToSend) => {
   const data = await userRequest.put(
     `/post/comment/${commentToSend.commentId}`,
-    commentToSend
+    commentToSend,
   );
 
   return data;

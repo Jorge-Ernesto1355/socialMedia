@@ -1,67 +1,45 @@
-.action img {
-  width: 30px;
-  height: 30px;
-  z-index: 1111111111;
-}
-
-.action ul {
+.ellipsiPost-container {
   position: absolute;
-  bottom: -185px;
-  right: -5px;
+  width: 200px;
   background-color: var(--color-white);
-  width: 300px;
-  border-radius: 10px;
-  opacity: 0;
-  visibility: hidden;
-  transition: 0.3s;
-  box-shadow: -1px -1px 5px 0px rgba(0, 0, 0, 0.19);
-  -webkit-box-shadow: -1px -1px 5px 0px rgba(0, 0, 0, 0.19);
-  -moz-box-shadow: -1px -1px 5px 0px rgba(0, 0, 0, 0.19);
-  z-index: 1111111111;
-}
-
-.action ul:before {
-  content: '';
-  background: white;
-  transform: rotate(45deg);
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  top: -5px;
-  right: 15px;
-}
-
-.action.active ul {
-  opacity: 1;
-  visibility: visible;
-  transition: 0.3s;
+  border-radius: 0.7rem;
+  box-shadow: var(--card-shadow);
+  padding: 0.3rem;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  padding: 1rem;
-}
-
-.action ul li {
-  display: flex;
   justify-content: center;
-  align-items: center;
+  align-self: start;
+  z-index: 100;
+  padding: 0.5rem;
+  left: -9rem;
+  top: 2.3rem;
+
+}
+
+.ellipsiPost-item {
+  padding: 0.2rem;
   cursor: pointer;
+  border-radius: 5px;
 }
 
-.action ul li:hover {
+.ellipsiPost-item:hover {
+  background-color: rgb(243, 243, 243);
+}
+
+
+
+.ellipsiPost-text {
   font-weight: 600;
+  font-size: 0.9rem;
 }
 
-.action ul li:not(:last-child) {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.action ul li img {
-  margin-right: 10px;
-  opacity: 0.2;
-  transform: scale(0.8);
-}
-
-.action ul li:hover img {
-  opacity: 0.8;
+.ellipsiPost-container::before {
+  content: "";
+  position: absolute;
+  width: 0.8rem;
+  height: 0.8rem;
+  background-color: var(--color-white);
+  transform: rotate(45deg);
+  top: -0.5rem;
+  left: 9.5rem;
 }

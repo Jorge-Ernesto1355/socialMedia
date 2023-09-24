@@ -1,16 +1,16 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const PreviewPostSlice = createSlice({
-  name: 'PreviewPost',
+  name: "PreviewPost",
   initialState: {
     active: false,
-    text: '',
+    text: "",
     VotesActive: false,
-    postImg: '',
-    postFeeling: '',
+    postImg: "",
+    postFeeling: "",
     votes: [],
     imgReady: {},
-    sharedPostId: ''
+    sharedPostId: "",
   },
   reducers: {
     PreviewActive: (state) => {
@@ -39,8 +39,8 @@ const PreviewPostSlice = createSlice({
     },
     sharedPost: (state, action) => {
       state.sharedPostId = action.payload;
-    }
-  }
+    },
+  },
 });
 
 export const {
@@ -52,6 +52,6 @@ export const {
   PostFeeling,
   VotesRedux,
   ImgReady,
-  sharedPost
+  sharedPost,
 } = PreviewPostSlice.actions;
 export default PreviewPostSlice.reducer;

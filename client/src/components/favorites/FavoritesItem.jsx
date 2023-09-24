@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import Post from '../MIDDLE/post/post/Post';
-import deleteImg from '../../assets/delete.png';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import Post from "../MIDDLE/post/post/Post";
+import deleteImg from "../../assets/delete.png";
 
 const FavoritesItem = ({ post }) => {
   const [selectedId, setSelectedId] = useState(null);
 
   const container = {
     hidden: {
-      opacity: 0
+      opacity: 0,
     },
     visible: {
       opacity: 1,
       transition: {
-        duration: 1
-      }
-    }
+        duration: 1,
+      },
+    },
   };
   return (
     <motion.div

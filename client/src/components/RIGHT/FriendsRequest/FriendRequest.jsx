@@ -1,6 +1,6 @@
-import React from 'react';
-import './FriendRequest.css';
-import rem from '../../../assets/rem.jpg';
+import React from "react";
+import "./FriendRequest.css";
+import rem from "../../../assets/rem.jpg";
 
 const FriendRequest = () => {
   return (

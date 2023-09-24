@@ -1,4 +1,4 @@
-import { userRequest } from '../utilities/requestMethod';
+import { userRequest } from "../utilities/requestMethod";
 
 const CreatePost = async (post) => {
   const form = new FormData();
@@ -11,17 +11,17 @@ const CreatePost = async (post) => {
   }
 
   // lo ponemos en el formData pero ya con stringify para que no salfa [object Object]
-  form.append('votes', JSON.stringify(votes));
+  form.append("votes", JSON.stringify(votes));
 
-  const data = await userRequest.post('/post', form, {
+  const data = await userRequest.post("/post", form, {
     headers: {
-      'Content-Type': 'multipart/form-data'
-    }
+      "Content-Type": "multipart/form-data",
+    },
   });
 
   if (data.data && post?.postShared) {
     const dataShare = await userRequest.put(
-      `/post/share/${post.postShared}?userId=${post.userId}&postId=${data?.data?._id}`
+      `/post/share/${post.postShared}?userId=${post.userId}&postId=${data?.data?._id}`,
     );
 
     console.log(dataShare);

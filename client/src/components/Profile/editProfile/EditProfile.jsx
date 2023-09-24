@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import './EditProfile.css';
-import rem from '../../../assets/rem.jpg';
-import cross from '../../../assets/cross.png';
-import heart from '../../../assets/couple.png';
-import FirstPage from './firstPage';
-import { AnimatePresence, motion } from 'framer-motion';
-import SearchFriends from '../searchFriends/SearchFriends';
-import SecondPage from './SecondPage';
-import notProfilePicture from '../../../assets/not-suitable.png';
+import React, { useState } from "react";
+import "./EditProfile.css";
+import rem from "../../../assets/rem.jpg";
+import cross from "../../../assets/cross.png";
+import heart from "../../../assets/couple.png";
+import FirstPage from "./firstPage";
+import { AnimatePresence, motion } from "framer-motion";
+import SearchFriends from "../searchFriends/SearchFriends";
+import SecondPage from "./SecondPage";
+import notProfilePicture from "../../../assets/not-suitable.png";
 
 const EditProfile = ({ showEdit, user, hideEdit }) => {
-  const display = [{ label: 'nombre' }, { label: 'contraseña' }];
+  const display = [{ label: "nombre" }, { label: "contraseña" }];
 
   const [isSelected, setIsSelected] = useState(display[0]);
   const [showCouple, setShowCouple] = useState(false);
@@ -19,14 +19,14 @@ const EditProfile = ({ showEdit, user, hideEdit }) => {
   const [frontPage, setFrontPage] = useState(null);
 
   const [form, setForm] = useState({
-    username: '',
-    curp: '',
-    email: '',
-    password1: '',
-    password2: ''
+    username: "",
+    curp: "",
+    email: "",
+    password1: "",
+    password2: "",
   });
 
-  //cargar las imagenes al estado
+  // cargar las imagenes al estado
   const handleImages = (e, type) => {
     const file = e.target.files[0];
     setFile(file);
@@ -40,10 +40,10 @@ const EditProfile = ({ showEdit, user, hideEdit }) => {
     reader.readAsDataURL(file);
 
     reader.onloadend = () => {
-      if (type === 'profilePicture') {
+      if (type === "profilePicture") {
         setProfilePicture(reader.result);
       }
-      if (type === 'frontPage') {
+      if (type === "frontPage") {
         setFrontPage(reader.result);
       }
     };
@@ -54,7 +54,7 @@ const EditProfile = ({ showEdit, user, hideEdit }) => {
     const { value, name } = e.target;
     setForm({
       ...form,
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -62,22 +62,22 @@ const EditProfile = ({ showEdit, user, hideEdit }) => {
     visible: {
       scale: 1,
       transition: {
-        duration: 0.2
-      }
+        duration: 0.2,
+      },
     },
     hidden: {
       scale: 0,
       y: -100,
       transition: {
-        duration: 0.1
-      }
-    }
+        duration: 0.1,
+      },
+    },
   };
 
   return (
     <motion.div
       variants={variantsPhotos}
-      animate={showEdit ? 'visible' : 'hidden'}
+      animate={showEdit ? "visible" : "hidden"}
       className="container-edit"
     >
       <button onClick={() => hideEdit(false)} className="button-cross">
@@ -88,14 +88,14 @@ const EditProfile = ({ showEdit, user, hideEdit }) => {
         <div className="profile-edit">
           <div className="photo">
             <img
-              src={profilePicture ? profilePicture : notProfilePicture}
+              src={profilePicture ?? ''}
               alt=""
             />
             <input
               type="file"
               id="fileInput"
               className="input-file"
-              onChange={(e) => handleImages(e, 'profilePicture')}
+              onChange={(e) => handleImages(e, "profilePicture")}
               accept="image/png, image/jpeg, image/jpg, /image.jfif"
             />
             <h5 className="change-profile">cambiar foto</h5>
@@ -124,7 +124,7 @@ const EditProfile = ({ showEdit, user, hideEdit }) => {
       </div>
       <div className="split-up">
         {display?.map((label) => (
-          <h4 onClick={() => setIsSelected(label)} className="label">
+          <h4 onClick={() => setIsSelected(label)} className="label" key={`label-key=${label.label}`}>
             {label.label}
 
             {label.label === isSelected.label ? (
@@ -144,14 +144,14 @@ const EditProfile = ({ showEdit, user, hideEdit }) => {
       <AnimatePresence exitBeforeEnter>
         <motion.div
           className="body-edit"
-          key={isSelected ? isSelected.label : 'empty'}
+          key={isSelected ? isSelected.label : "empty"}
           initial={{ y: 10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -10, opacity: 0 }}
           transition={{ duration: 0.2 }}
         >
           <div className="down-edit">
-            {isSelected.label === 'nombre' ? (
+            {isSelected.label === "nombre" ? (
               <FirstPage
                 handleForm={handleForm}
                 form={form}

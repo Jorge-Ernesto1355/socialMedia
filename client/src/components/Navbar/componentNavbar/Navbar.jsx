@@ -1,17 +1,17 @@
-import './Navbar.css';
+import "./Navbar.css";
 
-//librerias
-import React, { useState } from 'react';
-import rem from '../../../assets/rem.jpg';
-import { Users } from '../../RIGHT/SearchFriends/User';
+// librerias
+import React, { useState } from "react";
+import rem from "../../../assets/rem.jpg";
+import { Users } from "../../RIGHT/SearchFriends/User";
 
-//icons
+// icons
 
-import { BsSearch } from 'react-icons/bs';
-import SearchingPeople from '../SearchingPeople';
+import { BsSearch } from "react-icons/bs";
+import SearchingPeople from "../SearchingPeople";
 
 const Navbar = () => {
-  const [query, setquery] = useState('');
+  const [query, setquery] = useState("");
 
   return (
     <nav>

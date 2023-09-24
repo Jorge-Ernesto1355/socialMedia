@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import './Detalles.css';
+import React, { useEffect, useState } from "react";
+import "./Detalles.css";
 
-import casa from '../../../assets/casa.png';
-import hearth from '../../../assets/hearth.png';
-import location from '../../../assets/location.png';
-import hobbies from '../../../assets/pintura.png';
+import casa from "../../../assets/casa.png";
+import hearth from "../../../assets/hearth.png";
+import location from "../../../assets/location.png";
+import hobbies from "../../../assets/pintura.png";
 const Detalles = ({ details }) => {
   const [editDetails, setEditDetails] = useState(false);
   const [addHobbies, setAddHobis] = useState(false);
 
   const [editForm, setEditForm] = useState({
-    living: '',
-    location: '',
-    single: '',
-    hobbies: ''
+    living: "",
+    location: "",
+    single: "",
+    hobbies: "",
   });
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const Detalles = ({ details }) => {
     const { name, value } = e.target;
     setEditForm({
       ...editForm,
-      [name]: value
+      [name]: value,
     });
   };
 

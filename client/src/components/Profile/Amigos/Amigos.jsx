@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
-import SearchFriends from '../searchFriends/SearchFriends';
-import './Amigos.css';
+import React, { useState, useEffect } from "react";
+
+import SearchFriends from "../searchFriends/SearchFriends";
+import "./Amigos.css";
 
 const Amigos = ({ user }) => {
   const [friendsUser, setFriendsUser] = useState([]);
@@ -46,12 +46,12 @@ const Amigos = ({ user }) => {
         <div className="amigos-profile">
           {friends.length === 0 ? (
             <span className="without-friends text-muted">
-              {'no hay amigos ;'}
+              {"no hay amigos ;"}
             </span>
           ) : (
             <>
               {friends?.map((img) => (
-                <div className="foto">
+                <div className="foto" key={`friend-key=${img._id}`}>
                   <img src={img?.image?.url} alt="" />
                   <span>{img?.username}</span>
                 </div>

@@ -1,20 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 
-import './PreviewPost.css';
+import "./PreviewPost.css";
 
-import rem from '../../../../assets/rem.jpg';
-import { motion } from 'framer-motion';
-import toast, { Toaster } from 'react-hot-toast';
-import createPost from '../../../../services/CreatePost.service';
+import rem from "../../../../assets/rem.jpg";
+import { motion } from "framer-motion";
+import toast, { Toaster } from "react-hot-toast";
+import createPost from "../../../../services/CreatePost.service";
 
 //icons
-import cross from '../../../../assets/cross.png';
+import cross from "../../../../assets/cross.png";
 
 //components
-import Feelings from './Feelings';
-import Votes from '../Vote/Votes';
+import Feelings from "./Feelings";
+import Votes from "../Vote/Votes";
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 import {
   PreviewDesactivate,
   VotesRedux,
@@ -23,13 +23,13 @@ import {
   PostFeeling,
   PostImg,
   ImgReady,
-  sharedPost
-} from '../../../../redux/PreviewPostRedux';
+  sharedPost,
+} from "../../../../redux/PreviewPostRedux";
 
-import { useMutation, useQueryClient } from 'react-query';
-import GetPostById from '../../../../services/GetPostById';
-import { useState } from 'react';
-import PostShare from '../../post/post/postShare';
+import { useMutation, useQueryClient } from "react-query";
+import GetPostById from "../../../../services/GetPostById";
+import { useState } from "react";
+import PostShare from "../../post/post/postShare";
 
 //components
 
@@ -61,7 +61,7 @@ const PreviewPost = () => {
     feeling: postFeeling,
     shared: { userId: user._id },
     votes: votes,
-    postShared: sharedPostId
+    postShared: sharedPostId,
   };
 
   const dispatch = useDispatch();
@@ -69,24 +69,24 @@ const PreviewPost = () => {
 
   const { mutate } = useMutation(createPost, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['posts']);
+      queryClient.invalidateQueries(["posts"]);
       dispatch(VotesRedux([]));
-      dispatch(TextValue(''));
-      dispatch(PostFeeling(''));
-      dispatch(PostImg(''));
+      dispatch(TextValue(""));
+      dispatch(PostFeeling(""));
+      dispatch(PostImg(""));
       dispatch(VotesActive(false));
       dispatch(PreviewDesactivate());
       dispatch(ImgReady({}));
-      dispatch(sharedPost(''));
-    }
+      dispatch(sharedPost(""));
+    },
   });
 
   const HandelSubmit = (e) => {
     e.preventDefault();
 
     if (!text) {
-      toast.error('escribe algo', {
-        position: 'top-right'
+      toast.error("escribe algo", {
+        position: "top-right",
       });
     } else {
       mutate(dataPostToSubmit);
@@ -96,7 +96,7 @@ const PreviewPost = () => {
     <motion.div
       initial={{ y: -500 }}
       animate={{ y: -2 }}
-      transition={{ ease: 'easeOut', duration: 0.5 }}
+      transition={{ ease: "easeOut", duration: 0.5 }}
       exit={{ opacity: 0, scaleY: 0 }}
       className="feed PreviewPost"
     >
@@ -127,7 +127,7 @@ const PreviewPost = () => {
           <div>loading</div>
         ) : (
           <>
-            {' '}
+            {" "}
             {sharedPostState === null ? null : (
               <PostShare post={sharedPostState} />
             )}
