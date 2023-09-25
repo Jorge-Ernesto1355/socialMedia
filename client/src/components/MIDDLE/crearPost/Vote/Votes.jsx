@@ -9,18 +9,18 @@ import React, {
 import Vote from "./vote";
 import _ from "underscore";
 import { v4 as uuidv4 } from "uuid";
-import toast, { Toaster } from "react-hot-toast";
 import { motion } from "framer-motion";
 import plus from "../icons/plus-sign.png";
-import { useDispatch } from "react-redux";
-import { VotesRedux } from "../../../../redux/PreviewPostRedux";
+import {  useSelector } from "react-redux";
 import Loader from "../../../../utilities/Loader";
+import CreatePostStore from "../../../../zustand/CreatePostStore";
 
 const variants = {
   show: {
     scale: 1,
     opacity: 1,
   },
+
   hide: {
     scale: 0,
     opacity: 0,
@@ -28,38 +28,35 @@ const variants = {
 };
 
 const Votes = ({ VotesActive, hideVotes }) => {
-  const dispatch = useDispatch();
-
+  const { addVotes, delVotes } = CreatePostStore()
   const [numForm, setNumForm] = useState([]);
-  const [form, setForm] = useState({});
+  const [votes, setVotes] = useState([]);
 
-  const allFormsCallback = useCallback(
-    () =>
-      ({ value, name }) => {
-        const updatedForm = {
-          ...form,
-          [name]: value,
-        };
-        setForm((prev) => [...prev, updatedForm]);
-      },
-    [],
-  );
+  const vote = ({ value, name }) => {
+    // update the vote to new vote into a object to put it in the votes 
+    const updatedvote = {
+      ...votes,
+      [name]: value,
+    };
+    setVotes(updatedvote) 
+       
+    // we use "for" to turn the vote object into a array with key: uuid and text 
+    const convertVotesToArray = Object.keys(votes).map((vote)=> ({
+      uuid:vote, 
+      text:votes[vote]
+    }))
 
-  const increase = () =>
-    setNumForm((prevNumForm) => [...prevNumForm, uuidv4()]);
+    addVotes(convertVotesToArray)
+ }
 
-  const arrayForms = useMemo(() => {
-    return Object.keys(form).map((property) => ({
-      uuid: property,
-      text: form[property],
-    }));
-  }, [form]);
-
+  const increase = () => 
+    setNumForm((prevNumForm) => [...prevNumForm, uuidv4()])
+  
   const submitForm = (e) => {
     e.preventDefault();
-    const newArray = [...arrayForms];
-    dispatch(VotesRedux(newArray));
-    setForm({});
+    // dellVotes is a zustand function 
+    delVotes()
+    setVotes([]);
     setNumForm([]);
   };
 
@@ -67,8 +64,11 @@ const Votes = ({ VotesActive, hideVotes }) => {
 
   const deletePoll = useCallback(() => {
     hideVotes((prev) => (prev.poll = false));
-    setForm({});
+    // dellVotes is a zustand function 
+    delVotes()
+    setVotes([]);
     setNumForm([]);
+    
   }, []);
 
   useEffect(() => {
@@ -76,6 +76,8 @@ const Votes = ({ VotesActive, hideVotes }) => {
     increase();
   }, [deletePoll]);
 
+  
+  
   return (
     <>
       {VotesActive && (
@@ -93,8 +95,8 @@ const Votes = ({ VotesActive, hideVotes }) => {
                     {numForm.map((i, index) => (
                       <Vote
                         key={i}
-                        updateForm={allFormsCallback}
-                        votes={form}
+                        updateVote={vote}
+                        votes={votes}
                         uuid={i}
                         index={index}
                       />
