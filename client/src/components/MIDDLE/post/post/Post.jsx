@@ -34,15 +34,9 @@ const Post = ({ post }) => {
 	);
 
 
-	const dispatch = useDispatch();
-
-	const [editPost, setEditPost] = useState(false);
+	
 
 	const [visibilityComment, setVisibilityComment] = useState(false);
-
-	const [descriptionState, setDescription] = useState(
-		"escribe el nuevo texto aqui",
-	);
 
 	const {
 		description,
@@ -52,7 +46,6 @@ const Post = ({ post }) => {
 		image,
 		createdAt,
 		edit,
-		feeling,
 		_id: postId,
 	} = post;
 
