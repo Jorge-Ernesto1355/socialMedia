@@ -7,22 +7,22 @@ import "./vote.css";
 
 const LIMIT_INPUT_TEXT = 30;
 
-const Vote = ({ updateForm = {}, votes = {}, uuid = "", index = 0 }) => {
-  const [form, setForm] = useState([uuid] || "");
+const Vote = ({ updateVote = {}, votes = {}, uuid = "", index = 0 }) => {
+  const [input, setInput] = useState([uuid] || "");
 
   useEffect(() => {
-    setForm(votes[uuid] || "");
+    setInput(votes[uuid] || "");
   }, [votes[uuid]]);
 
   const handleFormChange = (e) => {
     const { value, name } = e.target;
-    setForm(value);
-    updateForm({ value, name });
+    setInput(value);
+    updateVote({ value, name });
   };
 
   const isWarning = useMemo(
-    () => (form || "").length > LIMIT_INPUT_TEXT,
-    [form],
+    () => (input || "").length > LIMIT_INPUT_TEXT,
+    [input],
   );
 
   return (
@@ -30,13 +30,13 @@ const Vote = ({ updateForm = {}, votes = {}, uuid = "", index = 0 }) => {
       <div className="vote-input">
         <input
           type="text"
-          value={form}
+          value={input}
           name={uuid}
           onChange={handleFormChange}
           placeholder={`Option ${index} `}
         />
         <span>
-          {form.length}/{LIMIT_INPUT_TEXT}
+          {input.length}/{LIMIT_INPUT_TEXT}
         </span>
       </div>
     </div>
