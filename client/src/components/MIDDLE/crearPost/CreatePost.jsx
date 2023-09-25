@@ -1,4 +1,4 @@
-import React, { lazy, useState } from "react";
+import React, { lazy, useEffect, useState } from "react";
 import "./CreatePost.css";
 import { useSelector } from "react-redux";
 import rem from "../../../assets/rem.jpg";
@@ -9,6 +9,8 @@ import schedule from "./icons/calendar.png";
 import smile from "./icons/smile.png";
 import AutoComplete from "../../Autocomplete/AutoComplete";
 import { useStore } from "../../../hooks/useStore/useStore";
+import CreatePostStore from "../../../zustand/CreatePostStore";
+import UseImagePreview from "../../../hooks/useImagePreview/useImagePreview";
 
 const Votes = lazy(() => import("./Vote/Votes"));
 
@@ -26,6 +28,8 @@ const CreatePost = () => {
   const { user } = useSelector((state) => state.user.currentUser);
   const [actions, setActions] = useState(ACTIONS_INITIAL_STATE);
   const { store, set, get } = useStore();
+  const {element, input:inputFile, clearImagePreview} = UseImagePreview()
+
 
   const handleClick = (key) => {
     // Crear una copia del estado actual
@@ -73,10 +77,20 @@ const CreatePost = () => {
         <Votes VotesActive={actions.poll} hideVotes={setActions} />
         <EmojiPickerComponent isOpen={actions.emoji} store={store} set={set} />
       </div>
+      <img ref={element} alt="createpost" />
       <div className="divisor"></div>
       <div className="down-createPost">
         <div className="options-createPost">
+          <div>
           <img className="options-createPost-icon" src={gallery} alt="" />
+          <input
+              type="file"
+              ref={inputFile}
+              id="fileInput"
+              className="input-file-makeComment"
+              accept="image/png, image/jpeg, image/jpg, /image.jfif"
+            />
+          </div>
           <img
             className="options-createPost-icon"
             src={poll}
