@@ -1,0 +1,37 @@
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 6px;
+    gap: 8px;
+    border: none;
+    background: #ff362b34;
+    border-radius: 18px;
+    cursor: pointer;
+}
+
+.lable {
+    line-height: 15px;
+    font-size: 15px;
+    color: #FF342B;
+    font-weight: 500;
+
+}
+
+.button:hover {
+    background: #ff362b52;
+}
+
+.button:hover .svg-icon {
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(-360deg);
+    }
+}
