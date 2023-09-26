@@ -19,7 +19,7 @@
   color: rgba(255, 255, 255, 1);
 }
 
-.box-body > :not([hidden]) ~ :not([hidden]) {
+.box-body> :not([hidden])~ :not([hidden]) {
   margin-right: calc(1rem * 0);
   margin-left: calc(1rem * calc(1 - 0));
 }
@@ -99,7 +99,7 @@
   flex-direction: column;
 }
 
-.autocomplete-item > :not([hidden]) ~ :not([hidden]) {
+.autocomplete-item> :not([hidden])~ :not([hidden]) {
   margin-top: calc(0.25rem * calc(1 - 0));
   margin-bottom: calc(0.25rem * 0);
 }
@@ -120,7 +120,7 @@
   align-items: center;
 }
 
-.account-body > :not([hidden]) ~ :not([hidden]) {
+.account-body> :not([hidden])~ :not([hidden]) {
   margin-right: calc(0.75rem * 0);
   margin-left: calc(0.75rem * calc(1 - 0));
 }
@@ -185,6 +185,14 @@
   outline: none;
   resize: none;
   background-color: transparent;
+}
+
+.limited-textarea.larger {
+  font-size: large;
+}
+
+.limited-textarea.larger::placeholder {
+  font-size: large;
 }
 
 .form-autocomplete {

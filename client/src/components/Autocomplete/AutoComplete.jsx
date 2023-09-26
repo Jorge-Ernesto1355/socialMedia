@@ -120,13 +120,13 @@ const AutoComplete = (props, inputRef) => {
             maxLength="280"
             rows={props.rows}
             cols={props.cols}
-            className="limited-textarea"
+            className={`limited-textarea ${props.larger && props.larger}`}
           ></textarea>
         </form>
         <div
           {...autocomplete.getPanelProps({})}
           className="autocomplete-panel"
-          // style={{ top: `${top + height}px` }}
+        // style={{ top: `${top + height}px` }}
         >
           {state.status === "stalled" && !state.isOpen && <Loader />}
 
@@ -158,7 +158,7 @@ const AutoComplete = (props, inputRef) => {
                             className={[
                               "autocomplete-item",
                               itemProps["aria-selected"] &&
-                                "autocomplete-item-selected",
+                              "autocomplete-item-selected",
                             ]
                               .filter(Boolean)
                               .join(" ")}
