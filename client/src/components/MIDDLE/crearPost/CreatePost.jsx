@@ -1,16 +1,22 @@
-import React, { lazy, useEffect, useState } from "react";
+import React, { lazy,  useCallback,  useState } from "react";
 import "./CreatePost.css";
 import { useSelector } from "react-redux";
 import rem from "../../../assets/rem.jpg";
-import down from "./icons/down.png";
-import gallery from "./icons/gallery.png";
 import poll from "./icons/poll.png";
 import schedule from "./icons/calendar.png";
 import smile from "./icons/smile.png";
 import AutoComplete from "../../Autocomplete/AutoComplete";
 import { useStore } from "../../../hooks/useStore/useStore";
 import UseImagePreview from "../../../hooks/useImagePreview/useImagePreview";
-import ImgInputFile from "../../../stylesComponents/Loading/ImgInputFile/ImgInputFile";
+import ImgInputFile from "../../../stylesComponents/ImgInputFile/ImgInputFile";
+import BlueLoader from "../../../stylesComponents/BlurLoader/BlueLoader";
+import SendButtonCreatePost from "./senbButtonCreatePost/SendButtonCreatePost";
+import Difusion from "./Difusion/Difusion";
+import { HandleStateActions } from "./HandleSteateOptions";
+import useMutationRequest from "../../../hooks/useMutationRequest";
+import CreatePostService from "../../../services/CreatePost.service";
+import CreatePostStore from "../../../zustand/CreatePostStore";
+import ErrorButton from "../post/comments/makeComment/styledComponentes/ErrorButton/ErrorButton";
 
 const Votes = lazy(() => import("./Vote/Votes"));
 
@@ -25,41 +31,42 @@ const ACTIONS_INITIAL_STATE = {
 };
 
 const CreatePost = () => {
+
   const { user } = useSelector((state) => state.user.currentUser);
+  const {votes, difusion, delVotes} = CreatePostStore()
   const [actions, setActions] = useState(ACTIONS_INITIAL_STATE);
-  const { store, set, get } = useStore();
-  const { element, input: inputFile, clearImagePreview } = UseImagePreview()
+  const { store, set, get, state} = useStore();
+  const {element, input:inputFile, clearImagePreview} = UseImagePreview()
+  const {mutate, isLoading, isError, reset} = useMutationRequest(CreatePostService, {name:'posts'})
 
-
-  const handleClick = (key) => {
-    // Crear una copia del estado actual
-    const updatedActions = { ...actions };
-
-    // Establecer el valor del key proporcionado en true
-    updatedActions[key] = true;
-
-    // Establecer los otros valores en false
-    for (const actionKey in updatedActions) {
-      if (actionKey !== key) {
-        updatedActions[actionKey] = false;
+  const handleMutate = useCallback(()=>{
+    if(!get()) return 
+    mutate({description: state, userId: user._id,  votes, image: inputFile.current.files[0], difusion}, {
+      onSuccess:()=>{
+            delVotes()
+            set("");
+            if (store.current) store.current.value = "";
+            clearImagePreview()
       }
-    }
-    // Actualizar el estado con el nuevo objeto de acciones
-    setActions(updatedActions);
-  };
+    })
+
+  }, [])
+
+  
+
+
+ 
 
   return (
     <div className="container-createPost">
+      {isLoading && <BlueLoader/>}
       <div className="info-createPost">
         <div className="profile-photo">
           <img src={rem} alt="" />
         </div>
         <div className="info-name">
-          <h2>{user.username}</h2>
-          <div className="post-everyone">
-            <span>everyone</span>
-            <img src={down} alt="" />
-          </div>
+          <h3>{user.username}</h3>
+          <Difusion/>
         </div>
       </div>
       <div className="input-createPost">
@@ -71,13 +78,13 @@ const CreatePost = () => {
             ref={store}
             set={set}
             stateValue={get}
-            larger={'larger'}
           />
         )}
+
         <Votes VotesActive={actions.poll} hideVotes={setActions} />
         <EmojiPickerComponent isOpen={actions.emoji} store={store} set={set} />
       </div>
-      <img ref={element} onClick={() => clearImagePreview()} />
+      <img ref={element} onClick={()=> clearImagePreview()} />
       <div className="divisor"></div>
       <div className="down-createPost">
         <div className="options-createPost">
@@ -85,24 +92,26 @@ const CreatePost = () => {
           <img
             className="options-createPost-icon"
             src={poll}
-            onClick={() => handleClick("poll")}
+            onClick={() => HandleStateActions("poll", actions, setActions)}
             alt=""
           />
           <img
             className="options-createPost-icon"
             src={smile}
-            onClick={() => handleClick("emoji")}
+            onClick={() => HandleStateActions("emoji", actions, setActions)}
             alt=""
           />
           <img
+          style={{width:'35px', height:'35px'}}
             className="options-createPost-icon"
             src={schedule}
-            onClick={() => handleClick("schedule")}
+            onClick={() => HandleStateActions("shedule", actions, setActions)}
             alt=""
           />
         </div>
-        <div>
-          <button className="button-post-createPost">post</button>
+        <div style={{marginTop:'15px'}} onClick={()=> handleMutate()} aria-disabled={isError || isLoading}>
+          {isError && <ErrorButton reset={reset} />}
+          {!isError && <SendButtonCreatePost />}
         </div>
       </div>
     </div>
