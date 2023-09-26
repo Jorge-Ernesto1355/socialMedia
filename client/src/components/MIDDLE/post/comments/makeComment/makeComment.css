@@ -23,15 +23,17 @@
 }
 
 .field-write-card {
-  width: 85%;
+  width: 90%;
   display: flex;
   position: relative;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   z-index: 11;
+  margin-left: 5px;
   border-radius: 10px;
 }
+
 .field-write-card .img {
   width: 30%;
   height: fit-content;
@@ -78,6 +80,7 @@
   display: flex;
   cursor: pointer;
   justify-content: space-between;
+  align-items: center;
 }
 
 .comment-container .field-write .adjuncts img {
@@ -87,34 +90,10 @@
 }
 
 .comment-button {
-  margin-left: 10px;
+  margin-left: 5px;
   background-color: transparent;
 }
 
 .comment-button img.rise-shake {
   animation: jump-shaking 0.83s infinite;
-}
-
-@keyframes jump-shaking {
-  0% {
-    transform: translateX(0);
-  }
-  25% {
-    transform: translateY(-4px);
-  }
-  35% {
-    transform: translateY(-4px) rotate(17deg);
-  }
-  55% {
-    transform: translateY(-4px) rotate(-17deg);
-  }
-  65% {
-    transform: translateY(-4px) rotate(17deg);
-  }
-  75% {
-    transform: translateY(-4px) rotate(-17deg);
-  }
-  100% {
-    transform: translateY(0) rotate(0);
-  }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-condition */
 import React, { useCallback, useMemo } from "react";
 
 import "./makeComment.css";
@@ -15,6 +16,8 @@ import { ThreeDotsLoader } from "./ThreeDotsLoader";
 import EmojiPickerWithIcon from "../../../../EmojiPicker/EmojiPickerWithIcon";
 import warning from "../icons/warning.png";
 import { isDefined } from "../../../../../utilities/isDefined";
+import SendButton from "./styledComponentes/sendButton/SendButton";
+import ErrorButton from "./styledComponentes/ErrorButton/ErrorButton";
 
 const MakeComment = (
   {
@@ -70,10 +73,6 @@ const MakeComment = (
       );
   }, [state, inputFile]);
 
-  const isText = useMemo(
-    () => (state?.length ? state?.length : false),
-    [state],
-  );
 
   return (
     <div className="comment-container">
@@ -110,21 +109,13 @@ const MakeComment = (
               disabled={isError}
             >
               {isError ? (
-                <img
-                  className="rise-shake"
-                  src={warning}
-                  alt="error-makeComment"
-                  onClick={() => reset()}
-                />
+                <ErrorButton />
               ) : (
                 <>
                   {isLoadingMutation ? (
                     <ThreeDotsLoader />
                   ) : (
-                    <img
-                      src={isText ? paperPlaneBlue : paperPlaneGray}
-                      alt=""
-                    />
+                    <SendButton />
                   )}
                 </>
               )}
