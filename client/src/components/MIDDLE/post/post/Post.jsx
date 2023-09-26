@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Post.css";
 
 import rem from "../../../../assets/rem.jpg";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 
 import more from "../comments/EllipsiComments/icons/ellipsis.png";
 
@@ -11,8 +11,7 @@ import GetUser from "../../../../services/GetUser.service";
 
 import Comments from "../comments/Comments";
 import MakeAComment from "../comments/makeComment/MakeComment";
-import { Toaster } from "react-hot-toast";
-import { imgsFeelings } from "../../crearPost/PreviewPost/imgsFeelings";
+import { Toaster } from "react-hot-toast"
 import moment from "moment";
 import ReactionsView from "../Reactions/ReactionsView";
 import {
@@ -32,10 +31,6 @@ const Post = ({ post }) => {
 	const { _id: currentUser } = useSelector(
 		(state) => state.user.currentUser.user,
 	);
-
-
-	
-
 	const [visibilityComment, setVisibilityComment] = useState(false);
 
 	const {
@@ -125,7 +120,7 @@ const Post = ({ post }) => {
 
 				</div>
 				<span className="edit">
-					<More>
+					<More id={userId}>
 						<img src={more} alt="" />
 					</More>
 				</span>

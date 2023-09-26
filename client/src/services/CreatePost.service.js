@@ -1,12 +1,12 @@
 import { userRequest } from "../utilities/requestMethod";
 
-const CreatePost = async (post) => {
+const CreatePostService = async (post) => {
   const form = new FormData();
 
-  //quitamos el el array votes del post
+  // quitamos el el array votes del post
   const { votes, ...posts } = post;
 
-  for (let key in posts) {
+  for (const key in posts) {
     form.append(key, posts[key]);
   }
 
@@ -30,4 +30,4 @@ const CreatePost = async (post) => {
   return data;
 };
 
-export default CreatePost;
+export default CreatePostService;

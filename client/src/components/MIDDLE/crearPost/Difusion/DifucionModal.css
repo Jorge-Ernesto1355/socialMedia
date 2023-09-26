@@ -1,0 +1,42 @@
+.ellipsi-createPost-container {
+    position: absolute;
+    width: 140px;
+    background-color: var(--color-white);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--card-shadow);
+    padding: 0.3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: start;
+    z-index: 100;
+    top: 5.5rem;
+    left: 1rem;
+  }
+  
+  .ellipsi-createPost-item {
+    padding: 0.2rem;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    border-radius: .4rem;
+    cursor: pointer;
+
+  }
+
+  .ellipsi-createPost-item:hover {
+    background-color: rgb(243, 243, 243);
+  }
+  
+
+  .ellipsi-createPost-item img{
+    width: 15px;
+    height: 15px;
+    margin-left: 0.5rem;
+  }
+  
+  .ellipsi-createPost-text {
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+ 

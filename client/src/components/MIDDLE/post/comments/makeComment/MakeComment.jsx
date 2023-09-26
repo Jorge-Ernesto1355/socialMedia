@@ -103,23 +103,18 @@ const MakeComment = (
               accept="image/png, image/jpeg, image/jpg, /image.jfif"
             />
             <EmojiPickerWithIcon store={store} set={set} />
-            <button
+            <div
               className="comment-button"
               onClick={() => CommentCallback()}
               disabled={isError}
             >
-              {isError ? (
-                <ErrorButton />
-              ) : (
+              {isError && <ErrorButton reset={reset}/>}
+              {!isError && (
                 <>
-                  {isLoadingMutation ? (
-                    <ThreeDotsLoader />
-                  ) : (
-                    <SendButton />
-                  )}
+                {isLoadingMutation ? <ThreeDotsLoader/>  : <SendButton/>}
                 </>
               )}
-            </button>
+            </div>
           </div>
         </div>
       </div>

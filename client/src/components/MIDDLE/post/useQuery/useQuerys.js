@@ -1,9 +1,8 @@
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import {
   GetAllReactions,
   GetReactionsSelected,
   GetReactionsView,
-  getAllCommentsResponded,
 } from "../services/actions/actions";
 
 import { GetAllPostsShared } from "../services/post/post.service";

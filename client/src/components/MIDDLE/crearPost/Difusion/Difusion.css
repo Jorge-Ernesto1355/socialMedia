@@ -1,0 +1,19 @@
+.difusion-container{
+    width: max-content;
+    height: max-content;
+    border: 1px solid #585858;
+    border-radius: 10px;
+    padding: 0 .2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.8rem;
+    
+}
+
+.difusion-container img {
+    width: 15px;
+    height: 15px;
+}
