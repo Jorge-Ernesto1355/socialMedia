@@ -5,16 +5,16 @@ import Loader from "../../../../utilities/Loader";
 const EllipsisPost = lazy(() => import("./Ellipsis"))
 
 
-const More = ({ children }) => {
+const More = ({ children, id }) => {
   const [isOpen, setIsOpen] = useState(false);
-
+ 
   return (
     <div className="ellipsiPost-more">
       <div className="more-img" onClick={() => setIsOpen((prev) => !prev)}>
         {children}
       </div>
       {isOpen && (
-        <Suspense fallback={<Loader />}><EllipsisPost isOpen={isOpen} /></Suspense>
+        <Suspense fallback={<Loader />}><EllipsisPost isOpen={isOpen} userId={id} /></Suspense>
       )}
 
     </div>

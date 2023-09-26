@@ -1,26 +1,39 @@
 
 import "./Ellipsis.css";
-import { motion } from "framer-motion";
-import { variantsMotion } from "../../../../utilities/variantsMotion";
-const EllipsisPost = ({ isOpen }) => {
+
+// icons
+import { useSelector } from "react-redux";
+import { useQuery } from "react-query";
+import GetUser from "../../../../services/GetUser.service";
+import EllipsiOwner from "./EllipsiOwner";
+import EllipsiNormalUser from "./EllipsiNormalUser";
+const EllipsisPost = ({ isOpen, userId }) => {
+  
+  // userId is the  user that has uploaded the post that we trying to config
+  // currentUser is our id, is our own user
+  
+  const { _id: currentUser } = useSelector(
+		(state) => state.user.currentUser.user,
+	);
+
+  const { data: userData, isLoading } = useQuery(["user", userId], () => GetUser(userId));
+
+	const user = userData?.data?.data ?? {};
+
+ 
+
+
   return (
-    <motion.ul
-      variants={variantsMotion}
-      initial={{ scale: 0, opacity: 0 }}
-      animate={`${isOpen ? "show" : "hide"}`}
-      className="ellipsiPost-container"
-    >
-      <li className="ellipsiPost-item">
-        <h4 className="ellipsiPost-text">Ocultar comentario</h4>
-      </li>
-      <li className="ellipsiPost-item">
-        <h4 className="ellipsiPost-text">Reportar comentario</h4>
-      </li>
-      <li className="ellipsiPost-item">
-        <h4 className="ellipsiPost-text">Editar comentario</h4>
-      </li>
-    </motion.ul>
+     <>
+       {currentUser !== userId ? <EllipsiOwner isOpen={isOpen} username={user.username ?? ''}  isLoading={isLoading}/> : <EllipsiNormalUser isOpen={isOpen} isLoading={isLoading} username={user.username ?? ''}/> }
+       
+     </>
   );
 };
 
 export default EllipsisPost;
+
+
+
+
+

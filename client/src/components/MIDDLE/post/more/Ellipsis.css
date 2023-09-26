@@ -1,6 +1,6 @@
 .ellipsiPost-container {
   position: absolute;
-  width: 200px;
+  width: max-content;
   background-color: var(--color-white);
   border-radius: 0.7rem;
   box-shadow: var(--card-shadow);
@@ -20,6 +20,14 @@
   padding: 0.2rem;
   cursor: pointer;
   border-radius: 5px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+.ellipsiPost-item img{
+  width: .9rem;
+  height: .9rem;
+  margin-right: .5rem;
 }
 
 .ellipsiPost-item:hover {
