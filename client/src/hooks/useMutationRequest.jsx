@@ -1,17 +1,16 @@
 import { useMutation, useQueryClient } from "react-query";
 
-const useMutationRequest = (request, { name, id } = {}, fetchToUpdate) => {
+const useMutationRequest = (request, { name } = {}) => {
   if (typeof request !== "function") {
     throw new Error("request must be a function");
   }
 
-  if (!name && !id) {
-    throw new Error("error:name and id should be defined");
+
+  if (!name ) {
+    throw new Error("error:name should be defined");
   }
 
-  if (typeof name && typeof id !== "string") {
-    throw new Error("error: name and id should be of type string");
-  }
+  
 
   const queryClient = useQueryClient();
   const {
