@@ -53,10 +53,6 @@ const CreatePost = () => {
   }, [])
 
   
-
-
- 
-
   return (
     <div className="container-createPost">
       {isLoading && <BlueLoader/>}
