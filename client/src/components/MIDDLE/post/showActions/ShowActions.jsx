@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./ShowActions.css";
 
 import { objetsImgs } from "../post/objectImg";
 import cross from "../../../../assets/cross.png";
 import { AnimatePresence, motion } from "framer-motion";
-import ShowPersons from "./ShowPersons";
-import { GetUsersOfActions } from "../services/actions/actions";
-import ConcatUserWithActions from "./concatUserWithActions";
-import { CallbackRequest, GetReactionsPost } from "../useQuery/useQuerys";
+import ShowPersons from "./ShowPersons"
 import ShowAllPersons from "./ShowAllPersons";
 import useInfiniteScroll from "../../../../hooks/useInfiniteScroll/useInfiniteScroll";
 
 const ShowActions = ({
   changeShowActions,
-  showAction,
+
   id,
   reactionsView,
   reqReactions,
@@ -30,26 +27,11 @@ const ShowActions = ({
     fetchNextPage,
   } = useInfiniteScroll({ name, id, request: reqReactions });
 
-  const variantsPhotos = {
-    visible: {
-      scale: 1,
-      transition: {
-        duration: 0.2,
-      },
-    },
-    hidden: {
-      scale: 0,
-      y: -100,
-      transition: {
-        duration: 0.2,
-      },
-    },
-  };
+ 
   return (
-    <motion.div
+    <div
       className="container-action"
-      variants={variantsPhotos}
-      animate={showAction ? "visible" : "hidden"}
+      
     >
       {isError && (
         <div className="somethingWrong-action">
@@ -117,7 +99,7 @@ const ShowActions = ({
               <div className="down-edit">
                 {reactionsView
                   ?.filter((reaction) => isSelected.label === reaction?.label)
-                  .map((reaction) => (
+                  ?.map((reaction) => (
                     <ShowPersons
                       label={reaction?.label}
                       id={id}
@@ -139,7 +121,7 @@ const ShowActions = ({
           </AnimatePresence>
         </>
       )}
-    </motion.div>
+    </div>
   );
 };
 

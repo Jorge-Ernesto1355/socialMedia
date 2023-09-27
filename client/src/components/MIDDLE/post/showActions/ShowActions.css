@@ -1,12 +1,6 @@
 .container-action {
-  width: 44.3vw;
-  height: 21.3vw;
-  position: absolute;
-  bottom: 0;
-  z-index: 9999999;
-  top: 0;
-  left: 0;
-  right: 0;
+  width: 50.3vw;
+  height: 25.3vw;
   overflow: hidden;
   background-color: var(--color-white);
   padding: var(--card-padding);
@@ -16,6 +10,7 @@
   -moz-box-shadow: -1px -1px 5px 0px rgba(0, 0, 0, 0.19);
   overflow-y: scroll;
   scroll-behavior: smooth;
+  opacity: 1;
 }
 
 .container-action .head-action {
