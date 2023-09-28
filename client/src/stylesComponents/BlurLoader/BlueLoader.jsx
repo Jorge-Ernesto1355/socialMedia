@@ -1,10 +1,9 @@
 import React from 'react'
-import LoaderPost from '../LoaderPost/LoaderPost'
 import './blurLoader.css'
-const BlueLoader = () => {
+const BlueLoader = ({ children }) => {
   return (
-    <div  className='blurLoader-container'>
-            <LoaderPost/>
+    <div className='blurLoader-container'>
+      {children}
     </div>
   )
 }

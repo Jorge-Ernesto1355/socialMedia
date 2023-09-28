@@ -1,7 +1,9 @@
-import React, { lazy,  useCallback,  useState } from "react";
+import React, { lazy, useCallback, useEffect, useState } from "react";
 import "./CreatePost.css";
 import { useSelector } from "react-redux";
 import rem from "../../../assets/rem.jpg";
+import down from "./icons/down.png";
+import gallery from "./icons/gallery.png";
 import poll from "./icons/poll.png";
 import schedule from "./icons/calendar.png";
 import smile from "./icons/smile.png";
@@ -9,14 +11,15 @@ import AutoComplete from "../../Autocomplete/AutoComplete";
 import { useStore } from "../../../hooks/useStore/useStore";
 import UseImagePreview from "../../../hooks/useImagePreview/useImagePreview";
 import ImgInputFile from "../../../stylesComponents/ImgInputFile/ImgInputFile";
-import BlueLoader from "../../../stylesComponents/BlurLoader/BlueLoader";
-import SendButtonCreatePost from "./senbButtonCreatePost/SendButtonCreatePost";
-import Difusion from "./Difusion/Difusion";
 import { HandleStateActions } from "./HandleSteateOptions";
-import useMutationRequest from "../../../hooks/useMutationRequest";
-import CreatePostService from "../../../services/CreatePost.service";
-import CreatePostStore from "../../../zustand/CreatePostStore";
 import ErrorButton from "../post/comments/makeComment/styledComponentes/ErrorButton/ErrorButton";
+import SendButtonCreatePost from "./senbButtonCreatePost/SendButtonCreatePost";
+import BlueLoader from "../../../stylesComponents/BlurLoader/BlueLoader";
+import LoaderPost from "../../../stylesComponents/LoaderPost/LoaderPost";
+import Difusion from "./Difusion/Difusion";
+import useMutationRequest from "../../../hooks/useMutationRequest";
+import CreatePostStore from "../../../zustand/CreatePostStore";
+import CreatePostService from "../../../services/CreatePost.service";
 
 const Votes = lazy(() => import("./Vote/Votes"));
 
@@ -31,42 +34,39 @@ const ACTIONS_INITIAL_STATE = {
 };
 
 const CreatePost = () => {
-
   const { user } = useSelector((state) => state.user.currentUser);
-  const {votes, difusion, delVotes} = CreatePostStore()
+  const { votes, difusion, delVotes } = CreatePostStore()
   const [actions, setActions] = useState(ACTIONS_INITIAL_STATE);
-  const { store, set, get, state} = useStore();
-  const {element, input:inputFile, clearImagePreview} = UseImagePreview()
-  const {mutate, isLoading, isError, reset} = useMutationRequest(CreatePostService, {name:'posts'})
+  const { store, set, get, state } = useStore();
+  const { element, input: inputFile, clearImagePreview } = UseImagePreview()
+  const { mutate, isLoading, isError, reset } = useMutationRequest(CreatePostService, { name: 'posts' })
 
-  const handleMutate = useCallback(()=>{
-    if(!get()) return 
-    mutate({description: state, userId: user._id,  votes, image: inputFile.current.files[0], difusion}, {
-      onSuccess:()=>{
-            delVotes()
-            set("");
-            if (store.current) store.current.value = "";
-            clearImagePreview()
+  const handleMutate = useCallback(() => {
+    if (!get()) return
+    mutate({ description: state, userId: user._id, votes, image: inputFile.current.files[0], difusion }, {
+      onSuccess: () => {
+        delVotes()
+        set("");
+        if (store.current) store.current.value = "";
+        clearImagePreview()
       }
     })
 
   }, [])
 
-  
-
-
- 
 
   return (
     <div className="container-createPost">
-      {isLoading && <BlueLoader/>}
+      {isLoading && (
+        <BlueLoader><LoaderPost /></BlueLoader>
+      )}
       <div className="info-createPost">
         <div className="profile-photo">
           <img src={rem} alt="" />
         </div>
         <div className="info-name">
           <h3>{user.username}</h3>
-          <Difusion/>
+          <Difusion />
         </div>
       </div>
       <div className="input-createPost">
@@ -84,7 +84,7 @@ const CreatePost = () => {
         <Votes VotesActive={actions.poll} hideVotes={setActions} />
         <EmojiPickerComponent isOpen={actions.emoji} store={store} set={set} />
       </div>
-      <img ref={element} onClick={()=> clearImagePreview()} />
+      <img ref={element} onClick={() => clearImagePreview()} />
       <div className="divisor"></div>
       <div className="down-createPost">
         <div className="options-createPost">
@@ -102,14 +102,14 @@ const CreatePost = () => {
             alt=""
           />
           <img
-          style={{width:'35px', height:'35px'}}
+            style={{ width: '35px', height: '35px' }}
             className="options-createPost-icon"
             src={schedule}
             onClick={() => HandleStateActions("shedule", actions, setActions)}
             alt=""
           />
         </div>
-        <div style={{marginTop:'15px'}} onClick={()=> handleMutate()} aria-disabled={isError || isLoading}>
+        <div style={{ marginTop: '15px' }} onClick={() => handleMutate()} aria-disabled={isError || isLoading}>
           {isError && <ErrorButton reset={reset} />}
           {!isError && <SendButtonCreatePost />}
         </div>
