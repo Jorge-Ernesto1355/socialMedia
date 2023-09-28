@@ -1,0 +1,8 @@
+.votes-container{
+    width: 90%;
+    margin: 1rem;
+    height: max-content;
+    display: grid;
+    grid-template-columns: 50% 50%; 
+    gap: 10px;  
+}
