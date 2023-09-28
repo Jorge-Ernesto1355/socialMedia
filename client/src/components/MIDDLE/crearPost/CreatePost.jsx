@@ -12,7 +12,7 @@ import ImgInputFile from "../../../stylesComponents/ImgInputFile/ImgInputFile";
 import BlueLoader from "../../../stylesComponents/BlurLoader/BlueLoader";
 import SendButtonCreatePost from "./senbButtonCreatePost/SendButtonCreatePost";
 import Difusion from "./Difusion/Difusion";
-import { HandleStateActions } from "./HandleSteateOptions";
+import { HandleStateActions, clearStateActions } from "./HandleSteateOptions";
 import useMutationRequest from "../../../hooks/useMutationRequest";
 import CreatePostService from "../../../services/CreatePost.service";
 import CreatePostStore from "../../../zustand/CreatePostStore";
@@ -35,22 +35,26 @@ const CreatePost = () => {
   const { user } = useSelector((state) => state.user.currentUser);
   const {votes, difusion, delVotes} = CreatePostStore()
   const [actions, setActions] = useState(ACTIONS_INITIAL_STATE);
-  const { store, set, get, state} = useStore();
+  const { store, set, get} = useStore();
   const {element, input:inputFile, clearImagePreview} = UseImagePreview()
   const {mutate, isLoading, isError, reset} = useMutationRequest(CreatePostService, {name:'posts'})
+  console.log(votes)
 
   const handleMutate = useCallback(()=>{
     if(!get()) return 
-    mutate({description: state, userId: user._id,  votes, image: inputFile.current.files[0], difusion}, {
+    mutate({description: get(), userId: user._id,  votes, image: inputFile.current.files[0], difusion}, {
       onSuccess:()=>{
             delVotes()
             set("");
             if (store.current) store.current.value = "";
             clearImagePreview()
+            clearStateActions(setActions)
       }
     })
 
-  }, [])
+  }, [votes, difusion, inputFile])
+
+
 
   
   return (

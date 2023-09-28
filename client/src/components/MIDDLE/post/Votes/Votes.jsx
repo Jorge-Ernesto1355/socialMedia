@@ -1,13 +1,43 @@
-import React from "react";
+import React, { useMemo } from "react";
+import './votes.css'
+import { useCallbackRequest } from "../../../../hooks/useCallbackRequest/useCallbackRequest";
+import getVotes from "./service/getVotes.service";
+import VotesLoader from "./VotesLoader";
+import Vote from "./Vote";
 
-const Votes = () => {
+const Votes = ({id}) => {
+
+  const {data, isLoading, isError} = useCallbackRequest({request:getVotes, name:'votes', id})
+  const votes = data?.data.votes ?? []
+
+
+
+  const totalVotes = useMemo(()=> {
+    let totalVotes = 0
+    votes?.forEach(vote => {
+      totalVotes += vote.counter.length;
+      return totalVotes
+    })
+    return totalVotes
+  }, [votes])
+
+
+
   return (
-    <div>
-      {votes?.map((vote) => (
-        <div className="vote-post" onClick={() => VoteMutateFun(vote?._id)}>
-          <h4>{vote.text}</h4>
-        </div>
-      ))}
+    <div className="votes-container">
+      {isError && <span>error</span>}
+      {isLoading && <VotesLoader/>}
+      {!isLoading && (
+        <>
+        {votes?.map((vote)=> (
+          <Vote
+           vote={vote}
+           totalVotes={totalVotes}
+           postId={id}
+           key={vote._id}/>
+        ))}
+        </>
+      )}
     </div>
   );
 };
