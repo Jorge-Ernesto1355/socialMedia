@@ -3,6 +3,7 @@ import { useCallbackRequest } from "../../../../hooks/useCallbackRequest/useCall
 import { objetsImgs } from "../post/objectImg";
 import "./ReactionsView.css";
 import ShowActions from "../showActions/ShowActions";
+import ReactionView from "./ReactionView";
 
 /**
  * React component that displays a list of reaction icons based on the data received from the `CallbackRequest` function.
@@ -25,7 +26,7 @@ const useReactionsView = ({ id, reqReactionsView, name }) => {
     id,
     name,
   });
-  const [showAllActions, setShowAllActions] = useState(false);
+  
 
   const reactionsView = data?.data ?? [];
 
@@ -33,8 +34,6 @@ const useReactionsView = ({ id, reqReactionsView, name }) => {
     isError,
     isLoading,
     reactionsView,
-    showAllActions,
-    setShowAllActions,
   };
 };
 const ReactionsView = ({
@@ -53,6 +52,8 @@ const ReactionsView = ({
     setShowAllActions,
   } = useReactionsView({ id, reqReactionsView, name: nameView });
 
+  
+
   return (
     <div>
       {isError && <div>error</div>}
@@ -66,33 +67,20 @@ const ReactionsView = ({
                 }`}
             >
               {reactionsView?.map((reactionView) => (
-                <li
-                  className="img-reactionView"
-                  key={`reactionView-key=${reactionView._id}`}
-                >
-                  <img
-                    className="icons-reaction"
-                    src={objetsImgs[reactionView.label]}
-                    alt={reactionView.label}
-                    onClick={() => setShowAllActions(true)}
-                  />
-                </li>
+                <ReactionView
+                 name={name}
+                 id={id}
+                 reactionView={reactionView}
+                 reactionsView={reactionsView}
+                 reqReaction={reqReaction} 
+                 reqReactions={reqReactions}
+                 key={reactionView._id}/>
               ))}
             </ul>
           )}
         </>
       )}
-      {showAllActions && (
-        <ShowActions
-          changeShowActions={setShowAllActions}
-          showAction={showAllActions}
-          id={id}
-          reactionsView={reactionsView}
-          name={name}
-          reqReaction={reqReaction}
-          reqReactions={reqReactions}
-        />
-      )}
+      
     </div>
   );
 };

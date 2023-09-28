@@ -1,38 +1,31 @@
-const Votess = require('../../dominio/Votess')
+const Votess = require("../../dominio/Votess");
 
-const createVotes = async (req, res)=>{
+const createVotes = async (req, res) => {
+  const { votes } = req.body;
 
-  const {votes} = req.body  
-  
- const votesJson = JSON.parse(votes)
+  const votesJson = JSON.parse(votes);
 
-  if(votes.length === 0){
-    return []
+  if (votes.length === 0) {
+    return [];
   }
-try{
+  try {
     const votesReady = await Promise.all(
-    votesJson.map(vote =>  {
-      const votesSeparado = {
-        uuid:vote.uuid, 
-        text:vote.text
-      }
-        
-      const newVote = new Votess(votesSeparado)
-      newVote.save()
-      return newVote
-    }))
+      votesJson.map((vote) => {
+        const votesSeparado = {
+          uuid: vote.uuid,
+          text: vote.text,
+        };
 
-   
+        const newVote = new Votess(votesSeparado);
+        newVote.save();
+        return newVote;
+      })
+    );
 
-      return votesReady
+    return votesReady;
+  } catch (error) {
+    return res.status(500).json({ message: "algo salio maldd" });
+  }
+};
 
-    }catch (error) {
-      return res.status(500).json({message:"algo salio maldd"})
-    }
-    
-  
-
-
-}
-
-module.exports= createVotes
+module.exports = createVotes;

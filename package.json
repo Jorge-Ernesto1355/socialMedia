@@ -8,16 +8,12 @@
     "dev": "cross-env NODE_ENV=development",
     "test": "cross-env NODE_ENV=test jest --verbose --silent --detectOpenHandles   ",
     "test:watch": "npm run test -- --watch"
-   
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-   
-  },
   "devDependencies": {
-    
+    "styled-components": "^6.0.8"
   },
   "jest": {
     "testEnviroment": "node"

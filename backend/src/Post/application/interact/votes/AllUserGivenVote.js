@@ -1,44 +1,17 @@
-const User = require("../../../../users/domain/UserModel");
 const Votess = require("../../../dominio/Votess");
 
-const allUsersHasGivenVote =  async (req, res)=>{
+const getVote = async (req, res) => {
+  const { id } = req.params;
 
-  const {VoteId} = req.query
+  if (!id) return res.status(500).json({ message: "algo salio mal" });
 
-  if(VoteId){
-    try {
-  
-      const Vote = await Votess.findById(VoteId)
-      
-       
-     const AllVote = await Promise.all(
-      Vote.counter.map((userId) => {
-        return User.findById(userId);
-      })
-    );
+  try {
+    const vote = await Votess.findById(id);
 
-
-        
-      const users = AllVote.map(user => {
-       return {
-         _id:user._id, 
-         username:user.username, 
-         imageProfile:user.imageProfile
-       }
-      })
-
-      
-      return res.status(200).json(users)
-    } catch (error) {
-      console.log(error)
-      return res.status(500).json({message:"algo salio mal"})
-    }
-
+    return res.status(200).json(vote);
+  } catch (error) {
+    return res.status(500).json({ message: "algo salio mal" });
   }
+};
 
-  return res.status(400).json({message:'proporciona el id'})
-
-
-}
-
-module.exports = allUsersHasGivenVote
+module.exports = getVote;

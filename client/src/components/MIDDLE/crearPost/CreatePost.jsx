@@ -17,6 +17,7 @@ import SendButtonCreatePost from "./senbButtonCreatePost/SendButtonCreatePost";
 import BlueLoader from "../../../stylesComponents/BlurLoader/BlueLoader";
 import LoaderPost from "../../../stylesComponents/LoaderPost/LoaderPost";
 import Difusion from "./Difusion/Difusion";
+import { HandleStateActions, clearStateActions } from "./HandleSteateOptions";
 import useMutationRequest from "../../../hooks/useMutationRequest";
 import CreatePostStore from "../../../zustand/CreatePostStore";
 import CreatePostService from "../../../services/CreatePost.service";
@@ -49,10 +50,15 @@ const CreatePost = () => {
         set("");
         if (store.current) store.current.value = "";
         clearImagePreview()
+        clearStateActions()
       }
     })
 
   }, [])
+
+
+
+
 
 
   return (

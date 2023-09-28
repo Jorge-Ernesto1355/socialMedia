@@ -26,6 +26,7 @@ import CommentAxios from "../services/comment/Comment";
 import ActionsPost from "../actionsPost/ActionsPost";
 import { useQuery } from "react-query";
 import More from "../more/More";
+import Votes from "../Votes/Votes";
 const Post = ({ post }) => {
 
 	const { _id: currentUser } = useSelector(
@@ -42,45 +43,8 @@ const Post = ({ post }) => {
 		createdAt,
 		edit,
 		_id: postId,
+		votes
 	} = post;
-
-
-	//   const mutateDelete = DeletePostMutation(postId);
-
-	//   const DeletePostFun = () => {
-	//     mutateDelete({ postId, currentUser });
-	//   };
-
-	//   //editar el Post
-	//   const mutateEdit = EditPostMutation(postId);
-
-	//   const editPostFun = () => {
-	//     mutateEdit({ description: descriptionState, currentUser, postId });
-	//   };
-
-	//   //favorites
-	//   const mutateFavorite = MutationFavorite();
-
-	//   //Share
-	//   const mutateShare = MutationShare();
-
-	//   const addToFavoriteFun = (postId) => {
-	//     if (currentUser === userId) {
-	//       toast("no se puede");
-	//     } else {
-	//       dispatch(PreviewActive());
-	//       dispatch(sharedPost(postId));
-	//     }
-	//   };
-
-	//   const addToShareFun = (postId) => {
-	//     if (currentUser === userId) {
-	//       toast.error("no puedes comentar un post que es tuyo");
-	//     } else {
-	//       dispatch(PreviewActive());
-	//       dispatch(sharedPost(postId));
-	//     }
-	//   };
 
 	const { data: userData } = useQuery(["user", userId], () => GetUser(userId));
 
@@ -127,11 +91,10 @@ const Post = ({ post }) => {
 			</div>
 
 			<div className="caption">
-
 				<p>{description}</p>
-
 			</div>
-
+			{votes?.length > 0 && <Votes id={postId}/>}
+			
 			<div className="photo">
 				<img src={image?.url} alt="" />
 			</div>

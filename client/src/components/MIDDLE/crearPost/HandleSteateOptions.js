@@ -14,3 +14,7 @@ export const HandleStateActions = (key, actions, setActions) => {
   // Actualizar el estado con el nuevo objeto de acciones
   setActions(updatedActions);
 };
+
+export const clearStateActions = (setActions) => {
+  setActions((prev) => !prev);
+};

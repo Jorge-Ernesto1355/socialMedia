@@ -1,9 +1,9 @@
 export const variantsMotion = {
   show: {
-    opacity: 1,
+    opacity: 0.8,
     scale: 1,
   },
-  hide: {
+  hidden: {
     opacity: 0,
     scale: 0,
   },
