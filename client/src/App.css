@@ -107,7 +107,6 @@ main .container .left {
 main .container .right {
   height: max-content;
   width: 100%;
-
   position: sticky;
   top: var(--sticky-top-right);
   bottom: 0;
@@ -118,6 +117,9 @@ main .container .right {
   padding: var(--card-padding);
   box-shadow: var(--card-shadow);
   background-color: var(--color-white);
+}
+.rightd {
+  width: 100%;
 }
 
 .rightd .friendsRequest {

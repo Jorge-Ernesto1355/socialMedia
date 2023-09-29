@@ -7,6 +7,7 @@ import voteService from './service/vote.service';
 import LoaderVote from './LoaderVote';
 import toast, { Toaster } from 'react-hot-toast';
 
+
 const porcentageVoto = ({totalVotes, votes})=>{
     if (totalVotes <= 0 || votes <= 0) return null
     const porcentage = (votes / totalVotes) * 100;
@@ -14,20 +15,19 @@ const porcentageVoto = ({totalVotes, votes})=>{
 }
 
 const Vote = ({vote, postId, totalVotes}) => {
+  
 
     const { _id: currentUser } = useSelector(
 		(state) => state.user.currentUser.user,
 	);
 
-    
     const [porcentaje, setPorcentaje] = useState(0)
 
     const {mutate, isLoading, isError} = useMutationRequest(voteService, {name:'votes'})
 
+  
    
-    const handleMutate = useCallback(()=>{
-        
-            console.log('1')
+    const HandleMutate = useCallback(()=>{
             mutate({
                 postId, 
                 userId:currentUser, 
@@ -35,28 +35,34 @@ const Vote = ({vote, postId, totalVotes}) => {
             }, {
                 onSuccess:()=>{
                     const porcentaje = porcentageVoto({totalVotes, votes:vote?.counter?.length})
+                    if(!porcentaje) return 
                     setPorcentaje(porcentaje)
                 }, 
                 // eslint-disable-next-line n/handle-callback-err
                 onError:(err)=>{
-                    
                     toast.error(err?.response?.data?.message)
+                    setPorcentaje(0)
                 }
             })
         
     }, [])
 
-    console.log(porcentaje)
     
+
   return (
-    <div className='vote-container' onClick={()=> handleMutate()} >
+    <div className='vote-container' onClick={()=> HandleMutate()} >
         {isLoading && <LoaderVote/>}
         {!isLoading && (
-            <div className='vote-body'>
+           <>
+           {porcentaje > 0  && <motion.div className='expanded-var-vote' initial={{width:'0%'}} animate={{width: `${porcentaje}%`}}  transition={{duration:.5}}>
+           <span className='text-expand-var'>{vote?.text}</span>
+           <p className='counter-expand-var'>{vote?.counter?.length}</p>
+            </motion.div>}
+            <div className={`vote-body ${porcentaje > 0  && 'expanded' }`}>
            <span>{vote?.text}</span>
-           <p>{vote?.counter?.length}</p>
-           {porcentaje && <motion.div className='expanded-var-vote'initial={{scaleX:0, scaleY:10}} animate={{scaleX:40}} transition={{duration:.5}}/>}
+           <p >{vote?.counter?.length}</p>
             </div>
+           </>
         ) }
         <Toaster/>
     </div>

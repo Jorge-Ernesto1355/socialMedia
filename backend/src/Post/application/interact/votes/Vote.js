@@ -5,8 +5,6 @@ const Votess = require("../../../dominio/Votess");
 const Votes = async (req, res) => {
   const { userId, postId, voteId, previousVote } = req.query;
 
-  console.log(userId, postId, voteId, previousVote);
-
   //userId user que vamos agregar a la votacion
   //postId la publicacion a la que le vamos a poner el userId
   //voteId para encontrar el vote en especifico
