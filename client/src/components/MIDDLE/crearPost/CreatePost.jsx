@@ -1,9 +1,7 @@
-import React, { lazy, useCallback, useEffect, useState } from "react";
+import React, { lazy, useCallback, useState } from "react";
 import "./CreatePost.css";
 import { useSelector } from "react-redux";
 import rem from "../../../assets/rem.jpg";
-import down from "./icons/down.png";
-import gallery from "./icons/gallery.png";
 import poll from "./icons/poll.png";
 import schedule from "./icons/calendar.png";
 import smile from "./icons/smile.png";
@@ -11,7 +9,7 @@ import AutoComplete from "../../Autocomplete/AutoComplete";
 import { useStore } from "../../../hooks/useStore/useStore";
 import UseImagePreview from "../../../hooks/useImagePreview/useImagePreview";
 import ImgInputFile from "../../../stylesComponents/ImgInputFile/ImgInputFile";
-import { HandleStateActions } from "./HandleSteateOptions";
+
 import ErrorButton from "../post/comments/makeComment/styledComponentes/ErrorButton/ErrorButton";
 import SendButtonCreatePost from "./senbButtonCreatePost/SendButtonCreatePost";
 import BlueLoader from "../../../stylesComponents/BlurLoader/BlueLoader";
