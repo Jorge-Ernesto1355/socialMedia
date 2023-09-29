@@ -19,7 +19,7 @@ router.delete("/:id", DeleteUser);
 
 router.put("/password", indexAuth.NewPassword);
 
-router.put("/friend/acceptfriend", index.AcceptFriends);
+router.put("/friend/request/accept", index.AcceptFriends);
 
 router.get("/friend/request/all/:userId", index.getRequestFriends);
 
