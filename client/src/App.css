@@ -87,7 +87,8 @@ main {
 
 main .container {
   display: grid;
-  grid-template-columns: 18vw auto 20vw;
+  grid-template-columns: auto 20vw 20vw;
+  place-content: center;
   column-gap: 2rem;
   position: relative;
 }
@@ -96,18 +97,21 @@ main .container .middle {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-left: 40rem;
 }
 
-main .container .left {
+ .container .left {
   height: max-content;
-  position: sticky;
-  top: var(--sticky-top-left);
+  position: fixed;
+  
 }
 
-main .container .right {
+ .container .rightd {
+ 
   height: max-content;
-  width: 100%;
-  position: sticky;
+  width: 20vw;
+  position: fixed;
+  right: 3rem;
   top: var(--sticky-top-right);
   bottom: 0;
 }
@@ -117,10 +121,9 @@ main .container .right {
   padding: var(--card-padding);
   box-shadow: var(--card-shadow);
   background-color: var(--color-white);
+  position: sticky ;
 }
-.rightd {
-  width: 100%;
-}
+
 
 .rightd .friendsRequest {
   background: var(--color-white);
