@@ -5,7 +5,7 @@ import Loader from "../../../../utilities/Loader";
 const EllipsisPost = lazy(() => import("./Ellipsis"))
 
 
-const More = ({ children, id }) => {
+const More = ({ children, id, postId }) => {
   const [isOpen, setIsOpen] = useState(false);
  
   return (
@@ -14,7 +14,7 @@ const More = ({ children, id }) => {
         {children}
       </div>
       {isOpen && (
-        <Suspense fallback={<Loader />}><EllipsisPost isOpen={isOpen} userId={id} /></Suspense>
+        <Suspense fallback={<Loader />}><EllipsisPost isOpen={isOpen} userId={id} postId={postId} /></Suspense>
       )}
 
     </div>
