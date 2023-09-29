@@ -1,7 +1,7 @@
 import "./RatingS.css";
 
 import { variantsAction } from "../framerMotion/showActions";
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import { motion } from "framer-motion";
 import MutationRequest from "../../../../hooks/useMutationRequest";
 import { objetsImgs } from "../post/objectImg";
@@ -23,6 +23,7 @@ const Reaction = ({ id, userId, name, children, request }) => {
     setShowReactions(false);
     mutateRequest.mutate({ userId, id, toSend: { label: value, userId } });
   };
+
 
   return (
     <div>

@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import React, { Suspense, lazy, useState } from 'react'
 import { objetsImgs } from '../post/objectImg'
-import { ConfirmationModal } from '../../../modal/ConfirmationModal'
 import ShowActions from '../showActions/ShowActions'
-
+const ConfirmationModal = lazy(()=> import('../../../modal/ConfirmationModal'))
 const ReactionView = ({reactionView, name, id, reactionsView, reqReaction, reqReactions}) => {
      const [isOpen, setIsOpen] = useState(false)
      
@@ -17,22 +16,22 @@ const ReactionView = ({reactionView, name, id, reactionsView, reqReaction, reqRe
         className="icons-reaction"
         src={objetsImgs[reactionView.label]}
         alt={reactionView.label}
-        
         />
       </li>
-      <ConfirmationModal isOpen={isOpen} handleClose={setIsOpen}>
-      <ShowActions
-          changeShowActions={setIsOpen}
-          id={id}
-          reactionsView={reactionsView}
-          name={name}
-          reqReaction={reqReaction}
-          reqReactions={reqReactions}
-        />
-      </ConfirmationModal>
-
-      
-    </>
+      {isOpen && (
+      <Suspense>
+         <ConfirmationModal isOpen={isOpen} handleClose={setIsOpen} >
+           <ShowActions
+            changeShowActions={setIsOpen}
+            id={id}
+            reactionsView={reactionsView}
+            name={name}
+            reqReaction={reqReaction}
+            reqReactions={reqReactions}
+         />
+        </ConfirmationModal>
+    </Suspense>
+  )}</>
   )
 }
 

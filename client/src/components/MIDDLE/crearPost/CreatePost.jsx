@@ -42,7 +42,7 @@ const CreatePost = () => {
 
   const handleMutate = useCallback(() => {
     if (!get()) return
-    mutate({ description: state, userId: user._id, votes, image: inputFile.current.files[0], difusion }, {
+    mutate({ description: get(), userId: user._id, votes, image: inputFile.current.files[0], difusion }, {
       onSuccess: () => {
         delVotes()
         set("");
@@ -53,6 +53,8 @@ const CreatePost = () => {
     })
 
   }, [])
+
+  console.log(isError)
 
 
 
@@ -114,7 +116,7 @@ const CreatePost = () => {
           />
         </div>
         <div style={{ marginTop: '15px' }} onClick={() => handleMutate()} aria-disabled={isError || isLoading}>
-          {isError && <ErrorButton reset={reset} />}
+          {isError && <ErrorButton reset={reset}/>}
           {!isError && <SendButtonCreatePost />}
         </div>
       </div>

@@ -84,7 +84,7 @@ const Post = ({ post }) => {
 
 				</div>
 				<span className="edit">
-					<More id={userId}>
+					<More id={userId} postId={postId}>
 						<img src={more} alt="" />
 					</More>
 				</span>

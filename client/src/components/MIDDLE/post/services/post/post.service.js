@@ -1,6 +1,6 @@
 import { userRequest } from "../../../../../utilities/requestMethod";
 
-export const EditPost = async (post, infoRequest) => {
+export const EditPostService = async (post, infoRequest) => {
   const form = new FormData();
 
   for (const key in post) {
@@ -20,10 +20,8 @@ export const EditPost = async (post, infoRequest) => {
   return data;
 };
 
-export const DeletePost = async (post) => {
-  const data = await userRequest.delete(
-    `/post/${post.postId}?userId=${post.currentUser}`,
-  );
+export const DeletePostService = async ({ postId, userId }) => {
+  const data = await userRequest.delete(`/post/${postId}?userId=${userId}`);
 
   return data;
 };
@@ -49,4 +47,12 @@ export const GetAllPostsShared = async (postId) => {
     `/post/action/shares/all?postId=${postId}`,
   );
   return data;
+};
+
+export const getPostService = async ({ id }) => {
+  try {
+    return userRequest.get(`/post/${id}`);
+  } catch (error) {
+    return error;
+  }
 };

@@ -1,0 +1,11 @@
+.skeleton-post-container{
+  width: 100%;
+  max-height: max-content;
+  border-radius: var(--card-border-radius);
+  padding: var(--card-padding);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  background: var(--color-white);
+  box-shadow: var(--card-shadow);
+ margin-top: 2rem;
+}

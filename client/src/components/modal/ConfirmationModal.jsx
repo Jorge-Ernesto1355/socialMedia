@@ -5,7 +5,7 @@ import './ConfirmationModal.css'
 import { variantsMotion } from '../../utilities/variantsMotion'
 
 
-export const ConfirmationModal = ({isOpen, children, handleClose}) => {
+ const ConfirmationModal = ({isOpen, children, handleClose}) => {
 
     useEffect(()=>{
         const closeOnScapeKey = (event)=> event?.key === 'Escape' &&  handleClose()
@@ -40,3 +40,5 @@ export const ConfirmationModal = ({isOpen, children, handleClose}) => {
     </ReactPortal>
   )
 }
+
+export default ConfirmationModal
