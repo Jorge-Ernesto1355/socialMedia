@@ -1,0 +1,26 @@
+/* inspired form gumroad website */
+.Accept-friend-accept {
+    --bg: #000;
+    --hover-bg: linear-gradient(to bottom, #4dc7d9 0%, #66a6ff 100%);
+    ;
+    --hover-text: #fff;
+    color: #fff;
+    border: 1px solid var(--bg);
+    border-radius: 4px;
+    padding: 0.2em 1em;
+    background: var(--bg);
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.Accept-friend-accept:hover {
+    color: var(--hover-text);
+    transform: translate(-0.20rem, -0.20rem);
+    background: var(--hover-bg);
+    box-shadow: 0.25rem 0.25rem var(--bg);
+}
+
+.Accept-friend-accept:active {
+    transform: translate(0);
+    box-shadow: none;
+}
