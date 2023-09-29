@@ -1,11 +1,14 @@
-import React from "react";
+
 import { userRequest } from "../../../../utilities/requestMethod";
 
-const RequestFriendsService = ({ id, limit, page }) => {
+const RequestFriendsService = async  ({ id, limit, page }) => {
+  
   try {
-    return userRequest.get(
+    const data = await userRequest.get(
       `/users/friend/request/all/${id}?limit=${limit}&page=${page}`,
     );
+   
+    return data
   } catch (error) {
     return error;
   }
