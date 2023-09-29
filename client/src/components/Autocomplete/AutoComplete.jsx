@@ -1,5 +1,5 @@
 import "./autoComplete.css";
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect} from "react";
 import { getAlgoliaResults } from "@algolia/autocomplete-preset-algolia";
 import { getActiveToken, isValidUsername, replaceAt } from "./utils";
 import { useAutocomplete } from "../../hooks/useAutocomplete";

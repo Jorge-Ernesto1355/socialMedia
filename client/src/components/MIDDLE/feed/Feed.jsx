@@ -18,7 +18,7 @@ import useInfiniteScroll from "../../../hooks/useInfiniteScroll/useInfiniteScrol
  * @returns {JSX.Element} - The rendered feed of posts.
  */
 export default function Feed({ limit }) {
-  const active = useSelector((state) => state.PreviewPost.active);
+
 
   const { results, isLoading, isError, hasNextPage, fetchNextPage } =
     useInfiniteScroll({

@@ -38,7 +38,7 @@ const CreatePost = () => {
   const { store, set, get} = useStore();
   const {element, input:inputFile, clearImagePreview} = UseImagePreview()
   const {mutate, isLoading, isError, reset} = useMutationRequest(CreatePostService, {name:'posts'})
-  console.log(votes)
+  
 
   const handleMutate = useCallback(()=>{
     if(!get()) return 
