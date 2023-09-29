@@ -1,0 +1,28 @@
+.user-request-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    height: max-content;
+
+}
+
+.user-request-information {
+    display: flex;
+
+}
+
+.user-request-text {
+    margin-left: .5rem;
+    font-weight: 500;
+    font-size: 1.3rem;
+}
+
+.text-muted.mutual-friends {
+    font-weight: 400;
+    font-size: small;
+}
+
+.request-options {
+    margin-top: .5rem;
+
+}

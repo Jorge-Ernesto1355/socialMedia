@@ -6,11 +6,11 @@ const useMutationRequest = (request, { name } = {}) => {
   }
 
 
-  if (!name ) {
+  if (!name) {
     throw new Error("error:name should be defined");
   }
 
-  
+
 
   const queryClient = useQueryClient();
   const {
