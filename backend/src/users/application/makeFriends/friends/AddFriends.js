@@ -9,6 +9,8 @@ const addFriends = async (req, res) => {
   try {
     const user = await User.findById(userId);
 
+    if(user.friends.includes(addUser)) return  res.status(201).json({ message: "ya lo tienes de amigos" });
+
     if (!user.friendsWaiting.includes(addUser)) {
       await user.updateOne({ $push: { friendsWaiting: addUser } });
 
