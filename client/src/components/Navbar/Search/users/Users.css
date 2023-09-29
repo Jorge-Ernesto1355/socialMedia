@@ -1,0 +1,15 @@
+.search-users-container{
+    width: 100%;
+    height: max-content;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    top: 3.5rem;
+    left: 0;
+    padding: .5rem;
+    box-shadow: var(--card-shadow);
+    border-radius: .5rem;
+    background-color: #fff;
+}
