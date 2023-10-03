@@ -2,6 +2,15 @@ const UserModel = require('../../../../../users/domain/UserModel')
 const Post = require('../../../../dominio/Post')
 const Reaction  = require('../../../../dominio/Reaction')
 
+const labelsValue = {
+  encanta:5, 
+  gusta:2, 
+  asombra:3, 
+  entristece:0, 
+  divierte:1
+
+}
+
 const GiveLike = async (req, res)=>{
   const {userid} = req.query
   const {label, userId} = req.body
@@ -25,7 +34,10 @@ try {
     return res.status(404)
   }
   const createReaction = async ()=>{
-    const reaction = await new Reaction({label, user:{
+
+    if(!labelsValue.hasOwnProperty(label)) return 
+
+    const reaction = await new Reaction({label, value: labelsValue[label], user:{
       userId,
       username:user.username, 
       imageProfile:{
