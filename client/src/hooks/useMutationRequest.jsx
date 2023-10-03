@@ -18,6 +18,7 @@ const useMutationRequest = (request, { name } = {}) => {
     isLoading: isLoadingMutation,
     isError,
     reset,
+    error,
   } = useMutation({
     mutationFn: request,
     onMutate: async (newComment) => {
@@ -47,7 +48,7 @@ const useMutationRequest = (request, { name } = {}) => {
     },
   });
 
-  return { mutate, isLoadingMutation, isError, reset };
+  return { mutate, isLoadingMutation, isError, reset, error };
 };
 
 export default useMutationRequest;
