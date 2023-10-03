@@ -3,10 +3,12 @@ const mongoosePaginate = require("mongoose-paginate-v2");
 
 const Post = Schema(
   {
-    userId: { type: String },
-    description: { type: String, max: 500 },
+    userId: {
+      ref: "User",
+      type: Schema.Types.ObjectId,
+    },
+    description: { type: String, max: 300 },
     image: { url: String, public_id: String },
-
     comments: [
       {
         ref: "Comment",
@@ -20,9 +22,7 @@ const Post = Schema(
         type: Schema.Types.ObjectId,
       },
     ],
-
     postShared: { ref: "Post", type: Schema.Types.ObjectId },
-
     reactions: {
       gusta: [
         {

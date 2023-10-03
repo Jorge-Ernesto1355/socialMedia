@@ -5,6 +5,8 @@ const route = Router();
 
 route.get("/", PostIndex.FindAllPost);
 
+route.get('/timeline/:userId', PostIndex.findTimeLine)
+
 route.put("/comment/:postId", PostIndex.comment);
 
 route.get("/comment/all/:id", PostIndex.FindCommentsFromPost);

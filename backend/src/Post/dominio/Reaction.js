@@ -3,6 +3,7 @@ const mongoosePaginate = require('mongoose-paginate-v2')
 
 const Reaction = Schema({
     label:{type:String},
+    value:{type:Number, max:10},
     user:{
      userId:Schema.Types.ObjectId, 
      username:String,
