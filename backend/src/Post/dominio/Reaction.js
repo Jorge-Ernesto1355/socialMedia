@@ -1,5 +1,5 @@
-const {Schema, model} = require('mongoose')
-const mongoosePaginate = require('mongoose-paginate-v2')
+const { Schema, model } = require("mongoose");
+const mongoosePaginate = require("mongoose-paginate-v2");
 
 const Reaction = Schema({
     label:{type:String},
@@ -17,5 +17,5 @@ const Reaction = Schema({
      versionKey: false,
  })
 
-Reaction.plugin(mongoosePaginate)
-module.exports = model('Reaction', Reaction)
+Reaction.plugin(mongoosePaginate);
+module.exports = model("Reaction", Reaction);

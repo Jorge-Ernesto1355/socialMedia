@@ -5,8 +5,9 @@ const connectDB = require("./db/Connect");
 const Auth = require("./auth/authUser.routes");
 const UserRoute = require("./users/infrastructure/User.routes");
 const PostRoute = require("./Post/infrastucture/PostRoute.routes");
+const NotificationRoute = require("./notification/infrastructure/Notification.routes");
 const fileUpload = require("express-fileupload");
-const createRoles = require("../src/roles/application/createAllRoles");
+
 const createFeelings = require("./Post/application/createPost/createFeelings");
 
 class Server {
@@ -30,15 +31,28 @@ class Server {
     );
 
     createFeelings();
-    createRoles();
+
     this.app.use(cors({ origin: "*" }));
     this.app.use((err, req, res, next) => {
-      if (!err) {
-        return next();
+      console.log(err);
+      // Verificar el tipo de error y responder en consecuencia
+      if (err.name === "ValidationError") {
+        // Error de validación (por ejemplo, al crear un nuevo registro)
+        return res
+          .status(400)
+          .json({ error: "Error de validación", message: err.message });
       }
+      if (err.name === "CastError") {
+        // Error de conversión de tipo (por ejemplo, al buscar un registro por un ID inválido)
+        return res
+          .status(404)
+          .json({ error: "Recurso no encontrado", message: err.message });
+      }
+      // Otros tipos de errores
 
-      res.status(500);
-      res.send("500: Internal server error");
+      return res
+        .status(500)
+        .json({ error: "Error interno del servidor", message: err.message });
     });
   }
 
@@ -50,6 +64,7 @@ class Server {
     this.app.use("/api/v1/auth", Auth);
     this.app.use("/api/v1/users", UserRoute);
     this.app.use("/api/v1/post", PostRoute);
+    this.app.use("/api/v1/notification", NotificationRoute);
   }
 
   listen() {

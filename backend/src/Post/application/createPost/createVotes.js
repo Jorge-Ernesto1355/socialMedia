@@ -1,8 +1,6 @@
 const Votess = require("../../dominio/Votess");
 
-const createVotes = async (req, res) => {
-  const { votes } = req.body;
-
+const createVotes = async ({ req, res, votes }) => {
   const votesJson = JSON.parse(votes);
 
   if (votes.length === 0) {

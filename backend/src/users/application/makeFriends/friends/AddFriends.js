@@ -6,10 +6,16 @@ const addFriends = async (req, res) => {
   // userId donde vamos agregar el usuario
   //addUser usuario que queremos añadir
 
+  if (!userId && !addUser)
+    return res.status(500).json({ message: "algo salio mal " });
+
   try {
     const user = await User.findById(userId);
 
-    if(user.friends.includes(addUser)) return  res.status(201).json({ message: "ya lo tienes de amigos" });
+    if (!user) return res.status(500).json({ message: "algo salio mal " });
+
+    if (user.friends.includes(addUser))
+      return res.status(201).json({ message: "ya lo tienes de amigos" });
 
     if (!user.friendsWaiting.includes(addUser)) {
       await user.updateOne({ $push: { friendsWaiting: addUser } });
@@ -17,10 +23,12 @@ const addFriends = async (req, res) => {
       await user.save();
       res.status(201).json({ message: "se ha mandado solicitud" });
     } else {
-      res.status(200).json({ message: "no puedes enviar dos veces solicitud" });
+      return res
+        .status(200)
+        .json({ message: "no puedes enviar dos veces solicitud" });
     }
   } catch (error) {
-    res.status(500).json({ message: "algo salio mal " });
+    return res.status(500).json({ message: "algo salio mal " });
   }
 };
 

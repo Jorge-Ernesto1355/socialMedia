@@ -1,6 +1,6 @@
 import { userRequest } from "../utilities/requestMethod";
 
-const GetPosts = async ({ limit, page }) => {
+export const GetPosts = async ({ limit, page }) => {
   try {
     return await userRequest.get(`/post?limit=${limit}&page=${page}`);
   } catch (error) {
@@ -8,4 +8,16 @@ const GetPosts = async ({ limit, page }) => {
   }
 };
 
-export default GetPosts;
+export const getTimeLine = async({limit, page, id})=>{
+
+  try {
+    return await userRequest.get(`/post/timeline/${id}`)
+  } catch (error) {
+    return error
+  }
+
+}
+
+
+
+

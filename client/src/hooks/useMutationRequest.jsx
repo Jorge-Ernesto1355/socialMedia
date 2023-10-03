@@ -19,6 +19,7 @@ const useMutationRequest = (request, { name } = {}) => {
     isError,
     reset,
     error,
+    status
   } = useMutation({
     mutationFn: request,
     onMutate: async (newComment) => {
@@ -48,7 +49,8 @@ const useMutationRequest = (request, { name } = {}) => {
     },
   });
 
-  return { mutate, isLoadingMutation, isError, reset, error };
+  return { mutate, isLoadingMutation, isError, reset, error, status };
+
 };
 
 export default useMutationRequest;
