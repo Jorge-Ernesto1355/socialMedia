@@ -1,5 +1,5 @@
 /* eslint-disable no-constant-condition */
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 
 import "./makeComment.css";
 import rem from "../../../../../assets/rem.jpg";
@@ -7,14 +7,11 @@ import gallery from "../../../crearPost/icons/gallery.png";
 
 import GetUser from "../../../../../services/GetUser.service";
 import useMutationRequest from "../../../../../hooks/useMutationRequest";
-import paperPlaneBlue from "../icons/paperPlaneBlue.png";
-import paperPlaneGray from "../icons/paperPlaneGray.png";
 import { useQuery } from "react-query";
 import AutoComplete from "../../../../Autocomplete/AutoComplete";
 import { useStore } from "../../../../../hooks/useStore/useStore";
 import { ThreeDotsLoader } from "./ThreeDotsLoader";
 import EmojiPickerWithIcon from "../../../../EmojiPicker/EmojiPickerWithIcon";
-import warning from "../icons/warning.png";
 import { isDefined } from "../../../../../utilities/isDefined";
 import SendButton from "./styledComponentes/sendButton/SendButton";
 import ErrorButton from "./styledComponentes/ErrorButton/ErrorButton";
@@ -29,7 +26,7 @@ const MakeComment = (
     componentId,
     showComments,
     hideMakeComments,
-
+    notShowComments
   },
   inputFile,
 ) => {
@@ -52,6 +49,7 @@ const MakeComment = (
   const user = userData?.data?.data ?? {};
 
   const CommentCallback = useCallback(() => {
+    if (notShowComments) return
     if (!request) return;
     if (state)
       mutate(
@@ -108,10 +106,10 @@ const MakeComment = (
               onClick={() => CommentCallback()}
               disabled={isError}
             >
-              {isError && <ErrorButton reset={reset}/>}
+              {isError && <ErrorButton reset={reset} />}
               {!isError && (
                 <>
-                {isLoadingMutation ? <ThreeDotsLoader/>  : <SendButton/>}
+                  {isLoadingMutation ? <ThreeDotsLoader /> : <SendButton />}
                 </>
               )}
             </div>
