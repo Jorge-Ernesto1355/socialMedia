@@ -1,8 +1,8 @@
 import React from "react";
 
-const Loader = () => {
+const Loader = ({ box }) => {
   return (
-    <div className="autocomplete-loading">
+    <div className={`autocomplete-loading ${box && box}`}>
       <svg
         className="autocomplete-loading-icon"
         viewBox="0 0 100 100"
