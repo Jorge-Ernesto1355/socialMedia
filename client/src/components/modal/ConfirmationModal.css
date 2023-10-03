@@ -1,12 +1,11 @@
-.react-portal-modal-container{
+.react-portal-modal-container {
     top: 0;
     display: grid;
     place-content: center;
     width: 100vw;
     height: 100vh;
     position: fixed;
-    z-index: 10;
-    background-color: ghostwhite;
-    opacity: 0.5;
+    z-index: 100;
+    background-color: rgba(256, 226, 226, 0.5);
 
 }
