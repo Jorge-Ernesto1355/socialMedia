@@ -149,6 +149,7 @@
 
 .feed .caption {
   margin: 20px 0;
+  word-break: break-word;
 }
 
 .feed .liked-by span {
