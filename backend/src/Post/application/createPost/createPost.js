@@ -5,9 +5,10 @@ const createImagen = require("./createImagen");
 const createVotes = require("./createVotes");
 
 const createPost = async (req, res) => {
-  const { description, userId, votes, difusion, postShared } = req.body;
+  // const { description, userId, votes, difusion, postShared, usersTagged } = req.body;
 
-  let Votes = [];
+  if (!req.body?.userId)
+    return res.status(500).json({ message: "algo salio something went wrong" });
 
   try {
     const user = await User.findById(userId);

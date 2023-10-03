@@ -54,7 +54,6 @@ const CreatePost = () => {
 
   }, [])
 
-  console.log(isError)
 
 
 

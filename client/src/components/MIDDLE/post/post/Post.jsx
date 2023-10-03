@@ -3,12 +3,8 @@ import "./Post.css";
 
 import rem from "../../../../assets/rem.jpg";
 import {  useSelector } from "react-redux";
-
 import more from "../comments/EllipsiComments/icons/ellipsis.png";
-
 import GetUser from "../../../../services/GetUser.service";
-
-
 import Comments from "../comments/Comments";
 import MakeAComment from "../comments/makeComment/MakeComment";
 import { Toaster } from "react-hot-toast"
