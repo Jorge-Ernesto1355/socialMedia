@@ -32,10 +32,17 @@
 .user-username{
     font-weight: 500;
     color: #3A3A3A;
+    font-size: large;
 }
 
 .user-status{
     font-weight: 400;
     font-size: small;
 
+}
+
+.search-add-friend{
+    font-size: small;
+    color: gray;
+    font-weight: 500;
 }
