@@ -16,5 +16,6 @@ export const HandleStateActions = (key, actions, setActions) => {
 };
 
 export const clearStateActions = (setActions) => {
+  if(!setActions) return 
   setActions((prev) => !prev);
 };
