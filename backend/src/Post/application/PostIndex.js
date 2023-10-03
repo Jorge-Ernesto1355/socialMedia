@@ -4,6 +4,7 @@ const FindPostById = require("./find/FindPostById");
 const UpdatePost = require("./UpdatePost");
 const createPost = require("./createPost/createPost");
 const FindCurrentPost = require("./find/FindCurrentPost");
+const findTimeLine = require('./find/FindTimeLinePost')
 
 const Votes = require("./interact/votes/Vote");
 const UsersVotes = require("../application/interact/votes/AllUserGivenVote");
@@ -67,4 +68,5 @@ module.exports = {
   getAllCommentsResponded,
   updateComment,
   deleteComment,
+  findTimeLine
 };
