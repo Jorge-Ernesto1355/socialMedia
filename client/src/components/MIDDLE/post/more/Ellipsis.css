@@ -11,7 +11,7 @@
   align-self: start;
   z-index: 100;
   padding: 0.5rem;
-  left: -9rem;
+  left: -4.9rem;
   top: 2.3rem;
 
 }
@@ -24,7 +24,8 @@
   justify-content: start;
   align-items: center;
 }
-.ellipsiPost-item img{
+
+.ellipsiPost-item img {
   width: .9rem;
   height: .9rem;
   margin-right: .5rem;
