@@ -10,4 +10,4 @@ function validateVote(object) {
   return VoteSchema.safeParse(object);
 }
 
-modules.exports = { VoteSchema, validateVote };
+module.exports = { VoteSchema, validateVote };

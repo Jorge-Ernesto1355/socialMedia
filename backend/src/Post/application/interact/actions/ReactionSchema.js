@@ -20,4 +20,4 @@ function validateReaction(object) {
   return ReactionSchema.safeParse(object);
 }
 
-modules.exports = { validateReaction, ReactionSchema };
+module.exports = { validateReaction, ReactionSchema };

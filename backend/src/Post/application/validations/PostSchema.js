@@ -12,7 +12,7 @@ const PostSchema = z.object({
     .min(24),
   description: z
     .string({
-      required_error: "userId is required",
+      required_error: "description is required",
     })
     .max(200),
   image: z
@@ -42,4 +42,4 @@ function validatePost(object) {
   return PostSchema.safeParse(object);
 }
 
-modules.exports = { PostSchema, validatePost };
+module.exports = { PostSchema, validatePost };
