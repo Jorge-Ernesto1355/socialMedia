@@ -1,32 +1,28 @@
 const z = require("zod");
 
-const ImageProfileSchema = z.object({
-  url: z.string(),
-  public_id: z.string(),
-});
-
-const UserSchema = z.object({
-  userId: z
-    .string({
-      required_error: "userId is required",
-    })
-    .max(24)
-    .min(24),
-  username: z.string(),
-  imageProfile: ImageProfileSchema.optional(),
-});
+const allowedTypes = ["Post", "Comment"];
+const allowedLabels = ["gusta", "encanta", "entristece", "asombra", "divierte"];
 
 const ReactionSchema = z.object({
-  label: z.string({
-    required_error: "label is required",
-  }),
+  label: z
+    .string()
+    .nonempty()
+    .refine((value) => allowedLabels.includes(value), {
+      message: 'label of reaaction not exists".',
+    }),
   containerId: z
     .string({
       required_error: "userId is required",
     })
     .max(24)
     .min(24),
-  userId:z
+  type: z
+    .string()
+    .nonempty()
+    .refine((value) => allowedTypes.includes(value), {
+      message: 'El tipo debe ser "Post" o "Comment".',
+    }),
+  userId: z
     .string({
       required_error: "userId is required",
     })
