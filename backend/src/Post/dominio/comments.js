@@ -4,6 +4,7 @@ const mongoosePaginate = require("mongoose-paginate-v2");
 const Comment = Schema(
   {
     comment: {
+      postId:{type: Schema.Types.ObjectId, require: true },
       userId: { type: Schema.Types.ObjectId, require: true },
       edit: { type: Boolean, default: false },
       text: { type: String, require: true },
