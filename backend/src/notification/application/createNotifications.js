@@ -5,7 +5,7 @@ const createNotification = async (req, res) => {
   // const {label, userConector, userReceptor, message} = req.body
   const result = validateNotification(req.body);
   if (result.error) {
-    return res.status(400).json({ error: result.error.mesasge });
+    return res.status(400).json({ error: result.error.message });
   }
 
   const notification = await NotificationService.create(req.body);
