@@ -1,52 +1,63 @@
+const { default: mongoose } = require("mongoose");
 const exists = require("../../../../libs/exits");
 const validateObjectId = require("../../../../libs/isValidObjectId");
-const UserModel = require("../../../../users/domain/UserModel");
-const Post = require("../../../dominio/Post");
 const Reaction = require("../../../dominio/Reaction");
 const verifyExistingUser = require("./utils/verifyExistingUser");
- 
 
 module.exports = class ReactionService {
   static async create(object) {
     exists(object);
 
-    const {
-      label,
-      userId,
-      value,
-      postId,
-    } = object;
+    const { label, userId, value, containerId, type } = object;
 
     try {
-      const isValidUser = validateObjectId(userId, UserModel);
-      const isValidPost = validateObjectId(postId, Post);
+      const isValidUser = await validateObjectId(userId, "User");
+      const isValidContainerId = await validateObjectId(containerId, type);
 
-      if (isValidPost?.error || isValidUser?.error) {
+      if (isValidContainerId?.error || isValidUser?.error) {
         throw new Error("document not found or objectId is not valid");
       }
 
-      const {reactions} = await Post.findById(id).populate([
-        "reactions.gusta",
-        "reactions.encanta",
-        "reactions.divierte",
-        "reactions.asombra",
-        "reactions.entristece",
-      ]);
-      
-      const user = await UserModel.findById(userId);
+      const container = await mongoose.models[type].findById(containerId);
 
-      const {exitsUserId, reaction} = verifyExistingUser(reactions, userId)
-      
-      if(!exitsUserId){
-          return await this.createReaction({label, value, user, userId})
-      } 
-      if(exitsUserId){
-          if(reaction?.label === label ) return 
-          await Reaction.findByIdAndDelete(reaction._id)
-         return  await this.createReaction({label, value, user, userId, postId})
-      }    
-       
-      
+      const reactions = (await Reaction.find({ containerId })) || [];
+
+      const user = await mongoose.models["User"].findById(userId);
+
+      const { exitsUserId, reaction, error } = verifyExistingUser(
+        reactions,
+        userId
+      );
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      if (!exitsUserId) {
+        return await this.createReaction({
+          label,
+          value,
+          user,
+          userId,
+          containerId,
+          type,
+        });
+      }
+      if (exitsUserId && reaction) {
+        if (reaction?.label === label)
+          throw new Error("same label not modified");
+
+        const reactionSaved = await Reaction.findByIdAndUpdate(reaction._id, {
+          label,
+          value,
+        });
+        const reactionIndex = container.reactions.findIndex(
+          (reactionIndex) => reactionIndex._id === reaction._id
+        );
+        container.reactions[reactionIndex] = reactionSaved;
+        await container.save();
+        return reactionSaved;
+      }
     } catch (error) {
       return {
         error,
@@ -55,20 +66,28 @@ module.exports = class ReactionService {
     }
   }
 
-static async createReaction({label, value, user, userId, postId}){
-
-  const isValidPost = validateObjectId(postId, Post);
-
-  if (isValidPost?.error || isValidUser?.error) {
-    throw new Error("document not found or objectId is not valid");
-  }
-
-  const {reactions} = await Post.findById(postId);
-
+  static async createReaction({
+    label,
+    value,
+    user,
+    userId,
+    containerId,
+    type,
+  }) {
     try {
+      const isValidContainerId = await validateObjectId(containerId, type);
+
+      if (isValidContainerId?.error) {
+        throw new Error("document not found or objectId is not valid");
+      }
+
+      const container = await mongoose.models[type].findById(containerId);
+
       const reaction = await new Reaction({
         label,
         value,
+        containerId,
+        type,
         user: {
           userId,
           username: user?.username,
@@ -78,18 +97,18 @@ static async createReaction({label, value, user, userId, postId}){
           },
         },
       });
-      
+
       const reactionSaved = await reaction.save();
-      reactions[label] = [...reactions[label], reactionSaved];
-      await reactions.save();
+      if (!container && !container.reactions)
+        throw new Error("reactions Model not found");
+      container.reactions = [...container.reactions, reactionSaved];
+      await container.save();
+      return reaction;
     } catch (error) {
       return {
         error,
         message: error.message,
       };
     }
-
   }
-
- 
 };
