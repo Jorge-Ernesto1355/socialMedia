@@ -5,6 +5,7 @@ const Reaction = Schema(
   {
     label: { type: String },
     value: { type: Number, max: 10 },
+    type: { type: String },
     containerId: { type: Schema.Types.ObjectId },
     user: {
       userId: Schema.Types.ObjectId,

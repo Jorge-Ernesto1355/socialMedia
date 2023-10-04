@@ -23,38 +23,12 @@ const Post = Schema(
       },
     ],
     postShared: { ref: "Post", type: Schema.Types.ObjectId },
-    reactions: {
-      gusta: [
-        {
-          ref: "Reaction",
-          type: Schema.Types.ObjectId,
-        },
-      ],
-      encanta: [
-        {
-          ref: "Reaction",
-          type: Schema.Types.ObjectId,
-        },
-      ],
-      asombra: [
-        {
-          ref: "Reaction",
-          type: Schema.Types.ObjectId,
-        },
-      ],
-      divierte: [
-        {
-          ref: "Reaction",
-          type: Schema.Types.ObjectId,
-        },
-      ],
-      entristece: [
-        {
-          ref: "Reaction",
-          type: Schema.Types.ObjectId,
-        },
-      ],
-    },
+    reactions: [
+      {
+        ref: "Reaction",
+        type: Schema.Types.ObjectId,
+      },
+    ],
     group: { type: String, default: "" },
     edit: { type: Boolean, default: false },
   },
