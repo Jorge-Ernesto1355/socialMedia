@@ -1,25 +1,18 @@
+const CommentService = require("../interact/comments/CommentService");
 
-const Post = require("../../dominio/Post")
-const Comment = require("../../dominio/comments")
+const FindCommentsFromPost = async (req, res) => {
+  const limit = parseInt(req.query.limit, 10) || 10;
+  const page = parseInt(req.query.page, 10) || 1;
 
-const FindCommentsFromPost = async  (req,res)=>{
+  const { postId } = req.params;
+  if (!postId) return res.status(500).json({ message: "something went wrong" });
 
+  const comments = await CommentService.getAll({ req, limit, page });
 
-  
- const {id} = req.params
- if(!id) return res.status(500).json({message:'algo salio mal'})
-
-
-   try {
-   const post = await Post.findById(id).select(['comments']).populate('comments')
-   const comments = await Comment.paginate({_id:{$in: post.comments?.map((comment)=>comment._id )}})
-  return res.status(200).json(comments)
- } catch (error) {   
-res.status(500).json({message:'algo salio mal'})
+  if (comments.error) {
+    return res.status(500).json({ message: comments.error.message });
   }
 
-  
-  
-
-}
-module.exports = FindCommentsFromPost
+  return res.status(200).json(comments);
+};
+module.exports = FindCommentsFromPost;
