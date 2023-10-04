@@ -1,46 +1,32 @@
 const User = require("../../../users/domain/UserModel");
 const Post = require("../../dominio/Post");
-
-const createImagen = require("./createImagen");
-const createVotes = require("./createVotes");
+const {validatePost} = require('../validations/PostSchema')
+const PostService = require('../../PostService')
 
 const createPost = async (req, res) => {
   // const { description, userId, votes, difusion, postShared, usersTagged } = req.body;
 
   if (!req.body?.userId)
-    return res.status(500).json({ message: "algo salio something went wrong" });
+    return res.status(500).json({ message: "something went wrong" });
 
-  try {
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(500).json({ message: "user no proporcionado" });
-    }
-    let image = null;
 
-    if (req.files?.image) {
-      image = await createImagen(req);
+
+    const result = validatePost(req.body)
+    
+    if (result.error) {
+      return res.status(400).json({ error: result.error.mesasge });
     }
 
-    if (votes) {
-      Votes = await createVotes(req, res);
+    const post =  await PostService.create(req)
+    
+
+    if(post.error){
+      return res.status(400).json({ message: post.error.message });
     }
+   
 
-    const newPost = new Post({ userId, description, image });
-    const votesId = Votes.map((vote) => vote._id);
-
-    if (postShared) {
-      newPost.postShared = postShared;
-    }
-    newPost.votes = votesId;
-    user.posts = [...user.posts, newPost];
-
-    await user.save();
-    await newPost.save();
-
-    return res.status(201).json(newPost);
-  } catch (error) {
-    return res.status(500).json({ message: "algo salio posts" });
-  }
+    return res.status(201).json(post);
+  
 };
 
 module.exports = createPost;
