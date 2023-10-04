@@ -5,17 +5,17 @@ const route = Router();
 
 route.get("/", PostIndex.FindAllPost);
 
-route.get('/timeline/:userId', PostIndex.findTimeLine)
+route.get("/timeline/:userId", PostIndex.findTimeLine);
 
 route.put("/comment/:postId", PostIndex.comment);
 
-route.get("/comment/all/:id", PostIndex.FindCommentsFromPost);
+route.get("/comment/all/:postId", PostIndex.FindCommentsFromPost);
 
 route.post("/", PostIndex.createPost);
 
 route.put("/:id", PostIndex.UpdatePost);
 
-route.put("/reaction/:id", PostIndex.GiveLike);
+route.put("/reaction/:postId", PostIndex.GiveLike);
 
 route.put("/share/:id", PostIndex.Share);
 
