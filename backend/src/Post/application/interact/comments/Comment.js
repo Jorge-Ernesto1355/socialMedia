@@ -3,59 +3,34 @@ const Post = require("../../../dominio/Post")
 const Comment = require('../../../dominio/comments')
 const User = require("../../../../users/domain/UserModel")
 const createImagen = require('../../createPost/createImagen')
+const { validateComment } = require("./CommentSchema")
+const CommentService = require("./CommentService")
 
 
 
 
 const comments = async (req, res)=>{
 
-   const {commentId} = req.query
-   const {postId} = req.params
-   const { text, userId} = req.body
-  
+  const {postId} = req.params
+   if(!postId) return res.status(500).json({message:"something went wrong"})
 
-  
+   
+   const result = validateComment({comment:{...req.body, postId}})
 
-    if(!postId) return res.status(500).json({message:"algo salio mal "})
-    const post = await Post.findById(postId)
-
-    const user = await User.findById(userId)
-    if(!user) return res.status(500).json({message:"user no encontrado"})
-      
-    
-   try {
-
-    let image = null
-
-    if (req.files?.image) {
-      image = await createImagen(req)
-     }
-
-     //commentGot is the comment that has been got for the id commentId
-     //commentCreated is gonna come into in a new post or comment
-
-     const comment = await new Comment({ comment:{userId, text, image}})
-     const commentCreated =  await comment.save()
-
-    if((userId && text  && commentId)){
-  
-      const commentGot = await Comment.findById(commentId)
-      commentGot.commentsResponded = [...commentGot.commentsResponded,commentCreated ]
-      await commentGot.save()
-  
-      return res.status(202).json({message:'se ha respondido'})
-     }
-
-  
-     post.comments = [...post.comments, commentCreated]
-     await post.save()
-    
-    return res.status(201).json({message:'se ha creado un comment'})
-
-   } catch (error) {
-     
-   return   res.status(500).json({message:"algo salio mal "})
+   if (result.error) {
+     return res.status(400).json({ error: result.error.mesasge });
    }
+  
+   const newComment = await CommentService.create(req)
+  
+
+   if(newComment.error){
+    return res.status(400).json({message:newComment.error.message})
+   }
+    
+    return res.status(201).json(newComment)
+
+   
 }
 
 module.exports = comments
