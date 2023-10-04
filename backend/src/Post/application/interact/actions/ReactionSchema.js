@@ -6,14 +6,30 @@ const ImageProfileSchema = z.object({
 });
 
 const UserSchema = z.object({
-  userId: z.string(),
+  userId: z
+    .string({
+      required_error: "userId is required",
+    })
+    .max(24)
+    .min(24),
   username: z.string(),
   imageProfile: ImageProfileSchema.optional(),
 });
 
 const ReactionSchema = z.object({
-  label: z.string(),
+  label: z.string({
+    required_error: "label is required",
+  }),
+  containerId: z
+    .string({
+      required_error: "userId is required",
+    })
+    .max(24)
+    .min(24),
   user: UserSchema,
+  value: z.string({
+    required_error: "value is required",
+  }),
 });
 
 function validateReaction(object) {
