@@ -26,8 +26,13 @@ const ReactionSchema = z.object({
     })
     .max(24)
     .min(24),
-  user: UserSchema,
-  value: z.string({
+  userId:z
+    .string({
+      required_error: "userId is required",
+    })
+    .max(24)
+    .min(24),
+  value: z.number({
     required_error: "value is required",
   }),
 });
