@@ -3,6 +3,8 @@ const validateObjectId = require("../../../../libs/isValidObjectId");
 const UserModel = require("../../../../users/domain/UserModel");
 const Post = require("../../../dominio/Post");
 const Reaction = require("../../../dominio/Reaction");
+const verifyExistingUser = require("./utils/verifyExistingUser");
+ 
 
 module.exports = class ReactionService {
   static async create(object) {
@@ -10,7 +12,7 @@ module.exports = class ReactionService {
 
     const {
       label,
-      user: { userId },
+      userId,
       value,
       postId,
     } = object;
@@ -23,54 +25,71 @@ module.exports = class ReactionService {
         throw new Error("document not found or objectId is not valid");
       }
 
-      const post = await Post.findById(id).populate([
+      const {reactions} = await Post.findById(id).populate([
         "reactions.gusta",
         "reactions.encanta",
         "reactions.divierte",
         "reactions.asombra",
         "reactions.entristece",
       ]);
+      
       const user = await UserModel.findById(userId);
 
+      const {exitsUserId, reaction} = verifyExistingUser(reactions, userId)
+      
+      if(!exitsUserId){
+          return await this.createReaction({label, value, user, userId})
+      } 
+      if(exitsUserId){
+          if(reaction?.label === label ) return 
+          await Reaction.findByIdAndDelete(reaction._id)
+         return  await this.createReaction({label, value, user, userId, postId})
+      }    
+       
+      
+    } catch (error) {
+      return {
+        error,
+        message: error.message,
+      };
+    }
+  }
+
+static async createReaction({label, value, user, userId, postId}){
+
+  const isValidPost = validateObjectId(postId, Post);
+
+  if (isValidPost?.error || isValidUser?.error) {
+    throw new Error("document not found or objectId is not valid");
+  }
+
+  const {reactions} = await Post.findById(postId);
+
+    try {
       const reaction = await new Reaction({
         label,
         value,
         user: {
           userId,
-          username: user.username,
+          username: user?.username,
           imageProfile: {
-            url: user.imageProfile.url,
-            public_id: user.imageProfile.public_id,
+            url: user?.imageProfile?.url,
+            public_id: user?.imageProfile?.public_id,
           },
         },
       });
+      
       const reactionSaved = await reaction.save();
-      post.reactions[label] = [...post.reactions[label], reactionSaved];
-      await post.save();
-    } catch (error) {}
+      reactions[label] = [...reactions[label], reactionSaved];
+      await reactions.save();
+    } catch (error) {
+      return {
+        error,
+        message: error.message,
+      };
+    }
+
   }
 
-  static async ExistsReaction(object) {
-    exits(object);
-
-    const { containerId, modelContainer } = object;
-
-    let reactions = [];
-
-    //para saber si esta el user o no
-    let exits = false;
-
-    //para saber si debemos eliminar y crear o no hacer nada
-    let reactionLabel = "";
-
-    //para actualizar el action
-    let reactionId = null;
-
-    try {
-      const isValidPost = await validateObjectId(containerId, modelContainer);
-      if (isValidPost?.error) {
-        throw new Error(isValidPost.message);
-      }
-    } catch (error) {}
-  }
+ 
 };
