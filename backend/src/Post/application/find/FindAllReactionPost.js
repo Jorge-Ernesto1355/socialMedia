@@ -1,37 +1,23 @@
-const Post = require("../../dominio/Post");
-const Reaction = require("../../dominio/Reaction");
+const ReactionService = require("../interact/actions/ReactionService");
 
 const FindAllReactionsPost = async (req, res) => {
-  const { id } = req.params;
-  if (!id) return res.status(500).json({ message: "algo salio mal" });
+  const { id, type } = req.params;
+  if (!id && !type) return res.status(500).json({ message: "algo salio mal" });
+
   const limit = parseInt(req.query.limit, 10) || 10;
   const page = parseInt(req.query.page, 10) || 1;
-  try {
-    let reactionsIds = [];
-    const fieldsReaction = await Post.findById(id)
-      .select(["reactions"])
-      .populate([
-        "reactions.gusta",
-        "reactions.encanta",
-        "reactions.divierte",
-        "reactions.asombra",
-        "reactions.entristece",
-      ]);
-    for (key in fieldsReaction.reactions) {
-      if (typeof fieldsReaction.reactions[key] === "object") {
-        reactionsIds = reactionsIds.concat(fieldsReaction.reactions[key]);
-      }
-    }
 
-    const reactions = await Reaction.paginate(
-      { _id: { $in: reactionsIds.map((id) => id._id) } },
-      { limit, page }
-    );
+  const reactions = await ReactionService.getAll({
+    containerId: id,
+    limit,
+    page,
+    type,
+  });
 
-    return res.status(200).json(reactions);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+  if (reactions.error)
+    return res.status(500).json({ message: reactions.error.message });
+
+  return res.status(200).json(reactions);
 };
 
 module.exports = FindAllReactionsPost;
