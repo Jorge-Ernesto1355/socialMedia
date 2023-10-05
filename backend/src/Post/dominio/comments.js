@@ -4,45 +4,18 @@ const mongoosePaginate = require("mongoose-paginate-v2");
 const Comment = Schema(
   {
     comment: {
-      postId:{type: Schema.Types.ObjectId, require: true },
+      postId: { type: Schema.Types.ObjectId, require: true },
       userId: { type: Schema.Types.ObjectId, require: true },
       edit: { type: Boolean, default: false },
       text: { type: String, require: true },
       image: { url: String, public_id: String },
-      reactions: {
-        gusta: [
-          {
-            ref: "Reaction",
-            type: Schema.Types.ObjectId,
-          },
-        ],
-        encanta: [
-          {
-            ref: "Reaction",
-            type: Schema.Types.ObjectId,
-          },
-        ],
-        asombra: [
-          {
-            ref: "Reaction",
-            type: Schema.Types.ObjectId,
-          },
-        ],
-        divierte: [
-          {
-            ref: "Reaction",
-            type: Schema.Types.ObjectId,
-          },
-        ],
-        entristece: [
-          {
-            ref: "Reaction",
-            type: Schema.Types.ObjectId,
-          },
-        ],
-      },
     },
-
+    reactions: [
+      {
+        ref: "Reaction",
+        type: Schema.Types.ObjectId,
+      },
+    ],
     commentsResponded: [
       {
         ref: "Comment",
