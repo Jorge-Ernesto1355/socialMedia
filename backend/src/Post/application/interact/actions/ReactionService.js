@@ -3,8 +3,39 @@ const exists = require("../../../../libs/exits");
 const validateObjectId = require("../../../../libs/isValidObjectId");
 const Reaction = require("../../../dominio/Reaction");
 const verifyExistingUser = require("./utils/verifyExistingUser");
+const exits = require("../../../../libs/exits");
+const groupReactions = require("./utils/groupReactions");
 
 module.exports = class ReactionService {
+  static async getAll(object) {
+    try {
+      exits(object);
+      const { containerId, type, limit, page } = object;
+
+      const isValidContainerId = await validateObjectId(containerId, type);
+
+      if (isValidContainerId?.error) {
+        throw new Error(isValidContainerId.message);
+      }
+
+      const options = {
+        limit,
+        page,
+      };
+
+      const reactions = await Reaction.paginate({ containerId }, options);
+
+      return reactions;
+    } catch (error) {
+      return {
+        error,
+        message: error.message,
+      };
+    }
+  }
+
+  static async get() {}
+
   static async create(object) {
     exists(object);
 
