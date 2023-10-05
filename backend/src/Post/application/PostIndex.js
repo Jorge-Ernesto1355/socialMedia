@@ -4,7 +4,7 @@ const FindPostById = require("./find/FindPostById");
 const UpdatePost = require("./UpdatePost");
 const createPost = require("./createPost/createPost");
 const FindCurrentPost = require("./find/FindCurrentPost");
-const findTimeLine = require('./find/FindTimeLinePost')
+const findTimeLine = require("./find/FindTimeLinePost");
 
 const Votes = require("./interact/votes/Vote");
 const UsersVotes = require("../application/interact/votes/AllUserGivenVote");
@@ -13,7 +13,7 @@ const getVotes = require("./interact/votes/getVotes");
 //actionsPost
 
 //like
-const GiveLike = require("./interact/actions/likes/GiveLike");
+const ReactionPost = require("./interact/actions/likes/ReactionPost");
 
 //shares
 const allShared = require("../application/interact/shares/AllUserHasGivenShared");
@@ -47,7 +47,7 @@ module.exports = {
   FindPostById,
   UpdatePost,
   createPost,
-  GiveLike,
+  ReactionPost,
   comment,
   Share,
   FindCurrentPost,
@@ -68,5 +68,5 @@ module.exports = {
   getAllCommentsResponded,
   updateComment,
   deleteComment,
-  findTimeLine
+  findTimeLine,
 };
