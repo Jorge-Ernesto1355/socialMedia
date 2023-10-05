@@ -15,7 +15,7 @@ route.post("/", PostIndex.createPost);
 
 route.put("/:id", PostIndex.UpdatePost);
 
-route.put("/reaction/:postId", PostIndex.GiveLike);
+route.put("/reaction/:postId", PostIndex.ReactionPost);
 
 route.put("/share/:id", PostIndex.Share);
 
@@ -35,13 +35,13 @@ route.get("/votes/:id", PostIndex.getVotes);
 
 route.put("/reaction/favorite/:postId", PostIndex.favorite);
 
-route.get("/reactions/all/:id", PostIndex.FindAllReactionsPost);
+route.get("/reactions/all/:id/:type", PostIndex.FindAllReactionsPost);
 
 route.get("/reaction/view/:id", PostIndex.FindReactionPostView);
 
 route.get("/reaction/:id", PostIndex.FindReactionPost);
 
-route.put("/reaction/comment/:id", PostIndex.ActionsComment);
+route.put("/reaction/comment/:commentId", PostIndex.ActionsComment);
 
 route.get("/reactions/comment/all/:id", PostIndex.getReactionsComment);
 
