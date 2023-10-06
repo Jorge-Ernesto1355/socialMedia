@@ -3,7 +3,7 @@ const FindAllPost = require("./find/FindAllPost");
 const FindPostById = require("./find/FindPostById");
 const UpdatePost = require("./UpdatePost");
 const createPost = require("./createPost/createPost");
-const FindCurrentPost = require("./find/FindCurrentPost");
+
 const findTimeLine = require("./find/FindTimeLinePost");
 
 const Votes = require("./interact/votes/Vote");
@@ -21,7 +21,7 @@ const Share = require("./interact/shares/Share");
 
 //comment
 const comment = require("./interact/comments/Comment");
-const FindCommentsFromPost = require("./find/FindCommentsFromPost");
+
 const getReactionComment = require("./interact/comments/getReactionComment");
 const getReactionCommentView = require("./interact/comments/getReactionView");
 
@@ -29,8 +29,6 @@ const getReactionCommentView = require("./interact/comments/getReactionView");
 const favorite = require("./interact/favorites/Favorites");
 const AllFavorite = require("./interact/favorites/AllFavorites");
 
-const FindAllReactionsPost = require("./find/FindAllReactionPost");
-const FindReactionPost = require("./find/FindReactionPost");
 const FindReactionPostView = require("./find/FindReactionsView");
 
 const ActionsComment = require("./interact/comments/ActionComment");
@@ -50,18 +48,18 @@ module.exports = {
   ReactionPost,
   comment,
   Share,
-  FindCurrentPost,
+
   allShared,
   Votes,
   UsersVotes,
   getVotes,
   favorite,
-  FindCommentsFromPost,
+
   AllFavorite,
-  FindAllReactionsPost,
+
   FindReactionPostView,
   getReactionCommentView,
-  FindReactionPost,
+
   ActionsComment,
   getReactionComment,
   getReactionsComment,
