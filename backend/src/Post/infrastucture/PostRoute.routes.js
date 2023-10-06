@@ -9,8 +9,6 @@ route.get("/timeline/:userId", PostIndex.findTimeLine);
 
 route.put("/comment/:postId", PostIndex.comment);
 
-route.get("/comment/all/:postId", PostIndex.FindCommentsFromPost);
-
 route.post("/", PostIndex.createPost);
 
 route.put("/:id", PostIndex.UpdatePost);
@@ -23,8 +21,6 @@ route.delete("/:id", PostIndex.DeletePost);
 
 route.get("/:id", PostIndex.FindPostById);
 
-route.get("/currentpost/postsfriends", PostIndex.FindCurrentPost);
-
 route.get("/action/shares/all", PostIndex.allShared);
 
 route.put("/votes/add", PostIndex.Votes);
@@ -35,11 +31,7 @@ route.get("/votes/:id", PostIndex.getVotes);
 
 route.put("/reaction/favorite/:postId", PostIndex.favorite);
 
-route.get("/reactions/all/:id/:type", PostIndex.FindAllReactionsPost);
-
 route.get("/reaction/view/:id", PostIndex.FindReactionPostView);
-
-route.get("/reaction/:id", PostIndex.FindReactionPost);
 
 route.put("/reaction/comment/:commentId", PostIndex.ActionsComment);
 

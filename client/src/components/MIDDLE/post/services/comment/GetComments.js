@@ -6,7 +6,7 @@ const GetComments = async ({ id }) => {
   }
 
   try {
-    const response = await userRequest.get(`/post/comment/all/${id}`);
+    const response = await userRequest.get(`/comment/all/${id}`);
     if (response.status === 200) {
       return response;
     } else {

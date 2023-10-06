@@ -8,7 +8,7 @@ import Post from "../post/post/Post";
 import { useSelector } from "react-redux";
 
 // service
-import GetPosts from "../../../services/getPosts.services";
+import {GetPosts} from "../../../services/getPosts.services";
 import InfiniteScroll from "react-infinite-scroll-component";
 import useInfiniteScroll from "../../../hooks/useInfiniteScroll/useInfiniteScroll";
 import PostLoader from "../post/post/postLoader/PostLoader";

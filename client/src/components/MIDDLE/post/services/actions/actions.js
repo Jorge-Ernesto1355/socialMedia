@@ -90,7 +90,7 @@ export const GetAllReactions = async ({ id, limit, page }) => {
 export const getAllCommentsResponded = async ({ id }) => {
   console.log(id);
   try {
-    const data = await userRequest.get(`/post/comments/responded/all/${id}`);
+    const data = await userRequest.get(`/comments/all/commentsResponded/${id}`);
     return data;
   } catch (errorCaugthed) {
     return errorCaugthed.response;
