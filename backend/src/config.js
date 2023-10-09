@@ -6,9 +6,10 @@ const Auth = require("./auth/authUser.routes");
 const UserRoute = require("./users/infrastructure/User.routes");
 const PostRoute = require("./Post/infrastucture/PostRoute.routes");
 const NotificationRoute = require("./notification/infrastructure/Notification.routes");
+const ReactionRouter = require('./reaction/infratructure/Reaction.routes')
+const CommentRouter = require('./comment/infrastructure/Comment.routes')
 const fileUpload = require("express-fileupload");
 
-const createFeelings = require("./Post/application/createPost/createFeelings");
 
 class Server {
   constructor() {
@@ -30,7 +31,6 @@ class Server {
       })
     );
 
-    createFeelings();
 
     this.app.use(cors({ origin: "*" }));
     this.app.use((err, req, res, next) => {
@@ -65,6 +65,8 @@ class Server {
     this.app.use("/api/v1/users", UserRoute);
     this.app.use("/api/v1/post", PostRoute);
     this.app.use("/api/v1/notification", NotificationRoute);
+    this.app.use('/api/v1/reaction', ReactionRouter)
+    this.app.use('/api/v1/comment', CommentRouter)
   }
 
   listen() {

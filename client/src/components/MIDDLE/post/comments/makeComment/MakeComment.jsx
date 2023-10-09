@@ -12,7 +12,6 @@ import AutoComplete from "../../../../Autocomplete/AutoComplete";
 import { useStore } from "../../../../../hooks/useStore/useStore";
 import { ThreeDotsLoader } from "./ThreeDotsLoader";
 import EmojiPickerWithIcon from "../../../../EmojiPicker/EmojiPickerWithIcon";
-import { isDefined } from "../../../../../utilities/isDefined";
 import SendButton from "./styledComponentes/sendButton/SendButton";
 import ErrorButton from "./styledComponentes/ErrorButton/ErrorButton";
 
@@ -42,7 +41,7 @@ const MakeComment = (
     ["user", userforDisplay],
     () => GetUser(userforDisplay),
     {
-      enabled: isDefined(userforDisplay),
+      enabled: !!userforDisplay,
     },
   );
 

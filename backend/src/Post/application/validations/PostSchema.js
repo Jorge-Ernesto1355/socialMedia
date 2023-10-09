@@ -1,7 +1,7 @@
 const z = require("zod");
-const ReactionSchema = require("../interact/actions/ReactionSchema");
-const { CommentSchema } = require("../interact/comments/CommentSchema");
+const ReactionSchema = require("../../../reaction/ReactionSchema");
 const { VoteSchema } = require("../interact/votes/validations/VoteSchema");
+const { CommentSchema } = require("../../../comment/application/CommentSchema");
 
 const PostSchema = z.object({
   userId: z

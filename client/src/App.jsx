@@ -15,13 +15,12 @@ import Message from "./components/RIGHT/Message/Message";
 import FriendRequest from "./components/RIGHT/FriendsRequest/FriendRequest";
 import Navbar from "./components/Navbar/componentNavbar/Navbar";
 import FavoritesList from "./components/favorites/FavoritesList";
-import Login from "./pages/Login/components/Login";
-import Settings from "./components/settings/Settings";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Theme from "./components/Theme/Theme";
+import Register from "./pages/Register/Register";
+import Login from "./pages/Login/Login";
 
 function App() {
-  const { currentUser } = useSelector((state) => state.user);
+
 
   return (
     <div>
@@ -29,48 +28,46 @@ function App() {
         <Routes>
           <Route path="/profile/:userId/:postId" element={<Profile />} />
           <Route path="/favorites/:userId" element={<FavoritesList />}></Route>
+          <Route path='/signup' element={<Register />} />
+          <Route path="/login" element={<Login />} />
           <Route
             exact
             index
             element={
-              currentUser ? (
-                <main>
-                  <Navbar></Navbar>
-                  <div className="container">
-                    {/* ===== LEFT ======= */}
-                    <div className="left">
-                      <Perfil />
-                      <Sidebar />
+
+              <main>
+                <Navbar></Navbar>
+                <div className="container">
+                  {/* ===== LEFT ======= */}
+                  <div className="left">
+                    <Perfil />
+                    <Sidebar />
+                  </div>
+
+                  {/* ===== MIDDLE =====  */}
+                  <div className="middle">
+                    <CreatePost />
+                    <Feed type="PostsFeed" />
+                  </div>
+
+                  {/* ===== RIGHT =====  */}
+                  <div className="rightd">
+                    <div className="messages">
+                      <Messages />
+                      <SearchFriends />
+                      <Category />
+                      <Message />
                     </div>
 
-                    {/* ===== MIDDLE =====  */}
-                    <div className="middle">
-                      <CreatePost />
-                      <Feed type="PostsFeed" />
-                      <Theme />
-                      <Settings></Settings>
-                    </div>
-
-                    {/* ===== RIGHT =====  */}
-                    <div className="rightd">
-                      <div className="messages">
-                        <Messages />
-                        <SearchFriends />
-                        <Category />
-                        <Message />
-                      </div>
-
-                      <div className="friendsRequest">
-                        <FriendRequest />
-                      </div>
+                    <div className="friendsRequest">
+                      <FriendRequest />
                     </div>
                   </div>
-                </main>
-              ) : (
-                <Login />
-              )
+                </div>
+              </main>
+
             }
-          ></Route>
+          />
         </Routes>
       </Router>
     </div>

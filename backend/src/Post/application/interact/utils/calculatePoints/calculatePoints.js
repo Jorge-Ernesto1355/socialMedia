@@ -1,4 +1,4 @@
-const Reaction = require("../../../../dominio/Reaction");
+const Reaction = require("../../../../../reaction/domain/Reaction");
 
 const objeto = {
     "reactions": {

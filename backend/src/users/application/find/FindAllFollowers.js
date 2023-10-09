@@ -1,29 +1,25 @@
 const User = require("../../domain/UserModel")
+const userService = require("../../userService")
 
+const DEFAULT_LIMIT = 10;
+const DEFAULT_PAGE = 1;
 
+const FindALLFollowers =  async (req, res)=>{
 
-const FindALLFollowers =  async ()=>{
+  const {userId} = req.params
+  
+  const limit = parseInt(req.query.limit, 10)  || DEFAULT_LIMIT;
+  const page = parseInt(req.query.page, 10) || DEFAULT_PAGE;
 
-  const {userId} = req.query
+ 
+  
+  const friends = await userService.getFriends({userId, limit, page})
 
-  if(userId){
-    try {
-      const user = await User.findById(userId)
-    const friends = await Promise.all(
-    user.followings.map((friendId)=>{
-      return User.findById(friendId)
-    })
-  )
-  if(!friends){
-    res.status(404).json({message:"amigos no encontrados ;("})
+  if(friends.error){
+    return res.status(500).json({error: friends.message})
   }
 
   return res.status(200).json(friends)
-    } catch (error) {
-     res.status(500).json({message:"algo salio mal "})
-    }
-  }
-
   
 }
 

@@ -1,15 +1,16 @@
 const mongoose = require("mongoose");
 
-module.exports = async function validateObjectId(id, modelName) {
+module.exports = async function validateObjectId(options, modelName) {
   try {
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      throw new Error("objectId is not valid");
-    }
 
+    if(typeof options !== 'object') throw new Error('options is not an object')
+   
     if (!mongoose.models[modelName]) throw new Error("model not found");
 
-    const document = await mongoose.models[modelName].findById(id);
+    const document = await mongoose.models[modelName].findOne(options);
 
+    if(document) return document
+    
     if (!document) throw new Error("document not found");
   } catch (error) {
     return {

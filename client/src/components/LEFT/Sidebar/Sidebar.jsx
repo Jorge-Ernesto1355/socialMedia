@@ -1,6 +1,6 @@
 import React from "react";
 import "./Sidebar.css";
-import NotificacionPopup from "./NotificationPopup/NotificacionPopup";
+
 import { AiOutlineHome, AiOutlineMessage } from "react-icons/ai";
 import { MdOutlineExplore } from "react-icons/md";
 import { IoIosNotificationsOutline } from "react-icons/io";
@@ -8,22 +8,14 @@ import { BsBookmark } from "react-icons/bs";
 import { HiOutlineColorSwatch } from "react-icons/hi";
 import { FiSettings } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import Theme from "../../Theme/Theme";
 
-// redux
-import {
-  Notification,
-  Messages,
-  Theme,
 
-  SettingsRedux,
-} from "../../../redux/NavigationRedux";
-import { PreviewActive } from "../../../redux/PreviewPostRedux";
-import { useDispatch, useSelector } from "react-redux";
 
 const Sidebar = () => {
-  const dispatch = useDispatch();
+
   const menuItem = document.querySelectorAll(".sidebar a ");
-  const { _id: userId } = useSelector((state) => state.user.currentUser.user);
+
 
   const removeClassList = () => {
     menuItem.forEach((size) => {
@@ -38,22 +30,6 @@ const Sidebar = () => {
     });
   });
 
-  const handleNotification = (action) => {
-    if (action === "theme") {
-      dispatch(Theme());
-    }
-    if (action === "notification") {
-      dispatch(Notification());
-    }
-
-    if (action === "messages") {
-      dispatch(Messages());
-    }
-
-    if (action === "settings") {
-      dispatch(SettingsRedux());
-    }
-  };
 
   return (
     <div className="sidebar">
@@ -73,7 +49,7 @@ const Sidebar = () => {
 
       <a
         className="menu-item"
-        onClick={() => handleNotification("notification")}
+
       >
         <span>
           <IoIosNotificationsOutline />
@@ -83,31 +59,31 @@ const Sidebar = () => {
 
         {/* NOTIFICACIONES POPUP */}
 
-        <NotificacionPopup />
+
       </a>
 
-      <a className="menu-item" onClick={() => handleNotification("messages")}>
+      <a className="menu-item" >
         <span>
           <AiOutlineMessage />
         </span>
         <i>9</i>
         <h3>Mensajes</h3>
       </a>
-      <Link to={`/favorites/${userId}`} className="menu-item">
+      <Link className="menu-item">
         <span>
           <BsBookmark />
         </span>
         <h3>Favoritos</h3>
       </Link>
 
-      <a className="menu-item" onClick={() => handleNotification("theme")}>
+      <a className="menu-item" >
         <span>
           <HiOutlineColorSwatch />
         </span>
-        <h3>Theme</h3>
+        <Theme />
       </a>
 
-      <a className="menu-item" onClick={() => handleNotification("settings")}>
+      <a className="menu-item" >
         <span>
           <FiSettings />
         </span>
@@ -115,7 +91,7 @@ const Sidebar = () => {
       </a>
       <label
         htmlFor="create-post"
-        onClick={() => dispatch(PreviewActive())}
+
         className="btn btn-primary"
       >
         crear post

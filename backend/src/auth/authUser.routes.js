@@ -1,20 +1,16 @@
 const {Router} = require('express')
-const {body} = require('express-validator')
- 
-const indexAuth = require('../users/application/authUser/indexAuth')
-const RefreshToken = require('../auth/application/RefreshToken')
-
+const indexAuth = require('./indexAuth')
 
 const router = Router()
  
 
 //register User
-router.post('/register', indexAuth.RegisterUser )
+router.post('/register', indexAuth.Register)
 
 //get All Users 
 router.post('/login', indexAuth.LoginUser)
 
-router.post('/refresh-token', RefreshToken )
+router.put('/refresh', indexAuth.refresh )
 
 router.post('/forgot-password', indexAuth.ForgotPassword)
 

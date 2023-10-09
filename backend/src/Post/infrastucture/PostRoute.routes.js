@@ -7,15 +7,9 @@ route.get("/", PostIndex.FindAllPost);
 
 route.get("/timeline/:userId", PostIndex.findTimeLine);
 
-route.put("/comment/:postId", PostIndex.comment);
-
-route.get("/comment/all/:postId", PostIndex.FindCommentsFromPost);
-
 route.post("/", PostIndex.createPost);
 
 route.put("/:id", PostIndex.UpdatePost);
-
-route.put("/reaction/:postId", PostIndex.ReactionPost);
 
 route.put("/share/:id", PostIndex.Share);
 
@@ -35,24 +29,8 @@ route.get("/votes/:id", PostIndex.getVotes);
 
 route.put("/reaction/favorite/:postId", PostIndex.favorite);
 
-route.get("/reactions/all/:id/:type", PostIndex.FindAllReactionsPost);
 
 route.get("/reaction/view/:id", PostIndex.FindReactionPostView);
 
-route.get("/reaction/:id", PostIndex.FindReactionPost);
-
-route.put("/reaction/comment/:commentId", PostIndex.ActionsComment);
-
-route.get("/reactions/comment/all/:id", PostIndex.getReactionsComment);
-
-route.get("/reaction/comment/:id", PostIndex.getReactionComment);
-
-route.get("/reaction/comment/view/:id", PostIndex.getReactionCommentView);
-
-route.get("/comments/responded/all/:id", PostIndex.getAllCommentsResponded);
-
-route.put("/comment/:id", PostIndex.updateComment);
-
-route.delete("/comment/:id", PostIndex.deleteComment);
 
 module.exports = route;

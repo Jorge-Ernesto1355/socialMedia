@@ -1,54 +1,50 @@
 const { Router } = require("express");
 const index = require("../application/index");
-const indexAuth = require("../application/authUser/indexAuth");
 const DeleteUser = require("../application/Delete/DeleteUserById");
 const UpdateUserProfile = require("../application/Update/UpdateUserProfile");
 const verifyToken = require("../../auth/application/verifySignup");
 
 const router = Router();
 
-//get All Users
-router.get("/", index.FindAllUsers);
+// querys
+router.get("/", index.query.getUsers);
 
-//get one User
+router.get("/posts/:userId", index.query.getPosts);
 
-router.get("/:id", index.FindUserById);
+router.get("/:userId", index.query.FindUserById);
 
-//delete User
-router.delete("/:id", DeleteUser);
+router.get('/friends/:userId', index.query.getFriends)
 
-router.put("/password", indexAuth.NewPassword);
+router.get("/friend/request/all/:userId", index.query.getRequestFriends);
 
-router.put("/friend/request/accept", index.AcceptFriends);
+//mutations POST
+router.post("/upload", index.mutation.UploadProfilePicture);
 
-router.get("/friend/request/all/:userId", index.getRequestFriends);
+router.post("/upload/cover", index.mutation.UploadCover);
 
-router.put("/friend/add", index.addFriend);
+router.post("/relationShip", index.mutation.addRelationShip);
 
-//update User
+
+// mutation PUT
+
+
+router.put("/friend/accept", index.mutation.AcceptFriends); //check
+
+router.put("/friend/add", index.mutation.addFriend); //check
+
 router.put("/:id", UpdateUserProfile);
 
-//uploadImages
+router.put("/roles/add", index.mutation.giveRoles);
 
-router.post("/upload", index.UploadProfilePicture);
+router.put("/relationShip/add", index.mutation.AcceptRelationShip);
 
-router.post("/upload/cover", index.UploadCover);
+//mutation DElETE
+router.delete("/relationShip/del", index.mutation.deleteRelationShip);
 
-//relationship
+router.delete("/:userId", index.mutation.deleteUser);
 
-router.put("/relationShip/add", index.AcceptRelationShip);
+router.delete("/roles/del", index.mutation.deleteRoles);
 
-router.post("/relationShip", index.addRelationShip);
 
-router.delete("/relationShip/del", index.deleteRelationShip);
-
-//roles
-router.put("/roles/add", index.giveRoles);
-
-router.delete("/roles/del", index.deleteRoles);
-
-router.get("/userPosts/:userId", index.FindUserPosts);
-
-router.get("/actions/getUsers/:id", index.FindUsersActions);
 
 module.exports = router;

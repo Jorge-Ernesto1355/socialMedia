@@ -10,8 +10,6 @@ const useMutationRequest = (request, { name } = {}) => {
     throw new Error("error:name should be defined");
   }
 
-
-
   const queryClient = useQueryClient();
   const {
     mutate,
@@ -19,7 +17,8 @@ const useMutationRequest = (request, { name } = {}) => {
     isError,
     reset,
     error,
-    status
+    status,
+    data
   } = useMutation({
     mutationFn: request,
     onMutate: async (newComment) => {
@@ -49,7 +48,7 @@ const useMutationRequest = (request, { name } = {}) => {
     },
   });
 
-  return { mutate, isLoadingMutation, isError, reset, error, status };
+  return { mutate, isLoadingMutation, isError, reset, error, status, data };
 
 };
 

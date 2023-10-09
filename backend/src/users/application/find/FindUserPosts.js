@@ -1,32 +1,24 @@
 const Post = require('../../../Post/dominio/Post')
+const userService = require('../../userService')
 
+const DEFAULT_LIMIT = 10;
+const DEFAULT_PAGE = 1;
 
+const getPosts = async (req, res)=>{
 
-const FindUserPost = async (req, res)=>{
+  const limit = parseInt(req.query.limit, 10)  || DEFAULT_LIMIT;
+  const page = parseInt(req.query.page, 10) || DEFAULT_PAGE;
 
-  
   const {userId} = req.params
  
-  if(userId){
+  const posts = await userService.getPosts({userId, limit, page})
 
-    try {
+  if(posts?.error)
+    return res.status(400).json({ error: posts.message });
 
-        const userPost = await Post.find({userId:userId})
-        if(!userPost){
-          return res.status(404).json({message:"recurso no encontrado"})
-        }
+  return res.status(200).json(posts)
 
-       return  res.status(200).json(userPost)
-        
   
-    } catch (error) {
-      res.status(500).json({message:"algo salio mal "})
-    }
-
-  }
-
-  return res.status(200).json({message:"algo salio mal "})
-
 }
 
-module.exports  = FindUserPost
+module.exports  = getPosts

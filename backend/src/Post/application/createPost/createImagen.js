@@ -1,8 +1,8 @@
 const { uploadImage } = require("../../../libs/cloudynary");
 const fs = require("fs-extra");
 
-const createImagen = async (req) => {
-  if (!req?.files?.image) return null;
+const createImagen = async (files) => {
+  if (!files?.image) return null;
 
   const result = await uploadImage(req.files.image.tempFilePath);
 

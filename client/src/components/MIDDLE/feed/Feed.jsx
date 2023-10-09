@@ -8,7 +8,7 @@ import Post from "../post/post/Post";
 import { useSelector } from "react-redux";
 
 // service
-import GetPosts from "../../../services/getPosts.services";
+import { GetPosts } from "../../../services/getPosts.services";
 import InfiniteScroll from "react-infinite-scroll-component";
 import useInfiniteScroll from "../../../hooks/useInfiniteScroll/useInfiniteScroll";
 import PostLoader from "../post/post/postLoader/PostLoader";
@@ -35,11 +35,11 @@ export default function Feed({ limit }) {
     <InfiniteScroll
       dataLength={results.length}
       hasMore={hasNextPage || isLoading}
-      loader={<PostLoader/>}
+      loader={<PostLoader />}
       next={() => fetchNextPage()}
     >
       <ul className="feeds">
-         
+
         {results?.map((post) => (
           <Post key={`post-key=${post._id}`} post={post} />
         ))}

@@ -1,15 +1,18 @@
-const User = require("../../domain/UserModel")
+
+const userService = require("../../userService")
 
 
 const findAllUsers = async (req, res)=>{
  
-  const Users = await User.find().select(['username, email, '])
 
-  
-   
-   
-    return res.status(200).json(Users)
-  
+  const users = await userService.getUsers()
+
+  if(users.error){
+    return res.status(500).json({error: users.message})
+  }
+
+  return res.status(200).json(users)
+ 
   
 
 }

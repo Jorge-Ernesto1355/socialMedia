@@ -3,9 +3,6 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { Provider } from "react-redux";
-import { store, persistor } from "./redux/store";
-import { PersistGate } from "redux-persist/integration/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { InstantSearch } from "react-instantsearch-hooks";
@@ -27,14 +24,10 @@ const INDEX_NAME = "autocomplete-accounts";
 
 root.render(
   <QueryClientProvider client={queryClient}>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
         <InstantSearch searchClient={searchClient} indexName={INDEX_NAME}>
           <App />
         </InstantSearch>
         <ReactQueryDevtools />
-      </PersistGate>
-    </Provider>
   </QueryClientProvider>,
 );
 

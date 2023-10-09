@@ -1,26 +1,12 @@
-import React from "react";
+import React, { Suspense, useState } from "react";
 import "./Theme.css";
-import { useDispatch, useSelector } from "react-redux";
-import { closeTheme } from "../../redux/NavigationRedux";
-import { motion } from "framer-motion";
+import ConfirmationModal from "../modal/ConfirmationModal";
+import Loader from "../../utilities/Loader";
 
 const Theme = () => {
-  const { theme } = useSelector((state) => state.Navigate);
-  const dispatch = useDispatch();
 
-  const variantLogin = {
-    show: {
-      opacity: 1,
-    },
-    hidden: {
-      opacity: 0,
-      y: -500,
-      x: 3,
-      transition: {
-        duration: 0.3,
-      },
-    },
-  };
+
+
 
   const fontSizes = document.querySelectorAll(".customize-theme span");
   const colorPalette = document.querySelectorAll(".choose-color span");
@@ -137,65 +123,74 @@ const Theme = () => {
     window.location.reload();
   };
 
+  const [isOpen, setIsOpen] = useState(false)
   return (
-    <div className={`customize-theme ${theme ? "active" : ""}`}>
-      <motion.div
-        animate={theme ? "show" : "hidden"}
-        variants={variantLogin}
-        className="card"
-      >
-        <h2>costomiza tu vista</h2>
-        <p>maneja tu tamaño de letra, color y el fondo </p>
-        <button onClick={() => dispatch(closeTheme())}>ddd</button>
-        {/* FontSize */}
-        <div className="font-size">
-          <h4>tamaño de letra</h4>
-          <div>
-            <h5>Aa</h5>
-            <div className="choose-size">
-              <span className="font-size-1"></span>
-              <span className="font-size-2"></span>
-              <span className="font-size-3"></span>
-              <span className="font-size-4"></span>
-              <span className="font-size-5"></span>
-            </div>
-            <h3>Aa</h3>
-          </div>
-        </div>
+    <>
+      <h3 onClick={() => setIsOpen((prev) => !prev)}>Theme</h3>
+      {
+        isOpen && (
+          <Suspense fallback={<Loader box={'box'} />}>
+            <ConfirmationModal>
+              <div>
 
-        {/* Color */}
+                <h2>costomiza tu vista</h2>
+                <p>maneja tu tamaño de letra, color y el fondo </p>
 
-        <div className="color">
-          <h4>Color</h4>
-          <div className="choose-color">
-            <span className="color-1"></span>
-            <span className="color-2"></span>
-            <span className="color-3"></span>
-            <span className="color-4"></span>
-            <span className="color-5"></span>
-          </div>
-        </div>
+                {/* FontSize */}
+                <div className="font-size">
+                  <h4>tamaño de letra</h4>
+                  <div>
+                    <h5>Aa</h5>
+                    <div className="choose-size">
+                      <span className="font-size-1"></span>
+                      <span className="font-size-2"></span>
+                      <span className="font-size-3"></span>
+                      <span className="font-size-4"></span>
+                      <span className="font-size-5"></span>
+                    </div>
+                    <h3>Aa</h3>
+                  </div>
+                </div>
 
-        {/* BackGround */}
-        <div className="background">
-          <h4>Background</h4>
-          <div className="choose-bg">
-            <div className="bg-1" onClick={() => bg1Fu()}>
-              <span></span>
-              <h5 htmlFor="bg-1">light</h5>
-            </div>
-            <div className="bg-2" onClick={() => bg2Fu()}>
-              <span></span>
-              <h5 htmlFor="bg-2">Dim</h5>
-            </div>
-            <div className="bg-3" onClick={() => bg3Fu()}>
-              <span></span>
-              <h5 htmlFor="bg-3">Lights Out</h5>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-    </div>
+                {/* Color */}
+
+                <div className="color">
+                  <h4>Color</h4>
+                  <div className="choose-color">
+                    <span className="color-1"></span>
+                    <span className="color-2"></span>
+                    <span className="color-3"></span>
+                    <span className="color-4"></span>
+                    <span className="color-5"></span>
+                  </div>
+                </div>
+
+                {/* BackGround */}
+                <div className="background">
+                  <h4>Background</h4>
+                  <div className="choose-bg">
+                    <div className="bg-1" onClick={() => bg1Fu()}>
+                      <span></span>
+                      <h5 htmlFor="bg-1">light</h5>
+                    </div>
+                    <div className="bg-2" onClick={() => bg2Fu()}>
+                      <span></span>
+                      <h5 htmlFor="bg-2">Dim</h5>
+                    </div>
+                    <div className="bg-3" onClick={() => bg3Fu()}>
+                      <span></span>
+                      <h5 htmlFor="bg-3">Lights Out</h5>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </ConfirmationModal>
+          </Suspense>
+        )
+
+      }
+    </>
   );
 };
 

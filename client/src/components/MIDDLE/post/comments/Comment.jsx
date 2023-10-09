@@ -26,7 +26,7 @@ import ShowComments from "./ShowComments";
 import commentRespondedAxios from "../services/comment/commentRespondesAxios";
 
 import Loader from "../../../../utilities/Loader";
-import { isDefined } from "../../../../utilities/isDefined";
+
 const More = lazy(() => import("./EllipsiComments/More"));
 
 const Comment = ({ comment, postId }) => {
@@ -61,7 +61,7 @@ const Comment = ({ comment, postId }) => {
     ["user", userId],
     () => GetUser(currentUser),
     {
-      enabled: isDefined(currentUser),
+      enabled: !!currentUser,
     },
   );
 

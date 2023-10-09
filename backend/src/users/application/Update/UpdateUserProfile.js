@@ -6,7 +6,7 @@ const User = require("../../domain/UserModel")
 const updateUserProfile = async ( req, res )=>{
   const {id} = req.params
   const {Admin, password, userId} = req.body
-  console.log(password, 'yo soy el impostor')
+ 
 
  if( id || Admin){
    if(password){

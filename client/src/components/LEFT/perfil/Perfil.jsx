@@ -1,10 +1,9 @@
 import React from "react";
-import { useSelector } from "react-redux";
+
 import rem from "../../../assets/rem.jpg";
 import "./Perfil.css";
 
 const Perfil = () => {
-  const { user } = useSelector((state) => state.user.currentUser);
 
   return (
     <div className="profile">
@@ -12,8 +11,8 @@ const Perfil = () => {
         <img src={rem} alt="" />
       </div>
       <div className="handle">
-        <h4>{user?.username}</h4>
-        <p className="text-muted">@{user?.username}</p>
+        <h4>{''}</h4>
+        <p className="text-muted">@{''}</p>
       </div>
     </div>
   );

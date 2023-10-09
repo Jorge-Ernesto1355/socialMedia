@@ -1,5 +1,8 @@
 const { Schema, model } = require("mongoose");
 const mongoosePaginate = require("mongoose-paginate-v2");
+const { Token, AccessToken, RefreshToken } = require("../../auth/application/auth");
+const getUserInfo = require("../../libs/getUserInfo");
+const TokenModel = require("./TokenModel");
 
 const User = new Schema(
   {
@@ -31,10 +34,7 @@ const User = new Schema(
       type: Array,
       default: [],
     },
-    curp: {
-      type: String,
-      required: true,
-    },
+    
     desription: {
       type: String,
       max: 80,
@@ -84,4 +84,24 @@ const User = new Schema(
 
 User.plugin(mongoosePaginate);
 
+User.methods.createAccessToken = function (){
+
+  return AccessToken(getUserInfo(this))
+
+}
+
+
+User.methods.createRefreshToken = async  function (){
+  const refreshToken = RefreshToken(getUserInfo(this))
+
+  try {
+    await new TokenModel({token:refreshToken}).save()
+    return refreshToken
+  } catch (error) {
+    return {error, message: error.message}
+  }
+}
+
 module.exports = model("User", User);
+
+

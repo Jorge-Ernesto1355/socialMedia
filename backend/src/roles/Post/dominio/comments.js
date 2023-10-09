@@ -2,6 +2,7 @@ const {Schema, model} = require('mongoose')
 
 const Comment = Schema({
    comment:{
+     containerId:{type:Schema.Types.ObjectId },
       userId:{type:Schema.Types.ObjectId, require:true},
       edit:{type:Boolean, default:false},
       text:{type:String, require:true},

@@ -1,17 +1,19 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const {SecretRefreshToken,Secret} = require('../../dotenv')
+const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET, } = require('../../dotenv')
 
 
+function sign(payload, isAccesToken){
+  return  jwt.sign(payload, isAccesToken ? ACCESS_TOKEN_SECRET  : REFRESH_TOKEN_SECRET , { expiresIn:3600})
+}
 
-
-const refreshToken = (id)=>{
- return jwt.sign({ id: id }, SecretRefreshToken , { expiresIn:86400 /*24 hour*/  })
+const RefreshToken = (user)=>{
+   return sign({user}, false)
 
 }
 
-const Token = (id, JWTSecret)=>{
- return jwt.sign({ id: id },  Secret , {expiresIn:86400 /*24 hour*/  })
+const AccessToken  = (user)=>{
+ return sign({user}, true)
      
 }
 
@@ -20,14 +22,14 @@ const encryptPassword = async (password)=>{
    return  bcrypt.hashSync(password, salt)
 }
 
-const comparePassword = async (passwordBody,passwordCompare )=>{
+const comparePassword = async (passwordBody,passwordCompare)=>{
    return await bcrypt.compare(passwordBody, passwordCompare)
 }
 
 
 module.exports = {
-  refreshToken, 
-  Token, 
+  RefreshToken, 
+  AccessToken, 
   encryptPassword,
   comparePassword
 }

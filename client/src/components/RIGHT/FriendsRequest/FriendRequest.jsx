@@ -7,11 +7,9 @@ import FriendsRequestLoader from "./FriendsRequestLoader";
 import RequestFriendsService from "./service/RequestFriends";
 import toast, { Toaster } from 'react-hot-toast'
 const FriendRequest = () => {
-  const { _id: currentUser } = useSelector(
-    (state) => state.user.currentUser.user,
-  );
 
-  const { results, isLoading, isError, refetch } = useInfiniteScroll({ request: RequestFriendsService, name: 'requestFriends', id: currentUser })
+
+  const { results, isLoading, isError, refetch } = useInfiniteScroll({ request: RequestFriendsService, name: 'requestFriends', })
 
 
 

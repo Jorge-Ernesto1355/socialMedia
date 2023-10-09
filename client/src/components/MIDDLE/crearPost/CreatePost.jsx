@@ -33,7 +33,7 @@ const ACTIONS_INITIAL_STATE = {
 };
 
 const CreatePost = () => {
-  const { user } = useSelector((state) => state.user.currentUser);
+
   const { votes, difusion, delVotes } = CreatePostStore()
   const [actions, setActions] = useState(ACTIONS_INITIAL_STATE);
   const { store, set, get, state } = useStore();
@@ -42,7 +42,7 @@ const CreatePost = () => {
 
   const handleMutate = useCallback(() => {
     if (!get()) return
-    mutate({ description: get(), userId: user._id, votes, image: inputFile.current.files[0], difusion }, {
+    mutate({ description: get(), votes, image: inputFile.current.files[0], difusion }, {
       onSuccess: () => {
         delVotes()
         set("");
@@ -70,7 +70,7 @@ const CreatePost = () => {
           <img src={rem} alt="" />
         </div>
         <div className="info-name">
-          <h3>{user.username}</h3>
+          <h3>{''}</h3>
           <Difusion />
         </div>
       </div>
@@ -115,7 +115,7 @@ const CreatePost = () => {
           />
         </div>
         <div style={{ marginTop: '15px' }} onClick={() => handleMutate()} aria-disabled={isError || isLoading}>
-          {isError && <ErrorButton reset={reset}/>}
+          {isError && <ErrorButton reset={reset} />}
           {!isError && <SendButtonCreatePost />}
         </div>
       </div>

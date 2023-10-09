@@ -1,23 +1,19 @@
-const Post = require("../../../Post/dominio/Post")
-const User = require("../../domain/UserModel")
 
+const userService = require("../../userService")
 
 const DeleteUser = async (req, res)=>{
-  const {id} = req.params
+  const {userId} = req.params
  
 
-  
-  if(!!id  || req.body.Admin){
-    
-    await User.findByIdAndDelete(id)
+  const user = await userService.delete({userId})
 
-    return res.status(204).json({message:"se ha borrado"})
-   
-  }else{
-    res.status(403).json({
-      message:"no puedes eliminar una cuenta que no es tuya"
-    })
+
+  if(user?.error){
+    return res.status(500).json({error: user.message})
   }
+
+  return  res.status(200).json({message:"User deleted"})
+  
 }
 
 module.exports = DeleteUser

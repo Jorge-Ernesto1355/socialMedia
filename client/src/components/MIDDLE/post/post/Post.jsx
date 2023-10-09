@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Post.css";
 
 import rem from "../../../../assets/rem.jpg";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import more from "../comments/EllipsiComments/icons/ellipsis.png";
 import GetUser from "../../../../services/GetUser.service";
 import Comments from "../comments/Comments";
@@ -25,9 +25,7 @@ import More from "../more/More";
 import Votes from "../Votes/Votes";
 const Post = ({ post }) => {
 
-	const { _id: currentUser } = useSelector(
-		(state) => state.user.currentUser.user,
-	);
+
 	const [visibilityComment, setVisibilityComment] = useState(false);
 
 	const {
@@ -89,8 +87,8 @@ const Post = ({ post }) => {
 			<div className="caption">
 				<p>{description}</p>
 			</div>
-			{votes?.length > 0 && <Votes id={postId}/>}
-			
+			{votes?.length > 0 && <Votes id={postId} />}
+
 			<div className="photo">
 				<img src={image?.url} alt="" />
 			</div>
@@ -114,7 +112,7 @@ const Post = ({ post }) => {
 			</div>
 
 			<div className="traze"></div>
-			<ActionsPost postId={postId} userId={currentUser} />
+			<ActionsPost postId={postId} userId={''} />
 			<div className="traze"></div>
 			{visibilityComment && (
 				<Comments
@@ -127,7 +125,7 @@ const Post = ({ post }) => {
 
 			<MakeAComment
 				id={postId}
-				userId={currentUser}
+				userId={''}
 				ref={input}
 				request={CommentAxios}
 				name="post-comment"
