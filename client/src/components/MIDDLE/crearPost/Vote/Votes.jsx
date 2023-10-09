@@ -7,11 +7,11 @@ import React, {
   useState,
 } from "react";
 import Vote from "./vote";
-import _ from "underscore";
+
 import { v4 as uuidv4 } from "uuid";
 import { motion } from "framer-motion";
 import plus from "../icons/plus-sign.png";
-import {  useSelector } from "react-redux";
+
 import Loader from "../../../../utilities/Loader";
 import CreatePostStore from "../../../../zustand/CreatePostStore";
 
@@ -38,20 +38,20 @@ const Votes = ({ VotesActive, hideVotes }) => {
       ...votes,
       [name]: value,
     };
-    setVotes(updatedvote) 
-       
+    setVotes(updatedvote)
+
     // we use "for" to turn the vote object into a array with key: uuid and text 
-    const convertVotesToArray = Object.keys(votes).map((vote)=> ({
-      uuid:vote, 
-      text:votes[vote]
+    const convertVotesToArray = Object.keys(votes).map((vote) => ({
+      uuid: vote,
+      text: votes[vote]
     }))
 
     addVotes(convertVotesToArray)
- }
+  }
 
-  const increase = () => 
+  const increase = () =>
     setNumForm((prevNumForm) => [...prevNumForm, uuidv4()])
-  
+
   const submitForm = (e) => {
     e.preventDefault();
     // dellVotes is a zustand function 
@@ -68,7 +68,7 @@ const Votes = ({ VotesActive, hideVotes }) => {
     delVotes()
     setVotes([]);
     setNumForm([]);
-    
+
   }, []);
 
   useEffect(() => {
@@ -76,8 +76,8 @@ const Votes = ({ VotesActive, hideVotes }) => {
     increase();
   }, [deletePoll]);
 
-  
-  
+
+
   return (
     <>
       {VotesActive && (

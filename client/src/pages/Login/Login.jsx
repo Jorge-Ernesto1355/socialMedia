@@ -3,21 +3,10 @@ import "./login.css";
 // librerias
 
 import React from "react";
-
-import { Formik, Form, ErrorMessage } from "formik";
-
-
-
 // components
 
-import Cuadro from "../../components/cuadro/Cuadro";
 
 import Input from "../components/Input";
-
-
-import validateContraseña from "../../utilities/ExpresionRegularContraseña";
-
-
 // emoticons
 
 import { FaArrowLeft } from "react-icons/fa";
@@ -63,68 +52,9 @@ function Login() {
 
                 <div className="logo" />
 
-                <Formik
-                    validate={(values) => {
-                        const errors = {};
-
-                        const { correo, contraseña } = values;
-
-                        // validacion de correo
-
-                        if (!correo) {
-                            errors.correo = "introduce un correo";
-                        } else if (
-                            !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
-                                values.correo,
-                            )
-                        ) {
-                            errors.correo =
-                                "el correo solo puede contener letras, numeros, puntos, guiones, guion bajo.";
-                        }
-
-                        // validacion de nombre
-
-
-                        if (!contraseña) {
-                            // validacion contraseña
-
-                            errors.contraseña = "introduce una contraseña";
-                        } else if (!validateContraseña(contraseña)) {
-                            errors.contraseña =
-                                "Minimo 8 caracteres Maximo 15, Al menos una letra mayúscula, Al menos una letra minuscula, Al menos un dígito, No espacios en blanco,  Al menos 1 caracter especial";
-                        }
-
-                        // validacion de crup
-                        return errors;
-                    }}
-                    initialValues={{
-                        correo: "",
-
-                        contraseña: "",
-                    }}
-                    onSubmit={async (values, { resetForm }) => {
-                        const { correo, contraseña } = values;
-
-                        mutate({
-                            email: correo,
-                            password: contraseña,
-                        }, {
-                            onSuccess: () => {
-                                resetForm()
-                            }
-                        });
-                    }}
-                >
-                    {({ handleBlur, handleChange, errors, values }) => (
-                        <Form>
-                            <div className="input">
+                <div className="input">
                                 <h3 className="text">correo</h3>
-                                <ErrorMessage
-                                    name="correo"
-                                    component={() => (
-                                        <Cuadro text={errors.correo} danger={"danger"} />
-                                    )}
-                                />
+                                
 
                                 <Input
                                     placeholder="correo"
@@ -142,12 +72,7 @@ function Login() {
                             <div className="input">
                                 <h3 className="text">contraseña</h3>
 
-                                <ErrorMessage
-                                    name="contraseña"
-                                    component={() => (
-                                        <Cuadro text={errors.contraseña} danger={"danger"} />
-                                    )}
-                                />
+                                
 
                                 <Input
                                     placeholder="contraseña"
@@ -169,9 +94,6 @@ function Login() {
 
                                 </button>
                             </div>
-                        </Form>
-                    )}
-                </Formik>
 
                 <span className="recuperar">recuperar contraseña</span>
             </div>
