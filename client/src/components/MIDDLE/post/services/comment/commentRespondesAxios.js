@@ -7,8 +7,8 @@ const commentRespondedAxios = async (commentToSend) => {
     form.append(key, commentToSend[key]);
   }
 
-  const data = await userRequest.put(
-    `/post/comment/${commentToSend.postId}?commentId=${commentToSend.commentId}`,
+  const data = await userRequest.post(
+    `/comment/${commentToSend.postId}?commentId=${commentToSend.commentId}`,
     form,
     {
       headers: {

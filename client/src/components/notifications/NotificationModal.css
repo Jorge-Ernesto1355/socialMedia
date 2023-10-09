@@ -1,0 +1,14 @@
+.notification-modal{
+    position: absolute;
+    width: 250px;
+    height: 400px;
+    max-width: 250px;
+    max-height: 400px;
+    top: 3rem;
+    right: -5rem;
+    background-color: #fff;
+    padding: .2rem;
+    border-radius: 10px;
+    box-shadow: var(--card-shadow);
+    padding: 0.3rem;
+}

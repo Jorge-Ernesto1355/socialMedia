@@ -8,13 +8,20 @@ const createNotification = async (req, res) => {
     return res.status(400).json({ error: result.error.message });
   }
 
-  const notification = await NotificationService.create(req.body);
+  const { message, label, userReceptorId, userConnectorId } = req.body;
+
+  const notification = await NotificationService.create({
+    message,
+    label,
+    userReceptorId,
+    userConnectorId,
+  });
 
   if (notification.error) {
-    return res.status(400).json({ error: notification.error.mesasge });
+    return res.status(500).json({ error: notification.message });
   }
 
-  res.status(201).json({ message: "notificationCreated" });
+  res.status(201).json(notification);
 };
 
 module.exports = createNotification;

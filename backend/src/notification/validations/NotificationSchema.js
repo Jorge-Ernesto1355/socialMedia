@@ -10,14 +10,14 @@ const NotificationSchema = z.object({
     .string({
       required_error: "message is required",
     })
-    .max(20),
-  userReceptor: z
+    .max(40),
+  userReceptorId: z
     .string({
       required_error: "userReceptor is required",
     })
     .max(24)
     .min(24),
-  userConector: z
+  userConnectorId: z
     .string({
       required_error: "message is required",
     })

@@ -3,8 +3,6 @@ const Post = require("../../dominio/Post");
 const findPostById = async (req, res) => {
   const { id } = req.params;
 
-  if (!id) return res.status(500).json({ message: "algo salio mal" });
-
   try {
     const post = await Post.findById(id);
 

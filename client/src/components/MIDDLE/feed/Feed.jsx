@@ -4,8 +4,8 @@ import "./Feed.css";
 // components
 import Post from "../post/post/Post";
 
-// librarys
-import { useSelector } from "react-redux";
+
+
 
 // service
 import { GetPosts } from "../../../services/getPosts.services";

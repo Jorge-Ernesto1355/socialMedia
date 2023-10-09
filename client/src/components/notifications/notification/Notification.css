@@ -1,0 +1,40 @@
+.notification-container{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.notification-info{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-left: 0.4rem;
+}
+.notification-text{
+    font-size: smaller;
+    font-weight: 500;
+}
+
+.noti-img-profile{
+  width: 2.5rem;
+  height: 2.5rem;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.receptor-username{
+    color: #474747;
+    font-size: 0.8rem;
+   margin-right: 0.1rem;
+}
+
+.notification-message{
+    font-size: 0.7rem;
+    margin-right: 0.1rem;
+    color: #474747;
+}
+
+.notification-label{
+    font-size: 0.8rem;
+    
+}

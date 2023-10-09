@@ -35,3 +35,10 @@ nav .container {
 nav .search-bar input[type="search"]::placeholder {
   color: var(--color-gray);
 }
+
+nav .options{
+  display: flex;
+  justify-content: space-around;
+
+  align-items: center;
+}

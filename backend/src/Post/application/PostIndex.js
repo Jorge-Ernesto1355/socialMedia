@@ -3,7 +3,7 @@ const FindAllPost = require("./find/FindAllPost");
 const FindPostById = require("./find/FindPostById");
 const UpdatePost = require("./UpdatePost");
 const createPost = require("./createPost/createPost");
-const FindCurrentPost = require("./find/FindCurrentPost");
+
 const findTimeLine = require("./find/FindTimeLinePost");
 
 const Votes = require("./interact/votes/Vote");
@@ -14,6 +14,7 @@ const getVotes = require("./interact/votes/getVotes");
 //shares
 const allShared = require("../application/interact/shares/AllUserHasGivenShared");
 const Share = require("./interact/shares/Share");
+
 
 
 
@@ -31,13 +32,13 @@ module.exports = {
   UpdatePost,
   createPost,
   Share,
-  FindCurrentPost,
+
   allShared,
   Votes,
   UsersVotes,
   getVotes,
   favorite,
-  
+
   AllFavorite,
   FindReactionPostView,
   findTimeLine,

@@ -7,6 +7,7 @@ route.get("/", PostIndex.FindAllPost);
 
 route.get("/timeline/:userId", PostIndex.findTimeLine);
 
+
 route.post("/", PostIndex.createPost);
 
 route.put("/:id", PostIndex.UpdatePost);
@@ -16,8 +17,6 @@ route.put("/share/:id", PostIndex.Share);
 route.delete("/:id", PostIndex.DeletePost);
 
 route.get("/:id", PostIndex.FindPostById);
-
-route.get("/currentpost/postsfriends", PostIndex.FindCurrentPost);
 
 route.get("/action/shares/all", PostIndex.allShared);
 
