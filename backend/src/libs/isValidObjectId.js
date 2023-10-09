@@ -9,7 +9,7 @@ module.exports = async function validateObjectId(id, modelName) {
     if (!mongoose.models[modelName]) throw new Error("model not found");
 
     const document = await mongoose.models[modelName].findById(id);
-
+    if (document) return document;
     if (!document) throw new Error("document not found");
   } catch (error) {
     return {
