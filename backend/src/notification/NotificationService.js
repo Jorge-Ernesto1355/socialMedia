@@ -1,4 +1,6 @@
+const exits = require("../libs/exits");
 const Notification = require("./domain/Notification");
+const isValidObjectId = require("../libs/isValidObjectId");
 
 class NotificationService {
   static async getAll(objectGet) {
@@ -18,7 +20,7 @@ class NotificationService {
 
     try {
       const notifications = await Notification.paginate(
-        { userReceptor: userId },
+        { "userReceptor.userId": userId },
         options
       );
 
@@ -33,20 +35,32 @@ class NotificationService {
     }
   }
   static async create(objectCreate) {
-    // {
-    //     label,
-    //     userReceptor,
-    //     message,
-    //     userConector,
-    //   }
-
-    if (!objectCreate)
-      return {
-        error: "not parameteres found to method create",
-      };
-
     try {
-      const notification = await new Notification(objectCreate);
+      exits(objectCreate);
+
+      const { label, message, userConnectorId, userReceptorId } = objectCreate;
+
+      const userReceptor = await isValidObjectId(userReceptorId, "User");
+      const userConnector = await isValidObjectId(userConnectorId, "User");
+
+      if (userReceptor.error || userConnector.error) {
+        throw new Error("document not found or objecdtId is not valid");
+      }
+
+      const notification = await new Notification({
+        userReceptor: {
+          username: userReceptor.username,
+          userId: userReceptor._id,
+          imageProfile: userReceptor.imageProfile,
+        },
+        userConnector: {
+          username: userConnector.username,
+          userId: userConnector._id,
+          imageProfile: userConnector.imageProfile,
+        },
+        message,
+        label,
+      });
       await notification.save();
       return notification;
     } catch (error) {
