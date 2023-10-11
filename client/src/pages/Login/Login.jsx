@@ -126,7 +126,7 @@ function Login() {
                     </Input>
                 </div>
                 <div>
-                    <input type="checkbox" id="persits" onChange={(e) => Auth.setPersits(!Auth.persits)} checked={Auth.persits} />
+                    <input type="checkbox" id="persits" onChange={(e) => Auth.setPersits(!Auth.persits)} checked={(Auth.persits === 'true')} />
                     <label htmlFor="persits">Guardar sesion</label>
 
                 </div>

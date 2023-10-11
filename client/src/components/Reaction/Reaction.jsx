@@ -1,10 +1,15 @@
 import "./RatingS.css";
 
-import { variantsAction } from "../framerMotion/showActions";
+import { variantsAction } from "../MIDDLE/post/framerMotion/showActions";
 import React, {  useState } from "react";
 import { motion } from "framer-motion";
-import MutationRequest from "../../../../hooks/useMutationRequest";
-import { objetsImgs } from "../post/objectImg";
+
+
+import useUserRequest from "../../hooks/auth/useUserRequest";
+import useMutationRequest from "../../hooks/useMutationRequest";
+import ReactionService from './services/ReactionService'
+import { objetsImgs } from "../MIDDLE/post/post/objectImg";
+
 
 const reactions = [
   { label: "gusta" },
@@ -13,15 +18,18 @@ const reactions = [
   { label: "divierte" },
   { label: "asombra" },
 ];
-const Reaction = ({ id, userId, name, children, request }) => {
-  const mutateRequest = MutationRequest(request, { id, name });
+
+
+const Reaction = ({ id, userId, name, children, type}) => {
+  const privateRequest = useUserRequest()
+  const mutateRequest = useMutationRequest(ReactionService.React, {name})
   const [showReactions, setShowReactions] = useState(false);
   const [reactionType, setReactionType] = useState(null);
 
   const MutateActionsFu = (value) => {
     setReactionType(value);
     setShowReactions(false);
-    mutateRequest.mutate({ userId, id, toSend: { label: value, userId } });
+    mutateRequest.mutate({ userId, id, label:value, privateRequest, type});
   };
 
 

@@ -7,8 +7,7 @@ import Post from "../post/post/Post";
 
 
 
-// service
-import { GetPosts } from "../../../services/getPosts.services";
+
 import InfiniteScroll from "react-infinite-scroll-component";
 import useInfiniteScroll from "../../../hooks/useInfiniteScroll/useInfiniteScroll";
 import PostLoader from "../post/post/postLoader/PostLoader";
@@ -21,19 +20,16 @@ import useGetPosts from "./useGetposts";
  * @param {number} limit - The maximum number of posts to fetch per page.
  * @returns {JSX.Element} - The rendered feed of posts.
  */
-export default function Feed({ limit }) {
+export default function Feed() {
 
-  const requestposts = useGetPosts()
+  const privateRequest = useUserRequest()
 
-
-  const { results, isLoading, isError, hasNextPage, fetchNextPage, error } =
+  const { results, isLoading, isError, hasNextPage, fetchNextPage} =
     useInfiniteScroll({
       name: "posts",
-      request: GetPosts
+      request: useGetPosts, 
+      privateRequest
     });
-
-
-  console.log(error)
 
   if (isError) {
     return <div>error posible unuatiorized</div>;

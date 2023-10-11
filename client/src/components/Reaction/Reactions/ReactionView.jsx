@@ -1,8 +1,8 @@
 import React, { Suspense, lazy, useState } from 'react'
-import { objetsImgs } from '../post/objectImg'
-import ShowActions from '../showActions/ShowActions'
-const ConfirmationModal = lazy(()=> import('../../../modal/ConfirmationModal'))
-const ReactionView = ({reactionView, name, id, reactionsView, reqReaction, reqReactions}) => {
+import { objetsImgs } from '../../MIDDLE/post/post/objectImg'
+import ShowActions from '../../MIDDLE/post/showActions/ShowActions'
+const ConfirmationModal = lazy(()=> import('../../modal/ConfirmationModal'))
+const ReactionView = ({reactionView, name, id, reactionsView, reqReaction, type}) => {
      const [isOpen, setIsOpen] = useState(false)
      
   return (
@@ -26,8 +26,7 @@ const ReactionView = ({reactionView, name, id, reactionsView, reqReaction, reqRe
             id={id}
             reactionsView={reactionsView}
             name={name}
-            reqReaction={reqReaction}
-            reqReactions={reqReactions}
+            type={type}
          />
         </ConfirmationModal>
     </Suspense>

@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { useCallbackRequest } from "../../../../hooks/useCallbackRequest/useCallbackRequest";
-import { objetsImgs } from "../post/objectImg";
+import React from "react";
+import { useCallbackRequest } from "../../../hooks/useCallbackRequest/useCallbackRequest";
 import "./ReactionsView.css";
-import ShowActions from "../showActions/ShowActions";
 import ReactionView from "./ReactionView";
+import ReactionService from "../services/ReactionService";
+import useUserRequest from "../../../hooks/auth/useUserRequest";
 
 /**
  * React component that displays a list of reaction icons based on the data received from the `CallbackRequest` function.
@@ -20,14 +20,14 @@ import ReactionView from "./ReactionView";
  * @returns {JSX.Element} - The React component.
  */
 
-const useReactionsView = ({ id, reqReactionsView, name }) => {
+const useReactionsView = ({ id, name, privateRequest, type}) => {
   const { isError, isLoading, data } = useCallbackRequest({
-    request: reqReactionsView,
+    request: ReactionService.reactionView,
     id,
     name,
+    privateRequest,
+    type
   });
-  
-
   const reactionsView = data?.data ?? [];
 
   return {
@@ -38,21 +38,16 @@ const useReactionsView = ({ id, reqReactionsView, name }) => {
 };
 const ReactionsView = ({
   id = "",
-  reqReactionsView = () => { },
-  reqReactions = () => { },
-  reqReaction = () => { },
   name = "",
   nameView = "",
+  type = ''
 }) => {
+  const privateRequest = useUserRequest()
   const {
     isError,
     isLoading,
     reactionsView,
-    showAllActions,
-    setShowAllActions,
-  } = useReactionsView({ id, reqReactionsView, name: nameView });
-
-  
+  } = useReactionsView({ id, name: nameView , privateRequest, type});
 
   return (
     <div>
@@ -72,8 +67,7 @@ const ReactionsView = ({
                  id={id}
                  reactionView={reactionView}
                  reactionsView={reactionsView}
-                 reqReaction={reqReaction} 
-                 reqReactions={reqReactions}
+                 type={type}
                  key={reactionView._id}/>
               ))}
             </ul>

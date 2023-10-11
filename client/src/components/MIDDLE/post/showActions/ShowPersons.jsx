@@ -8,14 +8,19 @@ import {
 } from "../useQuery/useQuerys";
 import InfiniteScroll from "react-infinite-scroll-component";
 import useInfiniteScroll from "../../../../hooks/useInfiniteScroll/useInfiniteScroll";
-const ShowPersons = ({ label, id, reqReaction }) => {
+import ReactionService from "../../../Reaction/services/ReactionService";
+import useUserRequest from "../../../../hooks/auth/useUserRequest";
+const ShowPersons = ({ label, id, type }) => {
+
+  const privateRequest = useUserRequest()
+ 
   const {
     results: reactions,
     isLoading,
     isError,
     hasNextPage,
     fetchNextPage,
-  } = useInfiniteScroll({ id, request: reqReaction, name: "reaction", label });
+  } = useInfiniteScroll({ id, request: ReactionService.getReaction, name: "reaction", label, privateRequest, type });
 
   return (
     <InfiniteScroll

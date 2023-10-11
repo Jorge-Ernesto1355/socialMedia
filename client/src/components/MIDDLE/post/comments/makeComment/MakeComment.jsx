@@ -14,6 +14,8 @@ import { ThreeDotsLoader } from "./ThreeDotsLoader";
 import EmojiPickerWithIcon from "../../../../EmojiPicker/EmojiPickerWithIcon";
 import SendButton from "./styledComponentes/sendButton/SendButton";
 import ErrorButton from "./styledComponentes/ErrorButton/ErrorButton";
+import CommentService from "../services/CommentServices";
+import useUserRequest from "../../../../../hooks/auth/useUserRequest";
 
 const MakeComment = (
   {
@@ -21,7 +23,7 @@ const MakeComment = (
     userforDisplay,
     name,
     userId,
-    request,
+    type,
     componentId,
     showComments,
     hideMakeComments,
@@ -29,8 +31,9 @@ const MakeComment = (
   },
   inputFile,
 ) => {
+  const privateRequest = useUserRequest()
   const { mutate, isLoadingMutation, isError, reset } = useMutationRequest(
-    request,
+    CommentService.comment,
     { id, name },
   );
 
@@ -49,13 +52,14 @@ const MakeComment = (
 
   const CommentCallback = useCallback(() => {
     if (notShowComments) return
-    if (!request) return;
-    if (state)
+    if (get())
       mutate(
         {
-          postId: id,
-          userId,
-          text: state,
+          privateRequest,
+          containerId: id,
+          userId:"6526cc1dfea9a75e4cf0e049",
+          type,
+          text: get(),
           commentId: componentId,
           image: inputFile.current.files[0],
         },

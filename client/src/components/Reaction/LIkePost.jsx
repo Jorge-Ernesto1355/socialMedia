@@ -1,8 +1,9 @@
 import React from "react";
 import "./likePost.css";
 import { motion } from "framer-motion";
-import like from "../actionsPost/icons/likePost.png";
-import { objetsImgs } from "../post/objectImg";
+import like from "../../assets/likePost.png";
+import { objetsImgs } from "../MIDDLE/post/post/objectImg";
+
 
 const LikePost = ({ reactionType, setShowReactions }) => {
   return (

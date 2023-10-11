@@ -27,10 +27,12 @@ import AuthService from "../services/AuthServices";
 import { useMutation } from "react-query";
 import SpinnerLoader from "../../stylesComponents/spinnerLoader/SpinnerLoader";
 import AuthProvider from "../../zustand/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
 
   const Auth = AuthProvider()
+  const navigate = useNavigate()
 
   const { mutate, isLoading } = useMutation({
     mutationFn: AuthService.Register,
@@ -39,7 +41,10 @@ function Register() {
       const refreshToken = data?.data?.refreshToken || null
       if (accessToken && refreshToken) {
         Auth.saveUser({ accessToken, refreshToken })
+        navigate('/')
       }
+
+      
     },
     onError: (error) => {
 

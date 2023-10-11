@@ -4,15 +4,23 @@ import Comment from "./Comment";
 import InfiniteScroll from "react-infinite-scroll-component";
 import useInfiniteScroll from "../../../../hooks/useInfiniteScroll/useInfiniteScroll";
 import Loader from "../../../../utilities/Loader";
+import CommentService from "./services/CommentServices";
+import useUserRequest from "../../../../hooks/auth/useUserRequest";
+import ComponentStateHandler from "../../../../hooks/stateManagmentComponent/ComponentStateHandler";
+import CommentsLoader from "./Loader/CommentsLoader";
 
-const Comments = ({ id, request, name, className }) => {
+const Comments = ({ id, request, name, className, type }) => {
+
+  const privateRequest = useUserRequest()
   const {
     results: comments,
     isLoading,
     isError,
     hasNextPage,
     fetchNextPage,
-  } = useInfiniteScroll({ name, id, request });
+  } = useInfiniteScroll({ name, id, request:CommentService.getComments, privateRequest, type });
+
+
 
   return (
     <InfiniteScroll
@@ -22,22 +30,15 @@ const Comments = ({ id, request, name, className }) => {
       className={className}
       style={{ overflow: "none" }}
     >
-      <div>
-        {isError && <>error</>}
-        {!isLoading && !isError && comments?.length <= 0 && (
-          <>no hay comments</>
-        )}
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <>
+        <ComponentStateHandler Loader={<CommentsLoader/>} isError={true} isLoading={false} >
             {comments?.map((comment) => (
               <>
                 <Comment key={comment._id} comment={comment} postId={id} />
               </>
             ))}
-          </>
-        )}
+        </ComponentStateHandler>
+      <div>
+
       </div>
     </InfiniteScroll>
   );

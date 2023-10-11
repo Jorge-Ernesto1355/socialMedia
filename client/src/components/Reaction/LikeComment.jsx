@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { objetsImgs } from "../post/objectImg";
+import { objetsImgs } from "../MIDDLE/post/post/objectImg";
+
 const LikeComment = ({ reactionType, setShowReactions }) => {
   const handleClick = () => {
     setShowReactions((prev) => !prev);

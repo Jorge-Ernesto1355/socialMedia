@@ -1,11 +1,10 @@
 /* eslint-disable dot-notation */
-import { useEffect } from 'react'
+
 
 import AuthProvider from '../../zustand/AuthProvider'
 import { userRequest } from '../../utilities/requestMethod'
-
-import { useMutation } from 'react-query'
-import AuthService from '../../pages/services/AuthServices'
+import UseRefreshToken from './UseRefreshToken'
+import { useEffect } from 'react'
 
 const useUserRequest = () => {
     /**
@@ -17,17 +16,11 @@ const useUserRequest = () => {
      */
 
     const Auth = AuthProvider()
+    const mutateRefresh = UseRefreshToken()
 
-    const { mutate: refresh } = useMutation({
-        mutationFn: AuthService.refreshToken,
-        onSuccess: (data) => {
-            const accessToken = data.data || null
-            Auth.setAccessToken(accessToken)
-        }
-    })
+      useEffect(()=>{
 
-    useEffect(() => {
-        const requestIntercept = userRequest.interceptors.request.use(
+        userRequest.interceptors.request.use(
             config => {
 
                 if (!config.headers['Authorization']) {
@@ -37,7 +30,7 @@ const useUserRequest = () => {
             }, (error) => Promise.reject(error)
         )
 
-        const responseInterceptor = userRequest.interceptors.response.use(
+         userRequest.interceptors.response.use(
             response => response,
             async (error) => {
 
@@ -45,8 +38,7 @@ const useUserRequest = () => {
                 if (error?.response?.status === 403 && !prevRequest?.sent) {
                     prevRequest.sent = true
                     const refreshToken = Auth.getRefreshToken() || null
-                    refresh(refreshToken)
-
+                    mutateRefresh(refreshToken)
                     if (Auth.accessToken) {
                         prevRequest.headers['Authorization'] = `Bearer ${Auth.accessToken}`
                     }
@@ -64,11 +56,12 @@ const useUserRequest = () => {
             }
         )
 
-        return () => {
-            userRequest.interceptors.response.eject(responseInterceptor)
-            userRequest.interceptors.request.eject(requestIntercept)
+        return ()=>{
+            userRequest.interceptors.response.eject()
+            userRequest.interceptors.request.eject()
         }
-    }, [Auth, refresh])
+
+      }, [Auth, mutateRefresh])
 
     return userRequest
 }

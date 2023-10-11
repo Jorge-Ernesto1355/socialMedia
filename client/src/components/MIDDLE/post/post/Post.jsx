@@ -9,7 +9,7 @@ import Comments from "../comments/Comments";
 import MakeAComment from "../comments/makeComment/MakeComment";
 
 import moment from "moment";
-import ReactionsView from "../Reactions/ReactionsView";
+
 import {
 	GetAllReactions,
 	GetReactionsSelected,
@@ -23,6 +23,7 @@ import ActionsPost from "../actionsPost/ActionsPost";
 import { useQuery } from "react-query";
 import More from "../more/More";
 import Votes from "../Votes/Votes";
+import ReactionsView from "../../../Reaction/Reactions/ReactionsView";
 const Post = ({ post }) => {
 
 
@@ -48,6 +49,7 @@ const Post = ({ post }) => {
 
 	return (
 		<div className="feed">
+			
 			<div className="head">
 				<div className="user">
 					<div className="profile-photo">
@@ -76,8 +78,8 @@ const Post = ({ post }) => {
 			<div className="caption">
 				<p>{description}</p>
 			</div>
-			{votes?.length > 0 && <Votes id={postId} />}
-
+			{votes?.length > 0 && <Votes id={postId}/>}
+			
 			<div className="photo">
 				<img src={image?.url} alt="" />
 			</div>
@@ -87,9 +89,7 @@ const Post = ({ post }) => {
 						id={postId}
 						name={"post-reactions"}
 						nameView="reactionsView"
-						reqReactionsView={GetReactionsView}
-						reqReactions={GetAllReactions}
-						reqReaction={GetReactionsSelected}
+						type="Post"
 					/>
 				</div>
 
@@ -106,9 +106,9 @@ const Post = ({ post }) => {
 			{visibilityComment && (
 				<Comments
 					id={postId}
-					request={GetComments}
 					name="post-comment"
 					className={"comments"}
+					type='Post'
 				/>
 			)}
 
@@ -116,7 +116,7 @@ const Post = ({ post }) => {
 				id={postId}
 				userId={''}
 				ref={input}
-				request={CommentAxios}
+				type="Post"
 				name="post-comment"
 				showComments={setVisibilityComment}
 			/>

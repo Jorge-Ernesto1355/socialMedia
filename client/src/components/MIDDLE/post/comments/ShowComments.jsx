@@ -26,7 +26,7 @@ const ShowCommentsResponded = ({ respondedLength = 0, commentId = "" }) => {
       {showCommentsResponded ? (
         <Comments
           id={commentId}
-          request={getAllCommentsResponded}
+          type={'Comment'}
           name={"comments-Responded"}
           className={classNames.commentsResponded}
         />
