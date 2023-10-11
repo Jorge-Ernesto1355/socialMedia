@@ -20,17 +20,17 @@ const useMutationRequest = (request, { name } = {}) => {
     data
   } = useMutation({
     mutationFn: request,
-    onMutate: async (newComment) => {
+    onMutate: async (newData) => {
+     
       await queryClient.cancelQueries([name]);
-      const previousComments = queryClient.getQueryData([name]);
+      const previousData = queryClient.getQueryData([name]);
       queryClient.setQueryData([name], (oldData) => {
-        const newCommentToAdd = structuredClone(newComment);
-        newCommentToAdd.preview = true;
-        if (oldData == null) return [newCommentToAdd];
-        return oldData?.concat(newCommentToAdd);
+        
+        if (oldData == null) return [newData];
+        return oldData?.concat(newData);
       });
 
-      return { previousComments }; // -----> context
+      return { previousData }; // -----> context
     },
     onError: (_error, variables, context) => {
       if (context?.previousComments != null) {
