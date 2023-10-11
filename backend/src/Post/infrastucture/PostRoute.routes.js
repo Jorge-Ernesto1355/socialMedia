@@ -8,7 +8,6 @@ route.get("/", verifyToken, PostIndex.FindAllPost);
 
 route.get("/timeline/:userId", PostIndex.findTimeLine);
 
-
 route.post("/", PostIndex.createPost);
 
 route.put("/:id", PostIndex.UpdatePost);
