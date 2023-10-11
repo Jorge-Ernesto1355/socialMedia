@@ -4,7 +4,7 @@ const validateObjectId = require("../libs/isValidObjectId");
 const Reaction = require("./domain/Reaction");
 const verifyExistingUser = require("./utils/verifyExistingUser");
 const exits = require("../libs/exits");
-const groupReactions = require("./utils/groupReactions");
+const getLabelsView = require("./utils/getLabelsView");
 
 module.exports = class ReactionService {
   static async getAll(object) {
@@ -12,18 +12,19 @@ module.exports = class ReactionService {
       exits(object);
       const { containerId, type, limit, page } = object;
 
-      const isValidContainerId = await validateObjectId(containerId, type);
+      const isValidContainerId = await validateObjectId(
+        { _id: containerId },
+        type
+      );
 
       if (isValidContainerId?.error) {
         throw new Error(isValidContainerId.message);
       }
 
-      const options = {
-        limit,
-        page,
-      };
-
-      const reactions = await Reaction.paginate({ containerId }, options);
+      const reactions = await Reaction.paginate(
+        { containerId },
+        { limit, page }
+      );
 
       return reactions;
     } catch (error) {
@@ -32,14 +33,17 @@ module.exports = class ReactionService {
         message: error.message,
       };
     }
-}
+  }
 
   static async get(object) {
     try {
       exists(object);
 
-      const {containerId, type, label, limit, page} = object 
-      const isValidContainerId = await validateObjectId(containerId, type);
+      const { containerId, type, label, limit, page } = object;
+      const isValidContainerId = await validateObjectId(
+        { _id: containerId },
+        type
+      );
 
       if (isValidContainerId?.error) {
         throw new Error(isValidContainerId.message);
@@ -49,39 +53,66 @@ module.exports = class ReactionService {
         limit,
         page,
       };
-  
 
-      const reactions = await Reaction.paginate({containerId, label}, {options})
-      return reactions
-      
+      const reactions = await Reaction.paginate(
+        { containerId, label },
+        options
+      );
+
+      return reactions;
     } catch (error) {
       return {
         error,
         message: error.message,
       };
     }
+  }
 
-    
+  static async view(object) {
+    try {
+      exists(object);
+      const { containerId, type } = object;
+
+      const container = await validateObjectId({ _id: containerId }, type);
+      if (container?.error) {
+        throw new Error(container.message);
+      }
+
+      const reactions = await this.getAll({
+        containerId,
+        type,
+        limit: 10000000,
+        page: 1,
+      });
+
+      if (reactions?.error) {
+        throw new Error(reactions.message);
+      }
+
+      const reactionsView = getLabelsView(reactions?.docs);
+
+      return reactionsView;
+    } catch (error) {
+      return {
+        error,
+        message: error.message,
+      };
+    }
   }
 
   static async create(object) {
-    exists(object);
-
-    const { label, userId, value, containerId, type } = object;
-
     try {
-      const isValidUser = await validateObjectId(userId, "User");
-      const isValidContainerId = await validateObjectId(containerId, type);
+      exists(object);
 
-      if (isValidContainerId?.error || isValidUser?.error) {
-        throw new Error("document not found or objectId is not valid");
+      const { label, userId, value, containerId, type } = object;
+      const user = await validateObjectId({ _id: userId }, "User");
+      const container = await validateObjectId({ _id: containerId }, type);
+
+      if (container?.error || user?.error) {
+        throw new Error("documenid");
       }
 
-      const container = await mongoose.models[type].findById(containerId);
-
       const reactions = (await Reaction.find({ containerId })) || [];
-
-      const user = await mongoose.models["User"].findById(userId);
 
       const { exitsUserId, reaction, error } = verifyExistingUser(
         reactions,
@@ -134,13 +165,11 @@ module.exports = class ReactionService {
     type,
   }) {
     try {
-      const isValidContainerId = await validateObjectId(containerId, type);
+      const container = await validateObjectId({ _id: containerId }, type);
 
-      if (isValidContainerId?.error) {
+      if (container?.error) {
         throw new Error("document not found or objectId is not valid");
       }
-
-      const container = await mongoose.models[type].findById(containerId);
 
       const reaction = await new Reaction({
         label,
@@ -160,7 +189,7 @@ module.exports = class ReactionService {
       const reactionSaved = await reaction.save();
       if (!container && !isArray(container.reactions))
         throw new Error("reactions Model not found");
-     
+
       container.reactions = [...container.reactions, reactionSaved];
       await container.save();
       return reaction;
