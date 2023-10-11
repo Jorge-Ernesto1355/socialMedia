@@ -1,70 +1,51 @@
-import React, { useEffect, useState } from 'react'
-import { useRefreshToken } from '../../hooks/auth/useRefreshToken'
-import AuthProvider from '../../zustand/AuthProvider'
-import SpinnerLoader from '../../stylesComponents/spinnerLoader/SpinnerLoader'
-import { Outlet, useNavigate } from 'react-router-dom'
-import AuthService from '../../pages/services/AuthServices'
-import { useMutation } from 'react-query'
+import React, { useEffect, useState } from "react";
+
+import AuthProvider from "../../zustand/AuthProvider";
+import SpinnerLoader from "../../stylesComponents/spinnerLoader/SpinnerLoader";
+import { Outlet } from "react-router-dom";
+
+import UseRefreshToken from "../../hooks/auth/UseRefreshToken";
 
 const PersitsLogin = () => {
+  const [isLoading, setIsLoading] = useState(true);
 
-    const [isLoading, setIsLoading] = useState(true)
-    
-    const Auth = AuthProvider()
-    const navigate = useNavigate()
+  const Auth = AuthProvider();
+  const mutateRefresh = UseRefreshToken();
 
-    const { mutate: refresh } = useMutation({
-        mutationFn: AuthService.refreshToken, 
-        onSuccess:(data)=>{
-            const accessToken = data.data || null
-            Auth.setAccessToken(accessToken)
-        }, 
-        onError:()=>{
-            navigate('/login')
-        }
-    })
+  useEffect(() => {
+    let isMounted = true;
+    const verifyRefreshToken = () => {
+      try {
+        const refreshToken = Auth.getRefreshToken();
 
-    useEffect(()=>{
+        mutateRefresh(refreshToken);
+      } catch (error) {
+        setIsLoading(false);
+      } finally {
+        isMounted && setIsLoading(false);
+      }
+    };
 
-        let isMounted = true
-        const verifyRefreshToken =  ()=>{
-            
-            try {
-                const refreshToken = Auth.getRefreshToken()
-                
-                refresh(refreshToken)
-            } catch (error) {
-               
-                setIsLoading(false)
-            }finally{
-               isMounted && setIsLoading(false)
-            }
-        }
+    !Auth?.accessToken ? verifyRefreshToken() : setIsLoading(false);
 
-        !Auth?.accessToken ? verifyRefreshToken() : setIsLoading(false)
-    
-        return () => {
-            isMounted = false
-        }
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
-    }, [])
-
-    useEffect(()=>{
-        
-        console.log(`at: ${JSON.stringify(Auth?.accessToken)}`)
-    }, [isLoading])
-
-
+  useEffect(() => {
+    console.log(`at: ${JSON.stringify(Auth?.accessToken)}`);
+  }, [isLoading]);
 
   return (
     <>
-       {!Auth.persits ? <Outlet/> :  (
-        <>
-            {isLoading ? <SpinnerLoader/> : <Outlet/>}
-        </>
-       ) }
+      {!Auth.persits ? (
+        <Outlet />
+      ) : (
+        <>{isLoading ? <SpinnerLoader /> : <Outlet />}</>
+      )}
     </>
-  )
-}
+  );
+};
 
-export default PersitsLogin
+export default PersitsLogin;
