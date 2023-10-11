@@ -1,27 +1,30 @@
 const { validateGetReaction } = require("../ReactionSchema");
 const ReactionService = require("../ReactionService");
 
+const getReaction = async (req, res) => {
+  const { label } = req.query;
+  const { type, containerId } = req.params;
 
+  const limit = parseInt(req.query.limit, 10) || 10;
+  const page = parseInt(req.query.page, 10) || 1;
 
-const getReaction = async  (req, res)=>{
+  const result = validateGetReaction({ label, type, containerId });
 
-    const {label} = req.query
-    const { type, containerId} = req.params
+  if (result.error)
+    return res.status(400).json({ error: result.error.message });
 
-    const result = validateGetReaction({label, type, containerId})
+  const reaction = await ReactionService.get({
+    label,
+    type,
+    containerId,
+    limit,
+    page,
+  });
 
-    if (result.error) 
-        return res.status(400).json({ error: result.error.message });
-    
+  if (reaction.error)
+    return res.status(400).json({ message: reaction.message });
 
-    const reaction = await ReactionService.get({label, type, containerId})
+  return res.status(200).json(reaction);
+};
 
-    if(reaction.error)
-        return res.status(400).json({ message: reaction.message });
-    
- 
-    return res.status(200).json(reaction)
-
-}
-
-module.exports = getReaction
+module.exports = getReaction;
