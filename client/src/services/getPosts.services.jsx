@@ -1,9 +1,9 @@
 import useUserRequest from "../hooks/auth/useUserRequest";
 
-export const GetPosts = async ({ limit, page }) => {
-  const userRequestAxios = useUserRequest()
+export const GetPosts = async ({ limit, page,privateRequest }) => {
+ 
   try {
-    const response = await userRequestAxios.get(`/post?limit=${limit}&page=${page}`);
+    const response = await privateRequest.get(`/post?limit=${limit}&page=${page}`);
     return response
   } catch (error) {
     return error;

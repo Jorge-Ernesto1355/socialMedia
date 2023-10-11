@@ -3,11 +3,8 @@ const ReactionService = require("../ReactionService");
 const labelsValue = require("../utils/labelsValue");
 
 const React = async (req, res) => {
-
-  const {containerId} = req.params;
+  const { containerId } = req.params;
   const { label, userId, type } = req.body;
-
-  console.log(containerId)
 
   const result = validateReaction({
     ...req.body,
