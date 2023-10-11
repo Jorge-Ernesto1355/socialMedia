@@ -5,8 +5,10 @@ import "./ActionsPost.css";
 import comment from "./icons/comment.png";
 import share from "./icons/share.png";
 
-import LikePost from "../Rating2.0/LIkePost";
-import Reaction from "../Rating2.0/Reaction";
+
+import Reaction from "../../../Reaction/Reaction";
+import LikePost from '../../../Reaction/LIkePost'
+
 
 const ActionsPost = ({ postId, userId }) => {
   return (
@@ -18,6 +20,7 @@ const ActionsPost = ({ postId, userId }) => {
             id={postId}
             userId={userId}
             request={ReactionPost}
+            type={'Post'}
           >
             <LikePost />
           </Reaction>
