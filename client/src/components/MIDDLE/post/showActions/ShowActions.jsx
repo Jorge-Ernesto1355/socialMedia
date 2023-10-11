@@ -7,25 +7,27 @@ import { AnimatePresence, motion } from "framer-motion";
 import ShowPersons from "./ShowPersons"
 import ShowAllPersons from "./ShowAllPersons";
 import useInfiniteScroll from "../../../../hooks/useInfiniteScroll/useInfiniteScroll";
+import ReactionService from "../../../Reaction/services/ReactionService";
+import useUserRequest from "../../../../hooks/auth/useUserRequest";
 
 const ShowActions = ({
   changeShowActions,
-
   id,
   reactionsView,
-  reqReactions,
-  reqReaction,
+  type,
   name,
 }) => {
   const [isSelected, setIsSelected] = useState({ label: "todos" });
-
+  const privateRequest = useUserRequest()
   const {
     results: reactions,
     isLoading,
     isError,
     hasNextPage,
     fetchNextPage,
-  } = useInfiniteScroll({ name, id, request: reqReactions });
+  } = useInfiniteScroll({ name, id, request:ReactionService.getReactions, type, privateRequest  });
+
+
 
  
   return (
@@ -104,7 +106,7 @@ const ShowActions = ({
                       label={reaction?.label}
                       id={id}
                       key={`showPersons-key=${reaction?._id}`}
-                      reqReaction={reqReaction}
+                      type={type}
                     />
                   ))}
                 {isSelected.label === "todos" && (
