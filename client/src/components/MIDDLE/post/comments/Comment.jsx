@@ -6,19 +6,18 @@ import more from "./EllipsiComments/icons/ellipsis.png";
 
 import moment from "moment";
 import { UserAdapterSucces } from "../../../Profile/useAdapter";
-import { useSelector } from "react-redux";
+
 import MakeComment from "./makeComment/MakeComment";
 
 import { UpdateCommentMutate } from "../useQuery/mutation/Post";
-import ReactionsView from "../Reactions/ReactionsView";
+import ReactionsView from "../../../Reaction/Reactions/ReactionsView";
 
 import getCommentReactions from "../services/comment/getCommentReactions";
 import getCommentReaction from "../services/comment/getReactionComment";
 import getCommentReactionsView from "../services/comment/getCommentReactionsView";
 
-import Reaction from "../Rating2.0/Reaction";
+
 import { ReactionComment } from "../services/comment/ReactionComment";
-import LikeComment from "../Rating2.0/LikeComment";
 
 import UseImagePreview from "../../../../hooks/useImagePreview/useImagePreview";
 import { useQuery } from "react-query";
@@ -26,6 +25,8 @@ import ShowComments from "./ShowComments";
 import commentRespondedAxios from "../services/comment/commentRespondesAxios";
 
 import Loader from "../../../../utilities/Loader";
+import Reaction from "../../../Reaction/Reaction";
+import LikeComment from '../../../Reaction/LikeComment'
 
 const More = lazy(() => import("./EllipsiComments/More"));
 
@@ -35,9 +36,7 @@ const Comment = ({ comment, postId }) => {
 
   const commentsResponded = comment?.commentsResponded ?? [];
 
-  const { _id: currentUser } = useSelector(
-    (state) => state.user.currentUser.user,
-  );
+
 
 
   const [makeComment, setMakeComment] = useState(false);
@@ -59,9 +58,9 @@ const Comment = ({ comment, postId }) => {
 
   const { data: userData, isLoadingUser } = useQuery(
     ["user", userId],
-    () => GetUser(currentUser),
+    () => GetUser(''),
     {
-      enabled: !!currentUser,
+      enabled: !!'',
     },
   );
 
@@ -98,9 +97,7 @@ const Comment = ({ comment, postId }) => {
             id={commentId}
             name={"comment"}
             nameView={"comment-view"}
-            reqReactionsView={getCommentReactionsView}
-            reqReactions={getCommentReactions}
-            reqReaction={getCommentReaction}
+            type="Comment"
           />
         </div>
         {isHovered && (
@@ -122,9 +119,10 @@ const Comment = ({ comment, postId }) => {
         <div></div>
         <div className="actions-comments">
           <Reaction
+            type="Comment"
             id={commentId}
             name={"comment-view"}
-            request={ReactionComment}
+            
             userId={userId}
           >
             <LikeComment />
@@ -151,7 +149,7 @@ const Comment = ({ comment, postId }) => {
             {input && (
               <MakeComment
                 userforDisplay={user?._id}
-                userId={currentUser}
+                userId={''}
                 id={postId}
                 name={"comments-Responded"}
                 componentId={commentId}
