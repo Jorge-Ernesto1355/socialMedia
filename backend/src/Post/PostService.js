@@ -42,6 +42,18 @@ class PostService {
     }
   }
 
+  static async getTimeLine(object) {
+    try {
+      exits(object);
+      const { objectId } = object;
+    } catch (error) {
+      return {
+        error,
+        message: error.message,
+      };
+    }
+  }
+
   static async create(req) {
     exits(req.body);
 
