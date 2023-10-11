@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import './DeclineFriend.css'
 import useMutationRequest from '../../../../hooks/useMutationRequest';
 import { useSelector } from 'react-redux';
-import toast from 'react-hot-toast';
+
 import OptionsRequestFriends from './OptionsRequestFriends';
 import LoaderVote from '../../../MIDDLE/post/Votes/LoaderVote';
 const DeclineFriend = ({ userRequestFriend }) => {

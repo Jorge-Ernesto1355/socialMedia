@@ -12,6 +12,9 @@ import { GetPosts } from "../../../services/getPosts.services";
 import InfiniteScroll from "react-infinite-scroll-component";
 import useInfiniteScroll from "../../../hooks/useInfiniteScroll/useInfiniteScroll";
 import PostLoader from "../post/post/postLoader/PostLoader";
+import useUserRequest from "../../../hooks/auth/useUserRequest";
+import useGetPosts from "./useGetposts";
+
 
 /**
  * Renders a feed of posts using infinite scroll.
@@ -20,15 +23,20 @@ import PostLoader from "../post/post/postLoader/PostLoader";
  */
 export default function Feed({ limit }) {
 
+  const requestposts = useGetPosts()
 
-  const { results, isLoading, isError, hasNextPage, fetchNextPage } =
+
+  const { results, isLoading, isError, hasNextPage, fetchNextPage, error } =
     useInfiniteScroll({
       name: "posts",
-      request: GetPosts,
+      request: GetPosts
     });
 
+
+  console.log(error)
+
   if (isError) {
-    return <div>Error</div>;
+    return <div>error posible unuatiorized</div>;
   }
 
   return (

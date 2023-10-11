@@ -22,7 +22,7 @@ class AuthService {
     }
 
     static async refreshToken(refresh){
-    
+
         const config = {
             headers:{
               "Authorization": `Bearer ${refresh}`,
@@ -30,6 +30,20 @@ class AuthService {
           };
         try {
             return axios.put(BASE_URL+'/auth/refresh', {}, config)
+        } catch (error) {
+            return error
+        }
+    }
+
+    static async logOut(refresh){
+        const config = {
+            headers:{
+              "Authorization": `Bearer ${refresh}`,
+            }
+          };
+
+        try {
+            return axios.put(BASE_URL + '/auth/logout', {}, config)
         } catch (error) {
             return error
         }

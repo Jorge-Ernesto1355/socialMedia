@@ -5,7 +5,6 @@ const useMutationRequest = (request, { name } = {}) => {
     throw new Error("request must be a function");
   }
 
-
   if (!name) {
     throw new Error("error:name should be defined");
   }
@@ -23,8 +22,6 @@ const useMutationRequest = (request, { name } = {}) => {
     mutationFn: request,
     onMutate: async (newComment) => {
       await queryClient.cancelQueries([name]);
-      // esto lo hacemos para guardar el estado previo
-      // por si tenemos que hacer un rollback
       const previousComments = queryClient.getQueryData([name]);
       queryClient.setQueryData([name], (oldData) => {
         const newCommentToAdd = structuredClone(newComment);

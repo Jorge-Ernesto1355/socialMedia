@@ -1,8 +1,9 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model,} = require("mongoose");
 const mongoosePaginate = require("mongoose-paginate-v2");
 const { Token, AccessToken, RefreshToken } = require("../../auth/application/auth");
 const getUserInfo = require("../../libs/getUserInfo");
 const TokenModel = require("./TokenModel");
+const isValidObjectId = require("../../libs/isValidObjectId");
 
 const User = new Schema(
   {
@@ -51,7 +52,7 @@ const User = new Schema(
       public_id: String,
     },
     Admin: { type: Boolean, default: false },
-    resetToken: {
+    refreshToken: {
       type: String,
       default: "",
     },
@@ -90,12 +91,13 @@ User.methods.createAccessToken = function (){
 
 }
 
-
 User.methods.createRefreshToken = async  function (){
-  const refreshToken = RefreshToken(getUserInfo(this))
-
+  
   try {
-    await new TokenModel({token:refreshToken}).save()
+    const refreshToken = RefreshToken(getUserInfo(this))
+    
+    this.refreshToken = refreshToken
+    await this.save()
     return refreshToken
   } catch (error) {
     return {error, message: error.message}

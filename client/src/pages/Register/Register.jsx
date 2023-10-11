@@ -18,9 +18,6 @@ import Input from "../components/Input";
 import validateContraseña from "../../utilities/ExpresionRegularContraseña";
 
 
-
-// emoticons
-
 import { FaArrowLeft, FaUser } from "react-icons/fa";
 
 import { MdEmail } from "react-icons/md";
@@ -35,7 +32,7 @@ function Register() {
 
   const Auth = AuthProvider()
 
-  const { mutate, isLoading, error } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: AuthService.Register,
     onSuccess: (data) => {
       const accessToken = data?.data?.accessToken || null

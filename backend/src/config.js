@@ -9,6 +9,7 @@ const NotificationRoute = require("./notification/infrastructure/Notification.ro
 const ReactionRouter = require('./reaction/infratructure/Reaction.routes')
 const CommentRouter = require('./comment/infrastructure/Comment.routes')
 const fileUpload = require("express-fileupload");
+const cookieParser = require("cookie-parser");
 
 
 class Server {
@@ -30,25 +31,40 @@ class Server {
         tempFileDir: "./src/upload",
       })
     );
+    this.app.use(cookieParser())
 
 
-    this.app.use(cors({ origin: "*" }));
+    this.app.use(cors({
+      origin:(origin, callback)=>{
+        const  ACCEPTED_ORIGINS=[
+          'http://localhost:3000'
+        ]
+
+        if(ACCEPTED_ORIGINS.includes(origin)){
+          return callback(null, true)
+        }
+        if(!origin){
+          return callback(null, true)
+        }
+
+        return callback(new Error('Not Allowed by CORS'))
+      }
+    }));
     this.app.use((err, req, res, next) => {
-      console.log(err);
-      // Verificar el tipo de error y responder en consecuencia
+    
+      
       if (err.name === "ValidationError") {
-        // Error de validación (por ejemplo, al crear un nuevo registro)
+        
         return res
           .status(400)
           .json({ error: "Error de validación", message: err.message });
       }
       if (err.name === "CastError") {
-        // Error de conversión de tipo (por ejemplo, al buscar un registro por un ID inválido)
+        
         return res
           .status(404)
           .json({ error: "Recurso no encontrado", message: err.message });
       }
-      // Otros tipos de errores
 
       return res
         .status(500)

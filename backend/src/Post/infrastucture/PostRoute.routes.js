@@ -1,9 +1,10 @@
 const { Router } = require("express");
 const PostIndex = require("../application/PostIndex");
+const verifyToken = require("../../auth/application/verifySignup");
 
 const route = Router();
 
-route.get("/", PostIndex.FindAllPost);
+route.get("/", verifyToken, PostIndex.FindAllPost);
 
 route.get("/timeline/:userId", PostIndex.findTimeLine);
 

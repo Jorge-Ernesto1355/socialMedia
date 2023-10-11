@@ -1,8 +1,11 @@
 /* eslint-disable dot-notation */
 import { useEffect } from 'react'
-import useRefreshToken from './UseRefreshToken'
+
 import AuthProvider from '../../zustand/AuthProvider'
 import { userRequest } from '../../utilities/requestMethod'
+
+import { useMutation } from 'react-query'
+import AuthService from '../../pages/services/AuthServices'
 
 const useUserRequest = () => {
     /**
@@ -12,13 +15,21 @@ const useUserRequest = () => {
      *
      * @returns {object} - The userRequest instance of axios.
      */
-    const refresh = useRefreshToken()
+
     const Auth = AuthProvider()
 
-    useEffect(() => {
+    const { mutate: refresh } = useMutation({
+        mutationFn: AuthService.refreshToken,
+        onSuccess: (data) => {
+            const accessToken = data.data || null
+            Auth.setAccessToken(accessToken)
+        }
+    })
 
+    useEffect(() => {
         const requestIntercept = userRequest.interceptors.request.use(
             config => {
+
                 if (!config.headers['Authorization']) {
                     config.headers['Authorization'] = `Bearer ${Auth?.accessToken}`
                 }
@@ -29,12 +40,13 @@ const useUserRequest = () => {
         const responseInterceptor = userRequest.interceptors.response.use(
             response => response,
             async (error) => {
+
                 const prevRequest = error?.config
                 if (error?.response?.status === 403 && !prevRequest?.sent) {
                     prevRequest.sent = true
-                    const refreshToken = Auth.getRefreshToken() ?? null
-                    const mutate = refresh({ refresh: refreshToken })
-                    await mutate(refreshToken)
+                    const refreshToken = Auth.getRefreshToken() || null
+                    refresh(refreshToken)
+
                     if (Auth.accessToken) {
                         prevRequest.headers['Authorization'] = `Bearer ${Auth.accessToken}`
                     }

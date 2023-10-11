@@ -12,6 +12,8 @@ router.post('/login', indexAuth.LoginUser)
 
 router.put('/refresh', indexAuth.refresh )
 
+router.put('/logout', indexAuth.LogOut)
+
 router.post('/forgot-password', indexAuth.ForgotPassword)
 
 

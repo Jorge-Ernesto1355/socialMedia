@@ -3,8 +3,8 @@ const jwt = require('jsonwebtoken')
 const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET, } = require('../../dotenv')
 
 
-function sign(payload, isAccesToken){
-  return  jwt.sign(payload, isAccesToken ? ACCESS_TOKEN_SECRET  : REFRESH_TOKEN_SECRET , { expiresIn:3600})
+function sign(payload, isAccessToken){
+  return  jwt.sign(payload, isAccessToken ? ACCESS_TOKEN_SECRET  : REFRESH_TOKEN_SECRET , { expiresIn:3600})
 }
 
 const RefreshToken = (user)=>{

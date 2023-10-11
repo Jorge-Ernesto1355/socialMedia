@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import "./Post.css";
 
 import rem from "../../../../assets/rem.jpg";
-import { useSelector } from "react-redux";
+
 import more from "../comments/EllipsiComments/icons/ellipsis.png";
 import GetUser from "../../../../services/GetUser.service";
 import Comments from "../comments/Comments";
 import MakeAComment from "../comments/makeComment/MakeComment";
-import { Toaster } from "react-hot-toast"
+
 import moment from "moment";
 import ReactionsView from "../Reactions/ReactionsView";
 import {
@@ -48,17 +48,6 @@ const Post = ({ post }) => {
 
 	return (
 		<div className="feed">
-			<Toaster
-				toastOptions={{
-					className: "",
-					style: {
-						marginTop: "620px",
-						marginLeft: "600px",
-						padding: "10px",
-						boxShadow: "1px 0px 5px -2px rgba(0, 0, 0, 0.13)  ",
-					},
-				}}
-			/>
 			<div className="head">
 				<div className="user">
 					<div className="profile-photo">

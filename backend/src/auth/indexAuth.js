@@ -5,6 +5,7 @@ const Register = require('./application/RegisterUser')
 const updateUserProfile = require('../users/application/Update/UpdateUserProfile')
 const NewPassword = require('./application/NewPassword')
 const refresh = require('./application/RefreshToken')
+const LogOut = require('./application/logOut')
 
 module.exports = {
   ForgotPassword,
@@ -12,6 +13,7 @@ module.exports = {
   LoginUser, 
   Register, 
   NewPassword,
-  refresh
+  refresh, 
+  LogOut
   
 }

@@ -19,7 +19,7 @@ const useInfiniteScroll = ({ name, id, request, label }) => {
   }
 
   // Use the useInfiniteQuery hook to fetch the data
-  const { data, isLoading, isError, hasNextPage, fetchNextPage } =
+  const { data, isLoading, isError, hasNextPage, fetchNextPage, error } =
     useInfiniteQuery(
       [name, id],
       ({ pageParam = 1 }) =>
@@ -34,11 +34,13 @@ const useInfiniteScroll = ({ name, id, request, label }) => {
       },
     );
 
+
+
   // Flatten the paginated results into a single array
   const results = data?.pages?.flatMap((page) => page.data?.docs ?? []) ?? [];
 
   // Return the paginated results, loading state, error state, and pagination information
-  return { results, isLoading, isError, hasNextPage, fetchNextPage };
+  return { results, isLoading, isError, hasNextPage, fetchNextPage, error };
 };
 
 export default useInfiniteScroll;

@@ -5,6 +5,8 @@ const FindAllPost = async (req, res) => {
   const limit = parseInt(req.query.limit, 10) || 10;
   const page = parseInt(req.query.page, 10) || 1;
 
+  console.log('siisisi')
+
   
     const posts = await PostService.getAll({limit, page})
 

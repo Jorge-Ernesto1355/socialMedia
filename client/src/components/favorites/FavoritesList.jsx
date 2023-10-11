@@ -10,7 +10,7 @@ import sad from "../../assets/sad-face.png";
 import FindAllUserPost from "../../services/FindAllUserPost";
 
 // querys
-import { useQuery } from "react-query";
+
 import { Link, useParams } from "react-router-dom";
 
 // others things
@@ -21,32 +21,13 @@ import { v4 as uuidv4 } from "uuid";
 // redux
 import FavoritesItem from "./FavoritesItem";
 import { useEffect, useState } from "react";
-import { isUndefined } from "underscore";
+
 
 const Favorites = () => {
   const [userPosts, setUserPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const params = useParams();
-  let userId = params.userId;
-  if (isUndefined(userId)) {
-    userId = null;
-  }
 
-  useEffect(() => {
-    setIsLoading(true);
-    const getAllPosts = async () => {
-      const { data, error } = await FindAllUserPost(userId);
-      if (error === null) {
-        setUserPosts(data.data);
-      } else {
-        setUserPosts([]);
-      }
-    };
-
-    getAllPosts();
-    setIsLoading(false);
-  }, [userId]);
 
   return (
     <div className="Favorites">

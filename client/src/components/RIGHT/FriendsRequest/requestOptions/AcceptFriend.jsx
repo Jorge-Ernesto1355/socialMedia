@@ -4,7 +4,7 @@ import './AcceptFriend.css'
 import useMutationRequest from '../../../../hooks/useMutationRequest'
 import OptionsRequestFriends from './OptionsRequestFriends'
 import { useSelector } from 'react-redux'
-import toast, { Toaster } from 'react-hot-toast'
+
 import LoaderVote from '../../../MIDDLE/post/Votes/LoaderVote'
 
 const AcceptFriend = ({ userRequestFriend }) => {
@@ -21,8 +21,7 @@ const AcceptFriend = ({ userRequestFriend }) => {
             accept: true
         }, {
             onSuccess: () => {
-                toast.success('anadiste a un nuevo amigo', {
-                })
+
             }
         })
     })

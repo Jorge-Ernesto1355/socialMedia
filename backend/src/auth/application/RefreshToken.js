@@ -6,7 +6,6 @@ const RefreshToken = async (req, res)=>{
   var token = req?.headers?.authorization?.split(' ')[1];
 
 
-
   const accessToken = await AuthService.refresh({refreshToken:token})
 
   if(accessToken?.error){

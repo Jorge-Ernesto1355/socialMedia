@@ -2,10 +2,10 @@ import React from "react";
 import "./FriendRequest.css";
 import useInfiniteScroll from "../../../hooks/useInfiniteScroll/useInfiniteScroll";
 import RequestFriends from "./requestFriends/RequestFriends";
-import { useSelector } from "react-redux";
+
 import FriendsRequestLoader from "./FriendsRequestLoader";
 import RequestFriendsService from "./service/RequestFriends";
-import toast, { Toaster } from 'react-hot-toast'
+
 const FriendRequest = () => {
 
 
@@ -27,7 +27,7 @@ const FriendRequest = () => {
       {!isLoading && (
         <RequestFriends items={results} />
       )}
-      <Toaster />
+
     </div>
   );
 };

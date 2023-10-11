@@ -5,10 +5,29 @@ import React from "react";
 import rem from "../../../assets/rem.jpg";
 import Search from "../Search/Search";
 import { useDispatch } from "react-redux";
+import useLogOut from "../../../hooks/auth/useLogOut";
+import AuthProvider from "../../../zustand/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 
 const Navbar = () => {
 
+  const Auth = AuthProvider()
+  const { mutateSignOut } = useLogOut()
+  const navigate = useNavigate()
+
+  const signOut = () => {
+    const refresh = Auth.getRefreshToken()
+
+    mutateSignOut(refresh, {
+      onSuccess: () => {
+        Auth.setAccessToken(null)
+        Auth.setRefreshToken(null)
+        Auth.logout()
+        navigate('/login')
+      }
+    })
+  }
 
 
   return (
@@ -22,7 +41,7 @@ const Navbar = () => {
           </div>
 
         </div>
-        <button>sign out</button>
+        <button onClick={() => signOut()}>sign out</button>
       </div>
     </nav>
   );

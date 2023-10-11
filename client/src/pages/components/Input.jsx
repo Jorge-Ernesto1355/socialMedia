@@ -12,7 +12,6 @@ function Input({
   return (
     <div className="input1">
       {children}
-
       <input
         className="input-invisible"
         placeholder={placeholder}
