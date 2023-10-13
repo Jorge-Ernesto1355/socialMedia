@@ -1,9 +1,8 @@
 const { Schema, model,} = require("mongoose");
 const mongoosePaginate = require("mongoose-paginate-v2");
-const { Token, AccessToken, RefreshToken } = require("../../auth/application/auth");
+const {  AccessToken, RefreshToken } = require("../../auth/application/auth");
 const getUserInfo = require("../../libs/getUserInfo");
-const TokenModel = require("./TokenModel");
-const isValidObjectId = require("../../libs/isValidObjectId");
+
 
 const User = new Schema(
   {
