@@ -31,6 +31,7 @@ const Post = Schema(
     ],
     group: { type: String, default: "" },
     edit: { type: Boolean, default: false },
+    points:{type:Number, default:0}
   },
   {
     timestamps: true,
