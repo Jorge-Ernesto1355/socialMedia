@@ -1,5 +1,6 @@
 .sidebar {
   margin-top: 1rem;
+
   background-color: var(--color-white);
   border-radius: var(--card-border-radius);
   box-shadow: var(--card-shadow);
@@ -10,6 +11,7 @@
   display: flex;
   align-items: center;
   height: 4rem;
+
   cursor: pointer;
   translate: all 300ms ease;
   position: relative;
@@ -22,7 +24,7 @@
 .sidebar span {
   font-size: 1.4rem;
   color: var(--color-gray);
-  margin-left: 2rem;
+  margin-left: 1rem;
   position: relative;
 }
 
@@ -35,11 +37,12 @@
   padding: 0.1rem 0.4rem;
   position: absolute;
   top: 0.8rem;
-  left: 2.7rem;
+  left: 1.9rem;
 }
 
 .sidebar h3 {
-  margin-left: 1.5rem;
+  margin-left: .9rem;
+  padding-right: 0.5rem;
   font-size: 1rem;
   color: var(--color-dark);
 }
@@ -66,6 +69,7 @@
   border-top-left-radius: var(--card-border-radius);
   overflow: hidden;
 }
+
 .sidebar .menu-item:last-child.active {
   border-bottom-left-radius: var(--card-border-radius);
   overflow: hidden;
@@ -80,9 +84,7 @@
 }
 
 @media screen and (max-width: 1200px) {
-  .sidebar h3 {
-    display: none;
-  }
+
 
   .sidebar .btn {
     display: none;
@@ -90,7 +92,7 @@
 }
 
 @media screen and (max-width: 1200px) {
-  .sidebar > div h3 {
+  .sidebar>div h3 {
     display: none;
   }
 

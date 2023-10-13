@@ -33,7 +33,7 @@ const Sidebar = () => {
 
   return (
     <div className="sidebar">
-      <a className="menu-item active">
+      <a className="menu-item">
         <span>
           <AiOutlineHome />
         </span>
@@ -47,20 +47,6 @@ const Sidebar = () => {
         <h3>Explore</h3>
       </a>
 
-      <a
-        className="menu-item"
-
-      >
-        <span>
-          <IoIosNotificationsOutline />
-        </span>
-        <i>9</i>
-        <h3>Notificaciones</h3>
-
-        {/* NOTIFICACIONES POPUP */}
-
-
-      </a>
 
       <a className="menu-item" >
         <span>
@@ -83,12 +69,7 @@ const Sidebar = () => {
         <Theme />
       </a>
 
-      <a className="menu-item" >
-        <span>
-          <FiSettings />
-        </span>
-        <h3>Settings</h3>
-      </a>
+
       <label
         htmlFor="create-post"
 
