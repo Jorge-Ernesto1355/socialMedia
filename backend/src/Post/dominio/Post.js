@@ -23,6 +23,11 @@ const Post = Schema(
       },
     ],
     postShared: { ref: "Post", type: Schema.Types.ObjectId },
+    usersTagged: [
+      {
+        username: String,
+      },
+    ],
     reactions: [
       {
         ref: "Reaction",
