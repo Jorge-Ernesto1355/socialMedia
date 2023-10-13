@@ -19,6 +19,9 @@ import { HandleStateActions, clearStateActions } from "./HandleSteateOptions";
 import useMutationRequest from "../../../hooks/useMutationRequest";
 import CreatePostStore from "../../../zustand/CreatePostStore";
 import CreatePostService from "../../../services/CreatePost.service";
+import PostServices from "../post/services/PostServices";
+import useUserRequest from "../../../hooks/auth/useUserRequest";
+import AuthProvider from "../../../zustand/AuthProvider";
 
 const Votes = lazy(() => import("./Vote/Votes"));
 
@@ -33,16 +36,17 @@ const ACTIONS_INITIAL_STATE = {
 };
 
 const CreatePost = () => {
-
+  const privateRequest = useUserRequest()
   const { votes, difusion, delVotes } = CreatePostStore()
   const [actions, setActions] = useState(ACTIONS_INITIAL_STATE);
-  const { store, set, get, state } = useStore();
+  const { userId } = AuthProvider()
+  const { store, set, get } = useStore();
   const { element, input: inputFile, clearImagePreview } = UseImagePreview()
-  const { mutate, isLoading, isError, reset } = useMutationRequest(CreatePostService, { name: 'posts' })
+  const { mutate, isLoading, isError, reset } = useMutationRequest(PostServices.create, { name: 'posts' })
 
   const handleMutate = useCallback(() => {
     if (!get()) return
-    mutate({ description: get(), votes, image: inputFile.current.files[0], difusion }, {
+    mutate({ description: get(), votes, image: inputFile.current.files[0], difusion, privateRequest, userId }, {
       onSuccess: () => {
         delVotes()
         set("");
