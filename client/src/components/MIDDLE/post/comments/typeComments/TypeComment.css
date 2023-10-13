@@ -1,0 +1,44 @@
+.typeComments-container {
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+    position: relative;
+
+}
+
+.typeComments-selector {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    font-weight: 500;
+    color: #363636;
+    font-size: 1rem;
+    width: 20px;
+    cursor: pointer;
+
+}
+
+.typeComments-arrow {
+    width: .9rem;
+    height: .9rem;
+
+}
+
+.typeComment-ellipsi {
+    position: absolute;
+    padding: 0.5rem;
+    background: #fff;
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--card-shadow);
+    z-index: 1000;
+}
+
+.typeComment-element {
+    padding: 0.2rem;
+
+}
+
+.typeComment-description {
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: #8C8C8C
+}
