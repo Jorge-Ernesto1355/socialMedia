@@ -17,7 +17,6 @@ const deleteUser = require('./Delete/DeleteUserById')
 
 module.exports = {
   query:{
-   
     getUsers,
     FindUserById,
     getFriends,

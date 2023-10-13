@@ -9,6 +9,7 @@ const addFriends = async (req, res) => {
 
 
   const addFriend = await userService.addFriend({userId, addUserId})
+  
 
   if(addFriend?.error){
     return res.status(500).json({error:addFriend.message})
