@@ -1,23 +1,29 @@
 import React, { useCallback } from 'react'
 import './DeclineFriend.css'
-import useMutationRequest from '../../../../hooks/useMutationRequest';
-import { useSelector } from 'react-redux';
-
-import OptionsRequestFriends from './OptionsRequestFriends';
 import LoaderVote from '../../../MIDDLE/post/Votes/LoaderVote';
-const DeclineFriend = ({ userRequestFriend }) => {
+import useUserRequest from '../../../../hooks/auth/useUserRequest';
+import userService from '../../../../services/UserService';
+import useMutationRequest from '../../../../hooks/useMutationRequest';
+import { toast } from 'react-toastify';
+const DeclineFriend = ({ userRequestFriend, currentUser }) => {
 
-    const { _id: currentUser } = useSelector(
-        (state) => state.user.currentUser.user,
-    );
 
-    const { mutate, isLoadingMutation, isError } = useMutationRequest(OptionsRequestFriends, { name: 'requestFriends' })
+    const privateRequest = useUserRequest()
+    const { mutate, isLoadingMutation, isError } = useMutationRequest(userService.acceptFriend, { name: 'requestFriends' })
 
     const handleMutate = useCallback(() => {
         mutate({
-            userRequestFriend,
-            userAccept: currentUser,
-            accept: true
+            addUserId: userRequestFriend,
+            userId: currentUser,
+            accept: true,
+            privateRequest
+        }, {
+            onSuccess: () => {
+                toast.success('declined friend request')
+            },
+            onError: () => {
+                toast.error('Something went wrong')
+            }
         })
     })
     return (
