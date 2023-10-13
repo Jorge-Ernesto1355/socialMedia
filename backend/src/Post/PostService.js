@@ -58,7 +58,7 @@ class PostService {
     exits(req.body);
 
     const { description, userId, votes, postShared, usersTagged } = req.body;
-
+    console.log(usersTagged);
     let image = null;
     try {
       image = await createImagen(req);
@@ -67,6 +67,9 @@ class PostService {
 
       const newPost = new Post({ userId, description, image });
       if (postShared) newPost.postShared = postShared;
+      newPost.usersTagged = usersTagged?.map((username) => ({
+        username,
+      }));
       user.posts = [...user.posts, newPost];
       await user.save();
       const postsaved = await newPost.save();
