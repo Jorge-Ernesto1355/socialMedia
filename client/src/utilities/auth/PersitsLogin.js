@@ -33,9 +33,7 @@ const PersitsLogin = () => {
     };
   }, []);
 
-  useEffect(() => {
-    console.log(`at: ${JSON.stringify(Auth?.accessToken)}`);
-  }, [isLoading]);
+
 
   return (
     <>
