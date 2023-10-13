@@ -3,24 +3,28 @@ import './ButtonEditPost.css'
 import { EditPostMutation } from '../../../RequestOptionsOwnUser'
 import SpinnerLoader from '../../../../../../../../stylesComponents/spinnerLoader/SpinnerLoader'
 import ErrorButton from '../../../../../comments/makeComment/styledComponentes/ErrorButton/ErrorButton'
-import { useSelector } from 'react-redux'
+
+import AuthProvider from '../../../../../../../../zustand/AuthProvider'
+import useUserRequest from '../../../../../../../../hooks/auth/useUserRequest'
 const ButtonEditPost = ({ get, post, handleClose, postId }) => {
 
-    const { _id: currentUser } = useSelector(
-        (state) => state.user.currentUser.user,
-    );
+    const { userId: currentUser } = AuthProvider()
+    const privateRequest = useUserRequest()
 
     const { mutateEdit, isLoadingMutationEdit, isErrorEditPost, reset } = EditPostMutation()
 
-    if (typeof get !== 'function') return <p>error</p>
+
 
     const handleEditPost = useCallback(() => {
         if (typeof get !== 'function') return
         mutateEdit({
-            ...post,
-            description: get(),
-            currentUser,
-            postId
+            post: {
+                ...post,
+                description: get(),
+                currentUser,
+                postId,
+            },
+            privateRequest
         }, {
             onSuccess: () => {
                 handleClose && handleClose()
