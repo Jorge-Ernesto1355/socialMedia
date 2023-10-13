@@ -6,7 +6,7 @@ const comments = async (req, res) => {
   const { commentId } = req.query;
   const { userId, text } = req.body;
 
-  console.log({ containerId, type, userId, text });
+
   const result = validateComment({ userId, text, containerId });
 
   if (result.error) {
@@ -22,7 +22,7 @@ const comments = async (req, res) => {
   });
 
   if (newComment.error) {
-    return res.status(500).json({ message: newComment.error.message });
+    return res.status(500).json({ message: newComment.message });
   }
 
   return res.status(201).json(newComment);
