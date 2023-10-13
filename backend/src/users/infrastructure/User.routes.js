@@ -17,6 +17,8 @@ router.get('/friends/:userId', index.query.getFriends)
 
 router.get("/friend/request/all/:userId", index.query.getRequestFriends);
 
+router.put('/friend/request/accept', index.mutation.AcceptFriends)
+
 //mutations POST
 router.post("/upload", index.mutation.UploadProfilePicture);
 
