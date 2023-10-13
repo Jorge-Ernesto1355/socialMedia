@@ -7,11 +7,10 @@ import { useQuery } from 'react-query'
 import GetUser from '../../../../services/GetUser.service'
 import AcceptFriend from '../requestOptions/AcceptFriend'
 import DeclineFriend from '../requestOptions/DeclineFriend'
+import AuthProvider from '../../../../zustand/AuthProvider'
 const Request = ({ user }) => {
-  const { _id: currentUser } = useSelector(
-    (state) => state.user.currentUser.user,
-  );
 
+  const { userId: currentUser } = AuthProvider()
   const { data: userData } = useQuery(["user", currentUser], () => GetUser(currentUser));
 
   const ownUser = userData?.data?.data ?? {};
@@ -31,8 +30,8 @@ const Request = ({ user }) => {
       </div>
 
       <div className="request-options">
-        <AcceptFriend userRequestFriend={user?._id} />
-        <DeclineFriend userRequestFriend={user?._id} />
+        <AcceptFriend userRequestFriend={user?._id} currentUser={currentUser} />
+        <DeclineFriend userRequestFriend={user?._id} currentUser={currentUser} />
       </div>
     </li>
   )
