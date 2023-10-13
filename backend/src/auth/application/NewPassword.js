@@ -24,7 +24,7 @@ const NewPassword = async (req, res)=>{
    
     
   } catch (error) {
-    console.log(error)
+    
     return res.status(401).json({message:error})
   }
   user.password = await encryptPassword(newPassword)
