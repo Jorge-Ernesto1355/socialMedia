@@ -39,7 +39,6 @@ const MakeComment = (
 
   const { store, set, get, state } = useStore();
 
-
   const { data: userData } = useQuery(
     ["user", userforDisplay],
     () => GetUser(userforDisplay),
@@ -57,7 +56,7 @@ const MakeComment = (
         {
           privateRequest,
           containerId: id,
-          userId:"6526cc1dfea9a75e4cf0e049",
+          userId,
           type,
           text: get(),
           commentId: componentId,
