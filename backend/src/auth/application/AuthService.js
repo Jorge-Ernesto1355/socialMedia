@@ -4,7 +4,8 @@ const isValidObjectId = require("../../libs/isValidObjectId");
 const UserModel = require("../../users/domain/UserModel");
 const { REFRESH_TOKEN_SECRET } = require("../../dotenv");
 const jwt = require("jsonwebtoken");
-const TokenModel = require("../../users/domain/TokenModel");
+const { AlgoliaUsers } = require("../../algolia/algolia");
+const formtatedUserToAlgolia = require("../utils/formtatedUserToAlgolia");
 
 module.exports = class AuthService {
   static async Register(object) {
@@ -27,13 +28,21 @@ module.exports = class AuthService {
         password: passwordEncryped,
       });
 
-      await user.save();
+     const userCreated  = await user.save();
+
+     const formatedUser = formtatedUserToAlgolia(userCreated)
+
+     await AlgoliaUsers.saveObject(formatedUser, (err, result)=>{
+        if(err){
+          throw new Error(err.message)
+        }
+     })
 
       const accessToken = user.createAccessToken();
 
       const refreshToken = await user.createRefreshToken();
 
-      return { user, accessToken, refreshToken };
+      return { user:userCreated, accessToken, refreshToken };
     } catch (error) {
       return {
         error,
@@ -46,7 +55,12 @@ module.exports = class AuthService {
     try {
       exits(object);
       const { email, password } = object;
-      const emailExits = await isValidObjectId({ email }, "User");
+      const options = {
+        model:"User", 
+        select:['password', 'email', 'username']
+      }
+      const emailExits = await isValidObjectId({ email },options);
+      
 
       if (emailExits.error)
         throw new Error("email or password are not corrects");
@@ -78,12 +92,23 @@ module.exports = class AuthService {
       const { refreshToken } = object;
 
       const verifyRefresh = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET);
-      const { id } = verifyRefresh;
+     
+      const {user:userRefreshToken} = verifyRefresh
 
-      const user = await isValidObjectId({ userId: id }, "User");
-      const accessToken = user.createAccessToken();
+      const options = {
+        model:"User", 
+        select:['password', 'email', 'username']
+      }
 
-      return accessToken;
+      const user = await isValidObjectId({_id:userRefreshToken.id}, options)
+
+      if(user?.error){
+        throw new Error(user.message)
+      }
+      
+     const accessToken = user.createAccessToken()
+
+     return {accessToken, userId:userRefreshToken.id}
     } catch (error) {
       return {
         error,
@@ -106,6 +131,11 @@ module.exports = class AuthService {
       user.refreshToken = "";
       await user.save();
       return;
-    } catch (error) {}
+    } catch (error) {
+      return {
+        error, 
+        message: error.message
+      }
+    }
   }
 };
