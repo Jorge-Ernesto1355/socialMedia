@@ -28,9 +28,9 @@
 
 .icons-reactions {
   position: absolute;
-  right: -8px;
-  height: 20px;
-
+  right: -13px;
+  height: 19px;
+  bottom: 3px;
   width: max-content;
   max-width: 25px;
   border-radius: 10px;
