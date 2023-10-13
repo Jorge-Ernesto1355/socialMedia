@@ -21,11 +21,11 @@ const useMutationRequest = (request, { name } = {}) => {
   } = useMutation({
     mutationFn: request,
     onMutate: async (newData) => {
-     
+
       await queryClient.cancelQueries([name]);
       const previousData = queryClient.getQueryData([name]);
       queryClient.setQueryData([name], (oldData) => {
-        
+
         if (oldData == null) return [newData];
         return oldData?.concat(newData);
       });
