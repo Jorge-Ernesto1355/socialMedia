@@ -1,18 +1,16 @@
-import React from "react";
+import React, { useId } from "react";
 import "./Feed.css";
 
 // components
 import Post from "../post/post/Post";
-
-
-
-
-
+import { v4 as uuidv4 } from "uuid";
 import InfiniteScroll from "react-infinite-scroll-component";
 import useInfiniteScroll from "../../../hooks/useInfiniteScroll/useInfiniteScroll";
 import PostLoader from "../post/post/postLoader/PostLoader";
 import useUserRequest from "../../../hooks/auth/useUserRequest";
 import useGetPosts from "./useGetposts";
+import PostServices from "../post/services/PostServices";
+import AuthProvider from "../../../zustand/AuthProvider";
 
 
 /**
@@ -23,17 +21,23 @@ import useGetPosts from "./useGetposts";
 export default function Feed() {
 
   const privateRequest = useUserRequest()
+  const { userId } = AuthProvider()
+  const uuid = uuidv4()
 
-  const { results, isLoading, isError, hasNextPage, fetchNextPage} =
+
+  const { results, isLoading, isError, hasNextPage, fetchNextPage } =
     useInfiniteScroll({
       name: "posts",
-      request: useGetPosts, 
-      privateRequest
+      request: PostServices.getTimeLine,
+      privateRequest,
+      id: userId
     });
 
   if (isError) {
     return <div>error posible unuatiorized</div>;
   }
+
+
 
   return (
     <InfiniteScroll
@@ -42,10 +46,11 @@ export default function Feed() {
       loader={<PostLoader />}
       next={() => fetchNextPage()}
     >
-      <ul className="feeds">
-
+      <ul className="feeds" key={uuid}>
         {results?.map((post) => (
-          <Post key={`post-key=${post._id}`} post={post} />
+          <>
+            <Post key={`${uuid}-${post._id}`} post={post} />
+          </>
         ))}
       </ul>
     </InfiniteScroll>
