@@ -1,0 +1,12 @@
+.ErrorMessageFriendRequest {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.ErrorMessage-description {
+    font-size: large;
+    color: #525252;
+    font-weight: 500;
+}
