@@ -6,11 +6,12 @@ const Auth = require("./auth/authUser.routes");
 const UserRoute = require("./users/infrastructure/User.routes");
 const PostRoute = require("./Post/infrastucture/PostRoute.routes");
 const NotificationRoute = require("./notification/infrastructure/Notification.routes");
-const ReactionRouter = require('./reaction/infratructure/Reaction.routes')
-const CommentRouter = require('./comment/infrastructure/Comment.routes')
+const ReactionRouter = require("./reaction/infratructure/Reaction.routes");
+const CommentRouter = require("./comment/infrastructure/Comment.routes");
+const ConversationRouter = require("./messages/infrastructure/Conversation.routes");
+const MessageRouter = require("./messages/infrastructure/Message.routes");
 const fileUpload = require("express-fileupload");
 const cookieParser = require("cookie-parser");
-
 
 class Server {
   constructor() {
@@ -31,36 +32,31 @@ class Server {
         tempFileDir: "./src/upload",
       })
     );
-    this.app.use(cookieParser())
+    this.app.use(cookieParser());
 
+    this.app.use(
+      cors({
+        origin: (origin, callback) => {
+          const ACCEPTED_ORIGINS = ["http://localhost:3000"];
 
-    this.app.use(cors({
-      origin:(origin, callback)=>{
-        const  ACCEPTED_ORIGINS=[
-          'http://localhost:3000'
-        ]
+          if (ACCEPTED_ORIGINS.includes(origin)) {
+            return callback(null, true);
+          }
+          if (!origin) {
+            return callback(null, true);
+          }
 
-        if(ACCEPTED_ORIGINS.includes(origin)){
-          return callback(null, true)
-        }
-        if(!origin){
-          return callback(null, true)
-        }
-
-        return callback(new Error('Not Allowed by CORS'))
-      }
-    }));
+          return callback(new Error("Not Allowed by CORS"));
+        },
+      })
+    );
     this.app.use((err, req, res, next) => {
-    
-      
       if (err.name === "ValidationError") {
-        
         return res
           .status(400)
           .json({ error: "Error de validación", message: err.message });
       }
       if (err.name === "CastError") {
-        
         return res
           .status(404)
           .json({ error: "Recurso no encontrado", message: err.message });
@@ -81,8 +77,10 @@ class Server {
     this.app.use("/api/v1/users", UserRoute);
     this.app.use("/api/v1/post", PostRoute);
     this.app.use("/api/v1/notification", NotificationRoute);
-    this.app.use('/api/v1/reaction', ReactionRouter)
-    this.app.use('/api/v1/comment', CommentRouter)
+    this.app.use("/api/v1/reaction", ReactionRouter);
+    this.app.use("/api/v1/comment", CommentRouter);
+    this.app.use("/api/v1/conversation", ConversationRouter);
+    this.app.use("/api/v1/message", MessageRouter);
   }
 
   listen() {
