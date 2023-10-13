@@ -8,6 +8,7 @@ import SearchFriends from '../../components/Profile/searchFriends/SearchFriends'
 import Category from '../../components/RIGHT/Category/Category'
 import Message from '../../components/RIGHT/Messages/Message'
 import FriendRequest from '../../components/RIGHT/FriendsRequest/FriendRequest'
+import Messages from '../../components/RIGHT/Message/Message'
 
 const Main = () => {
     return (
@@ -29,10 +30,9 @@ const Main = () => {
                 {/* ===== RIGHT =====  */}
                 <div className="rightd">
                     <div className="messages">
-
-                        <SearchFriends />
-                        <Category />
                         <Message />
+                        <Category />
+                        <Messages />
                     </div>
 
                     <div className="friendsRequest">
