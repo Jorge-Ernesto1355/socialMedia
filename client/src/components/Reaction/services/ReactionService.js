@@ -1,5 +1,5 @@
 class ReactionService {
-  static async React({ privateRequest, label, id: containerId, type }) {
+  static async React({ privateRequest, label, id: containerId, type, userId }) {
     if (!privateRequest) {
       throw new Error("could not load the requestsfsd");
     }
@@ -7,7 +7,7 @@ class ReactionService {
     try {
       return privateRequest?.put(`/reaction/${containerId}`, {
         label,
-        userId: "6526cc1dfea9a75e4cf0e049",
+        userId,
         type,
       });
     } catch (error) {
