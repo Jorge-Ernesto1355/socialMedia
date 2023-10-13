@@ -20,7 +20,7 @@ nav {
   padding: 0.7rem 0;
   position: fixed;
   top: 0;
-  z-index: 100;
+  z-index: 10;
 
 }
 
@@ -36,7 +36,7 @@ nav .search-bar input[type="search"]::placeholder {
   color: var(--color-gray);
 }
 
-nav .options{
+nav .options {
   display: flex;
   justify-content: space-around;
 
