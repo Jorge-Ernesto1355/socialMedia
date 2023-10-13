@@ -12,32 +12,23 @@ import MakeComment from "./makeComment/MakeComment";
 import { UpdateCommentMutate } from "../useQuery/mutation/Post";
 import ReactionsView from "../../../Reaction/Reactions/ReactionsView";
 
-import getCommentReactions from "../services/comment/getCommentReactions";
-import getCommentReaction from "../services/comment/getReactionComment";
-import getCommentReactionsView from "../services/comment/getCommentReactionsView";
-
-
-import { ReactionComment } from "../services/comment/ReactionComment";
-
 import UseImagePreview from "../../../../hooks/useImagePreview/useImagePreview";
 import { useQuery } from "react-query";
 import ShowComments from "./ShowComments";
-import commentRespondedAxios from "../services/comment/commentRespondesAxios";
 
 import Loader from "../../../../utilities/Loader";
 import Reaction from "../../../Reaction/Reaction";
 import LikeComment from '../../../Reaction/LikeComment'
+import AuthProvider from "../../../../zustand/AuthProvider";
 
 const More = lazy(() => import("./EllipsiComments/More"));
 
-const Comment = ({ comment, postId }) => {
+const Comment = ({ comment }) => {
   const { text, userId, image } = comment.comment;
+  const { userId: currentUser } = AuthProvider()
   const commentId = comment?._id;
 
   const commentsResponded = comment?.commentsResponded ?? [];
-
-
-
 
   const [makeComment, setMakeComment] = useState(false);
 
@@ -54,17 +45,18 @@ const Comment = ({ comment, postId }) => {
     updateCommentMutate({ commentId, text: textValue });
   };
 
-
-
   const { data: userData, isLoadingUser } = useQuery(
     ["user", userId],
-    () => GetUser(''),
+    () => GetUser(userId),
     {
-      enabled: !!'',
+      enabled: !!userId,
     },
   );
 
+
+
   const user = userData?.data?.data ?? UserAdapterSucces();
+
 
   const { element, input } = UseImagePreview();
 
@@ -122,8 +114,7 @@ const Comment = ({ comment, postId }) => {
             type="Comment"
             id={commentId}
             name={"comment-view"}
-            
-            userId={userId}
+            userId={currentUser}
           >
             <LikeComment />
           </Reaction>
@@ -138,6 +129,7 @@ const Comment = ({ comment, postId }) => {
           </span>
         </div>
       </div>
+
       <ShowComments
         commentId={commentId}
         respondedLength={commentsResponded?.length}
@@ -148,12 +140,12 @@ const Comment = ({ comment, postId }) => {
           <div className="comment-makecomment-container">
             {input && (
               <MakeComment
-                userforDisplay={user?._id}
-                userId={''}
-                id={postId}
-                name={"comments-Responded"}
+                userforDisplay={userId}
+                userId={currentUser}
+                id={commentId}
+                type="Comment"
+                name={"CommentsResponded"}
                 componentId={commentId}
-                request={commentRespondedAxios}
                 ref={input}
                 hideMakeComments={setMakeComment}
               />
