@@ -15,7 +15,7 @@ module.exports = async function validateObjectId(query, options) {
   } catch (error) {
     return {
       error,
-      message: error.message,
+      message: error.message, 
     };
   }
 };

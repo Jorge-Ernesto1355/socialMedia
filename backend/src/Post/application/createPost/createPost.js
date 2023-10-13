@@ -1,20 +1,15 @@
-const User = require("../../../users/domain/UserModel");
-const Post = require("../../dominio/Post");
+
 const {validatePost} = require('../validations/PostSchema')
 const PostService = require('../../PostService')
 
 const createPost = async (req, res) => {
   // const { description, userId, votes, difusion, postShared, usersTagged } = req.body;
 
-  if (!req.body?.userId)
-    return res.status(500).json({ message: "something went wrong" });
-
-
 
     const result = validatePost(req.body)
-    
+
     if (result.error) {
-      return res.status(400).json({ error: result.error.mesasge });
+      return res.status(400).json({ error: result.error.message });
     }
 
     const post =  await PostService.create(req)
