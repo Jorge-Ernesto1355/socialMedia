@@ -2,36 +2,43 @@
 import React, { useCallback } from 'react'
 import './AcceptFriend.css'
 import useMutationRequest from '../../../../hooks/useMutationRequest'
-import OptionsRequestFriends from './OptionsRequestFriends'
-import { useSelector } from 'react-redux'
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import LoaderVote from '../../../MIDDLE/post/Votes/LoaderVote'
+import userService from '../../../../services/UserService';
+import useUserRequest from '../../../../hooks/auth/useUserRequest';
 
-const AcceptFriend = ({ userRequestFriend }) => {
-    const { _id: currentUser } = useSelector(
-        (state) => state.user.currentUser.user,
-    );
 
-    const { mutate, isLoadingMutation, isError } = useMutationRequest(OptionsRequestFriends, { name: 'requestFriends' })
+const AcceptFriend = ({ userRequestFriend, currentUser }) => {
+
+    const privateRequest = useUserRequest()
+    const { mutate, isLoadingMutation, isError } = useMutationRequest(userService.acceptFriend, { name: 'requestFriends' },)
 
     const handleMutate = useCallback(() => {
         mutate({
-            userRequestFriend,
-            userAccept: currentUser,
-            accept: true
+            addUserId: userRequestFriend,
+            userId: currentUser,
+            accept: true,
+            privateRequest
         }, {
             onSuccess: () => {
-
+                toast.success('New friend added')
+            },
+            onError: () => {
+                toast.error('Something went wrong')
             }
         })
     })
 
     return (
-        <button className="Accept-friend-accept" onClick={() => handleMutate()}>
-            {isLoadingMutation && <LoaderVote />}
-            {!isLoadingMutation && <span>Aceptar</span>}
+        <>
+            <button className="Accept-friend-accept" onClick={() => handleMutate()}>
+                {isLoadingMutation && <LoaderVote />}
+                {!isLoadingMutation && <span>Aceptar</span>}
 
-        </button>
+            </button>
+
+        </>
     )
 }
 
