@@ -7,7 +7,7 @@ const EllipsisPost = lazy(() => import("./Ellipsis"))
 
 const More = ({ children, id, postId, editing }) => {
   const [isOpen, setIsOpen] = useState(false);
-  console.log(editing)
+
   const handleOpen = () => {
     if (editing) return
     setIsOpen((prev) => !prev)

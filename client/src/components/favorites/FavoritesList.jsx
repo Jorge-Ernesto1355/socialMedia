@@ -28,7 +28,6 @@ const Favorites = () => {
   const [isLoading, setIsLoading] = useState(false);
 
 
-
   return (
     <div className="Favorites">
       <motion.div className={`card`}>

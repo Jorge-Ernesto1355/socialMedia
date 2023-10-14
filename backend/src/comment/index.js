@@ -8,6 +8,7 @@ const updateComment = require('./application/mutation/updateComment')
 // query
 const getComments = require('./application/query/getComments')
 const getCommentResponded = require('./application/query/getCommentsResponded')
+const getMostView = require('./application/query/getMostView')
 
 
 
@@ -20,6 +21,7 @@ module.exports = {
     }, 
     query:{
         getComments, 
-        getCommentResponded
+        getCommentResponded, 
+        getMostView
     }
 }

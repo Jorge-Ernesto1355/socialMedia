@@ -21,7 +21,7 @@ const comments = async (req, res) => {
   });
 
   if (newComment.error) {
-    return res.status(500).json({ message: newComment.error.message });
+    return res.status(500).json({ message: newComment.message });
   }
 
   return res.status(201).json(newComment);

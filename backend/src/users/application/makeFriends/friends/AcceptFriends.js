@@ -10,7 +10,7 @@ const AcceptFriends = async (req, res)=>{
       return res.status(500).json({error: acceptUser.message})
     }
 
-    return res.status(200).json({message: 'accepted friend'})
+    return res.status(200).json({message: acceptUser.message})
   
 }
 

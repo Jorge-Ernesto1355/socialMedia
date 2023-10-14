@@ -12,10 +12,43 @@
   font-size: 0.85rem;
   line-height: 1.5;
   background: var(--color-white);
-
   box-shadow: var(--card-shadow);
   margin-top: 2rem;
+  overflow: hidden;
 }
+
+.feed.simple {
+  box-shadow: none;
+  border: .5px solid #B2B2B2;
+}
+
+.feed.simple .info-post {
+  display: none;
+}
+
+.feed.simple .post-imgToPost {
+  display: none;
+}
+
+.feed.simple .edit {
+  display: none;
+}
+
+
+
+.feed.simple .comment-container {
+  display: none;
+}
+
+.feed.simple .action-buton {
+  display: none;
+}
+
+.feed.simple .traze {
+  display: none;
+}
+
+
 
 .feed .head {
   display: grid;
@@ -138,8 +171,8 @@
 }
 
 .feed .ratingIcon .actionsActivated img {
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
   margin-right: 0.4rem;
 }
 

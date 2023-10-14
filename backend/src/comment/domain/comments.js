@@ -9,6 +9,7 @@ const Comment = Schema(
       edit: { type: Boolean, default: false },
       text: { type: String, require: true },
       image: { url: String, public_id: String },
+      points:{type:Number, default:0}
     },
     reactions: [
       {

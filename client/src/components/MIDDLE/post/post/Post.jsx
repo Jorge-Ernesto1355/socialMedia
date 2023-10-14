@@ -4,28 +4,25 @@ import "./Post.css";
 import rem from "../../../../assets/rem.jpg";
 
 import more from "../comments/EllipsiComments/icons/ellipsis.png";
-import GetUser from "../../../../services/GetUser.service";
 import Comments from "../comments/Comments";
 import MakeAComment from "../comments/makeComment/MakeComment";
 
 import moment from "moment";
 
-import {
-	GetAllReactions,
-	GetReactionsSelected,
-	GetReactionsView,
-} from "../services/actions/actions";
-import GetComments from "../services/comment/GetComments";
 import CommentsShared from "./CommentsShared";
 import useImagePreview from "../../../../hooks/useImagePreview/useImagePreview";
-import CommentAxios from "../services/comment/Comment";
 import ActionsPost from "../actionsPost/ActionsPost";
 import { useQuery } from "react-query";
 import More from "../more/More";
 import Votes from "../Votes/Votes";
 import ReactionsView from "../../../Reaction/Reactions/ReactionsView";
+import AuthProvider from "../../../../zustand/AuthProvider";
+import userService from "../../../../services/UserService";
+import useUserRequest from "../../../../hooks/auth/useUserRequest";
 const Post = ({ post }) => {
 
+	const { userId: currentUser } = AuthProvider()
+	const privateRequest = useUserRequest()
 
 	const [visibilityComment, setVisibilityComment] = useState(false);
 
@@ -41,15 +38,16 @@ const Post = ({ post }) => {
 		votes
 	} = post;
 
-	const { data: userData } = useQuery(["user", userId], () => GetUser(userId));
+	const { data: userData } = useQuery(["user", userId], () => userService.getUser({ privateRequest, userId }));
 
-	const user = userData?.data?.data ?? {};
+	const user = userData?.data ?? {};
+
 
 	const { element, input, clearImagePreview } = useImagePreview();
 
 	return (
-		<div className="feed">
-			
+		<div className="feed simple">
+
 			<div className="head">
 				<div className="user">
 					<div className="profile-photo">
@@ -69,7 +67,7 @@ const Post = ({ post }) => {
 
 				</div>
 				<span className="edit">
-					<More id={userId} postId={postId}>
+					<More id={currentUser} postId={postId}>
 						<img src={more} alt="" />
 					</More>
 				</span>
@@ -78,11 +76,14 @@ const Post = ({ post }) => {
 			<div className="caption">
 				<p>{description}</p>
 			</div>
-			{votes?.length > 0 && <Votes id={postId}/>}
-			
-			<div className="photo">
-				<img src={image?.url} alt="" />
-			</div>
+
+			{votes?.length > 0 && <Votes id={postId} />}
+
+			{image?.url && (
+				<div className="photo">
+					<img src={image?.url} alt="" />
+				</div>
+			)}
 			<div className="info-post">
 				<div className="liked-by">
 					<ReactionsView
@@ -101,12 +102,12 @@ const Post = ({ post }) => {
 			</div>
 
 			<div className="traze"></div>
-			<ActionsPost postId={postId} userId={''} />
+			<ActionsPost postId={postId} userId={currentUser} />
 			<div className="traze"></div>
 			{visibilityComment && (
 				<Comments
 					id={postId}
-					name="post-comment"
+					name="postComment"
 					className={"comments"}
 					type='Post'
 				/>
@@ -114,10 +115,10 @@ const Post = ({ post }) => {
 
 			<MakeAComment
 				id={postId}
-				userId={''}
+				userId={currentUser}
 				ref={input}
 				type="Post"
-				name="post-comment"
+				name="postComment"
 				showComments={setVisibilityComment}
 			/>
 			<div className="post-imgToPost">

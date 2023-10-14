@@ -1,5 +1,5 @@
 import "./autoComplete.css";
-import React, { useEffect} from "react";
+import React, { useEffect } from "react";
 import { getAlgoliaResults } from "@algolia/autocomplete-preset-algolia";
 import { getActiveToken, isValidUsername, replaceAt } from "./utils";
 import { useAutocomplete } from "../../hooks/useAutocomplete";
@@ -12,7 +12,7 @@ const searchClient = algoliasearch(
   "PZG4Z8HDRA",
   "f4018b1d9b79e8cedc28fae6fb2bb44a",
 );
-const INDEX_NAME = "autocomplete-accounts";
+const INDEX_NAME = "users";
 
 const AutoComplete = (props, inputRef) => {
   const { autocomplete, state } = useAutocomplete({

@@ -39,10 +39,12 @@ function Login() {
         onSuccess: (data) => {
             const accessToken = data?.data?.accessToken || null
             const refreshToken = data?.data?.refreshToken || null
-            if (accessToken && refreshToken) {
-                Auth.saveUser({ accessToken, refreshToken })
+            const userId = data?.data?.user?._id
+
+            if (accessToken && refreshToken && userId) {
+                Auth.saveUser({ accessToken, refreshToken, userId })
+                navigate('/')
             }
-            navigate('/')
         },
         onError: (error) => {
             const messageError = error?.response?.data?.error ?? ''

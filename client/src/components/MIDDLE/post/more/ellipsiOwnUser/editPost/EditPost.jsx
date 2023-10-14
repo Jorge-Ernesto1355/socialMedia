@@ -25,9 +25,6 @@ const EditPost = ({ postId, handleClose }) => {
     set(post?.description)
   }, [])
 
-
-
-
   return (
     <>
       {isLoading && (

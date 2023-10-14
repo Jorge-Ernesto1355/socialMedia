@@ -1,30 +1,7 @@
 import { userRequest } from "../../../../../utilities/requestMethod";
 
-export const EditPostService = async (post, infoRequest) => {
-  const form = new FormData();
 
-  for (const key in post) {
-    form.append(key, post[key]);
-  }
 
-  const data = await userRequest.put(
-    `/post/${post.postId}?userId=${post.currentUser}`,
-    form,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    },
-  );
-
-  return data;
-};
-
-export const DeletePostService = async ({ postId, userId }) => {
-  const data = await userRequest.delete(`/post/${postId}?userId=${userId}`);
-
-  return data;
-};
 
 export const VotePost = async (post) => {
   if (post?.previousVote) {

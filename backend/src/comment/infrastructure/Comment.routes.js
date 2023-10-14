@@ -16,6 +16,8 @@ router.get('/all/:containerId/:type', index.query.getComments)
 
 router.get('/:commentId/commentsResponded', index.query.getCommentResponded)
 
+router.get('/mostView/:containerId/:type', index.query.getMostView)
+
 
 
 module.exports = router

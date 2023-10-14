@@ -23,11 +23,12 @@ const ShowCommentsResponded = ({ respondedLength = 0, commentId = "" }) => {
 
   return (
     <div>
+
       {showCommentsResponded ? (
         <Comments
           id={commentId}
           type={'Comment'}
-          name={"comments-Responded"}
+          name={"CommentsResponded"}
           className={classNames.commentsResponded}
         />
       ) : (

@@ -30,10 +30,9 @@ const Main = () => {
                 {/* ===== RIGHT =====  */}
                 <div className="rightd">
                     <div className="messages">
-
-                        <SearchFriends />
+                        <Message />
                         <Category />
-                        <MessageView />
+                        <Message />
                     </div>
 
                     <div className="friendsRequest">
