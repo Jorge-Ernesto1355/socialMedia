@@ -2,7 +2,7 @@ const Post = require("../../dominio/Post");
 
 const FindReactionPostView = async (req, res) => {
   const { id } = req.params;
-  if (!id) return res.status(500).json({ message: "algo salio mal" });
+  if (!id) return res.status(500).json({ message: "something went wrong" });
 
   let reactions = ["gusta", "encanta", "asombra", "divierte", "entristece"];
   let reactionsView = [];

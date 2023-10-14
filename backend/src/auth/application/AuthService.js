@@ -106,6 +106,11 @@ module.exports = class AuthService {
       user.refreshToken = "";
       await user.save();
       return;
-    } catch (error) {}
+    } catch (error) {
+      return {
+        error,
+        message: error.message,
+      };
+    }
   }
 };

@@ -6,7 +6,6 @@ const comments = async (req, res) => {
   const { commentId } = req.query;
   const { userId, text } = req.body;
 
-  console.log({ containerId, type, userId, text });
   const result = validateComment({ userId, text, containerId });
 
   if (result.error) {

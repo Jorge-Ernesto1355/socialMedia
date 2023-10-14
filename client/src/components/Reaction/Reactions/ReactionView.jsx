@@ -2,7 +2,7 @@ import React, { Suspense, lazy, useState } from 'react'
 import { objetsImgs } from '../../MIDDLE/post/post/objectImg'
 import ShowActions from '../../MIDDLE/post/showActions/ShowActions'
 const ConfirmationModal = lazy(()=> import('../../modal/ConfirmationModal'))
-const ReactionView = ({reactionView, name, id, reactionsView, reqReaction, type}) => {
+const ReactionView = ({reactionView, name, id, reactionsView, type}) => {
      const [isOpen, setIsOpen] = useState(false)
      
   return (

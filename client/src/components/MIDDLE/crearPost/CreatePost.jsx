@@ -1,6 +1,5 @@
 import React, { lazy, useCallback, useState } from "react";
 import "./CreatePost.css";
-import { useSelector } from "react-redux";
 import rem from "../../../assets/rem.jpg";
 import poll from "./icons/poll.png";
 import schedule from "./icons/calendar.png";

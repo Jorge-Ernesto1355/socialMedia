@@ -20,7 +20,6 @@ const NotificationModal = ({isOpen}) => {
 	);
     const {results, isLoading, isError, fetchNextPage, hasNextPage} = useInfiniteScroll({request: NotificationService.getAll, name:'notification', id:currentUser})
 
-console.log(results)
 
   return (
     <InfiniteScroll 
