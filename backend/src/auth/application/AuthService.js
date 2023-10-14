@@ -59,6 +59,7 @@ module.exports = class AuthService {
         model: "User",
         select: ["password", "email", "username"],
       };
+      
       const emailExits = await isValidObjectId({ email }, options);
 
       if (emailExits.error)

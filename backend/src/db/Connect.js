@@ -8,7 +8,7 @@ const connectDB = async ()=> {
     : MONGO_DB_URI
     try{
         await mongoose.connect('mongodb://0.0.0.0:27017/socialmediaTest')
-        console.log('database connected')
+        
     }catch(e){
         console.log(e)
     }
