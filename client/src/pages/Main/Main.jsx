@@ -8,6 +8,7 @@ import SearchFriends from '../../components/Profile/searchFriends/SearchFriends'
 import Category from '../../components/RIGHT/Category/Category'
 import Message from '../../components/RIGHT/Messages/Message'
 import FriendRequest from '../../components/RIGHT/FriendsRequest/FriendRequest'
+import MessageView from '../../components/RIGHT/messages/MessageView/MessageView'
 
 const Main = () => {
     return (
@@ -32,7 +33,7 @@ const Main = () => {
 
                         <SearchFriends />
                         <Category />
-                        <Message />
+                        <MessageView />
                     </div>
 
                     <div className="friendsRequest">
