@@ -1,7 +1,7 @@
 const {v2: cloudinary} = require('cloudinary')
 const exits = require('./exits')
 
-cloudinary.config({sd'fsd'fspkgeoiqytg
+cloudinary.config({
   cloud_name:"cbta", 
   api_key:"911678697972225", 
   api_secret:"k5TzOoP0uMgprtv1sDAprFTwtHo"
