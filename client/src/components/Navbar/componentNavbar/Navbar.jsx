@@ -4,7 +4,6 @@ import "./Navbar.css";
 import React from "react";
 import rem from "../../../assets/rem.jpg";
 import Search from "../Search/Search";
-import { useDispatch } from "react-redux";
 import useLogOut from "../../../hooks/auth/useLogOut";
 import AuthProvider from "../../../zustand/AuthProvider";
 import { useNavigate } from "react-router-dom";
@@ -35,6 +34,8 @@ const Navbar = () => {
       <div className="container">
         <h2 className="log">cbta 81</h2>
         <Search />
+
+        
         <div className="create">
           <div className="profile-photo">
             <img src={rem} alt="" />
