@@ -1,25 +1,16 @@
-const User = require("../../domain/UserModel")
+const userService = require("../../userService");
 
+const updateUserProfile = async (req, res) => {
+  const { userId } = req.params;
+  const { password } = req.body;
 
+  const userInfo = await userService.updateInfo({ userId, password });
 
+  if (userInfo?.error) {
+    return res.status(500).json({ error: userInfo.message });
+  }
 
-const updateUserProfile = async ( req, res )=>{
-  const {id} = req.params
-  const {Admin, password, userId} = req.body
- 
+  return res.status(202).json(userInfo);
+};
 
- if( id || Admin){
-   if(password){
-
-    const user = await User.findByIdAndUpdate(id, req.body)
-    res.status(200).json(user)
-
-   }
- }else{
-   res.status(403).json({
-     message:'no puedes actualizar una cuenta que no es tuya'
-   })
- }
-}
-
-module.exports = updateUserProfile
+module.exports = updateUserProfile;
