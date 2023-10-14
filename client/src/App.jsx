@@ -12,6 +12,10 @@ import Login from "./pages/Login/Login";
 import Main from "./pages/Main/Main";
 import Layout from "./components/layout/Layout";
 import PersitsLogin from "./utilities/auth/PersitsLogin";
+import io from 'socket.io-client'
+
+const socket = io('http://localhost:3002')
+console.log(socket)
 
 function App() {
 
@@ -20,8 +24,8 @@ function App() {
     <div>
       <Router>
         <Routes>
-              <Route path='/signup' element={<Register />} />
-              <Route path="/login" element={<Login />} />
+          <Route path='/signup' element={<Register />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/" element={<Layout />}>
 
             {/* protect this routes */}
