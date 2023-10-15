@@ -13,6 +13,7 @@ const UserModel = require("./domain/UserModel");
 module.exports = class userService {
   static async getUsers() {
     try {
+      
       if (!mongoose.models["User"]) throw new Error("model not found");
       const users = await User.find();
       return users;
@@ -29,9 +30,14 @@ module.exports = class userService {
       exits(object);
 
       const { userId } = object;
+      const queryOptions = {
+        model:"User", 
+        select:['username','email', 'imageProfile']
+      }
+      
+      const user = await isValidObjectId({ _id:userId}, queryOptions);
 
-      const user = await isValidObjectId({ userId }, "User");
-
+  
       if (user?.error) {
         throw new Error(user.message);
       }
@@ -48,8 +54,12 @@ module.exports = class userService {
     try {
       exits(object);
       const { userId, limit, page } = object;
+      const queryOptions = {
+        model:"User", 
+        select:['friends']
+      }
 
-      const user = await isValidObjectId({ userId }, "User");
+      const user = await isValidObjectId({ _id:userId}, queryOptions);
 
       if (user.error) {
         throw new Error(user.message);
@@ -81,7 +91,11 @@ module.exports = class userService {
       exits(object);
       const { userId, limit, page } = object;
 
-      const user = await isValidObjectId({ userId }, "User");
+      const queryOptions = {
+        model:"User", 
+        select:['posts']
+      }
+      const user = await isValidObjectId({ _id:userId}, queryOptions);
 
       if (user.error) {
         throw new Error(user.message);
@@ -107,7 +121,12 @@ module.exports = class userService {
     try {
       exits(object);
       const { userId, page, limit } = object;
-      const user = await isValidObjectId({ userId }, "User");
+
+      const queryOptions = {
+        model:"User", 
+        select:['friendsWaiting']
+      }
+      const user = await isValidObjectId({ _id:userId}, queryOptions );
 
       if (user?.error) {
         throw new Error(user.message);
@@ -141,8 +160,13 @@ module.exports = class userService {
 
       const { userId, addUserId } = object;
 
-      const user = await isValidObjectId({ userId }, "User");
-      const addUser = await isValidObjectId({ userId: addUserId }, "User");
+      const queryOptions = {
+        model:"User", 
+        select:['friends']
+      }
+      
+      const user = await isValidObjectId({ _id:userId }, queryOptions);
+      const addUser = await isValidObjectId({ _id: addUserId }, queryOptions);
 
       if (user?.error || addUser.error) {
         throw new Error("document not found or objectId is not valid");
@@ -166,8 +190,13 @@ module.exports = class userService {
       const { userId, addUserId, accept } = object;
       const acceptBoolean = accept === "true";
 
-      const user = await isValidObjectId({ userId }, "User");
-      const addUser = await isValidObjectId({ userId: addUserId }, "User");
+      const queryOptions = {
+        model:"User", 
+        select:['friendsWaiting']
+      }
+
+      const user = await isValidObjectId({ _id:userId }, queryOptions);
+      const addUser = await isValidObjectId({ _id: addUserId }, queryOptions);
 
       if (user?.error || addUser.error) {
         throw new Error("document not found or objectId is not valid");
@@ -200,7 +229,11 @@ module.exports = class userService {
     try {
       exits(object);
       const { userId } = object;
-      const user = await isValidObjectId({ userId }, "User");
+
+      const options = {
+        model:"User",
+      }
+      const user = await isValidObjectId({ _id:userId }, options);
 
       if (user.error) {
         throw new Error(user.message);
@@ -212,6 +245,80 @@ module.exports = class userService {
         error,
         message: error.message,
       };
+    }
+  }
+
+  static async uploadProfilePicture(object) {
+    try {
+      exits(object);
+      const { userId, image } = object;
+      const queryOptions = {
+        model: "User",
+      };
+
+      if (!image) {
+        throw new Error("file invalidate or undefined");
+      }
+
+      const user = await isValidObjectId({ _id: userId }, queryOptions);
+      if (user?.error) {
+        throw new Error(user?.message);
+      }
+
+      const result = await cloudinaryService.upload({
+        filePath: image?.filePath,
+      });
+      await fs.remove(image.tempFilePath);
+      const ProfilePicture = {
+        url: result.secure_url,
+        public_id: result.public_id,
+      };
+
+      user.imageProfile = ProfilePicture;
+
+      await user.save();
+      return null;
+    } catch (error) {
+      return {
+        error,
+        message: error.message,
+      };
+    }
+  }
+
+
+  
+  
+  static async updateInfo(object){
+    try {
+        exits(object)
+        const {password, userId} = object
+
+        const options = {
+            model: "User"
+        }
+        const user = await isValidObjectId({_id: userId}, options)
+
+        if (user?.error) {
+            throw new Error(user?.message);
+        }
+
+        const correctPassword = await comparePassword(
+            password,
+            user.password
+          );
+    
+        if (!correctPassword)
+            throw new Error("password is not correct");
+
+       const userUpdatd = await UserModel.findByIdAndUpdate(user._id, {})
+
+       return userUpdatd
+    } catch (error) {
+        return {
+            error, 
+            message: error.message
+        }
     }
   }
 };
