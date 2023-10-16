@@ -14,9 +14,6 @@ import Layout from "./components/layout/Layout";
 import PersitsLogin from "./utilities/auth/PersitsLogin";
 import io from 'socket.io-client'
 
-const socket = io('http://localhost:3002')
-console.log(socket)
-
 function App() {
 
 
