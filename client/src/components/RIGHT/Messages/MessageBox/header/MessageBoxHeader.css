@@ -1,0 +1,51 @@
+.MessageBox-header-container {
+    display: flex;
+    padding: 0.3rem .5rem;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--card-shadow);
+}
+
+.MessageBox-header-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.MessageBox-header-info .profile-photo {
+    width: 35px;
+    height: 35px;
+}
+
+.header-username-container {
+    margin-left: .5rem;
+}
+
+.online-status {
+    font-size: x-small;
+    font-weight: 400;
+    color: #525252;
+}
+
+.MessageBox-header-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.minimize-icon {
+    width: 15px;
+    height: 15px;
+    margin-bottom: .8rem;
+    margin-right: .3rem;
+    cursor: pointer;
+
+}
+
+.cross-icon {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
