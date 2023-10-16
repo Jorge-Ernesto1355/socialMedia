@@ -1,6 +1,8 @@
 .MessageBox-container {
     border-radius: 10px;
     box-shadow: var(--card-shadow);
+    display: grid;
+    grid-template-rows: 10% 80% 10%;
     width: 100%;
     height: 100%;
     max-width: 300px;

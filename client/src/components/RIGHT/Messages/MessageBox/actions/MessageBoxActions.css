@@ -1,0 +1,38 @@
+.MessageBox-actions-container {
+    display: grid;
+    grid-template-columns: 70% 15% 15%;
+    box-shadow: var(--card-shadow);
+    justify-content: center;
+    align-items: center;
+}
+
+.MessageBox-actions-form {
+    width: 100%;
+    height: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: .3rem;
+    border-radius: 6px;
+    background-color: var(--color-light);
+
+}
+
+
+.MessageBox-actions-input {
+    outline: none;
+    width: 90%;
+    background-color: transparent;
+
+}
+
+.MessageBox-actions-InputFile {
+
+    margin-left: 20px;
+}
+
+.MessageBox-sendButton {
+    width: 25px;
+    height: 25px;
+    margin-left: 10px;
+}
