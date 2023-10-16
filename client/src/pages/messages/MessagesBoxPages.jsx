@@ -1,24 +1,19 @@
 import React from 'react'
-import BoxMessage from '../../components/RIGHT/messages/boxMessage/BoxMessage'
 import './MessageBoxPage.css'
 import ReactPortal from '../../components/modal/ReactPortal'
+import MessageBox from '../../components/RIGHT/Messages/MessageBox/MessageBox'
+
+
 
 const MessageBoxPage = () => {
+
   return (
-    <div className='boxMessages-container'>
+    <ReactPortal wrapperId={'Message-box-popup'}>
+      <div className='boxMessages-container'>
         <ul className='boxMessages-row'>
-            <BoxMessage/>
+          <MessageBox />
         </ul>
-        
-    </div>
-  )
-}
-
-
-const MessageBoxPagePortal = ()=>{
-  return (
-    <ReactPortal wrapperId={'Message-box-page'} closeModal={handleClose}>
-        <MessageBoxPage/>
+      </div>
     </ReactPortal>
   )
 }
@@ -27,4 +22,6 @@ const MessageBoxPagePortal = ()=>{
 
 
 
-export default 
+
+
+export default MessageBoxPage

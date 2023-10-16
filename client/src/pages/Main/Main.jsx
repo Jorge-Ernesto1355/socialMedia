@@ -8,6 +8,7 @@ import Feed from '../../components/MIDDLE/feed/Feed'
 import Category from '../../components/RIGHT/Category/Category'
 
 import FriendRequest from '../../components/RIGHT/FriendsRequest/FriendRequest'
+import MessageBoxPage from '../messages/MessagesBoxPages'
 
 
 const Main = () => {
@@ -30,15 +31,13 @@ const Main = () => {
                 {/* ===== RIGHT =====  */}
                 <div className="rightd">
                     <div className="messages">
-
                         <Category />
-
                     </div>
-
                     <div className="friendsRequest">
                         <FriendRequest />
                     </div>
                 </div>
+                <MessageBoxPage />
             </div>
         </main>
     )
