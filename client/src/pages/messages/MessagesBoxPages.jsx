@@ -12,6 +12,7 @@ const MessageBoxPage = () => {
       <div className='boxMessages-container'>
         <ul className='boxMessages-row'>
           <MessageBox />
+
         </ul>
       </div>
     </ReactPortal>
