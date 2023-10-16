@@ -1,0 +1,16 @@
+.message-container {
+    border-radius: 10px;
+    padding: .3rem;
+    width: max-content;
+    padding: .3rem;
+    max-width: 80%;
+    height: max-content;
+    overflow: auto;
+    background-color: var(--color-light);
+}
+
+.message-text {
+    font-size: small;
+    font-weight: 400;
+    color: #525252;
+}
