@@ -6,6 +6,7 @@ const { REFRESH_TOKEN_SECRET } = require("../../dotenv");
 const jwt = require("jsonwebtoken");
 const { AlgoliaUsers } = require("../../algolia/algolia");
 const formtatedUserToAlgolia = require("../utils/formtatedUserToAlgolia");
+const { DocumentNotFound } = require("../../handleErros/errors");
 
 module.exports = class AuthService {
   static async Register(object) {
@@ -59,11 +60,14 @@ module.exports = class AuthService {
         model: "User",
         select: ["password", "email", "username"],
       };
-      
+
       const emailExits = await isValidObjectId({ email }, options);
 
-      if (emailExits.error)
-        throw new Error("email or password are not corrects");
+      if (emailExits.error) {
+        if (emailExits?.error instanceof DocumentNotFound)
+          throw new Error("Email or password are incorrec");
+        throw new Error("something went wrong");
+      }
 
       const correctPassword = await comparePassword(
         password,
