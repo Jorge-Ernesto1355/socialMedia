@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon"
+    "start": "nodemon node --trace-warnings"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +14,7 @@
     "nodemon": "^3.0.1"
   },
   "dependencies": {
+    "algolia": "^0.0.0",
     "algoliasearch": "^4.20.0",
     "bcrypt": "^5.1.1",
     "class-validator": "^0.14.0",
