@@ -1,10 +1,10 @@
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./db/Connect");
-const { Server : SocketServer } = require("socket.io")
-const http = require('http')
 
-const  socketIo = require("./socketIo")
+const http = require("http");
+
+const socketIo = require("./socketIo");
 const Auth = require("./auth/authUser.routes");
 const UserRoute = require("./users/infrastructure/User.routes");
 const PostRoute = require("./Post/infrastucture/PostRoute.routes");
@@ -15,6 +15,7 @@ const ConversationRouter = require("./messages/infrastructure/Conversation.route
 const MessageRouter = require("./messages/infrastructure/Message.routes");
 const fileUpload = require("express-fileupload");
 const cookieParser = require("cookie-parser");
+const ConversationService = require("./messages/ConversationService");
 
 class Server {
   constructor() {
@@ -24,7 +25,7 @@ class Server {
     this.middlewares();
     this.router();
     this.DBconnection();
-    
+    this.socketIo();
   }
 
   middlewares() {
@@ -41,8 +42,6 @@ class Server {
     this.app.use(
       cors({
         origin: (origin, callback) => {
-          
-
           if (this.ACCEPTED_ORIGINS.includes(origin)) {
             return callback(null, true);
           }
@@ -75,7 +74,7 @@ class Server {
   DBconnection() {
     const maxRetries = 3;
     let retries = 0;
-  
+
     const connect = () => {
       connectDB()
         .then(() => {
@@ -88,12 +87,14 @@ class Server {
             console.log(`Retrying connection (${retries}/${maxRetries})...`);
             setTimeout(connect, 5000); // Retry after 5 seconds
           } else {
-            console.error(`Max connection retries (${maxRetries}) reached. Exiting...`);
+            console.error(
+              `Max connection retries (${maxRetries}) reached. Exiting...`
+            );
             process.exit(1); // Exit the server process
           }
         });
     };
-  
+
     connect();
   }
 
@@ -107,15 +108,30 @@ class Server {
     this.app.use("/api/v1/conversation", ConversationRouter);
     this.app.use("/api/v1/message", MessageRouter);
   }
-  
+
+  socketIo() {
+    const server = http.createServer(this.app);
+    socketIo(server);
+    server
+      .listen(3002, () => {
+        console.log("ejecutando en:", 3002);
+      })
+      .on("error", (err) => {
+        console.error("Server error:", err);
+        // Restart the server here
+      });
+  }
+
   listen(portParams) {
-    const port = portParams ? portParams : this.port
-    this.app.listen(port, () => {
-      console.log("ejecutando en:", port);
-    }).on("error", (err) => {
-      console.error("Server error:", err);
-      // Restart the server here
-    });
+    const port = portParams ? portParams : this.port;
+    this.app
+      .listen(port, () => {
+        console.log("ejecutando en:", port);
+      })
+      .on("error", (err) => {
+        console.error("Server error:", err);
+        // Restart the server here
+      });
   }
 }
 
