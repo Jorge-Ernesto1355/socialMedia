@@ -1,31 +1,22 @@
+const AuthService = require("./AuthService");
+const { validateUserRegister } = require("../../users/validation/userSchema");
 
-const AuthService = require('./AuthService')
-const { validateUserRegister } = require('../../users/validation/userSchema')
+const RegisteryUser = async (req, res) => {
+  const { username, email, password } = req.body;
 
+  const result = validateUserRegister({ username, email, password });
 
-
-
-const RegisteryUser = async (req, res)=>{
-  const {username, email, password} = req.body
-
-  const result =  validateUserRegister({username, email, password})
-
-  if(result.error){
-    return res.status(400).json({error: result.message})
+  if (result.error) {
+    return res.status(400).json({ error: result.message });
   }
-  
 
-    const user = await AuthService.Register({username, email, password})
+  const user = await AuthService.Register({ username, email, password });
 
-    if(user?.error){
-      return res.status(500).json({error: user.message})
-    }
+  if (user?.error) {
+    return res.status(500).json({ error: user.message });
+  }
 
-    return res.status(201).json(user)
+  return res.status(201).json(user);
+};
 
-  
-}
-
-module.exports = RegisteryUser
- 
-  
+module.exports = RegisteryUser;
