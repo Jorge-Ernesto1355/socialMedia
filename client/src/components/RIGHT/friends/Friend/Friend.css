@@ -1,0 +1,21 @@
+.friend-container{
+    display: flex;
+    padding: .3rem;
+    margin: 0 .5rem;
+    align-items: center;
+    
+}
+
+
+.friend-information{
+    margin-left: .3rem;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.friend-options{
+    width: 16px;
+    height: 16px;
+}
