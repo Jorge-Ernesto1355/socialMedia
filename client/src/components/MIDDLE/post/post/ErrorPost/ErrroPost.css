@@ -1,0 +1,36 @@
+.errorPost-container{
+    width: 340px;
+    height: 160px;
+    margin-top: 1rem;
+    padding: var(--card-padding);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-white);
+    border-radius: .5rem;
+    box-shadow: var(--card-shadow);
+    
+
+}
+
+.circle-red {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    padding: .9rem;
+    background-color: rgba(255, 82, 35, .34);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.triangule-warning {
+    width: 25px;
+    height: 25px;
+}
+
+.reset-button{
+    margin-top: .5rem;
+}
