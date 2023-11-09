@@ -1,0 +1,18 @@
+.usersTagged-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.imageProfiles-container{
+    display: flex;
+    align-items: center;
+}
+
+.usersTagged-imageProfile{
+    border-radius: 50%;
+    object-fit: cover;
+    width:20px;
+    height: 20px;
+    overflow: hidden;
+    margin: -.3rem;
+}
