@@ -1,8 +1,7 @@
-const { Schema, model,} = require("mongoose");
+const { Schema, model } = require("mongoose");
 const mongoosePaginate = require("mongoose-paginate-v2");
-const {  AccessToken, RefreshToken } = require("../../auth/application/auth");
+const { AccessToken, RefreshToken } = require("../../auth/application/auth");
 const getUserInfo = require("../../libs/getUserInfo");
-
 
 const User = new Schema(
   {
@@ -34,7 +33,7 @@ const User = new Schema(
       type: Array,
       default: [],
     },
-    
+
     desription: {
       type: String,
       max: 80,
@@ -76,6 +75,11 @@ const User = new Schema(
       },
     ],
     favorites: { type: Array, default: [] },
+    socketId: { type: String },
+    status: {
+      type: String,
+      enum: ["Online", "Offline"],
+    },
   },
   {
     timestamps: true,
@@ -84,25 +88,20 @@ const User = new Schema(
 
 User.plugin(mongoosePaginate);
 
-User.methods.createAccessToken = function (){
+User.methods.createAccessToken = function () {
+  return AccessToken(getUserInfo(this));
+};
 
-  return AccessToken(getUserInfo(this))
-
-}
-
-User.methods.createRefreshToken = async  function (){
-  
+User.methods.createRefreshToken = async function () {
   try {
-    const refreshToken = RefreshToken(getUserInfo(this))
-    
-    this.refreshToken = refreshToken
-    await this.save()
-    return refreshToken
+    const refreshToken = RefreshToken(getUserInfo(this));
+
+    this.refreshToken = refreshToken;
+    await this.save();
+    return refreshToken;
   } catch (error) {
-    return {error, message: error.message}
+    return { error, message: error.message };
   }
-}
+};
 
 module.exports = model("User", User);
-
-
