@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { InstantSearch } from "react-instantsearch-hooks";
 import algoliasearch from "algoliasearch";
+import { SocketProvider } from "./hooks/useSocket";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const queryClient = new QueryClient({
@@ -24,10 +25,12 @@ const INDEX_NAME = "autocomplete-accounts";
 
 root.render(
   <QueryClientProvider client={queryClient}>
-        <InstantSearch searchClient={searchClient} indexName={INDEX_NAME}>
-          <App />
-        </InstantSearch>
-        <ReactQueryDevtools />
+    <InstantSearch searchClient={searchClient} indexName={INDEX_NAME}>
+      <SocketProvider>
+        <App />
+      </SocketProvider>
+    </InstantSearch>
+    <ReactQueryDevtools />
   </QueryClientProvider>,
 );
 
