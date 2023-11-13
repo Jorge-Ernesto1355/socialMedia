@@ -1,8 +1,7 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
 import socketIOClient from 'socket.io-client';
 import AuthProvider from '../zustand/AuthProvider';
-
-const ENDPOINT = 'http://localhost:3002'; // Reemplaza esto con la URL de tu servidor Socket.io
+const ENDPOINT = 'http://localhost:3002';
 
 const SocketContext = createContext();
 
@@ -12,8 +11,11 @@ export const useSocket = () => {
 
 export const SocketProvider = ({ children }) => {
   const {userId, accessToken} = AuthProvider()
+
+  
   let socket = {}
-  if(userId){
+
+  if(userId && accessToken){
      socket = socketIOClient(ENDPOINT, {
       query:{
         userId, 
@@ -21,6 +23,9 @@ export const SocketProvider = ({ children }) => {
       }
     });
   }
+
+
+  
 
   return (
     <SocketContext.Provider value={socket}>
