@@ -20,7 +20,7 @@ import useUserRequest from "../../../hooks/auth/useUserRequest";
  * @returns {JSX.Element} - The React component.
  */
 
-const useReactionsView = ({ id, name, privateRequest, type}) => {
+const useReactionsView = ({ id, name, privateRequest, type, className}) => {
   const { isError, isLoading, data } = useCallbackRequest({
     request: ReactionService.reactionView,
     id,
@@ -40,14 +40,15 @@ const ReactionsView = ({
   id = "",
   name = "",
   nameView = "",
-  type = ''
+  type = '',
+  className = ''
 }) => {
   const privateRequest = useUserRequest()
   const {
     isError,
     isLoading,
     reactionsView,
-  } = useReactionsView({ id, name: nameView , privateRequest, type});
+  } = useReactionsView({ id, name: nameView , privateRequest, type });
 
   return (
     <div>
@@ -56,10 +57,7 @@ const ReactionsView = ({
         <>
           {reactionsView.length > 0 && (
             <ul
-              className={`${name === "comment"
-                  ? "icons-reactions"
-                  : "container-reactionView"
-                }`}
+              className={`${className ? className : ''}`}
             >
               {reactionsView?.map((reactionView) => (
                 <ReactionView
