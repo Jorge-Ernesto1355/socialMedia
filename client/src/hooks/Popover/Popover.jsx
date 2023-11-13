@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   useFloating,
   autoUpdate,
@@ -14,11 +14,12 @@ import {
 } from "@floating-ui/react";
 
 import "./Popover.css";
-import Dialog from "./Dialog";
 
-function Popover() {
+
+
+function Popover({trigger, children}) {
   const [isOpen, setIsOpen] = useState(false);
-
+  
   const { refs, floatingStyles, context } = useFloating({
     open: isOpen,
     onOpenChange: setIsOpen,
@@ -33,20 +34,23 @@ function Popover() {
   const click = useClick(context);
   const dismiss = useDismiss(context);
   const role = useRole(context);
-
+  
   const { getReferenceProps, getFloatingProps } = useInteractions([
     click,
     dismiss,
     role
   ]);
-
+  
   const headingId = useId();
+  
+  
+  
+    if(!React.isValidElement(children)) return null
 
   return (
     <>
-      <button ref={refs.setReference} {...getReferenceProps()}>
-        Add review
-      </button>
+     
+      {React.cloneElement(trigger, { ref: refs.setReference, ...getReferenceProps() })}
       {isOpen && (
         <FloatingFocusManager context={context} modal={false}>
           <div
@@ -56,15 +60,7 @@ function Popover() {
             aria-labelledby={headingId}
             {...getFloatingProps()}
           >
-            <h2 id={headingId}>Review balloon</h2>
-            <textarea placeholder="Write your review..." />
-            <br />
-            <button
-              style={{ float: "right" }}
-              
-            >
-              
-            </button>
+           {children}
           </div>
         </FloatingFocusManager>
       )}
