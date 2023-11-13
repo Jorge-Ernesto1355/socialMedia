@@ -15,13 +15,12 @@ import AuthProvider from '../../../../zustand/AuthProvider'
 
 const BoxMessage = ({conversation}) => {
   
-    
     const {userId} = AuthProvider()
     const [minimize, setMinimize] = useState(true)
     const privateRequest = useUserRequest()
     const {deleteConversation} = BoxMessagesStore() 
    
-    const friendId = conversation.participants.filter((participant)=> participant !==  userId)[0] ?? null
+    const friendId = conversation?.participants?.filter((participant)=> participant !==  userId)[0] ?? null
 
 
     const { data: userData } = useQuery(["user", friendId], () => userService.getUser({ privateRequest, id:friendId }), {
