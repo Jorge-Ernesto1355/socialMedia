@@ -4,7 +4,7 @@ import Message from '../../Message/Message'
 
 const MessageBoxBody = () => {
     return (
-        <div>
+        <div className='messages-container'>
             <Message />
         </div>
     )
