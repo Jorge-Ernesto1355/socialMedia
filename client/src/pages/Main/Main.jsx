@@ -18,8 +18,7 @@ const Main = () => {
             <div className="container">
                 {/* ===== LEFT ======= */}
                 <div className="left">
-                    <Perfil />
-                    <Sidebar />
+                  
                 </div>
 
                 {/* ===== MIDDLE =====  */}
