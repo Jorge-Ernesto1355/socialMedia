@@ -1,7 +1,7 @@
 import React from 'react'
 import './MessageBoxPage.css'
 import ReactPortal from '../../components/modal/ReactPortal'
-import MessageBox from '../../components/RIGHT/Messages/MessageBox/MessageBox'
+import MessageBox from '../../components/RIGHT/messages/MessageBox/BoxMessage'
 
 
 
