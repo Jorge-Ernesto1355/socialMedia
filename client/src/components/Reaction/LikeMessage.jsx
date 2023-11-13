@@ -1,28 +1,22 @@
 import React from "react";
 import "./likePost.css";
-import react from '../RIGHT/messages/icons/corazon.png'
 
+import emoji from '../RIGHT/icons/sonreir.png'
 
 
 const LikeMessage = ({ reactionType, setShowReactions }) => {
   return (
     <div className="ratingIcon">
-      {reactionType === null ? (
+      
         <div
           className="reaction-div"
           onClick={() => setShowReactions((prev) => !prev)}
           onMouseEnter={() => setShowReactions(true)}
         >
-          <li className='MessageActions-icon'>
-            <img src={react} alt="react icon" />
-       </li>
+          <p className='popover-text-message'>React</p>
+                    <span><img src={emoji} alt="react" className='popover-img-message' /></span>
         </div>
-      ) : (
-        <li className='MessageActions-icon'>
-        <img src={react} alt="react icon" />
-   </li>
-      )
-      }
+    
     </div >
   )
 }
