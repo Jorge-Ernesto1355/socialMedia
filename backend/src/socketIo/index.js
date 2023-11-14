@@ -4,6 +4,7 @@ const { ACCESS_TOKEN_SECRET } = require("../dotenv");
 const ConversationService = require("../messages/ConversationService");
 const { validateConversation } = require("./validations");
 const userService = require("../users/userService");
+const UserModel = require("../users/domain/UserModel");
 
 module.exports = function socketIo(server) {
   const io = new SocketServer(server, {
@@ -17,7 +18,7 @@ module.exports = function socketIo(server) {
     const token = socket.handshake.query.token;
 
     try {
-      if (token) {
+      if (token != null && Boolean(token)) {
         const isValid = jwt.verify(token, ACCESS_TOKEN_SECRET);
         if (isValid) {
           return next();
@@ -42,7 +43,10 @@ module.exports = function socketIo(server) {
     if (userId != null && Boolean(userId)) {
       const user = await userService.get({ userId });
       if (user.error) return null;
-      await user.updateOne(userId, { socketId: socket.id, status: "Online" });
+      await UserModel.findByIdAndUpdate(userId, {
+        socketId: socket.id,
+        status: "Online",
+      });
     }
 
     socket.on("open-conversation", async (data) => {
@@ -60,7 +64,7 @@ module.exports = function socketIo(server) {
 
       if (conversation.error) return null;
 
-      io.to(to._id).emit("open-conversation", conversation);
+      io.to(fromUser.socketId).emit("open-conversation", conversation);
     });
 
     socket.on("disconnect", () => {});
