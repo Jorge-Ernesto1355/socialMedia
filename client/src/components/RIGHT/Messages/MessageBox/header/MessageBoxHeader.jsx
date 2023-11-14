@@ -3,7 +3,7 @@ import './MessageBoxHeader.css'
 import rem from '../../../../../assets/rem.jpg'
 import cross from '../../icons/cross.png'
 import minimizeIcon from '../../icons/minimize.png'
-const MessageBoxHeader = ({ minimize }) => {
+const MessageBoxHeader = ({ minimize, friend }) => {
     return (
         <div className='MessageBox-header-container'>
             <div className='MessageBox-header-info'>
@@ -11,8 +11,8 @@ const MessageBoxHeader = ({ minimize }) => {
                     <img className='profile-photo' src={rem} alt="profile info " />
                 </div>
                 <div className='header-username-container'>
-                    <h5 className=''>Jorge Ernesto</h5>
-                    <p className='online-status'>Activo(a) ahora</p>
+                    <h5 className=''>{friend.username}</h5>
+                    <p className='online-status'>{friend?.status === "Online" ? <>Activo(a) ahora</> : <>Desconectado</>}</p>
                 </div>
             </div>
             <div className='MessageBox-header-actions'>
