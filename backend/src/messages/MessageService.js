@@ -1,7 +1,34 @@
+const exits = require("../libs/exits");
+const isValidObjectId = require("../libs/isValidObjectId");
+
+const Message = require("./domain/Message");
+const { validateMessage } = require("./utils/validate/Message/MessageShema");
+
 module.exports = class MessageService {
   static async messages(object) {
     try {
       exits(object);
+      const { conversationId, limit, page } = object;
+      const queryOptions = {
+        model: "Conversation",
+      };
+      const conversation = await isValidObjectId(
+        { _id: conversationId },
+        queryOptions
+      );
+
+      if (conversation.error) throw new Error("something went wrong");
+
+      const messages = await Message.find({ conversationId });
+
+      const messagesIds = messages?.map((message) => message?._id);
+
+      const messagesPagination = await Message.paginate(
+        { _id: { $in: messagesIds } },
+        { limit, page }
+      );
+
+      return messagesPagination;
     } catch (error) {
       return {
         error,
@@ -13,6 +40,20 @@ module.exports = class MessageService {
   static async create(object) {
     try {
       exits(object);
+      const { from, message, to, conversationId } = object;
+      const result = validateMessage({ from, message, to });
+
+      if (result.error) {
+        throw new Error(result.error.message);
+      }
+
+      const newMessage = await Message.create({
+        from,
+        text: message,
+        to,
+        conversationId,
+      });
+      return newMessage.save();
     } catch (error) {
       return {
         error,
