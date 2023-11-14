@@ -15,6 +15,7 @@ import AuthProvider from '../../../../zustand/AuthProvider'
 
 const BoxMessage = ({conversation}) => {
   
+
     const {userId} = AuthProvider()
     const [minimize, setMinimize] = useState(true)
     const privateRequest = useUserRequest()
@@ -23,18 +24,22 @@ const BoxMessage = ({conversation}) => {
     const friendId = conversation?.participants?.filter((participant)=> participant !==  userId)[0] ?? null
 
 
-    const { data: userData } = useQuery(["user", friendId], () => userService.getUser({ privateRequest, id:friendId }), {
+    
+
+    const { data: userData } = useQuery(["user", friendId], () => userService.getUser({ privateRequest, userId:friendId }), {
         onError:()=>{
             toast.error('something went wrong with your friend')
             deleteConversation(conversation?._id)
         }
     });
 
+   
+
 	const user = userData?.data ?? {};
 
     return (
         <motion.div animate={`${minimize ? 'show' : 'hidden'}`} variants={variantsMessageBox} className='MessageBox-container'>
-            <MessageBoxHeader minimize={setMinimize} conversation={conversation} user={user} />
+            <MessageBoxHeader minimize={setMinimize} conversation={conversation} friend={user} />
             <MessageBoxBody conversation={conversation} />
             <MessageBoxActions conversation={conversation} friendId={friendId} userId={userId} />
         </motion.div>

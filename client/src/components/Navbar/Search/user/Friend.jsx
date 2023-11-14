@@ -16,8 +16,7 @@ const Friend = ({ addUser }) => {
     const privateRequest = useUserRequest()
     const { mutate, isLoading, isError, status, error } = useMutationRequest(addFriend, { name: 'friends' })
 
-    console.log(addUser)
-
+    
     const { data: userData } = useQuery(["user", userId], () => userService.getUser({ privateRequest, userId }));
 
     const user = userData?.data ?? {};
