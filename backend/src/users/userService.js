@@ -13,7 +13,6 @@ const UserModel = require("./domain/UserModel");
 module.exports = class userService {
   static async getUsers() {
     try {
-      
       if (!mongoose.models["User"]) throw new Error("model not found");
       const users = await User.find();
       return users;
@@ -31,13 +30,12 @@ module.exports = class userService {
 
       const { userId } = object;
       const queryOptions = {
-        model:"User", 
-        select:['username','email', 'imageProfile']
-      }
-      
-      const user = await isValidObjectId({ _id:userId}, queryOptions);
+        model: "User",
+        select: ["username", "email", "imageProfile", "socketId", "status"],
+      };
 
-  
+      const user = await isValidObjectId({ _id: userId }, queryOptions);
+
       if (user?.error) {
         throw new Error(user.message);
       }
@@ -55,11 +53,11 @@ module.exports = class userService {
       exits(object);
       const { userId, limit, page } = object;
       const queryOptions = {
-        model:"User", 
-        select:['friends']
-      }
+        model: "User",
+        select: ["friends"],
+      };
 
-      const user = await isValidObjectId({ _id:userId}, queryOptions);
+      const user = await isValidObjectId({ _id: userId }, queryOptions);
 
       if (user.error) {
         throw new Error(user.message);
@@ -92,10 +90,10 @@ module.exports = class userService {
       const { userId, limit, page } = object;
 
       const queryOptions = {
-        model:"User", 
-        select:['posts']
-      }
-      const user = await isValidObjectId({ _id:userId}, queryOptions);
+        model: "User",
+        select: ["posts"],
+      };
+      const user = await isValidObjectId({ _id: userId }, queryOptions);
 
       if (user.error) {
         throw new Error(user.message);
@@ -123,10 +121,10 @@ module.exports = class userService {
       const { userId, page, limit } = object;
 
       const queryOptions = {
-        model:"User", 
-        select:['friendsWaiting']
-      }
-      const user = await isValidObjectId({ _id:userId}, queryOptions );
+        model: "User",
+        select: ["friendsWaiting"],
+      };
+      const user = await isValidObjectId({ _id: userId }, queryOptions);
 
       if (user?.error) {
         throw new Error(user.message);
@@ -161,11 +159,11 @@ module.exports = class userService {
       const { userId, addUserId } = object;
 
       const queryOptions = {
-        model:"User", 
-        select:['friends']
-      }
-      
-      const user = await isValidObjectId({ _id:userId }, queryOptions);
+        model: "User",
+        select: ["friends"],
+      };
+
+      const user = await isValidObjectId({ _id: userId }, queryOptions);
       const addUser = await isValidObjectId({ _id: addUserId }, queryOptions);
 
       if (user?.error || addUser.error) {
@@ -191,11 +189,11 @@ module.exports = class userService {
       const acceptBoolean = accept === "true";
 
       const queryOptions = {
-        model:"User", 
-        select:['friendsWaiting']
-      }
+        model: "User",
+        select: ["friendsWaiting"],
+      };
 
-      const user = await isValidObjectId({ _id:userId }, queryOptions);
+      const user = await isValidObjectId({ _id: userId }, queryOptions);
       const addUser = await isValidObjectId({ _id: addUserId }, queryOptions);
 
       if (user?.error || addUser.error) {
@@ -231,9 +229,9 @@ module.exports = class userService {
       const { userId } = object;
 
       const options = {
-        model:"User",
-      }
-      const user = await isValidObjectId({ _id:userId }, options);
+        model: "User",
+      };
+      const user = await isValidObjectId({ _id: userId }, options);
 
       if (user.error) {
         throw new Error(user.message);
@@ -286,39 +284,32 @@ module.exports = class userService {
     }
   }
 
-
-  
-  
-  static async updateInfo(object){
+  static async updateInfo(object) {
     try {
-        exits(object)
-        const {password, userId} = object
+      exits(object);
+      const { password, userId } = object;
 
-        const options = {
-            model: "User"
-        }
-        const user = await isValidObjectId({_id: userId}, options)
+      const options = {
+        model: "User",
+      };
+      const user = await isValidObjectId({ _id: userId }, options);
 
-        if (user?.error) {
-            throw new Error(user?.message);
-        }
+      if (user?.error) {
+        throw new Error(user?.message);
+      }
 
-        const correctPassword = await comparePassword(
-            password,
-            user.password
-          );
-    
-        if (!correctPassword)
-            throw new Error("password is not correct");
+      const correctPassword = await comparePassword(password, user.password);
 
-       const userUpdatd = await UserModel.findByIdAndUpdate(user._id, {})
+      if (!correctPassword) throw new Error("password is not correct");
 
-       return userUpdatd
+      const userUpdatd = await UserModel.findByIdAndUpdate(user._id, {});
+
+      return userUpdatd;
     } catch (error) {
-        return {
-            error, 
-            message: error.message
-        }
+      return {
+        error,
+        message: error.message,
+      };
     }
   }
 };
