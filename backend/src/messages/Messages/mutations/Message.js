@@ -1,4 +1,7 @@
 const MessageService = require("../../MessageService");
+const {
+  validateMessage,
+} = require("../../utils/validate/Message/MessageShema");
 
 const Message = async (req, res) => {
   const result = validateMessage();
