@@ -1,0 +1,25 @@
+
+.reply-container{
+
+    width:max-content;
+    max-width: 300px;
+    padding: .1rem;
+    max-height: 60px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    padding: .3rem;
+    justify-content: start;
+    align-items: start;
+    background-color: var(--color-light);
+
+}
+
+.reply-username{
+    font-size: small;
+    font-weight: 400;
+}
+
+.reply-text{
+    font-size: smaller;
+}
