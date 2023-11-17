@@ -2,12 +2,11 @@ import { ObjectErrosName } from "../../../../../utilities/ObjectErrorsName";
 
 export default class messageService {
   static async messages({ privateRequest, limit, page, id: conversationId }) {
-    console.log({ limit, page });
     try {
       if (!privateRequest)
         throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
       return await privateRequest?.get(
-        `/message/${conversationId}?limit=${limit}&page=${page}`,
+        `/message/all/${conversationId}?limit=${limit}&page=${page}`,
       );
     } catch (error) {
       return {
@@ -39,6 +38,19 @@ export default class messageService {
       return await privateRequest.get(
         `conversation/${conversationId}/${userId}`,
       );
+    } catch (error) {
+      return {
+        error,
+        message: error.message,
+      };
+    }
+  }
+
+  static async getMessage({ privateRequest, id }) {
+    try {
+      if (!privateRequest)
+        throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+      return await privateRequest.get(`message/${id}`);
     } catch (error) {
       return {
         error,
