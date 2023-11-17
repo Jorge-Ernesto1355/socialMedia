@@ -2,9 +2,11 @@ const { Router } = require("express");
 const index = require("../Messages/index");
 const router = Router();
 
-router.get("/", index.query.messages);
+router.get("/all/:conversationId", index.query.messages);
 
-router.post("/", index.mutation.message);
+router.get("/:messageId", index.query.message);
+
+router.post("/", index.mutation.createMessage);
 
 router.delete("/", index.mutation.deleteMessage);
 
