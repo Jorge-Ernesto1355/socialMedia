@@ -1,31 +1,41 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 
 const useHover = () => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [showComponent, setShowComponent] = useState(false);
 
-    const [isHovered, setIsHovered] = useState(false);
-    const [showComponent, setShowComponent] = useState(false);
+  useEffect(() => {
+    let hoverTimeout;
 
-  
-  
-    useEffect(() => {
-      let hoverTimeout;
-  
-      if (isHovered) {
-        hoverTimeout = setTimeout(() => {
-          setShowComponent(true);
-        }, 600); // 1000 milisegundos = 1 segundo
-      } else {
-        clearTimeout(hoverTimeout);
-        setShowComponent(false);
-      }
-  
-      return () => {
-        clearTimeout(hoverTimeout);
-      };
-    }, [isHovered]);
+    const handleMouseEnter = () => {
+      hoverTimeout = setTimeout(() => {
+        setShowComponent(true);
+      }, 600); // 1000 milisegundos = 1 segundo
+    };
 
-    return {isHovered, hovered:setIsHovered, show:showComponent}
-  
-}
+    const handleMouseLeave = () => {
+      clearTimeout(hoverTimeout);
+      setShowComponent(false);
+    };
 
-export default useHover
+    const cleanup = () => {
+      clearTimeout(hoverTimeout);
+    };
+
+    if (isHovered) {
+      handleMouseEnter();
+    } else {
+      handleMouseLeave();
+    }
+
+    return cleanup;
+  }, [isHovered]);
+
+  return {
+    isHovered,
+    hovered: setIsHovered,
+    show: showComponent,
+  };
+};
+
+export default useHover;
