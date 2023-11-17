@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 const BoxMessagesStore = create((set, get) => ({
   boxMessages: [],
+  messageReply: null,
   setBoxMessages: (conversation) => {
     if (!conversation) return null;
     const conversationsIds = get().boxMessages?.map(
@@ -15,6 +16,12 @@ const BoxMessagesStore = create((set, get) => ({
       set((state) => ({
         boxMessages: [...state.boxMessages, conversation],
       }));
+  },
+  MessageReply: (messageId) => {
+    set({ messageReply: messageId });
+  },
+  deleteMessageReply: () => {
+    set({ messageReply: null });
   },
   deleteConversation: (conversationId) => {
     if (!conversationId) return null;
