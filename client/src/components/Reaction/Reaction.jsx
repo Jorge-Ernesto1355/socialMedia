@@ -9,6 +9,7 @@ import useUserRequest from "../../hooks/auth/useUserRequest";
 import useMutationRequest from "../../hooks/useMutationRequest";
 import ReactionService from './services/ReactionService'
 import { objetsImgs } from "../MIDDLE/post/post/objectImg";
+import useHideOnOutsideClick from "../../hooks/useHideOnCLickOutside";
 
 
 const reactions = [
@@ -21,10 +22,12 @@ const reactions = [
 
 
 const Reaction = ({ id, userId, name, children, type}) => {
+  const { isVisible, elementRef, show} = useHideOnOutsideClick(true);
   const privateRequest = useUserRequest()
   const mutateRequest = useMutationRequest(ReactionService.React, {name})
   const [showReactions, setShowReactions] = useState(false);
   const [reactionType, setReactionType] = useState(null);
+
 
   const MutateActionsFu = (value) => {
     setReactionType(value);
@@ -34,12 +37,12 @@ const Reaction = ({ id, userId, name, children, type}) => {
 
 
   return (
-    <div>
-      <motion.div
+    <div ref={elementRef}>
+      {isVisible && (
+        <motion.div
         className="ratings"
         variants={variantsAction}
         animate={`${showReactions ? "visible" : "hidden"}`}
-
         transition={{
           duration: 0.2,
         }}
@@ -58,8 +61,9 @@ const Reaction = ({ id, userId, name, children, type}) => {
           </div>
         </div>
       </motion.div>
+      )}
       {React.Children.map(children, (child) => {
-        return React.cloneElement(child, { reactionType, setShowReactions });
+        return React.cloneElement(child, { reactionType, setShowReactions, isVisible:show });
       })}
     </div>
   );
