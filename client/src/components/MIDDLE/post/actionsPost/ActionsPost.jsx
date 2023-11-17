@@ -19,7 +19,6 @@ const ActionsPost = ({ postId, userId }) => {
             name="reactionsView"
             id={postId}
             userId={userId}
-            request={ReactionPost}
             type={'Post'}
           >
             <LikePost />
