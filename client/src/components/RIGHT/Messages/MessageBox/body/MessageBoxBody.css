@@ -1,5 +1,13 @@
 .messages-container{
     max-width: 300px;
     background-color: #ffff;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    overflow-y: auto;
+    flex-direction: column-reverse;
     
 }
+
+
+
