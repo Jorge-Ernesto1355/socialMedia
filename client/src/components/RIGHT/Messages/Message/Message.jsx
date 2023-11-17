@@ -1,36 +1,42 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Message.css";
 import rem from '../../../../assets/rem.jpg'
 import { objetsImgs } from "../../../MIDDLE/post/post/objectImg";
 import MenuMessage from "./menuMessage/MenuMessage";
+import useHover from "../../../../hooks/useHover";
+import ReactionsView from "../../../Reaction/Reactions/ReactionsView";
 
-const Message = () => {
-  const [isHovered, setIsHovered] = useState(false);
-
+const Message = ({isMyMessage, message}) => {
+  
+  const {hovered, isHovered, show} = useHover()
 
   return (
-    <div className="message-container"
-    onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+    <div className={`message-container ${isMyMessage ? 'from-user'  : 'to-friend'}`}
+    onMouseEnter={() => hovered(true)}
+    onMouseLeave={()=> hovered(false)}
+     
     >
-     <div >
+       {isMyMessage && <MenuMessage isHovered={show} hovered={hovered} /> }
+     {!isMyMessage && <div >
 					<img
               className="profile-picture"
 							src={rem}
 							alt="user"
 						/>
-					</div>
+					</div> }
       <div className="message-body">
-         <p className="message-text">hola como estas espero que estes muy bien</p>
-        <ul className="reaction-view-message">
-            <img src={objetsImgs.gusta} alt="" className="view-img" />
-            <img src={objetsImgs.encanta} alt="" className="view-img"/>
-            <img src={objetsImgs.divierte} alt="" className="view-img" />
-            <span className="lenght-reactions">85</span>
-        </ul>
+        {message?.preview && <>cargando</>}
+         <p className="message-text">{message?.text}</p>
+         <ReactionsView
+						id={message?._id}
+						name={"message-reactions"}
+						nameView="message-reactions"
+						type="Message"
+            className="reaction-view-message"
+					/>
       </div>
       
-        <MenuMessage isHovered={isHovered}/>
+        {!isMyMessage && <MenuMessage isHovered={isHovered} message={message} /> }
       
     </div>
   );
