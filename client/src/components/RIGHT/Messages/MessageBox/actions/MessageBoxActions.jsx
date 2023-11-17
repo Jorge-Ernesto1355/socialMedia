@@ -6,13 +6,18 @@ import { useStore } from '../../../../../hooks/useStore/useStore'
 import AutoComplete from '../../../../Autocomplete/AutoComplete'
 import AuthProvider from '../../../../../zustand/AuthProvider'
 import { useSocket } from '../../../../../hooks/useSocket'
-
+import Reply from '../../Message/Reply/Reply'
+import BoxMessagesStore from '../../../../../zustand/BoxMessagesStore'
+import cross from '../../../../../assets/cross.png'
 
 
 const MessageBoxActions = ({friendId, conversation}) => {
     const {userId} = AuthProvider()
     const { store, set, get } = useStore();
     const socket = useSocket()
+    const {messageReply, deleteMessageReply} = BoxMessagesStore() 
+
+  
 
 
     const onClick = useCallback(() => {
@@ -20,11 +25,21 @@ const MessageBoxActions = ({friendId, conversation}) => {
         if(get().length <= 0) return 
         
         socket?.emit('new-message', {to:friendId, from:userId, conversationId:conversation?._id, message:get()})
+        set('')
     }, [get()])
 
 
     return (
         <div className='MessageBox-actions-container'>
+             {!!messageReply && (
+                <div className='actions-reply-container'>
+            
+                <Reply messageId={messageReply}/>
+                <img onClick={deleteMessageReply} className='actions-reply-cross' src={cross} alt="eliminar" />
+             </div>
+             ) } 
+          
+            <div className='messageBox-actions'>
             <form className='MessageBox-actions-form'>
             {store && (
             <AutoComplete
@@ -45,6 +60,8 @@ const MessageBoxActions = ({friendId, conversation}) => {
             </button>
 
 
+                
+            </div>
         </div>
     )
 }
