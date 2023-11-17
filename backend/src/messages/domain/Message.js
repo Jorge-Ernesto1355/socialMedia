@@ -25,6 +25,12 @@ const Message = new Schema(
       url: String,
       public_id: String,
     },
+    reactions: [
+      {
+        ref: "Reaction",
+        type: Schema.Types.ObjectId,
+      },
+    ],
   },
   {
     timestamps: true,
