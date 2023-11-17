@@ -46,7 +46,7 @@ const Post = ({ post }) => {
 	const { element, input, clearImagePreview } = useImagePreview();
 
 	return (
-		<div className="feed simple">
+		<div className="feed ">
 
 			<div className="head">
 				<div className="user">
