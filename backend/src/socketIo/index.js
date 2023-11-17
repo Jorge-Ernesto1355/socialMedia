@@ -5,6 +5,7 @@ const ConversationService = require("../messages/ConversationService");
 const { validateConversation } = require("./validations");
 const userService = require("../users/userService");
 const UserModel = require("../users/domain/UserModel");
+const MessageService = require("../messages/MessageService");
 
 module.exports = function socketIo(server) {
   const io = new SocketServer(server, {
@@ -65,6 +66,26 @@ module.exports = function socketIo(server) {
       if (conversation.error) return null;
 
       io.to(fromUser.socketId).emit("open-conversation", conversation);
+    });
+
+    socket.on("new-message", async (data) => {
+      const { message, conversationId, from, to } = data;
+      console.log(data);
+
+      const toUser = await userService.get({ userId: to });
+      const fromUser = await userService.get({ userId: from });
+      if (toUser.error || fromUser.error) return null;
+
+      const newMessage = await MessageService.create({
+        to,
+        from,
+        message,
+        conversationId,
+      });
+
+      if (newMessage.error) return null;
+
+      io.to(toUser.socketId).emit("new-message", newMessage);
     });
 
     socket.on("disconnect", () => {});
