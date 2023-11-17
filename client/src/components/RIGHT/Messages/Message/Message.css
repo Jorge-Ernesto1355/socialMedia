@@ -1,20 +1,34 @@
 .message-container {
- display: grid;
- grid-template-columns: 10% 90% 10%;
- gap: 5px;
- margin-top: .5rem;
+ display: flex;
+ padding: .1rem;
+ gap: 10;
+
+ width: fit-content;
  max-width: 90%;
+ 
+
 }
+
+.message-container.from-user{
+    align-self: flex-end;
+    padding-right: .5rem;
+}
+.message-container.to-friend{
+    align-self: flex-start;
+}
+
+
 
 .message-body{
     position: relative;
     margin-left: .2rem;
     border-radius: 8px;
-    width: max-content;
+ 
     padding: 0.3rem;
-    width: 100%;
-    height: max-content;
+    width: fit-content;
+    height: fit-content;
     background-color: #E8E8E8;
+
 }
 
 .profile-picture{
@@ -31,6 +45,7 @@
     font-size: x-small;
     font-weight: 400;
     color: #000000;
+    
     
 }
 
@@ -60,5 +75,6 @@
 
 .lenght-reactions{
     font-size: .6rem;
-    font-weight:600;
+    padding: .2rem;
+    font-weight:500;
 }
