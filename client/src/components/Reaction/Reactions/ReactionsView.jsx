@@ -28,12 +28,14 @@ const useReactionsView = ({ id, name, privateRequest, type, className}) => {
     privateRequest,
     type
   });
-  const reactionsView = data?.data ?? [];
+  const reactionsView = data?.data?.reactionsView ?? [];
+  const totalDocs = data?.data?.totalDocs ?? 0
 
   return {
     isError,
     isLoading,
     reactionsView,
+    totalDocs
   };
 };
 const ReactionsView = ({
@@ -44,10 +46,12 @@ const ReactionsView = ({
   className = ''
 }) => {
   const privateRequest = useUserRequest()
+
   const {
     isError,
     isLoading,
     reactionsView,
+    totalDocs
   } = useReactionsView({ id, name: nameView , privateRequest, type });
 
   return (
@@ -68,6 +72,7 @@ const ReactionsView = ({
                  type={type}
                  key={reactionView._id}/>
               ))}
+              <span className="lenght-reactions">{totalDocs}</span>
             </ul>
           )}
         </>
