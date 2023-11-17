@@ -25,7 +25,7 @@ module.exports = class MessageService {
 
       const messagesPagination = await Message.paginate(
         { _id: { $in: messagesIds } },
-        { limit, page }
+        { limit, page, sort: { createdAt: "desc" } }
       );
 
       return messagesPagination;
@@ -76,6 +76,26 @@ module.exports = class MessageService {
   static async update(object) {
     try {
       exits(object);
+    } catch (error) {
+      return {
+        error,
+        message: error.message,
+      };
+    }
+  }
+
+  static async message(object) {
+    try {
+      exits(object);
+      const { messageId } = object;
+
+      const message = await isValidObjectId(
+        { _id: messageId },
+        { model: "Message" }
+      );
+
+      if (message.error) throw new Error(message.message);
+      return message;
     } catch (error) {
       return {
         error,
