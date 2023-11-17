@@ -6,24 +6,23 @@ import { useSocket } from '../../hooks/useSocket'
 import BoxMessagesStore from '../../zustand/BoxMessagesStore'
 
 
-
 const MessageBoxPage = () => {
 
-  const socket = useSocket()
+  const socket = useSocket() ?? {}
   const {setBoxMessages, boxMessages} = BoxMessagesStore()
 
 
   useEffect(()=>{
 
-    socket?.on('open-conversation', (conversation)=>{
-      setBoxMessages(conversation)
-    })
+    socket?.on('open-conversation', setBoxMessages)
 
     return ()=>{
        socket?.off('open-conversation')
     }
     
   }, [socket])
+
+  if(boxMessages.length <= 0) return null
 
   return (
     <ReactPortal wrapperId={'Message-box-popup'}>
