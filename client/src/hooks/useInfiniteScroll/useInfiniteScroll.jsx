@@ -23,7 +23,7 @@ const useInfiniteScroll = ({ name, id, request, label, privateRequest, type }) =
     useInfiniteQuery(
       [name, id],
       ({ pageParam = 1 }) =>
-        request({ name, id, label, limit: 5, page: pageParam, privateRequest, type }),
+        request({ name, id, label, limit: 10, page: pageParam, privateRequest, type }),
       {
         getNextPageParam: ({ data }) => {
           if (!data || data.page === data.totalPages) {
