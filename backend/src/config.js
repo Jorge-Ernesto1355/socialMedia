@@ -1,9 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./db/Connect");
-
 const http = require("http");
-
 const socketIo = require("./socketIo");
 const Auth = require("./auth/authUser.routes");
 const UserRoute = require("./users/infrastructure/User.routes");
@@ -15,7 +13,6 @@ const ConversationRouter = require("./messages/infrastructure/Conversation.route
 const MessageRouter = require("./messages/infrastructure/Message.routes");
 const fileUpload = require("express-fileupload");
 const cookieParser = require("cookie-parser");
-const ConversationService = require("./messages/ConversationService");
 
 class Server {
   constructor() {
