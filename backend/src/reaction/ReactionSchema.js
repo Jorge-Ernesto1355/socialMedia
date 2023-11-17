@@ -1,6 +1,6 @@
 const z = require("zod");
 
-const allowedTypes = ["Post", "Comment"];
+const allowedTypes = ["Post", "Comment", "Message"];
 const allowedLabels = ["gusta", "encanta", "entristece", "asombra", "divierte"];
 
 const ReactionSchema = z.object({
