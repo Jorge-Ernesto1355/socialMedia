@@ -2,7 +2,7 @@ export default class userService {
   static async getUser({ privateRequest, userId }) {
     try {
       if (!privateRequest) throw new Error("could not load the request");
-      return privateRequest?.get(`/users/${userId}`);
+      return await privateRequest?.get(`/users/${userId}`);
     } catch (error) {
       return error;
     }
