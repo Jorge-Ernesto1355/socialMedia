@@ -18,11 +18,6 @@ import Input from "../components/Input";
 import validateContraseña from "../../utilities/ExpresionRegularContraseña";
 
 
-import { FaArrowLeft, FaUser } from "react-icons/fa";
-
-import { MdEmail } from "react-icons/md";
-
-import { GiPadlock } from "react-icons/gi";
 import AuthService from "../services/AuthServices";
 import { useMutation } from "react-query";
 import SpinnerLoader from "../../stylesComponents/spinnerLoader/SpinnerLoader";
@@ -65,7 +60,7 @@ function Register() {
 
         </div>
         <div className="icon-atras">
-          <FaArrowLeft />
+     
         </div>
 
         <div className="logo" />
@@ -146,7 +141,7 @@ function Register() {
                   handleBlur={handleBlur}
                 >
                   <div className="icon">
-                    <MdEmail />
+             
                   </div>
                 </Input>
               </div>
@@ -168,7 +163,7 @@ function Register() {
                   inputValue={values.nombre}
                 >
                   <div className="icon">
-                    <FaUser />
+                
                   </div>
                 </Input>
               </div>
@@ -192,7 +187,7 @@ function Register() {
                   inputValue={values.contraseña}
                 >
                   <div className="icon">
-                    <GiPadlock />
+                 
                   </div>
                 </Input>
               </div>

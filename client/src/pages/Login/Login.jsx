@@ -11,14 +11,11 @@ import React, { useEffect } from "react";
 import Input from "../components/Input";
 // emoticons
 
-import { FaArrowLeft } from "react-icons/fa";
-
-import { MdEmail } from "react-icons/md";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-import { GiPadlock } from "react-icons/gi";
+
 
 import { useMutation } from "react-query";
 import AuthServices from "../services/AuthServices";
@@ -88,7 +85,7 @@ function Login() {
 
                 </div>
                 <div className="icon-atras">
-                    <FaArrowLeft />
+                 
                 </div>
 
                 <div className="logo" />
@@ -106,7 +103,7 @@ function Login() {
 
                     >
                         <div className="icon">
-                            <MdEmail />
+                        
                         </div>
                     </Input>
                 </div>
@@ -123,7 +120,7 @@ function Login() {
                         handleChange={handleInputChange}
                     >
                         <div className="icon">
-                            <GiPadlock />
+                         
                         </div>
                     </Input>
                 </div>
