@@ -6,6 +6,7 @@ const { validateConversation } = require("./validations");
 const userService = require("../users/userService");
 const UserModel = require("../users/domain/UserModel");
 const MessageService = require("../messages/MessageService");
+const isValidObjectId = require("../libs/isValidObjectId");
 
 module.exports = function socketIo(server) {
   const io = new SocketServer(server, {
@@ -57,6 +58,7 @@ module.exports = function socketIo(server) {
 
       const toUser = await userService.get({ userId: to });
       const fromUser = await userService.get({ userId: from });
+
       if (toUser.error || fromUser.error) return null;
 
       if (result.error) return null;
@@ -69,23 +71,27 @@ module.exports = function socketIo(server) {
     });
 
     socket.on("new-message", async (data) => {
-      const { message, conversationId, from, to } = data;
-      console.log(data);
+      const { from, to, messageId } = data;
 
       const toUser = await userService.get({ userId: to });
       const fromUser = await userService.get({ userId: from });
+
       if (toUser.error || fromUser.error) return null;
 
-      const newMessage = await MessageService.create({
-        to,
-        from,
-        message,
-        conversationId,
-      });
+      const message = await isValidObjectId(
+        { _id: messageId },
+        { model: "Message" }
+      );
 
-      if (newMessage.error) return null;
+      if (message.error) return null;
 
-      io.to(toUser.socketId).emit("new-message", newMessage);
+      io.to(toUser.socketId).emit("new-message", message);
+    });
+
+    socket.on("block-conversation", async ({ block, to }) => {
+      const toUser = await userService.get({ userId: to });
+      if (toUser.error) return null;
+      io.to(toUser.socketId).emit("block-conversation", { block });
     });
 
     socket.on("disconnect", () => {});
