@@ -1,25 +1,63 @@
 
 .reply-container{
-
-    width:max-content;
-    max-width: 300px;
-    padding: .1rem;
+    width:100%;
+    max-width: 230px;
     max-height: 60px;
     display: flex;
     flex-direction: column;
     border-radius: 8px;
-    padding: .3rem;
+    padding: .2rem;
     justify-content: start;
     align-items: start;
-    background-color: var(--color-light);
-
+    background-color: #D9D9D9;
+    position: relative;
 }
 
+.reply-container.to-friend::before{
+  content: ''; 
+  position: absolute;
+  top: 0;
+  left:0;
+  width: 4.5px;
+  height: 100%;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  background-color: #4098FF;
+}
+.reply-container.from-user::before{
+    content: ''; 
+    position: absolute;
+    top: 0;
+    left:0;
+    width: 3.5px;
+    height: 99%;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background-color: #fff;
+  }
+
+.reply-container.from-user{
+    background-color: #71B3FF;
+}
 .reply-username{
-    font-size: small;
-    font-weight: 400;
+    font-size: x-small;
+    font-weight: 500;
+    color: linear-gradient(to bottom, #4dc7d9 0%,#66a6ff 100%);
+}
+
+.reply-user-hour{
+    display: flex;
+    justify-content: start;
+    align-items:center ;
+    
 }
 
 .reply-text{
-    font-size: smaller;
+    font-size: x-small;
+}
+
+.reply-hour{
+    font-size: xx-small;
+    font-weight: 500;
+    margin-left: .3rem;
 }
