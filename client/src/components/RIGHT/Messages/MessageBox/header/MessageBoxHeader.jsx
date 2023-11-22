@@ -1,9 +1,11 @@
 import React from 'react'
 import './MessageBoxHeader.css'
 import rem from '../../../../../assets/rem.jpg'
-import cross from '../../icons/cross.png'
-import minimizeIcon from '../../icons/minimize.png'
-const MessageBoxHeader = ({ minimize, friend }) => {
+import cross from '../../icons/simbolo-x.png'
+import minimizeIcon from '../../icons/menos.png'
+
+import MenuMessageBox from '../MenuMessageBox/MenuMessageBox'
+const MessageBoxHeader = ({ minimize, friend, deleteConversation, conversation}) => {
     return (
         <div className='MessageBox-header-container'>
             <div className='MessageBox-header-info'>
@@ -17,7 +19,8 @@ const MessageBoxHeader = ({ minimize, friend }) => {
             </div>
             <div className='MessageBox-header-actions'>
                 <img className='minimize-icon' src={minimizeIcon} alt="minimze" onClick={() => minimize((prev) => !prev)} />
-                <img className='cross-icon' src={cross} alt="delete" />
+                <img className='cross-icon' src={cross} alt="delete" onClick={()=> deleteConversation(conversation?._id)} />
+               <MenuMessageBox conversation={conversation}/>
             </div>
 
 
