@@ -3,6 +3,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  z-index: 1000;
 }
 
 .fbRating {
@@ -13,6 +15,7 @@
   -webkit-box-shadow: -1px -1px 5px 0px rgba(0, 0, 0, 0.19);
   -moz-box-shadow: -1px -1px 5px 0px rgba(0, 0, 0, 0.19);
   transition: all ease 0.25s;
+  z-index: 1000;
 }
 
 .fbRating div {

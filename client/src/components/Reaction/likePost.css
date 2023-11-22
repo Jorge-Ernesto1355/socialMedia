@@ -1,6 +1,6 @@
 .reaction-div {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 }
 
@@ -9,4 +9,9 @@
   font-size: small;
   color: #515151;
   margin-left: 0.5rem;
+}
+
+
+.popover-img-message{
+  margin-left: 1.9rem;
 }
