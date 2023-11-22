@@ -16,13 +16,15 @@ const Conversation = ({conversation}) => {
     const {userId} = AuthProvider()
     const [isTyping, setIsTyping] = useState(false)
     const queryClient = useQueryClient()
-    const privateRequest = useUserRequest()
+    const privateRequest = useUserRequest() 
     const socket = useSocket()
-    const friendId = conversation.participants.filter((participant)=> participant._id !==  userId)[0]?._id ?? null
-    const { data: userData} = useCallbackRequest({request:userService.getUser, id:friendId, name:'user', privateRequest})
-
-    const user = userData?.data ?? {}
+    const friendId = conversation?.participants?.filter((participant)=> participant !==  userId)[0] ?? null
+  
+    const { data: userData } = useQuery(["user", friendId], () => userService.getUser({ privateRequest, userId:friendId}));
     
+
+    const user = userData?.data ?? {};
+ 
     const {data:lastMessage, isError} = useCallbackRequest({request: messageService.lastMessage, id:conversation?._id, name:'lastMessage', privateRequest})
 
     const {data: UnReadMessage} = useQuery(['unReadMessage', conversation?._id], ()=> messageService.unReadMessages({privateRequest, conversationId: conversation?._id, userId}))
@@ -30,6 +32,7 @@ const Conversation = ({conversation}) => {
     const notReadMessages = UnReadMessage?.data ?? []
 
     const message = lastMessage?.data ?? {}
+
 
     const fechaFormateada = moment(message.createdAt).format(' h:mm A');
     
@@ -72,9 +75,17 @@ const Conversation = ({conversation}) => {
             setIsTyping(false)
         }
     }, [socket])
+
+
+    const handleSocket = ()=>{
+    
+        socket?.emit('open-conversation', {to:friendId, from:userId})
+    }
+    
     
   return (
-    <div className='conversation-container' onClick={()=> socket.emit('start-conversation', {to:friendId, from:userId})}>
+    <div className='conversation-container' onClick={()=> handleSocket()}>
+        
         <div className='conversation-profile-picture'>
             <img src={rem} alt=""  className='profile-photo'/>
         </div>
@@ -87,10 +98,10 @@ const Conversation = ({conversation}) => {
                 {isError && <p>message not found</p>}
                 <div className='conversation-message'> 
                 {isTyping && <p>Typing...</p>}
-                {!isTyping && <p>{message.text}</p>}
+                {!isTyping && <p>{message?.text}</p>}
                 </div>
                {
-                notReadMessages?.length > 0  &&  <span className='conversation-popup'>{notReadMessages?.length ?? null}</span>
+                notReadMessages?.length  &&  <span className='conversation-popup'>{notReadMessages?.length ?? null}</span>
                }
             </div>
         </div>
