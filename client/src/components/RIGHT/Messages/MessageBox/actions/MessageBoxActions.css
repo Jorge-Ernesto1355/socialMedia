@@ -1,12 +1,12 @@
 .MessageBox-actions-container {
     position: fixed;
     bottom: 0; /* Cambia esto a 'top: 0;' para que crezca hacia arriba */
-    width: 300px;
-    max-width: 300px;
+    width: 270px;
+    max-width: 270px;
     background-color: #fff; /* Cambia esto según tu diseño */
     transition: transform 0.3s ease-in-out;
-    box-shadow: var(--card-shadow);
-
+    border-top: 1px solid #eeeeee;
+z-index: 100;
 }
 
 .actions-reply-container{
@@ -27,9 +27,9 @@
 .messageBox-actions{
     transform: translateY(0); 
     display: grid;
-    grid-template-columns: 70% 15% 15%;
+    grid-template-columns: 70% 10% 10% 10%;
     justify-content: center;
-    align-items: center;
+  align-items: center;
 }
 .MessageBox-actions-form {
     width: 100%;
@@ -43,6 +43,10 @@
 
 }
 
+.MessageBox-actions-InputFile{
+    margin-left: .5rem;
+}
+
 
 .MessageBox-actions-input {
     outline: none;
@@ -51,13 +55,52 @@
 
 }
 
-.MessageBox-actions-InputFile {
 
-    margin-left: 20px;
-}
 
 .MessageBox-sendButton {
     width: 25px;
     height: 25px;
     margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+}
+
+.actions-img-send{
+    width: 50%;
+    height: 50%;
+    margin: .2rem;
+    object-fit: cover;
+  
+    max-width: 100px;
+    max-height: 100px;
+}
+ 
+.actions-img-send img{
+    border-radius: 5px;
+}
+
+.MessageBox-emoji{
+    width: 15px;
+    height: 15px;
+    margin-left: 5px;
+}
+
+.Messagebox-sendbutton{
+    width: 20px;
+    height: 20px;
+    margin-right: 1.3rem;
+}
+
+
+.conversation-blocked-container{
+    padding: .5rem;
+}
+
+.conversation-blocked-text{
+  
+    font-size: x-small;
+    padding: .1rem;
+    
 }
