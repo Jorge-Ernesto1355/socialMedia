@@ -1,10 +1,11 @@
 import React, { useCallback, useState } from 'react'
 import './vote.css'
 import { motion } from 'framer-motion'
-import { useSelector } from 'react-redux';
+
 import useMutationRequest from '../../../../hooks/useMutationRequest';
 import voteService from './service/vote.service';
 import LoaderVote from './LoaderVote';
+import AuthProvider from '../../../../zustand/AuthProvider';
 
 
 
@@ -17,10 +18,8 @@ const porcentageVoto = ({ totalVotes, votes }) => {
 const Vote = ({ vote, postId, totalVotes }) => {
 
 
-    const { _id: currentUser } = useSelector(
-        (state) => state.user.currentUser.user,
-    );
-
+   
+   const {userId} = AuthProvider()
     const [porcentaje, setPorcentaje] = useState(0)
 
     const { mutate, isLoading, isError } = useMutationRequest(voteService, { name: 'votes' })
@@ -30,7 +29,7 @@ const Vote = ({ vote, postId, totalVotes }) => {
     const HandleMutate = useCallback(() => {
         mutate({
             postId,
-            userId: currentUser,
+            userId,
             voteId: vote?._id
         }, {
             onSuccess: () => {
