@@ -4,7 +4,7 @@ const messageShema = z.object({
     .string({
       required_error: "message is required",
     })
-    .max(24),
+    .max(200),
   to: z
     .string({
       required_error: "userId is required",
