@@ -1,0 +1,39 @@
+.btn-star {
+    border: none;
+    width: 5rem;
+    height: 1rem;
+    border-radius: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1px;
+    background: linear-gradient(to bottom, #4dc7d9 0%, #66a6ff 100%);
+    cursor: pointer;
+    transition: all 450ms ease-in-out;
+  }
+  
+  .sparkle-star {
+    fill: #AAAAAA;
+    transition: all 800ms ease;
+  }
+  
+  .btn-star-text {
+    font-weight: 600;
+    color: #fff;
+    font-size: x-small;
+  }
+  
+  .btn-star:hover {
+   
+   
+    transform: translateY(-2px);
+  }
+  
+  
+  
+  .btn-star:hover .sparkle-start  {
+    fill: white;
+
+    transform: scale(1.2);
+    transition: all 300ms ;
+  } 
