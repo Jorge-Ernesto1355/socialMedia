@@ -2,7 +2,7 @@ import React from 'react'
 import './Request.css'
 import rem from '../../../../assets/rem.jpg'
 import MutualFriends from '../../../../utilities/MutualFriends'
-import { useSelector } from 'react-redux'
+
 import { useQuery } from 'react-query'
 import GetUser from '../../../../services/GetUser.service'
 import AcceptFriend from '../requestOptions/AcceptFriend'
