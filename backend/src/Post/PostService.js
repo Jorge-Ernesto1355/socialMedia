@@ -118,9 +118,15 @@ class PostService {
       select: ["posts"],
     };
 
-    let image = null;
     try {
-      image = await createImagen(req);
+      const file = req.files?.image;
+      const image = await cloudinaryService.upload({
+        filePath: file?.tempFilePath,
+      });
+
+      if (image?.error)
+        throw new Error("something went wrong to upload the photo");
+
       votes > 0 && (await createVotes({ votes }));
       const user = await isValidObjectId({ _id: userId }, queryOptions);
 
