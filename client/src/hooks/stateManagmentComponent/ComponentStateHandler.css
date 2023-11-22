@@ -1,14 +1,7 @@
 .Component-state-handler-container {
     width: 100%;
-    height: max-content;
+    height: 100%;
     background-color: transparent;
-
+    
 }
 
-.loading-stateManagment{
-  
-}
-
-.error-stateManagment{
-   
-}
