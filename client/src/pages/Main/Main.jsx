@@ -9,6 +9,7 @@ import Category from '../../components/RIGHT/Category/Category'
 
 import FriendRequest from '../../components/RIGHT/FriendsRequest/FriendRequest'
 import MessageBoxPage from '../messages/MessagesBoxPages'
+import ConversationView from '../../components/RIGHT/messages/conversationView/ConversationView'
 
 
 const Main = () => {
@@ -31,6 +32,8 @@ const Main = () => {
                 <div className="rightd">
                     <div className="messages">
                         <Category />
+                        <ConversationView/>
+                        
                     </div>
                     <div className="friendsRequest">
                         <FriendRequest />

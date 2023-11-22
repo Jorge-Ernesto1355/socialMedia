@@ -29,7 +29,7 @@ const MessageBoxPage = () => {
       <div className='boxMessages-container'>
         <ul className='boxMessages-row'>
           {boxMessages?.map((conversation)=> (
-            <MessageBox key={`messagebox-key=${conversation?._id}`} conversation={conversation}/>
+            <MessageBox key={`messagebox-key=${conversation?._id}`} conversationId={conversation?._id}/>
           ))}
         </ul>
       </div>
