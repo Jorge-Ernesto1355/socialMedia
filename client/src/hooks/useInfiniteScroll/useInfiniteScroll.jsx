@@ -22,19 +22,26 @@ const useInfiniteScroll = ({ name, id, request, label, privateRequest, type }) =
   const { data, isLoading, isError, hasNextPage, fetchNextPage, error, reset } =
     useInfiniteQuery(
       [name, id],
-      ({ pageParam = 1 }) =>
-        request({ name, id, label, limit: 10, page: pageParam, privateRequest, type }),
+      ({ pageParam = 1 }) =>{
+     
+        return request({ name, id, label, limit: 10, page: pageParam, privateRequest, type })
+      },
+
       {
         getNextPageParam: ({ data }) => {
-          if (!data || data.page === data.totalPages) {
+          
+       
+          if (!data || data?.page === data?.totalPages) {
+       
             return false;
           }
-          return data.page + 1;
+         
+          return data?.nextPage
         },
       },
     );
 
-  // Flatten the paginated results into a single array
+
 
 
   const results = data?.pages?.flatMap((page) => page.data?.docs ?? []) ?? [];
