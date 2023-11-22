@@ -28,8 +28,4 @@ route.get("/votes/:id", PostIndex.getVotes);
 
 route.put("/reaction/favorite/:postId", PostIndex.favorite);
 
-
-route.get("/reaction/view/:id", PostIndex.FindReactionPostView);
-
-
 module.exports = route;
