@@ -8,8 +8,9 @@ import userService from '../../../../services/UserService'
 import useUserRequest from '../../../../hooks/auth/useUserRequest'
 import { useQuery } from 'react-query'
 import { useSocket } from '../../../../hooks/useSocket'
+import ButtonStars from '../../../buttons/ButtonStarts/ButtonStars'
 
-const Friend = ({ addUser }) => {
+const Friend = ({ addUser, clearInput }) => {
 
     const { userId } = AuthProvider()
     const socket = useSocket()
@@ -26,9 +27,9 @@ const Friend = ({ addUser }) => {
             userId,
             addUser: addUser?._id?.$oid
         })
-
-        
     }, [])
+
+   
 
     const isFriend = isYourFriend(user?.friends, addUser?._id?.$oid)
 
@@ -49,7 +50,10 @@ const Friend = ({ addUser }) => {
                     )}
                 </>
             )}
-    <button onClick={()=> socket?.emit('open-conversation', {to:addUser?.objectID, from:userId})}>message</button>
+            <ButtonStars onClick={()=>{
+               
+                socket?.emit('open-conversation', {to:addUser?.objectID, from:userId})
+            }}/>
             {!isLoading && isError && <p>error</p>}
         </div>
     )

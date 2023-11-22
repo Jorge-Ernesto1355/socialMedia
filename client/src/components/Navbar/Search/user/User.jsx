@@ -3,7 +3,7 @@ import './User.css'
 import rem from '../../../../assets/rem.jpg'
 
 import Friend from './Friend'
-const User = ({ hit, itemsProps }) => {
+const User = ({ hit, itemsProps, clearInput}) => {
 
 
   return (
@@ -11,7 +11,7 @@ const User = ({ hit, itemsProps }) => {
       <img className='search-user-img' src={hit?.imageProfile?.url ?? rem} alt="" />
       <div className='user-information-container'>
         <h5 className='user-username'>{hit?.username}</h5>
-        <Friend addUser={hit} />
+        <Friend addUser={hit} clearInput={clearInput} />
       </div>
     </li>
   )
