@@ -1,3 +1,5 @@
+const createImagen = require("../Post/application/createPost/createImagen");
+const cloudinaryService = require("../libs/cloudynary");
 const exits = require("../libs/exits");
 const isValidObjectId = require("../libs/isValidObjectId");
 
@@ -40,18 +42,29 @@ module.exports = class MessageService {
   static async create(object) {
     try {
       exits(object);
-      const { from, message, to, conversationId } = object;
+      const { from, message, to, conversationId, reply, file } = object;
       const result = validateMessage({ from, message, to });
 
       if (result.error) {
         throw new Error(result.error.message);
       }
 
+      const image = await cloudinaryService.upload({
+        filePath: file?.tempFilePath,
+      });
+
+      if (image?.error)
+        throw new Error("something went wrong to upload the photo");
+
+      const ReplyValue = reply === "null" ? undefined : reply;
+
       const newMessage = await Message.create({
         from,
         text: message,
         to,
         conversationId,
+        reply: ReplyValue,
+        file: image,
       });
       return newMessage.save();
     } catch (error) {
