@@ -4,7 +4,7 @@ import './ComponentStateHandler.css'
 const ComponentStateHandler = (props) => {
 
     return (
-        <div className='Component-state-handler-container'>
+        <div className='Component-state-handler-container' style={props.style}>
 
             {/* if IsLoading and isError is false it will display the Loader */}
             <div className='loading-stateManagment'>
