@@ -1,6 +1,7 @@
 const { DocumentNotFound } = require("../handleErros/errors");
 const exits = require("../libs/exits");
 const isValidObjectId = require("../libs/isValidObjectId");
+const MessageService = require("./MessageService");
 const Conversation = require("./domain/Conversation");
 const Message = require("./domain/Message");
 
@@ -14,7 +15,6 @@ module.exports = class ConversationService {
       const options = {
         limit,
         page,
-        populate: ["participants"],
       };
 
       const user = await isValidObjectId({ _id: userId }, { model: "User" });
@@ -31,6 +31,33 @@ module.exports = class ConversationService {
       );
 
       return conversations;
+    } catch (error) {
+      return {
+        error,
+        message: error.message,
+      };
+    }
+  }
+
+  static async getConversation(object) {
+    try {
+      exits(object);
+      const { conversationId } = object;
+
+      const queryOptions = {
+        model: "Conversation",
+      };
+
+      const conversation = await isValidObjectId(
+        { _id: conversationId },
+        queryOptions
+      );
+
+      if (conversation?.error) {
+        throw new Error(conversation?.message);
+      }
+
+      return conversation;
     } catch (error) {
       return {
         error,
@@ -110,6 +137,51 @@ module.exports = class ConversationService {
         participants: [to, from],
       });
       return conversation;
+    } catch (error) {
+      return {
+        error,
+        message: error.message,
+      };
+    }
+  }
+
+  static async blockContact(object) {
+    try {
+      exits(object);
+      const { conversationId } = object;
+      const conversation = await isValidObjectId(
+        { _id: conversationId },
+        { model: "Conversation", select: ["messages", "block"] }
+      );
+
+      if (conversation?.error) throw new Error(conversation?.message);
+
+      await Conversation.findByIdAndUpdate(conversation?._id, {
+        block: !conversation.block,
+      });
+    } catch (error) {
+      return {
+        error,
+        message: error.message,
+      };
+    }
+  }
+
+  static async lastMessage(object) {
+    try {
+      exits(object);
+      const { conversationId } = object;
+      const conversation = await isValidObjectId(
+        { _id: conversationId },
+        { model: "Conversation" }
+      );
+
+      if (conversation?.error) throw new Error(conversation?.message);
+
+      const messages = await Message.find({ conversationId });
+
+      if (typeof messages === "object") return messages[messages.length - 1];
+      return null;
     } catch (error) {
       return {
         error,
