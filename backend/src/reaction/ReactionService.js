@@ -13,9 +13,8 @@ module.exports = class ReactionService {
       const { containerId, type, limit, page } = object;
 
       const options = {
-        model:type, 
-       
-      }
+        model: type,
+      };
 
       const isValidContainerId = await validateObjectId(
         { _id: containerId },
@@ -45,16 +44,14 @@ module.exports = class ReactionService {
       exists(object);
 
       const { containerId, type, label, limit, page } = object;
-      
+
       const queryOptions = {
-        model:type, 
-        
-      }
+        model: type,
+      };
 
       const isValidContainerId = await validateObjectId(
         { _id: containerId },
         queryOptions
-        
       );
 
       if (isValidContainerId?.error) {
@@ -86,9 +83,8 @@ module.exports = class ReactionService {
       const { containerId, type } = object;
 
       const options = {
-        model:type, 
-       
-      }
+        model: type,
+      };
 
       const container = await validateObjectId({ _id: containerId }, options);
 
@@ -109,7 +105,7 @@ module.exports = class ReactionService {
 
       const reactionsView = getLabelsView(reactions?.docs);
 
-      return reactionsView;
+      return { reactionsView, totalDocs: reactions.docs?.length };
     } catch (error) {
       return {
         error,
@@ -125,17 +121,20 @@ module.exports = class ReactionService {
       const { label, userId, value, containerId, type } = object;
 
       const optionsUser = {
-        model:"User", 
-        select:['email', 'username']
-      }
+        model: "User",
+        select: ["email", "username"],
+      };
 
       const optionsContainer = {
-        model:type, 
-        select:['reactions']
-      }
+        model: type,
+        select: ["reactions"],
+      };
 
       const user = await validateObjectId({ _id: userId }, optionsUser);
-      const container = await validateObjectId({ _id: containerId }, optionsContainer);
+      const container = await validateObjectId(
+        { _id: containerId },
+        optionsContainer
+      );
 
       if (container?.error || user?.error) {
         throw new Error("document not found or objectId is not valid");
@@ -194,12 +193,14 @@ module.exports = class ReactionService {
     type,
   }) {
     try {
-
       const optionsContainer = {
-        model:type, 
-        select:['reactions']
-      }
-      const container = await validateObjectId({ _id: containerId }, optionsContainer);
+        model: type,
+        select: ["reactions"],
+      };
+      const container = await validateObjectId(
+        { _id: containerId },
+        optionsContainer
+      );
 
       if (container?.error) {
         throw new Error("document not found or objectId is not valid");
