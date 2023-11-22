@@ -21,7 +21,7 @@ export default class messageService {
       if (!privateRequest)
         throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
       return await privateRequest?.get(
-        `/message/${conversationId}/lastMessage`,
+        `/message/lastMessage/${conversationId}`,
       );
     } catch (error) {
       return {
@@ -51,6 +51,32 @@ export default class messageService {
       if (!privateRequest)
         throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
       return await privateRequest.get(`message/${id}`);
+    } catch (error) {
+      return {
+        error,
+        message: error.message,
+      };
+    }
+  }
+
+  static async createMessage(message) {
+    try {
+      if (!message?.privateRequest)
+        throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+
+      const form = new FormData();
+
+      for (const key in message) {
+        form.append(key, message[key]);
+      }
+
+      const data = await message?.privateRequest.post("/message", form, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      return data;
     } catch (error) {
       return {
         error,
