@@ -21,7 +21,7 @@ const reactions = [
 ];
 
 
-const Reaction = ({ id, userId, name, children, type}) => {
+const Reaction = ({ id, userId, name, children, type, variantsOptions}) => {
   const { isVisible, elementRef, show} = useHideOnOutsideClick(true);
   const privateRequest = useUserRequest()
   const mutateRequest = useMutationRequest(ReactionService.React, {name})
@@ -41,7 +41,7 @@ const Reaction = ({ id, userId, name, children, type}) => {
       {isVisible && (
         <motion.div
         className="ratings"
-        variants={variantsAction}
+        variants={variantsAction(variantsOptions)}
         animate={`${showReactions ? "visible" : "hidden"}`}
         transition={{
           duration: 0.2,
