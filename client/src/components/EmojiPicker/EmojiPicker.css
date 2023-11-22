@@ -1,13 +1,10 @@
-.EmojiPickerReact {
-  --epr-picker-height: 500px;
+.EmojiPickerReact{
+  transform: rotate();
 }
-
 .EmojiPickerReact.absolute {
   position: absolute;
-  top: 45px;
+  transform: scale(.6) ;
+  border-radius: 10px;
+  top: -400px;
   left: -209px;
-}
-
-.EmojiPickerReact.epr-main {
-  position: absolute;
 }
