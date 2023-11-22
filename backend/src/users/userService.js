@@ -88,7 +88,7 @@ module.exports = class userService {
     try {
       exits(object);
       const { userId, limit, page } = object;
-
+      console;
       const queryOptions = {
         model: "User",
         select: ["posts"],
@@ -144,6 +144,40 @@ module.exports = class userService {
       );
 
       return usersWainting;
+    } catch (error) {
+      return {
+        error,
+        message: error.message,
+      };
+    }
+  }
+
+  static async getFriendsPosts(object) {
+    try {
+      exits(object);
+      const { userId, limit, page } = object;
+
+      const friends = await this.getFriends({ userId, limit, page });
+
+      if (friends.error) throw new Error(friends.message);
+
+      const friendsPostsIds = await Promise.all(
+        await friends?.docs?.map(async (friend) => {
+          const friendPost = await isValidObjectId(
+            { _id: friend?._id.toString() },
+            { model: "User", select: ["posts"] }
+          );
+          if (friendPost.error) throw new Error(friendPost.message);
+          return friend?.posts;
+        })
+      );
+
+      const friendsPosts = await Post.paginate(
+        { _id: { $in: friendsPostsIds } },
+        { limit, page }
+      );
+
+      return friendsPosts;
     } catch (error) {
       return {
         error,
