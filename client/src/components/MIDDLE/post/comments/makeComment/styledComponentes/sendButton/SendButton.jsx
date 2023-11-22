@@ -1,6 +1,6 @@
 import React from 'react'
 import './sendButton.css'
-const SendButton = () => {
+const SendButton = ({tiny}) => {
     return (
         <button className='sendButton'>
             <div className="svg-wrapper-1">
@@ -11,7 +11,7 @@ const SendButton = () => {
                     </svg>
                 </div>
             </div>
-            <span>Send</span>
+           {tiny ? null :  <span>Send</span>}
         </button>
     )
 }
