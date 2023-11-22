@@ -17,10 +17,20 @@ export function useAutocomplete(props) {
       ...props,
       onStateChange(params) {
         props.onStateChange?.(params);
-        setState(params.state);
+        setState(params?.state);
       },
     });
   }, []);
 
-  return { autocomplete, state };
+  const clearQuery = () => {
+    setState((prevState) => ({
+      ...prevState,
+      query: '',
+    }));
+  };
+
+
+
+
+  return { autocomplete, state, clearQuery };
 }
