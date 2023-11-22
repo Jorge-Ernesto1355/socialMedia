@@ -4,12 +4,9 @@ import "./likePost.css";
 import emoji from '../RIGHT/icons/sonreir.png'
 import useHover from "../../hooks/useHover";
 
-const LikeMessage = ({ reactionType, setShowReactions, isVisible}) => {
+const LikeMessage = ({ setShowReactions, isVisible}) => {
 
    const {hovered, show } = useHover()
-
-   console.log(isVisible)
-
 
    useEffect(()=>{
     setShowReactions(show)
@@ -19,7 +16,7 @@ const LikeMessage = ({ reactionType, setShowReactions, isVisible}) => {
    
    
   return (
-    <div className="ratingIcon" >
+    <div className="ratingIcon">
       
         <div
           className="reaction-div"
@@ -30,7 +27,7 @@ const LikeMessage = ({ reactionType, setShowReactions, isVisible}) => {
           onMouseEnter={() => hovered(true)}
         >
           <p className='popover-text-message'>React</p>
-                    <span><img src={emoji} alt="react" className='popover-img-message' /></span>
+          <img src={emoji} alt="react" className='popover-img-message' />
         </div>
     
     </div >
