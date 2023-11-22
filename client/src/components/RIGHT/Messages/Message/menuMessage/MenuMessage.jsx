@@ -11,7 +11,7 @@ const MenuMessage = ({isHovered, message, hovered}) => {
 
    <div>
     {isHovered &&  (
-        <Popover trigger={ <img src={menu} className='menu-message' alt=""/>}>
+        <Popover trigger={<img src={menu} className='menu-message' alt="more"/>}>
            <Suspense fallback={<Loader/>}>
               <MoreMessage message={message} hovered={hovered}/>
             </Suspense>  
