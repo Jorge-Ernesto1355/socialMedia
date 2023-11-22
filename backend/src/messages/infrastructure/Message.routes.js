@@ -6,6 +6,8 @@ router.get("/all/:conversationId", index.query.messages);
 
 router.get("/:messageId", index.query.message);
 
+router.get("/lastMessage/:conversationId", index.query.lastMessage);
+
 router.post("/", index.mutation.createMessage);
 
 router.delete("/", index.mutation.deleteMessage);
