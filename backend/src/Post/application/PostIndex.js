@@ -10,20 +10,13 @@ const Votes = require("./interact/votes/Vote");
 const UsersVotes = require("../application/interact/votes/AllUserGivenVote");
 const getVotes = require("./interact/votes/getVotes");
 
-
 //shares
 const allShared = require("../application/interact/shares/AllUserHasGivenShared");
 const Share = require("./interact/shares/Share");
 
-
-
-
 //favorites
 const favorite = require("./interact/favorites/Favorites");
 const AllFavorite = require("./interact/favorites/AllFavorites");
-
-const FindReactionPostView = require("./find/FindReactionsView");
-
 
 module.exports = {
   DeletePost,
@@ -40,6 +33,6 @@ module.exports = {
   favorite,
 
   AllFavorite,
-  FindReactionPostView,
+
   findTimeLine,
 };
