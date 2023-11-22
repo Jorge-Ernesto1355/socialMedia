@@ -25,6 +25,16 @@ const Message = new Schema(
       url: String,
       public_id: String,
     },
+    readBy: [
+      {
+        ref: "User",
+        type: Schema.Types.ObjectId,
+      },
+    ],
+    reply: {
+      ref: "Message",
+      type: Schema.Types.ObjectId,
+    },
     reactions: [
       {
         ref: "Reaction",
