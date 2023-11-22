@@ -6,6 +6,7 @@ const { validateConversation } = require("./validations");
 const userService = require("../users/userService");
 const UserModel = require("../users/domain/UserModel");
 const MessageService = require("../messages/MessageService");
+
 const isValidObjectId = require("../libs/isValidObjectId");
 
 module.exports = function socketIo(server) {
