@@ -8,6 +8,7 @@ const UserModel = require("../users/domain/UserModel");
 const MessageService = require("../messages/MessageService");
 
 const isValidObjectId = require("../libs/isValidObjectId");
+const Message = require("../messages/domain/Message");
 
 module.exports = function socketIo(server) {
   const io = new SocketServer(server, {
@@ -93,6 +94,85 @@ module.exports = function socketIo(server) {
       const toUser = await userService.get({ userId: to });
       if (toUser.error) return null;
       io.to(toUser.socketId).emit("block-conversation", { block });
+    });
+
+    socket?.on("new-unRead-message", async ({ conversationId, to, userId }) => {
+      const unReadMessages = await MessageService.unReadMessage({
+        conversationId,
+        userId,
+      });
+
+      if (unReadMessages?.error) return null;
+      const toUser = await userService.get({ userId: to });
+      if (toUser?.error) return null;
+
+      io.to(toUser?.socketId).emit("new-unRead-message", {
+        unRead: unReadMessages,
+      });
+    });
+
+    socket?.on("readMessage", async ({ conversationId, to, userId }) => {
+      const toUser = await userService.get({ userId: to });
+      const fromUser = await userService.get({ userId: userId });
+
+      if (toUser.error || fromUser.error) return null;
+
+      const messagesUnRead = await Message.find({
+        conversationId,
+        $and: [{ to: userId }, { readBy: { $size: 0 } }],
+      });
+
+      const read = await MessageService.read({ conversationId, userId });
+
+      if (read?.error) return null;
+
+      const unReadMessages = await MessageService.unReadMessage({
+        conversationId,
+        userId,
+      });
+
+      io.to(fromUser?.socketId).emit("new-unRead-message", {
+        unRead: unReadMessages.unRead - read.modifiedCount,
+      });
+
+      io.to(toUser?.socketId).emit("readedMessage", messagesUnRead);
+    });
+
+    socket?.on("joinRoom", async ({ to, room }) => {
+      const toUser = await userService.get({ userId: to });
+      if (toUser.error) return null;
+      io.to(room).emit("userJoined", { userId: to, id: toUser.socketId });
+      socket.join(room);
+      io.to(toUser.socketId).emit("joinRoom", { to, room });
+    });
+
+    socket?.on("userCall", async (data) => {
+      const { to, offer, from } = data;
+
+      const fromUser = await userService.get({ userId: from });
+      if (fromUser?.error) return null;
+
+      io.to(to).emit("incomingCall", { from: fromUser.socketId, offer });
+    });
+
+    socket?.on("callAccepted", async (data) => {
+      const { to, ans } = data;
+
+      io.to(to).emit("callAccepted", { from: to, ans });
+    });
+
+    socket?.on("peerNegoNeeded", async (data) => {
+      const { offer, to, from } = data;
+
+      const fromUser = await userService.get({ userId: from });
+      if (fromUser?.error) return null;
+      io.to(to).emit("peerNegoNeeded", { from: fromUser?.socketId, offer });
+    });
+
+    socket?.on("peerNegoDone", async ({ to, ans, from }) => {
+      const fromUser = await userService.get({ userId: from });
+      if (fromUser?.error) return null;
+      io.to(to).emit("peerNegoFinal", { from: from?.socketId, ans });
     });
 
     socket.on("disconnect", () => {});
