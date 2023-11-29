@@ -1,3 +1,4 @@
+const cloudinaryService = require("../libs/cloudynary");
 const isValidObjectId = require("../libs/isValidObjectId");
 const getTotalPoints = require("../reaction/utils/getTotalPoints");
 const userService = require("../users/userService");
@@ -138,6 +139,7 @@ class PostService {
       user.posts = [...user.posts, newPost];
       await user.save();
       const postsaved = await newPost.save();
+
       return postsaved;
     } catch (error) {
       return {
