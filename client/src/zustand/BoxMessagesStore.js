@@ -20,6 +20,14 @@ const BoxMessagesStore = create((set, get) => ({
   MessageReply: (messageId) => {
     set({ messageReply: messageId });
   },
+  checkConversation: (conversation) => {
+    if (!conversation) return null;
+    const conversationsIds = get().boxMessages?.map(
+      (conversation) => conversation?._id,
+    );
+
+    return conversationsIds.includes(conversation?._id);
+  },
   deleteMessageReply: () => {
     set({ messageReply: null });
   },
