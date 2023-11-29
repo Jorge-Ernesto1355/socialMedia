@@ -39,6 +39,21 @@ module.exports = class MessageService {
     }
   }
 
+  static async messageWithOutPagination(object) {
+    try {
+      exits(object);
+      const { conversationId, limit, page } = object;
+      const queryOptions = {
+        model: "Conversation",
+      };
+      const conversation = await isValidObjectId(
+        { _id: conversationId },
+        queryOptions
+      );
+      if (conversation.error) throw new Error("something went wrong");
+    } catch (error) {}
+  }
+
   static async create(object) {
     try {
       exits(object);
@@ -97,6 +112,35 @@ module.exports = class MessageService {
     }
   }
 
+  static async unReadMessage(object) {
+    try {
+      exits(object);
+      const { conversationId, userId } = object;
+      const queryOptions = {
+        model: "Conversation",
+      };
+
+      const conversation = await isValidObjectId(
+        { _id: conversationId },
+        queryOptions
+      );
+
+      if (conversation.error) throw new Error("something went wrong");
+
+      const messagesUnRead = await Message.find({
+        conversationId,
+        $and: [{ to: userId }, { readBy: { $size: 0 } }],
+      });
+
+      return { unRead: messagesUnRead?.length };
+    } catch (error) {
+      return {
+        error,
+        message: error.message,
+      };
+    }
+  }
+
   static async message(object) {
     try {
       exits(object);
@@ -109,6 +153,41 @@ module.exports = class MessageService {
 
       if (message.error) throw new Error(message.message);
       return message;
+    } catch (error) {
+      return {
+        error,
+        message: error.message,
+      };
+    }
+  }
+
+  static async read(object) {
+    try {
+      exits(object);
+      const { conversationId, userId } = object;
+      const queryOptions = {
+        model: "Conversation",
+      };
+
+      const conversation = await isValidObjectId(
+        { _id: conversationId },
+        queryOptions
+      );
+
+      if (conversation.error) throw new Error("something went wrong");
+
+      const result = await Message.updateMany(
+        {
+          conversationId,
+          to: userId,
+          readBy: { $size: 0 },
+        },
+        {
+          $set: { readBy: [userId] },
+        }
+      );
+
+      return result;
     } catch (error) {
       return {
         error,
