@@ -21,17 +21,17 @@ import EmojiPickerComponent from '../../../../EmojiPicker/EmojiPicker'
 import emoji from '../../icons/feliz.png'
 
 
-const MessageBoxActions = ({friendId, conversation}) => {
+const MessageBoxActions = ({ conversation}) => {
     const {userId} = AuthProvider()
     const privateRequest = useUserRequest()
-    
+    const friendId  = conversation?.participants?.filter((participant)=> participant !==  userId)[0] ?? null
     const [isOpen, setIsOpen] = useState(false)
     const { store, set, get } = useStore();
     const { element, input: inputFile, clearImagePreview } = UseImagePreview()
     const socket = useSocket()
     const queryClient = useQueryClient()
     const messageKey = ['messages', conversation?._id]
-    const {messageReply, deleteMessageReply} = BoxMessagesStore() 
+    const {messageReply, deleteMessageReply, checkConversation} = BoxMessagesStore() 
     const {mutateAsync, isLoading, isError} = useMutation({
         mutationFn:messageService.createMessage, 
         onMutate: async (message)=>{
@@ -88,12 +88,16 @@ const MessageBoxActions = ({friendId, conversation}) => {
             image: inputFile.current.files[0]
         })
 
-       
-
+    
         if(!isLoading && !isError){
             const message = messageData?.data ?? null
             
-           if(message !== null)  socket?.emit('new-message', {messageId:message?._id, to:friendId, from:userId})
+           if(message !== null)  {
+            socket?.emit('new-message', {messageId:message?._id, to:friendId, from:userId})
+            const check = checkConversation()
+         
+            if(!check) socket?.emit('new-unRead-message', {conversationId:conversation?._id, to:friendId, userId})
+           }
 
         }
         clearImagePreview()

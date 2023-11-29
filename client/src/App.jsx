@@ -12,17 +12,21 @@ import Login from "./pages/Login/Login";
 import Main from "./pages/Main/Main";
 import Layout from "./components/layout/Layout";
 import PersitsLogin from "./utilities/auth/PersitsLogin";
-import io from 'socket.io-client'
+
+import Room from "./components/Room";
 
 function App() {
 
+  
+
 
   return (
-    <div>
+    <>
       <Router>
         <Routes>
           <Route path='/signup' element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/room/:roomId" element={<Room />}/>
           <Route path="/" element={<Layout />}>
 
             {/* protect this routes */}
@@ -36,7 +40,7 @@ function App() {
           </Route>
         </Routes>
       </Router>
-    </div>
+    </>
   );
 }
 

@@ -16,6 +16,7 @@ import SendButton from "./styledComponentes/sendButton/SendButton";
 import ErrorButton from "./styledComponentes/ErrorButton/ErrorButton";
 import CommentService from "../services/CommentServices";
 import useUserRequest from "../../../../../hooks/auth/useUserRequest";
+import Image from "../../../../../utilities/Image";
 
 const MakeComment = (
   {
@@ -77,7 +78,8 @@ const MakeComment = (
   return (
     <div className="comment-container">
       <div className="photo-makeComment">
-        <img src={rem} alt="" />
+      <Image src={rem}
+							alt="user"/>
       </div>
       <div className="field-write-card">
         <div className="field-write">

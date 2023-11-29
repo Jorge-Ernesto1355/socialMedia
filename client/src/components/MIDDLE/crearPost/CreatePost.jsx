@@ -17,7 +17,6 @@ import Difusion from "./Difusion/Difusion";
 import { HandleStateActions, clearStateActions } from "./HandleSteateOptions";
 import useMutationRequest from "../../../hooks/useMutationRequest";
 import CreatePostStore from "../../../zustand/CreatePostStore";
-import CreatePostService from "../../../services/CreatePost.service";
 import PostServices from "../post/services/PostServices";
 import useUserRequest from "../../../hooks/auth/useUserRequest";
 import AuthProvider from "../../../zustand/AuthProvider";

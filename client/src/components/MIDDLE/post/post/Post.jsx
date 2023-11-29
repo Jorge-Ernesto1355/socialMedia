@@ -19,6 +19,7 @@ import ReactionsView from "../../../Reaction/Reactions/ReactionsView";
 import AuthProvider from "../../../../zustand/AuthProvider";
 import userService from "../../../../services/UserService";
 import useUserRequest from "../../../../hooks/auth/useUserRequest";
+import Image from "../../../../utilities/Image";
 const Post = ({ post }) => {
 
 	const { userId: currentUser } = AuthProvider()
@@ -47,14 +48,11 @@ const Post = ({ post }) => {
 
 	return (
 		<div className="feed ">
-
 			<div className="head">
 				<div className="user">
 					<div className="profile-photo">
-						<img
-							src={user?.ProfilePicture ? user?.ProfilePicture : rem}
-							alt="user"
-						/>
+						<Image src={user?.ProfilePicture ? user?.ProfilePicture : rem}
+							alt="user"/>
 					</div>
 
 					<div className="ingo">

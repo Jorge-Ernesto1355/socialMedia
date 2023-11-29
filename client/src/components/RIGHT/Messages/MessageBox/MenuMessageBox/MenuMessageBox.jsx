@@ -8,9 +8,15 @@ import messenger from '../../icons/mensajero.png'
 import user from '../../icons/usuario.png'
 import './menuMessageBox.css'
 import BlockContact from './BlockContact'
+import { useSocket } from '../../../../../hooks/useSocket'
+import AuthProvider from '../../../../../zustand/AuthProvider'
 
 
 const MenuMessageBox = ({conversation}) => {
+
+  const socket = useSocket()
+  const {userId} = AuthProvider()
+  
   return (
   
     
@@ -24,7 +30,7 @@ const MenuMessageBox = ({conversation}) => {
                 <img className='menuMessageBox-img' src={user} alt="" />
                 <p className='menuMessageBox-text'>View Profile</p>
             </li>
-            <li className='menuMessageBox-item'>
+            <li className='menuMessageBox-item' onClick={()=> socket?.emit('joinRoom', {to:userId, room:1})}>
                 <img className='menuMessageBox-img' src={call} alt="" />
                 <p className='menuMessageBox-text'>Start call</p>
             </li>

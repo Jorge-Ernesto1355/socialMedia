@@ -10,6 +10,7 @@ import notSeen from './icons/notSeen.png'
 import LoaderVote from "../../../MIDDLE/post/Votes/LoaderVote";
 
 import Reply from "./Reply/Reply";
+import Image from "../../../../utilities/Image";
 
 
 const Message = ({isMyMessage, message}) => {
@@ -42,7 +43,7 @@ const Message = ({isMyMessage, message}) => {
             <p className="meta-info-message-text text-muted">{hour}</p>
             <img className="meta-info-message-img" src={notSeen} alt="" />
           </div>}
-        {!!message?.file && <img className="img-message" src={message?.file?.url}/>}
+        {!!message?.file && <Image src={message?.file?.url} className={'borderRadius:"10px"'}/>}
          <ReactionsView
 						id={message?._id}
 						name={"message-reactions"}

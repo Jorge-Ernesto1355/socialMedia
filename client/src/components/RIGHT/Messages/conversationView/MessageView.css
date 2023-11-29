@@ -1,7 +1,22 @@
 .conversationView-container{
     height: 100%;
     overflow-y: auto;
-    width: 300px;
-    max-width: 300px;
+    overflow-x: hidden;
+    width: 325px;
+    max-width: 325px;
     
+}
+
+.conversation-title-container{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: .5rem;
+    padding: 0.5rem;
+
+}
+
+.conversation-newGroup{
+    font-size: .7rem;
+    color: var(--color-blue);
 }

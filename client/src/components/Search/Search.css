@@ -1,0 +1,15 @@
+.search-input{
+    width: 100%;
+    padding: .3rem;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    background-color: var(--color-light);
+}
+
+.search-input input{
+    
+}
+
+
+

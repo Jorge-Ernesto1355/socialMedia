@@ -12,8 +12,6 @@ const createPost = async (req, res) => {
 
   const post = await PostService.create(req);
 
-  console.log(post);
-
   if (post.error) {
     return res.status(400).json({ message: post.error.message });
   }

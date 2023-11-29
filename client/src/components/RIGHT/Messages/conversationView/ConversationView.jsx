@@ -10,6 +10,9 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Loader from "../../../../utilities/Loader";
 import Conversations from "./conversations/Conversations";
 
+import UsersOnline from "../usersOnline/UsersOnline";
+import SearchConversationView from "./SearchConversationView";
+
 
 const ConversationView = () => {
   const {userId } = AuthProvider()
@@ -23,14 +26,21 @@ const ConversationView = () => {
       id: userId
     });
 
-
     if(isError){
       return <div>error</div>
     }
 
 
   return (
-    <InfiniteScroll
+   
+    <>
+    <div className="conversation-title-container">
+      <h4>Messages</h4>
+      <span className="conversation-newGroup">New group</span>
+    </div>
+    <SearchConversationView/>
+    <UsersOnline/>
+   <InfiniteScroll
     dataLength={results.length}
     hasMore={hasNextPage || isLoading}
     loader={<Loader />}
@@ -38,7 +48,8 @@ const ConversationView = () => {
     >
       <Conversations conversations={results}/>
     </InfiniteScroll>
+    </>
   );
 };
 
-export default ConversationView;
+export default ConversationView

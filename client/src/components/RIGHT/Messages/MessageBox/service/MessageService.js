@@ -35,9 +35,7 @@ export default class messageService {
     try {
       if (!privateRequest)
         throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
-      return await privateRequest.get(
-        `conversation/${conversationId}/${userId}`,
-      );
+      return await privateRequest.get(`message/unRead/${conversationId}?userId=${userId}`);
     } catch (error) {
       return {
         error,
@@ -77,6 +75,21 @@ export default class messageService {
       });
 
       return data;
+    } catch (error) {
+      return {
+        error,
+        message: error.message,
+      };
+    }
+  }
+
+  static async readMessages({ privateRequest, userId, conversationId }) {
+    try {
+      if (!privateRequest)
+        throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+      return await privateRequest.get(
+        `message/read/${conversationId}?userId=${userId}`,
+      );
     } catch (error) {
       return {
         error,

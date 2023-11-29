@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import './MessageBoxBody.css'
 import Message from '../../Message/Message'
 import useInfiniteScroll from '../../../../../hooks/useInfiniteScroll/useInfiniteScroll'
@@ -28,29 +28,40 @@ const MessageBoxBody = ({conversation}) => {
 
     })
 
-    useEffect(() => {
-        const handleNewMessage = (message) => {
+    const handleNewMessage = useCallback((message) => {
          
       
-          queryClient.setQueryData(['messages', conversation?._id], (prevData) => {
-            const dataDocs = prevData?.pages[0]?.data?.docs ?? [];
-            const newDocs = [...dataDocs, message];
-            const { docs, ...restData } = prevData.pages[0].data;
-      
-            return {
-              pages: [
-                {
-                  data: {
-                    docs: newDocs,
-                    restData,
-                  },
-                },
-              ],
-            };
-          });
+      queryClient.setQueryData(['messages', conversation?._id], (prevData) => {
+        const dataDocs = prevData?.pages[0]?.data?.docs ?? [];
+        console.log({prevData})
+        const newDocs = [message, ...dataDocs];
+        const { docs, ...restData } = prevData.pages[0].data;
+        
+
+  
+        return {
+          pages: [
+            {
+              data: {
+                docs: newDocs,
+                ...restData,
+              },
+            },
+          ],
         };
+      });
+    }, [socket])
+
+    const handleReadedMessage = useCallback((messages)=>{
+      console.log(messages)
+
+    },[socket])
+
+    useEffect(() => {
+        
       
         socket?.on('new-message', handleNewMessage);
+        socket?.on('readedMessage', handleReadedMessage)
       
         // Scroll automático cuando hay un nuevo mensaje
         messagesContainerRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -58,7 +69,7 @@ const MessageBoxBody = ({conversation}) => {
         return () => {
           socket.off('new-message', handleNewMessage);
         };
-      }, [socket, queryClient, conversation]);
+      }, [socket, queryClient, conversation, handleNewMessage]);
       
       
       

@@ -37,16 +37,17 @@
 }
 
 .minimize-icon {
-    width: 30px;
-    height: 30px;
-    
+    width: 25px;
+    height: 25px;
+    background-color: transparent;
     margin-right: .3rem;
     cursor: pointer;
 
 }
 
 .cross-icon {
-    width: 15px;
-    height: 15px;
+    width: 20px;
+    height: 20px;
+    
     cursor: pointer;
 }

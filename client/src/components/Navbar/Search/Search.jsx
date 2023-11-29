@@ -4,9 +4,8 @@ import './search.css'
 import { useAutocomplete } from '../../../hooks/useAutocomplete';
 import algoliasearch from 'algoliasearch';
 import { getAlgoliaResults } from '@algolia/autocomplete-preset-algolia';
-import Loader from '../../../utilities/Loader';
 import Users from './users/Users';
-import lupa from './icons/lupa.png'
+import lupa from '../../../assets/lupa.png'
 import SpinnerLoader from '../../../stylesComponents/spinnerLoader/SpinnerLoader';
 
 const searchClient = algoliasearch(
@@ -15,7 +14,7 @@ const searchClient = algoliasearch(
 );
 const INDEX_NAME = "users";
 const Search = ({ props }) => {
-
+  
   const inputRef = useRef()
 
   const { autocomplete, state} = useAutocomplete({
