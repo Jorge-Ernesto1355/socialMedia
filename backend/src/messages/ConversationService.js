@@ -189,4 +189,69 @@ module.exports = class ConversationService {
       };
     }
   }
+
+  static async getOneConversation(object) {
+    try {
+      exits(object);
+      const { to, from } = object;
+      const queryOptions = {
+        model: "Conversation",
+        select: ["_id"],
+      };
+
+      const conversation = await isValidObjectId(
+        {
+          participants: {
+            $size: 2,
+            $all: [to, from],
+          },
+        },
+        queryOptions
+      );
+
+      if (conversation?.error) {
+        throw new Error(conversation?.message);
+      }
+
+      return conversation;
+    } catch (error) {
+      return {
+        error,
+        message: error.message,
+      };
+    }
+  }
+
+  static async getUnReadConversation(object) {
+    try {
+      exits(object);
+      const { userId, limit, page } = object;
+
+      const conversations = await this.conversations({ userId, limit, page });
+
+      const conversationsUnReaded = await Promise.all(
+        await conversations?.docs?.map(async ({ _id }) => {
+          const unReadMessages = await MessageService.unReadMessage({
+            conversationId: _id,
+            userId,
+          });
+
+          if (unReadMessages?.unRead) {
+            return _id;
+          }
+        })
+      );
+
+      const conversationsPaginate = await Conversation.paginate(
+        { _id: { $in: conversationsUnReaded } },
+        { limit, page }
+      );
+      return conversationsPaginate;
+    } catch (error) {
+      return {
+        error,
+        message: error.message,
+      };
+    }
+  }
 };
