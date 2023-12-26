@@ -1,0 +1,53 @@
+.BoxMessagesDetails-container{
+    margin-top: 1rem;
+    width: 100%;
+    height: auto ;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.details-description{
+    font-size: x-small;
+    color: var(--color-gray);
+}
+
+.BoxMessageDetails-options{
+    display: flex;
+    width: 100%;
+    margin-top: .5rem;
+    justify-content: space-evenly;
+}
+
+.BoxMessageDetails-sendRequest{
+    border-radius: 5px;
+    padding: .2rem;
+    font-size: x-small;
+    font-weight: 500;
+    background-color: var(--color-blue);
+    color: white;
+    cursor: pointer;
+}
+
+.BoxMessageDetails-sendRequest.errorFriendRequest{
+    background-color: white;
+    color: var(--color-dark);
+    border: 1px solid var(--color-danger);
+}
+
+.BoxMessageDetails-viewProfile{
+    border-radius: 5px;
+    font-size: x-small;
+    cursor: pointer;
+    padding: .2rem;
+    font-weight: 500;
+    background-color: var(--color-light);
+    
+    
+
+}
+
+
+

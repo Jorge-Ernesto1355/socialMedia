@@ -18,4 +18,6 @@ router.delete("/", index.mutation.deleteMessage);
 
 router.put("/", index.mutation.updateMessage);
 
+router.post("/everyOne/:userId", index.mutation.messageToAll);
+
 module.exports = router;

@@ -44,6 +44,7 @@ module.exports = function socketIo(server) {
       "socketId",
       socket.id
     );
+
     if (userId != null && Boolean(userId)) {
       const user = await userService.get({ userId });
       if (user.error) return null;
@@ -52,6 +53,23 @@ module.exports = function socketIo(server) {
         status: "Online",
       });
     }
+
+    const usersConnected =
+      (await userService.getUsersOnline({
+        userId,
+        limit: 999999,
+        page: 1,
+      })) ?? [];
+
+    const userSocket = await userService.get({ userId });
+    if (userSocket.error) return null;
+
+    if (usersConnected?.error) return;
+
+    usersConnected?.docs?.map((user) => {
+      console.log(user.socketId, "--------socketId-------", user.username);
+      io.to(user.socketId).emit("user-online", userSocket);
+    });
 
     socket.on("open-conversation", async (data) => {
       const { to, from } = data;
@@ -175,7 +193,34 @@ module.exports = function socketIo(server) {
       io.to(to).emit("peerNegoFinal", { from: from?.socketId, ans });
     });
 
-    socket.on("disconnect", () => {});
+    socket.on("disconnect", async () => {
+      console.log("disconed");
+      if (userId != null && Boolean(userId)) {
+        const user = await userService.get({ userId });
+        if (user.error) return null;
+        await UserModel.findByIdAndUpdate(userId, {
+          socketId: socket.id,
+          status: "Offline",
+        });
+      }
+
+      const usersConnected =
+        (await userService.getUsersOnline({
+          userId,
+          limit: 999999,
+          page: 1,
+        })) ?? [];
+
+      const userSocket = await userService.get({ userId });
+      if (userSocket.error) return null;
+
+      if (usersConnected?.error) return;
+
+      usersConnected?.docs?.map((user) => {
+        console.log(user.socketId, "--------socketId-------", user.username);
+        io.to(user.socketId).emit("user-disconect", userSocket);
+      });
+    });
 
     socket.on("error", (error) => {
       console.error("Error en la conexión del usuario:", error);

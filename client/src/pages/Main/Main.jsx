@@ -1,5 +1,5 @@
 import React from 'react'
-import Navbar from '../../components/Navbar/componentNavbar/Navbar'
+import Navbar from '../../components/Navbar/Navbar'
 
 import CreatePost from '../../components/MIDDLE/crearPost/CreatePost'
 import Feed from '../../components/MIDDLE/feed/Feed'
@@ -11,18 +11,21 @@ import MessageBoxPage from '../messages/MessagesBoxPages'
 import ConversationView from '../../components/RIGHT/messages/conversationView/ConversationView'
 
 import Sidebar from '../../components/LEFT/Sidebar/Sidebar'
-import UsersOnline from '../../components/RIGHT/messages/usersOnline/UsersOnline'
+import WithSearch from '../../HOCs/WithSearch'
+import WebPush from '../../utilities/webPush/WebPush'
+
 
 
 
 const Main = () => {
   
-
+    const ConversationViewWithSearch = WithSearch(ConversationView, {INDEX_NAME:'conversations'})
+    
 
     return (
         <main>
-            <Navbar></Navbar>
-            <div className="container">
+            <Navbar/>
+            <section className="container">
                 {/* ===== LEFT ======= */}
                 <div className="left">
                   <Sidebar/>
@@ -37,8 +40,8 @@ const Main = () => {
                 {/* ===== RIGHT =====  */}
                 <div className="rightd">
                     <div className="messages">
-                        
-                        <ConversationView/>
+                        <WebPush/>
+                        <ConversationViewWithSearch/>
                         
                     </div>
                     <div className="friendsRequest">
@@ -46,7 +49,7 @@ const Main = () => {
                     </div>
                 </div>
                 <MessageBoxPage />
-            </div>
+            </section>
         </main>
     )
 }

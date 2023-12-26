@@ -6,14 +6,13 @@ import ErrorButton from '../../../../../comments/makeComment/styledComponentes/E
 
 import AuthProvider from '../../../../../../../../zustand/AuthProvider'
 import useUserRequest from '../../../../../../../../hooks/auth/useUserRequest'
+import { toast } from 'react-toastify'
 const ButtonEditPost = ({ get, post, handleClose, postId }) => {
 
     const { userId: currentUser } = AuthProvider()
     const privateRequest = useUserRequest()
 
     const { mutateEdit, isLoadingMutationEdit, isErrorEditPost, reset } = EditPostMutation()
-
-
 
     const handleEditPost = useCallback(() => {
         if (typeof get !== 'function') return
@@ -28,14 +27,12 @@ const ButtonEditPost = ({ get, post, handleClose, postId }) => {
         }, {
             onSuccess: () => {
                 handleClose && handleClose()
+                toast.success("post edited succefully")
             }
+
         })
 
     }, [get()])
-
-
-
-
 
     return (
         <button className="button-edit-post" onClick={() => handleEditPost()}>

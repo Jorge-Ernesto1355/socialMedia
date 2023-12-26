@@ -1,8 +1,7 @@
 .searchConversation-container{
     width: 100%;
     display: grid;
-    grid-template-columns: 90% 10%;
-   margin-left: .8rem;
+    grid-template-columns: 89% 11%;
     gap: .3rem;
     align-items: center;
     max-width: 300px;
@@ -22,12 +21,14 @@
 
 .searchConversation-input input{
     background-color:transparent;
-   outline: none;
+    outline: none;
+    width: 100%;
+    margin-left: .5rem;
 }
 
 .searchConversation-input input::placeholder{
     color: #A8A8A8;
-    font-weight:400;
+    font-weight:500;
 }
 
 .searchConversation-searchIcon{
@@ -37,8 +38,24 @@
 
 .searchConversation-filterIcon{
     width: 60%;
-    margin-left: .5rem;
+   
     height:60%;
+    
 }
 
+
+
+.conversation-filtred{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    
+}
+
+.conversation-filtred.filtred{
+    background-color: var(--color-blue);
+}
 

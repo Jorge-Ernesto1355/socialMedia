@@ -5,8 +5,7 @@ function Highlight({ hit, attribute }) {
     hit,
     attribute,
   });
-  console.log(hit);
-  console.log(si);
+
 
   return <></>;
 }

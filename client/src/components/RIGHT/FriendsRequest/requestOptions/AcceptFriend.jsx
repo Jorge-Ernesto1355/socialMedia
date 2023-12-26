@@ -24,7 +24,8 @@ const AcceptFriend = ({ userRequestFriend, currentUser }) => {
             onSuccess: () => {
                 toast.success('New friend added')
             },
-            onError: () => {
+            onError: (data) => {
+                console.log(data)
                 toast.error('Something went wrong')
             }
         })

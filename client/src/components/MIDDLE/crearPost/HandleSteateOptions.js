@@ -11,11 +11,11 @@ export const HandleStateActions = (key, actions, setActions) => {
       updatedActions[actionKey] = false;
     }
   }
-  // Actualizar el estado con el nuevo objeto de acciones
+
   setActions(updatedActions);
 };
 
 export const clearStateActions = (setActions) => {
-  if(!setActions) return 
+  if (!setActions) return;
   setActions((prev) => !prev);
 };

@@ -10,7 +10,7 @@ import ButtonEditPost from './inputEditPost/buttonEditPost/ButtonEditPost'
 
 import AutoComplete from '../../../../../Autocomplete/AutoComplete'
 import { useStore } from '../../../../../../hooks/useStore/useStore'
-import getUserTagged from '../../../../../../utilities/getUserTagged'
+
 
 const EditPost = ({ postId, handleClose }) => {
 
@@ -19,7 +19,7 @@ const EditPost = ({ postId, handleClose }) => {
   const { store, get, set } = useStore()
   const post = data?.data ?? {}
 
-  const usersTagged = getUserTagged(get)
+  
 
   useEffect(() => {
     set(post?.description)
@@ -37,7 +37,7 @@ const EditPost = ({ postId, handleClose }) => {
             <img src={close} alt="close editpost" />
           </button>
 
-          <Post post={post} notShowComments={true} editing={get} />
+          <Post post={post} notShowComments={true} editing={get} simple={true} />
 
           <div className='edit-options-container'>
             {store && (

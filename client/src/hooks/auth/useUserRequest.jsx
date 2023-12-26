@@ -43,13 +43,7 @@ const useUserRequest = () => {
                         prevRequest.headers['Authorization'] = `Bearer ${Auth.accessToken}`
                     }
                     return userRequest(prevRequest)
-                } else if (error?.response?.status === 404) {
-                    console.log('error 404')
-                } else if (error?.response?.status === 500) {
-                    console.log('error 500')
-                } else {
-                    console.log('error ')
-                }
+                } 
 
                 return Promise.reject(error)
 

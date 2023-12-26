@@ -1,13 +1,13 @@
 import React from "react";
-import { ReactionPost } from "../services/actions/actions";
 import "./ActionsPost.css";
 
 import comment from "./icons/comment.png";
-import share from "./icons/share.png";
+
 
 
 import Reaction from "../../../Reaction/Reaction";
 import LikePost from '../../../Reaction/LIkePost'
+import SharePost from "../share/SharePost";
 
 
 const ActionsPost = ({ postId, userId }) => {
@@ -28,10 +28,7 @@ const ActionsPost = ({ postId, userId }) => {
           <img className="icon icon-comment" src={comment} alt="" />
           <span className="interaction-button-text">Comment</span>
         </div>
-        <div>
-          <img className="icon" src={share} alt="" />
-          <span className="interaction-button-text">Compartir</span>
-        </div>
+        <SharePost/>
       </div>
     </div>
   );

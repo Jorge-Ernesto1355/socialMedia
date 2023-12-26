@@ -1,8 +1,6 @@
 
 .usersOnline-container{
     border-bottom: 1px solid var(--color-light);
- 
-   
 }
 
 .usersOnline-item{
@@ -41,7 +39,17 @@
     margin: 1rem .5rem;
 }
 
+.usersOnline-description{
+    font-size: small;
+    font-weight: 500;
+    margin-bottom: .5rem;
+}
+
 .usersOnline-length{
     font-weight: 400;
     color: var(--color-ligth);
 }
+
+
+
+.usersOnline-item{animation:scale-up-center 0.4s; } @keyframes usersOnline-item{ 0%{transform:scale(.5)} 100%{transform:scale(1)} }

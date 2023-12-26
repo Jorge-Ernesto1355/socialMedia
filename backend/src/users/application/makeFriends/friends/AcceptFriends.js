@@ -1,17 +1,19 @@
+const userService = require("../../../userService");
+const AcceptFriends = async (req, res) => {
+  const { addUserId, accept } = req.query;
+  const { userId } = req.params;
 
-const userService = require("../../../userService")
-const AcceptFriends = async (req, res)=>{
+  const acceptUser = await userService.acceptFriend({
+    userId,
+    addUserId,
+    accept,
+  });
 
-  const {userId, addUserId, accept} = req.query
+  if (acceptUser?.error) {
+    return res.status(500).json({ error: acceptUser?.message });
+  }
 
-    const acceptUser = await userService.acceptFriend({userId, addUserId, accept})
+  return res.status(200).json({ message: acceptUser?.message });
+};
 
-    if(acceptUser?.error){
-      return res.status(500).json({error: acceptUser.message})
-    }
-
-    return res.status(200).json({message: acceptUser.message})
-  
-}
-
-module.exports = AcceptFriends
+module.exports = AcceptFriends;

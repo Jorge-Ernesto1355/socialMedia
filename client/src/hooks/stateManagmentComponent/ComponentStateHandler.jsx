@@ -28,7 +28,7 @@ const ComponentStateHandler = (props) => {
             {
                 !props.isLoading && !props.isError && (
                     <>
-                        {props.items <= 0 && <p>be the best</p>}
+                        {props.items <= 0 && props.EmptyMessage}
                     </>
                 )
             }

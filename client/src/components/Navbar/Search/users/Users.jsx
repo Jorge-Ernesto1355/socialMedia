@@ -3,6 +3,8 @@ import User from '../user/User'
 import './Users.css'
 
 const Users = ({autocomplete, items, source, clearInput}) => {
+
+    
   return (
     <ul className='search-users-container' {...autocomplete.getListProps()}>
                         {items?.map((item)=>{

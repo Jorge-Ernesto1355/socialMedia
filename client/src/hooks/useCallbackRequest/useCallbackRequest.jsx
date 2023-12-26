@@ -1,7 +1,9 @@
 import { useQuery } from "react-query";
 import { useCallback } from "react";
 export const useCallbackRequest = ({ request, id, name, type, privateRequest}) => {
-  if (typeof id !== "string" || typeof name !== "string") {
+
+
+  if (typeof id !== 'string' || typeof name !== "string") {
     throw new Error("Invalid props: id and name must be of type string");
   }
   if (typeof request !== "function") {

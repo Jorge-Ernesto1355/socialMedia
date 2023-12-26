@@ -1,157 +1,135 @@
-.cuadro1 {
+
+
+.register {
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--color-light);
+    display: grid;
+    place-content: center;
+   
+}
+
+
+.register-container{
+   
+    width: 30vw;
+    height: 90vh;
+    background-color: #fff;
+    border-radius: var(--card-border-radius);
+     
+    padding: var(--card-padding);
+
+}
+
+.logo-container{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.name-social{
+    color: var(--color-blue);
+}
+
+.logo-register{
+    width: 2rem;
+    height: 2rem;
+    margin-right: .5rem;
+    
+}
+
+.text-register{
+    text-align: center;
+    font-size: larger;
+    color: var(--color-black);
+
+}
+
+.description-register{
+    font-size: x-small;
+
+    text-align: center;
+  font-weight: 500;
+  color: #656665;
+  margin-bottom: 2rem;
+}
+
+.session-ways{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap: .5rem;
+}
+
+
+.session-way{
+    border: 1.5px solid #eeeeee;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background: #f8f8f8;
+    background-color: transparent;
+    padding: .5rem;
+    border-radius: 10px;
+}
+.text-session{
+    font-size: small;
+    font-weight: 500;
 }
 
-.login {
-    position: relative;
-    width: 400px;
-    height: 600px;
-    background-color: #fff;
+.lines-container{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 35% 30% 35% ;
+    margin-top: 1rem;
+}
+
+.line-register{
+ border-bottom: 1px solid #d9d8d8;
+
+}
+
+.text-continue{
+    font-size: xx-small;
+    font-weight: 500;
+    color: #656665;
+    
+
+   
+}
+
+.register-submit{
+    width: 80%;
+    display: flex;
+    justify-content:center;
+    text-align: center;
+    margin-top: 1rem;
+    padding: .5rem;
     border-radius: 10px;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    margin-left: 2rem;
+    background-color: var(--color-blue);
+    color: #fff;
+
+}
+
+
+.inputs-form{
+    margin-top: 1rem;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
+
 }
 
-.login i {
-    position: absolute;
-    top: 40px;
-    left: -25px;
-    width: 360px;
-    height: 50px;
-    background: #67ff59;
-    border-radius: 30px;
-    border-bottom-left-radius: 0;
-}
 
-.title {
-    position: absolute;
-    top: 40px;
-    left: 90px;
-    color: #fff;
-}
 
-.login i::before {
-    content: "";
-    position: absolute;
-    top: 50px;
-    width: 25px;
-    height: 30px;
-    background: #65e704;
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
-    z-index: 2;
-}
-
-.login i::after {
-    content: "";
-    position: absolute;
-    top: 50px;
-    width: 25px;
-    height: 30px;
-    background: #67ff59;
-    border-bottom-left-radius: 20px;
-}
-
-.logo {
-    width: 100px;
-    height: 100px;
-    background-color: white;
-    margin: 20px;
-    margin-bottom: 20px;
-}
-
-.logocbta81 {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    top: 45px;
-    right: 150px;
-}
-
-.logocbta {
-    width: 40px;
-    height: 40px;
-}
-
-.icon-atras {
-    position: absolute;
-    color: #929292;
-    font-size: 1.5rem;
-    left: 25px;
-    top: 5px;
-    transition: 0.4s;
-}
-
-.icon-atras:hover {
-    transform: translateX(-10px);
-    transition: 0.4s;
-}
-
-.input {
-    padding: 10px;
-}
-
-.icon {
-    color: #929292;
-}
-
-.text {
-    font-size: 1rem;
-    color: #929292;
-    margin-bottom: 5px;
-}
-
-.submit {
-    border: none;
-    width: 150px;
-    height: 40px;
-    margin-top: 30px;
-    border-radius: 10px;
-    color: #ffffff;
-    background-color: #67ff59;
-    position: absolute;
-    right: 140px;
-    bottom: 50px;
-}
-
-.checkBox {
+.register-link-message{
+    width: 100%;
     display: flex;
-    align-items: center;
-    width: 250px;
-}
-
-.span-guardarSesion {
-    font-size: small;
-    font-weight: 500;
-    margin-right: 15px;
+    margin-top:1rem;
     color: #656665;
-}
-
-.submit:hover {
-    transform: scale(1.1);
-    transition: 0.4s;
-}
-
-.recuperar {
-    position: absolute;
-    color: #656665;
-    bottom: 10px;
-    right: 20px;
     font-size: small;
-    font-weight: 500;
-    margin-right: 15px;
-    border-bottom: 4px dotted #65e704;
-    transition: 0.4s;
-}
-
-.recuperar:hover {
-    padding-bottom: 4px;
-    transition: 0.4s;
+    font-weight: 400;
+    justify-content: center;
 }

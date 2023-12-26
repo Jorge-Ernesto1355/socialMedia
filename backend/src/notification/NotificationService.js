@@ -39,9 +39,19 @@ class NotificationService {
       exits(objectCreate);
 
       const { label, message, userConnectorId, userReceptorId } = objectCreate;
+      const options = {
+        model: "User",
+        select: ["username", "_id", "imageProfile"],
+      };
 
-      const userReceptor = await isValidObjectId(userReceptorId, "User");
-      const userConnector = await isValidObjectId(userConnectorId, "User");
+      const userReceptor = await isValidObjectId(
+        { _id: userReceptorId },
+        options
+      );
+      const userConnector = await isValidObjectId(
+        { _id: userConnectorId },
+        options
+      );
 
       if (userReceptor.error || userConnector.error) {
         throw new Error("document not found or objecdtId is not valid");

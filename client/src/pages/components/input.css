@@ -1,23 +1,66 @@
-.input1 {
-  padding: 4px 20px;
-  border-radius: 5px;
+
+.form-group {
+  margin-bottom: 20px;
+  
   position: relative;
-  background-color: #eaeaea;
-  display: flex;
-  align-items: center;
+  width: 80%;
 }
 
-.input-invisible {
-  border: none;
-  margin-left: 10px;
-  padding: 3px;
-  margin-right: 10px;
+.form-label {
+  font-size: 14px;
   background-color: transparent;
-  outline: none;
-  font-weight: 600;
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  pointer-events: none;
+  transition: 0.3s;
+  transform-origin: 0 0;
 }
 
-::placeholder {
-  color: #b6afaf;
-  padding-left: 10px;
+.form-label.error-label{
+  color: var(--color-danger);
 }
+
+.form-input.error-input{
+  border-bottom: 1px solid var(--color-danger);
+}
+
+
+.form-input {
+  width: 100%;
+  padding: 8px;
+  border-bottom: 1px solid var(--color-black);
+  font-size: 14px;
+  transition: 0.3s;
+  z-index: 1;
+}
+
+.error-label{
+  color: var(--color-danger)
+}
+
+.form-input:focus {
+  outline: none;
+
+}
+
+.form-input:focus + .form-label,
+.form-input:not(:placeholder-shown) + .form-label {
+  transform: translateY(-87%) scale(0.75);
+  font-size: 15px;
+  background-color: white;
+
+}
+
+.showIcon{
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  cursor: pointer;
+  top: 10px;
+  right: 10px;
+
+}
+
+
+

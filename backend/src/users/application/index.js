@@ -13,6 +13,7 @@ const giveRoles = require("../../roles/application/giveRoles");
 const deleteRoles = require("../../roles/application/removeRoles");
 const getRequestFriends = require("../application/makeFriends/friends/getRequestFriend");
 const deleteUser = require("./Delete/DeleteUserById");
+const getUsersOnline = require("./find/getUsersOnline.js");
 const getUsersTagged = require("./find/getUsersTagged");
 module.exports = {
   query: {
@@ -22,6 +23,7 @@ module.exports = {
     getPosts,
     getRequestFriends,
     getUsersTagged,
+    getUsersOnline,
   },
   mutation: {
     AcceptFriends,

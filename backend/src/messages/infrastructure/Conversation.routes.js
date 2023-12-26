@@ -4,9 +4,11 @@ const router = Router();
 
 router.get("/all/:userId", index.query.getConversations);
 
-router.post("/", index.mutation.Conversation);
-
 router.get("/one/:conversationId", index.query.getConversation);
+
+router.get("/unReadConversations/:userId", index.query.getUnReadConversations);
+
+router.post("/", index.mutation.Conversation);
 
 router.put("/block/:conversationId", index.mutation.blockContact);
 

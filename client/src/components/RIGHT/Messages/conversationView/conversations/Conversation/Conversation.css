@@ -1,17 +1,16 @@
 .conversation-container{
  margin-top: .5rem;
- width: 300px;
- max-width: 325px;
+ width: 100%;
+ max-width: 273px;
  display: grid;
  grid-template-columns: 15% 85%;
  gap: .5rem;
  overflow-x: none;
  cursor: pointer;
+
 }
 
-.conversation-container div:last-child{
-    border: none;
-}
+
 
 .conversation-profile-picture{
     display: flex;
@@ -44,11 +43,12 @@
 
 .conversation-information{
     width: 100%;
-   padding: .3rem;
+    padding: .3rem;
     display: flex;
     flex-direction: column;
     justify-content: start;
-    border-bottom: 1px solid var(--color-light)
+    border-bottom: 1px solid var(--color-light);
+    
  
 }
 
@@ -63,7 +63,6 @@
 
 .conversation-message-info{
     display: flex;
-    
     justify-content: space-between;
     align-items: center;
 }
@@ -72,7 +71,7 @@
     font-size: .77rem;
     color: var(--color-dark);
     text-overflow: ellipsis;
- overflow: hidden; 
+    overflow: hidden; 
 }
 
 .conversation-time-message{

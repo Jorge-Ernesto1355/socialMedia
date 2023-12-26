@@ -23,14 +23,12 @@ const DeletePost = ({ postId }) => {
             privateRequest
         }, {
             onError: () => {
-                console.log('err')
+                toast.error('Upss... something weng wrong')
             },
-            onSuccess: () => {
-                console.log('si')
-            }
+            
         })
 
-        console.log('sii')
+        
     }
 
 
@@ -39,9 +37,12 @@ const DeletePost = ({ postId }) => {
     return (
         <>
             <li className="ellipsiPost-item" onClick={() => setIsOpen(true)}>
+            <div className='editPost-content'>
                 <img src={trash} alt="icon delete post" />
                 {isErrorDeletePost && <ErrorButton reset={resetDelete} />}
                 <h4 className="ellipsiPost-text">Delete post</h4>
+            </div>
+                <p className='ellipsiPost-description'>Delete your post permanently</p>
             </li>
 
             {isOpen && (

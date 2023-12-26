@@ -4,9 +4,17 @@ import './PostLoader.css'
 
 const PostLoader = () => {
   return (
+    <>
     <div className='skeleton-post-container'>
         <SkeletonPost/>
     </div>
+    <div className='skeleton-post-container'>
+        <SkeletonPost/>
+    </div>
+    <div className='skeleton-post-container'>
+        <SkeletonPost/>
+    </div>
+    </>
   )
 }
 

@@ -1,0 +1,57 @@
+.group-container{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    width: 70vw;
+    height: 70vh;
+    padding: var(--card-padding);
+    box-shadow: var(--card-shadow);
+    border-radius: 10px;
+    background-color: var(--color-white);
+
+}
+
+.group-container.error{
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ width: 40vw;
+}
+
+.message-error-group{
+    color: var(--color-gray);
+    font-size: small;
+    font-weight: 500;
+}
+
+.group-message{
+    font-size: x-small;
+    font-weight: 500;
+    color: var(--color-gray);
+
+}
+
+.group-title-addParticipant{
+    font-size: large;
+    font-weight: 600;
+    color: var(--color-black);
+}
+
+.group-title-participant{
+    font-size: large;
+    font-weight: 600;
+    color: var(--color-black);
+}
+
+.group-next{
+    width: 70%;
+    background-color: var(--color-blue);
+    color: var(--color-white);
+    padding: .5rem;
+    border-radius: 10px;
+}
+.group-participants{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

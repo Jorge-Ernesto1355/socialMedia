@@ -8,18 +8,22 @@ import AutoComplete from "../../Autocomplete/AutoComplete";
 import { useStore } from "../../../hooks/useStore/useStore";
 import UseImagePreview from "../../../hooks/useImagePreview/useImagePreview";
 import ImgInputFile from "../../../stylesComponents/ImgInputFile/ImgInputFile";
-
 import ErrorButton from "../post/comments/makeComment/styledComponentes/ErrorButton/ErrorButton";
 import SendButtonCreatePost from "./senbButtonCreatePost/SendButtonCreatePost";
 import BlueLoader from "../../../stylesComponents/BlurLoader/BlueLoader";
 import LoaderPost from "../../../stylesComponents/LoaderPost/LoaderPost";
-import Difusion from "./Difusion/Difusion";
+import TimeExpiration from "./Difusion/TimeExpiration";
 import { HandleStateActions, clearStateActions } from "./HandleSteateOptions";
 import useMutationRequest from "../../../hooks/useMutationRequest";
 import CreatePostStore from "../../../zustand/CreatePostStore";
 import PostServices from "../post/services/PostServices";
 import useUserRequest from "../../../hooks/auth/useUserRequest";
 import AuthProvider from "../../../zustand/AuthProvider";
+import { toast } from "react-toastify";
+import { useQuery } from "react-query";
+import userService from "../../../services/UserService";
+import SimpleLineLoader from "../../Loaders/SimpleLineLoader";
+
 
 const Votes = lazy(() => import("./Vote/Votes"));
 
@@ -35,45 +39,45 @@ const ACTIONS_INITIAL_STATE = {
 
 const CreatePost = () => {
   const privateRequest = useUserRequest()
-  const { votes, difusion, delVotes } = CreatePostStore()
+  const { votes, timeExpiration, delVotes } = CreatePostStore()
   const [actions, setActions] = useState(ACTIONS_INITIAL_STATE);
   const { userId } = AuthProvider()
   const { store, set, get } = useStore();
   const { element, input: inputFile, clearImagePreview } = UseImagePreview()
-  const { mutate, isLoading, isError, reset } = useMutationRequest(PostServices.create, { name: 'posts' })
+  const { mutate, isLoadingMutation, isError, reset, } = useMutationRequest(PostServices.create, { name: 'posts' })
+  const { data: user, isLoading } = useQuery(["user", userId], () => userService.getUser({ privateRequest, userId }));
 
   const handleMutate = useCallback(() => {
     if (!get()) return
-    mutate({ description: get(), votes, image: inputFile.current.files[0], difusion, privateRequest, userId }, {
+    mutate({ description: get(), votes, image: inputFile.current.files[0], privateRequest, userId, timeExpiration}, {
       onSuccess: () => {
         delVotes()
         set("");
         if (store.current) store.current.value = "";
         clearImagePreview()
         clearStateActions()
+        toast.success(`se ha creado el post exitosamente \n ${get()}`)
       }
     })
 
-  }, [])
-
-
-
-
-
+  }, [get()])
 
 
   return (
-    <div className="container-createPost">
-      {isLoading && (
-        <BlueLoader><LoaderPost /></BlueLoader>
+    <div className="container-createPost" aria-disabled={isLoadingMutation} >
+      {isLoadingMutation && (
+        <BlueLoader><LoaderPost/></BlueLoader>
       )}
       <div className="info-createPost">
         <div className="profile-photo">
           <img src={rem} alt="" />
         </div>
         <div className="info-name">
-          <h3>{''}</h3>
-          <Difusion />
+          {isLoading && <div style={{marginBottom:'.3rem'}}>
+          <SimpleLineLoader/>
+          </div>}
+          {!isLoading && <h5>{user?.username}</h5>}
+          <TimeExpiration/>
         </div>
       </div>
       <div className="input-createPost">
@@ -116,11 +120,12 @@ const CreatePost = () => {
             alt=""
           />
         </div>
-        <div style={{ marginTop: '15px' }} onClick={() => handleMutate()} aria-disabled={isError || isLoading}>
+        <div style={{ marginTop: '15px' }} onClick={() => handleMutate()} aria-disabled={isError || isLoadingMutation}>
           {isError && <ErrorButton reset={reset} />}
           {!isError && <SendButtonCreatePost />}
         </div>
       </div>
+      
     </div>
   );
 };

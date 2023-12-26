@@ -4,6 +4,8 @@ import ReactPlayer from 'react-player'
 import peerService from '../services/peerService'
 import AuthProvider from '../zustand/AuthProvider'
 
+
+
 const Room = () => {
 
     const socket = useSocket()
@@ -106,6 +108,29 @@ const Room = () => {
             socket?.off('peerNegoFinal')
         }
     },[socket, handleUserJoined, remoteSocketId, handleCallAccepted, handleCallUser])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+  
+
+
+    
     return (
         <div>
           <h2>Remote Room</h2>
@@ -128,6 +153,11 @@ const Room = () => {
               <ReactPlayer url={remoteStream} height={'200px'} width={'200px'} playing muted />
             </>
           )}
+
+     
+      
+
+
         </div>
       );
 }

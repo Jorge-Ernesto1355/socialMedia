@@ -17,6 +17,7 @@ const useMutationRequest = (request, { name } = {}) => {
     reset,
     error,
     status,
+    isSuccess,
     data
   } = useMutation({
     mutationFn: request,
@@ -45,7 +46,7 @@ const useMutationRequest = (request, { name } = {}) => {
     },
   });
 
-  return { mutate, isLoadingMutation, isError, reset, error, status, data };
+  return { mutate, isLoadingMutation, isError, reset, error, status, data, isSuccess};
 
 };
 

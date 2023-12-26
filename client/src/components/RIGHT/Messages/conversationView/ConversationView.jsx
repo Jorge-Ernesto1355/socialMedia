@@ -1,7 +1,5 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./MessageView.css";
-
-
 import AuthProvider from "../../../../zustand/AuthProvider";
 import useInfiniteScroll from "../../../../hooks/useInfiniteScroll/useInfiniteScroll";
 import ConversationService from "./services/ConversationService";
@@ -9,14 +7,19 @@ import useUserRequest from "../../../../hooks/auth/useUserRequest";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loader from "../../../../utilities/Loader";
 import Conversations from "./conversations/Conversations";
-
 import UsersOnline from "../usersOnline/UsersOnline";
 import SearchConversationView from "./SearchConversationView";
+import { useQueryClient } from "react-query";
+import GroupText from "../newGroup/GroupText";
 
 
-const ConversationView = () => {
+const ConversationView = ({ autocomplete, inputProps, state}, inputRef) => {
   const {userId } = AuthProvider()
   const privateRequest = useUserRequest()
+  const queryClient = useQueryClient()
+  const [filtred, setFiltred] = useState(false)
+  const [searchConversation, setSearchConversation ] = useState([])
+
 
   const { results, isLoading, isError, hasNextPage, fetchNextPage } =
     useInfiniteScroll({
@@ -25,31 +28,91 @@ const ConversationView = () => {
       privateRequest,
       id: userId
     });
+  
 
-    if(isError){
+    const {
+           results: filtredConversations,
+           isLoading: loadingFiltredConversation,
+           isError: errorFiltredConversation,
+           refetch,
+           fetchNextPage: fetchNextPageFiltred,
+           hasNextPage:hasNextPageFiltred} = useInfiniteScroll({privateRequest, request:ConversationService.getUnReadConversations, name:'filtredConversations', id:userId, options:{
+           enabled:false
+    }})
+
+
+    const handleClickFiltrered = useCallback(async()=>{
+      
+      if(filtred){ 
+        await queryClient.cancelQueries({ queryKey: ['conversations', userId], exact: true })
+        refetch()
+        setFiltred(false)
+      }
+      else{
+        setFiltred(true)
+      }
+    }, [filtred])
+    
+    
+    
+    if(isError || errorFiltredConversation){
       return <div>error</div>
     }
 
 
+    useEffect(()=>{
+      const groupMessagesByConversationId = () => {
+        const grouped = {};
+  
+        state?.collections[0]?.items?.forEach((message) => {
+          const conversationId = message.conversationId;
+  
+          if (!grouped[conversationId]) {
+            grouped[conversationId] = {
+              conversationId,
+              messages: [],
+            };
+          }
+  
+          grouped[conversationId].messages.push(message);
+        });
+  
+        // Convertir el objeto a un array de conversaciones
+        const conversationsArray = Object.values(grouped);
+        setSearchConversation(conversationsArray);
+      };
+  
+      groupMessagesByConversationId();
+
+    },[state?.collections[0]?.items])
+
+
+
+
+
   return (
-   
-    <>
+    <div {...autocomplete.getRootProps()}>
     <div className="conversation-title-container">
       <h4>Messages</h4>
-      <span className="conversation-newGroup">New group</span>
+      <GroupText/>
     </div>
-    <SearchConversationView/>
-    <UsersOnline/>
+      <SearchConversationView stateFiltred={filtred} filtred={handleClickFiltrered} ref={inputRef} inputProps={inputProps} autocomplete={autocomplete}/>
+    <UsersOnline/>  
+   {filtred && <p className="message-filter">Filtred by Unread</p>}
    <InfiniteScroll
-    dataLength={results.length}
-    hasMore={hasNextPage || isLoading}
+   {...autocomplete.getPanelProps()}
+    dataLength={filtred ? filtredConversations?.length : results?.length}
+    hasMore={hasNextPage || isLoading || loadingFiltredConversation || hasNextPageFiltred  }
     loader={<Loader />}
-    next={() => fetchNextPage()}
+    next={() => {
+      if(filtred) fetchNextPage()
+      if(!filtred) fetchNextPageFiltred() 
+    }}
     >
-      <Conversations conversations={results}/>
+      <Conversations conversations={filtred ? filtredConversations : results }/>
     </InfiniteScroll>
-    </>
+    </div>
   );
 };
 
-export default ConversationView
+export default React.forwardRef(ConversationView)

@@ -10,15 +10,15 @@ import { useQuery } from 'react-query'
 import { useSocket } from '../../../../hooks/useSocket'
 import ButtonStars from '../../../buttons/ButtonStarts/ButtonStars'
 
-const Friend = ({ addUser, clearInput }) => {
+const Friend = ({ addUser }) => {
 
     const { userId } = AuthProvider()
     const socket = useSocket()
     const privateRequest = useUserRequest()
-    const { mutate, isLoading, isError, status, error } = useMutationRequest(addFriend, { name: 'friends' })
+    const { mutate, isLoading, isError} = useMutationRequest(addFriend, { name: 'friends' })
 
     
-    const { data: userData } = useQuery(["user", userId], () => userService.getUser({ privateRequest, userId }));
+    const { data: userData } = useQuery(["user", userId], () => userService.getUser({ privateRequest, userId, options:['friends'] }));
 
     const user = userData?.data ?? {};
 
@@ -28,6 +28,8 @@ const Friend = ({ addUser, clearInput }) => {
             addUser: addUser?._id?.$oid
         })
     }, [])
+
+    console.log(user)
 
    
 

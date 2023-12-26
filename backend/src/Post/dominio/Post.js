@@ -7,6 +7,7 @@ const Post = Schema(
       ref: "User",
       type: Schema.Types.ObjectId,
     },
+    expiresIn: { type: Date, expires: 20, default: Date.now },
     description: { type: String, max: 300 },
     image: { url: String, public_id: String },
     comments: [
@@ -36,8 +37,9 @@ const Post = Schema(
     ],
     group: { type: String, default: "" },
     edit: { type: Boolean, default: false },
-    points:{type:Number, default:0}
+    points: { type: Number, default: 0 },
   },
+
   {
     timestamps: true,
   }

@@ -19,7 +19,17 @@ function App() {
 
   
 
-
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then((registration) => {
+          console.log('Service Worker registered with scope:', registration.scope);
+        })
+        .catch((error) => {
+          console.error('Service Worker registration failed:', error);
+        });
+    });
+  }
   return (
     <>
       <Router>
@@ -28,7 +38,6 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/room/:roomId" element={<Room />}/>
           <Route path="/" element={<Layout />}>
-
             {/* protect this routes */}
             <Route element={<PersitsLogin />}>
               <Route path="/profile/:userId/:postId" element={<Profile />} />

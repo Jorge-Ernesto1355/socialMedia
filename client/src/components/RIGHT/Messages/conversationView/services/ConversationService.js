@@ -53,4 +53,19 @@ export default class ConversationService {
       };
     }
   }
+
+  static async getUnReadConversations({ privateRequest, id: conversationId }) {
+    try {
+      if (!privateRequest)
+        throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+      return await privateRequest.get(
+        `/conversation/unReadConversations/${conversationId}`,
+      );
+    } catch (error) {
+      return {
+        error,
+        message: error.message,
+      };
+    }
+  }
 }

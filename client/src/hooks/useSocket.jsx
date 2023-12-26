@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useMemo } from 'react';
 import socketIOClient from 'socket.io-client';
 import AuthProvider from '../zustand/AuthProvider';
+import webPush from '../utilities/webPush/WebPush';
 const ENDPOINT = 'http://localhost:3002';
 
 const SocketContext = createContext();
@@ -11,10 +12,8 @@ export const useSocket = () => {
 
 export const SocketProvider = ({ children }) => {
   const {userId, accessToken} = AuthProvider()
-
   
   const socket = useMemo(()=>{
-    
     if(userId && accessToken) 
     return  socketIOClient(ENDPOINT, {
       query:{

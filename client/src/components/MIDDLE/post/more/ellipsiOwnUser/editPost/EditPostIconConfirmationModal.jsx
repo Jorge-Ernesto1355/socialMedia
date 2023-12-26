@@ -13,8 +13,11 @@ const EditPostConfirmationModal = ({ postId }) => {
       <li className="ellipsiPost-item" onClick={() => {
         setIsOpen(true)
       }}>
+        <div className='editPost-content'>
         <img src={editar} alt="editar post" />
-        <h4 className="ellipsiPost-text">Editar post</h4>
+        <h6awaw className="ellipsiPost-text">Editar post</h6awaw>
+        </div>
+        <p className='ellipsiPost-description'>Only description can change</p>
 
       </li>
       {isOpen && (

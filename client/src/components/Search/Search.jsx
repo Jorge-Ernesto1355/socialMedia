@@ -1,24 +1,36 @@
-import React, { useRef } from 'react'
-import Image from '../../utilities/Image'
-import searchIcon from '../../assets/lupa.png'
-import './Search.css'
 
-const Search = () => {
+import React from 'react'
+import searchIcon from '../RIGHT/messages/icons/searchIcon.png'
 
-    const inputRef = useRef()
+const Search = ({ inputProps = {}, autocomplete = {}, styles}, inputRef  ) => {
 
+ 
 
+  if(!inputProps || !autocomplete ) {
+    return (
+      <form className='searchConversation-container' style={styles}  >
+      <div className='searchConversation-input'>
+          <img src={searchIcon} alt="search" className='searchConversation-searchIcon' />
+          <input type="text" placeholder='Search' />
+      </div>
+    
+    </form>
+    )
+  }
 
   return (
-    <>
-    <form className='search-container' >
-       <div className='search-input'>
-         <Image src={searchIcon}/>
-          <input className='search-input' type="text" placeholder='search'/>
-       </div>
+    <form className='searchConversation-container' style={styles} {...autocomplete.getFormProps({
+      inputElement: inputRef?.current, 
+      placeholder:'Search'
+    })}  >
+      <div className='searchConversation-input'>
+          <img src={searchIcon} alt="search" className='searchConversation-searchIcon' />
+          <input type="text" placeholder='Search' ref={inputRef} {...inputProps}/>
+      </div>
+    
     </form>
-    </>
+   
   )
 }
 
-export default Search
+export default React.forwardRef(Search)

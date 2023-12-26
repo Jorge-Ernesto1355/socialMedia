@@ -2,7 +2,7 @@
     height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-    width: 325px;
+width: 100%;
     max-width: 325px;
     
 }
@@ -12,11 +12,17 @@
     width: 100%;
     justify-content: space-between;
     margin-bottom: .5rem;
-    padding: 0.5rem;
+ 
 
 }
 
 .conversation-newGroup{
     font-size: .7rem;
     color: var(--color-blue);
+}
+
+.message-filter{
+    font-size: small;
+    color: var(--color-black);
+    font-weight: 400;
 }

@@ -20,7 +20,8 @@ import AuthProvider from "../../../../zustand/AuthProvider";
 import userService from "../../../../services/UserService";
 import useUserRequest from "../../../../hooks/auth/useUserRequest";
 import Image from "../../../../utilities/Image";
-const Post = ({ post }) => {
+import SimpleLineLoader from "../../../Loaders/SimpleLineLoader";
+const Post = ({ post, simple, editing }) => {
 
 	const { userId: currentUser } = AuthProvider()
 	const privateRequest = useUserRequest()
@@ -39,24 +40,24 @@ const Post = ({ post }) => {
 		votes
 	} = post;
 
-	const { data: userData } = useQuery(["user", userId], () => userService.getUser({ privateRequest, userId }));
+	const { data: user, isLoading } = useQuery(["user", userId], () => userService.getUser({ privateRequest, userId }));
 
-	const user = userData?.data ?? {};
 
 
 	const { element, input, clearImagePreview } = useImagePreview();
 
 	return (
-		<div className="feed ">
+		<div className={`feed ${simple ? 'simple' : ''} `}>
 			<div className="head">
 				<div className="user">
 					<div className="profile-photo">
-						<Image src={user?.ProfilePicture ? user?.ProfilePicture : rem}
+						<Image src={user?.ProfilePicture ?? rem}
 							alt="user"/>
 					</div>
 
 					<div className="ingo">
-						<h3>{user?.username ? user?.username : "name"}</h3>
+						{isLoading && <SimpleLineLoader/>}
+						{!isLoading  && <h3>{user?.username ?? "name"}</h3>}
 						<small>{moment(createdAt).format("ll")} </small>
 						{edit ? <small>-</small> : null}
 						{edit ? <small className="edit">editado</small> : null}
@@ -72,7 +73,7 @@ const Post = ({ post }) => {
 			</div>
 
 			<div className="caption">
-				<p>{description}</p>
+				<p>{editing ? editing() : description }</p>
 			</div>
 
 			{votes?.length > 0 && <Votes id={postId} />}
@@ -89,6 +90,7 @@ const Post = ({ post }) => {
 						name={"post-reactions"}
 						nameView="reactionsView"
 						type="Post"
+						className="reactionsView-post"
 					/>
 				</div>
 

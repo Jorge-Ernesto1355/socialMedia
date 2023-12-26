@@ -11,7 +11,7 @@
   align-self: start;
   z-index: 100;
   padding: 0.5rem;
-  left: -4.9rem;
+  left: -8.899999999999999rem;
   top: 2.3rem;
 
 }
@@ -20,11 +20,22 @@
   padding: 0.2rem;
   cursor: pointer;
   border-radius: 5px;
-  display: flex;
-  justify-content: start;
-  align-items: center;
+ 
 }
 
+.ellipsiPost-description{
+  font-size: x-small;
+  font-weight: 600;
+
+  color: var(--color-gray);
+}
+
+
+.editPost-content{
+  display: flex;
+  align-items: center;
+
+}
 .ellipsiPost-item img {
   width: .9rem;
   height: .9rem;

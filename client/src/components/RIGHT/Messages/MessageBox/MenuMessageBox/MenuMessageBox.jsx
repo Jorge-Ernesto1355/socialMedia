@@ -18,7 +18,6 @@ const MenuMessageBox = ({conversation}) => {
   const {userId} = AuthProvider()
   
   return (
-  
     
         <Popover trigger={<img src={menu} className='menu-message' alt="more"/>}>
           <ul className='menuMessageBox-container'>

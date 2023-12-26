@@ -6,6 +6,7 @@ import rem from '../../../assets/rem.jpg'
 import group from './icons/grupo.png'
 import messenger  from '../../RIGHT/messages/icons/mensajero.png'
 import marcador from './icons/marcador.png'
+import { Tooltip, TooltipContent, TooltipTrigger } from "../../../hooks/Popover/Tooltip";
 
 const Sidebar = () => {
 
@@ -20,20 +21,25 @@ const Sidebar = () => {
 		</div>
       <h5 className="sidebar-text">Jorge Ernesto</h5>
     </li>
-    <li  className="sidebar-item">
-      <img className="sidebar-icon" src={friends} alt="" />
+
+    <Tooltip>
+        <TooltipTrigger> <li  className="sidebar-item">
+      <img className="sidebar-icon" src={friends} alt="Friends" />
       <h5 className="sidebar-text">Amigos</h5>
-    </li>
+    </li></TooltipTrigger>
+        <TooltipContent>Minimizar</TooltipContent>
+      </Tooltip>
+    
     <li  className="sidebar-item">
-      <img className="sidebar-icon" src={group} alt="" />
+      <img className="sidebar-icon" src={group} alt="Grupos" />
       <h5 className="sidebar-text">Grupos</h5>
     </li>
     <li  className="sidebar-item">
-      <img className="sidebar-icon" src={marcador} alt="" />
+      <img className="sidebar-icon" src={marcador} alt="Saves" />
       <h5 className="sidebar-text">Guardados</h5>
     </li>
     <li  className="sidebar-item">
-      <img className="sidebar-icon" src={messenger} alt="" />
+      <img className="sidebar-icon" src={messenger} alt="Messenger" />
       <h5 className="sidebar-text">Messenger</h5>
     </li>
     

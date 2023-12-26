@@ -12,7 +12,7 @@ const getNotifications = async (req, res) => {
     page,
     limit,
   });
-  
+
   if (notifications.error)
     return res.status(500).json({ message: notifications.error.message });
 

@@ -3,7 +3,7 @@ import { create } from "zustand";
 const CreatePostStore = create((set, get) => ({
   text: "",
   votes: [],
-  difusion: "",
+  timeExpiration: 0,
   setText: (text) => set({ text: text() }),
   addVotes: (votes) => {
     if (!votes) return null;
@@ -13,9 +13,9 @@ const CreatePostStore = create((set, get) => ({
     set({ votes: [] });
   },
 
-  setDifusion: (difusion) => {
-    if (!difusion) return;
-    set({ difusion });
+  setTimeExpiration: (time) => {
+    if (!time) return;
+    set({ timeExpiration: time });
   },
 }));
 

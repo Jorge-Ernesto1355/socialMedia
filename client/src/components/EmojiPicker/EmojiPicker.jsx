@@ -1,6 +1,6 @@
 import "./EmojiPicker.css";
 import EmojiPicker from "emoji-picker-react";
-import { Suspense } from "react";
+import React, { Suspense } from "react";
 import { motion } from "framer-motion";
 import Loader from "../../utilities/Loader";
 
@@ -15,8 +15,7 @@ const variants = {
     scale: 0,
   },
 };
-
-export default function EmojiPickerComponent({
+ function EmojiPickerComponent({
   isOpen,
   store,
   set,
@@ -53,3 +52,5 @@ export default function EmojiPickerComponent({
     </>
   );
 }
+
+export default React.memo(EmojiPickerComponent)

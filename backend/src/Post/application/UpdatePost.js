@@ -1,25 +1,16 @@
-const { update } = require("../dominio/Post")
-const Post = require("../dominio/Post")
+const PostService = require("../PostService");
 
-const Update = async (req, res)=>{
+const Update = async (req, res) => {
+  const { postId } = req.params;
+  const { userId } = req.query;
+  const { description } = req.body;
 
+  const updatedPost = await PostService.update({ postId, description, userId });
 
-  const {id} = req.params
-  const post = await Post.findById(id)
-  const {userId} = req.query
-  const {description} = req.body
-  
+  if (updatedPost?.error)
+    return res.status(500).json({ error: updatedPost?.message });
 
-  if(userId === post.userId){
-    const updatePost = await Post.findByIdAndUpdate(id, {description})
-    updatePost.edit = true
-    await updatePost.save()
-    return  res.status(200).json(updatePost)
-  }else{
-  return  res.json(304).json({message:"no modificado"})
-  }
+  return res.status(201).json({ message: "post updated" });
+};
 
-
-}
-
-module.exports  = Update
+module.exports = Update;

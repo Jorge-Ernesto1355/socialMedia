@@ -1,0 +1,29 @@
+.participant-container{
+    display: flex;
+    
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.participant-information{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+
+.participant-name{
+    font-weight: 500;
+    font-size: x-small;
+    text-overflow: ellipsis;
+    
+    overflow: hidden; 
+}
+
+.delete-participant{
+    width: 15px;
+    height: 15px;
+}

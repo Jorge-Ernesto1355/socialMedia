@@ -11,8 +11,9 @@ import { useQueryClient } from 'react-query'
 import SpinnerLoader from '../../../../../stylesComponents/spinnerLoader/SpinnerLoader'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Loader from '../../../../../utilities/Loader'
+import BoxMessagesDetails from '../MessageDetails/BoxMessagesDetails'
 
-const MessageBoxBody = ({conversation}) => {
+const MessageBoxBody = ({conversation, friendUser}) => {
 
     
     const messagesContainerRef = useRef();
@@ -33,7 +34,7 @@ const MessageBoxBody = ({conversation}) => {
       
       queryClient.setQueryData(['messages', conversation?._id], (prevData) => {
         const dataDocs = prevData?.pages[0]?.data?.docs ?? [];
-        console.log({prevData})
+       
         const newDocs = [message, ...dataDocs];
         const { docs, ...restData } = prevData.pages[0].data;
         
@@ -84,17 +85,18 @@ const MessageBoxBody = ({conversation}) => {
             flexDirection: 'column-reverse',
           }} id="scrollableDiv"
         >
+     
          <InfiniteScroll
         dataLength={results.length}
-        next={fetchNextPage}
+        next={() => fetchNextPage()}
         style={{ display: 'flex', flexDirection: 'column-reverse' }} 
-        inverse={true} //
-       
+        inverse={true} 
         hasMore={hasNextPage || isLoading}
         loader={<Loader/>}
         scrollableTarget="scrollableDiv"
          >
          <>
+         
          {isLoading && <SpinnerLoader/>}
           {isError && <>Error Message</>}
             {!isLoading && !isError && (<>
@@ -106,11 +108,9 @@ const MessageBoxBody = ({conversation}) => {
         }
             </>)}
             <div ref={messagesContainerRef}></div>
-
          </>
          </InfiniteScroll>
-         
-
+         <BoxMessagesDetails friendUser={friendUser}/>
         </div>
     )
 }

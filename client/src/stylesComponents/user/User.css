@@ -1,0 +1,42 @@
+.user-container{
+    width: 100%;
+    height: max-content;
+    display: grid;
+    grid-template-columns: 80% 20%;
+    padding: .3rem;
+    border-bottom: 1px solid var(--color-light);
+}
+
+.user-information{
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.user-profile{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    margin-left: .5rem;
+}
+
+
+
+.user-description{
+    font-size: x-small;
+    font-weight: 500;
+    
+}
+
+.user-actions{
+    width: 100%;
+    font-size: small;
+    font-weight: 500;
+    color: var(--color-blue);
+    cursor: pointer;
+}
+
+
+

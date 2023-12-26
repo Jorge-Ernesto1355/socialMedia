@@ -3,29 +3,12 @@ import './MessageBoxHeader.css'
 import rem from '../../../../../assets/rem.jpg'
 import cross from '../../icons/simbolo-x.png'
 import minimizeIcon from '../../icons/menos.png'
-
 import MenuMessageBox from '../MenuMessageBox/MenuMessageBox'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../../../../hooks/Popover/Tooltip'
-import userService from '../../../../../services/UserService'
-import useUserRequest from '../../../../../hooks/auth/useUserRequest'
-import { useQuery } from 'react-query'
-import { toast } from 'react-toastify'
-import AuthProvider from '../../../../../zustand/AuthProvider'
 import SimpleLineLoader from '../../../../Loaders/SimpleLineLoader'
 import Image from '../../../../../utilities/Image'
-const MessageBoxHeader = ({ minimize, friend, deleteConversation, conversation}) => {
-    const privateRequest = useUserRequest()
-    const {userId} = AuthProvider()
-    const friendId  = conversation?.participants?.filter((participant)=> participant !==  userId)[0] ?? null
-    const { data: userData, isLoading} = useQuery(["user", friendId], () => userService.getUser({ privateRequest, userId:friendId }), {
-        onError:()=>{
-            toast.error('something went wrong with your friend')
-            deleteConversation(conversation?._id)
-        }
-    });
-    const user = userData?.data ?? {};
-
-
+const MessageBoxHeader = ({ minimize, deleteConversation, conversation, isLoading, user}) => {
+   
     return (
         <div className='MessageBox-header-container'>
             <div className='MessageBox-header-info'>

@@ -11,8 +11,6 @@ router.get("/", index.query.getUsers);
 
 router.get("/posts/:userId", index.query.getPosts);
 
-router.get("/:userId", index.query.FindUserById);
-
 router.get("/friends/:userId", index.query.getFriends);
 
 router.get("/friend/request/all/:userId", index.query.getRequestFriends);
@@ -21,16 +19,19 @@ router.get("/tagged/:containerId", index.query.getUsersTagged);
 
 router.put("/friend/request/accept", index.mutation.AcceptFriends);
 
+router.get("/online/:userId", index.query.getUsersOnline);
+
 //mutations POST
 router.post("/upload/:userId", index.mutation.UploadImageProfile);
 
+router.post("/:userId", index.query.FindUserById);
 // router.post("/relationShip", index.mutation.addRelationShip);
 
 // mutation PUT
 
-router.put("/friend/accept", index.mutation.AcceptFriends); //check
+router.put("/friend/accept/:userId", index.mutation.AcceptFriends); //check
 
-router.put("/friend/add", index.mutation.addFriend); //check
+router.put("/friend/add/:userId", index.mutation.addFriend); //check
 
 router.put("/:userId", UpdateUserProfile);
 

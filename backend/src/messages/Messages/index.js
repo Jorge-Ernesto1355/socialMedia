@@ -3,6 +3,7 @@ const createMessage = require("./mutations/Message");
 const deleteMessage = require("./mutations/DeleteMessage");
 const updateMessage = require("./mutations/updateMessage");
 const markAsRead = require("./mutations/read.js");
+const messageToAll = require("./mutations/sendToAll.js");
 
 //query
 const messages = require("./query/Messages");
@@ -22,5 +23,6 @@ module.exports = {
     deleteMessage,
     updateMessage,
     markAsRead,
+    messageToAll,
   },
 };

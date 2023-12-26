@@ -1,6 +1,8 @@
+const { isValid } = require("zod");
 const cloudinaryService = require("../libs/cloudynary");
 const isValidObjectId = require("../libs/isValidObjectId");
 const getTotalPoints = require("../reaction/utils/getTotalPoints");
+const { exists } = require("../users/domain/UserModel");
 const userService = require("../users/userService");
 const createImagen = require("./application/createPost/createImagen");
 const createVotes = require("./application/createPost/createVotes");
@@ -113,7 +115,14 @@ class PostService {
   static async create(req) {
     exits(req.body);
 
-    const { description, userId, votes, postShared, usersTagged } = req.body;
+    const {
+      description,
+      userId,
+      votes,
+      postShared,
+      usersTagged,
+      timeExpiration,
+    } = req.body;
     const queryOptions = {
       model: "User",
       select: ["posts"],
@@ -130,8 +139,13 @@ class PostService {
 
       votes > 0 && (await createVotes({ votes }));
       const user = await isValidObjectId({ _id: userId }, queryOptions);
-
-      const newPost = new Post({ userId, description, image });
+      console.log(timeExpiration);
+      const newPost = new Post({
+        userId,
+        description,
+        image,
+        expiresIn: timeExpiration ? timeExpiration : undefined,
+      });
       if (postShared) newPost.postShared = postShared;
       newPost.usersTagged = usersTagged?.map((username) => ({
         username,
@@ -152,17 +166,22 @@ class PostService {
   static async update(object) {
     try {
       exits(object);
-      const { postId, text } = object;
+      const { postId, description, userId } = object;
       const queryOptions = {
         model: "Post",
       };
-      const isValidPost = await isValidObjectId({ _id: postId }, queryOptions);
 
-      if (isValidPost?.error) {
-        throw new Error(isValidPost?.error?.message);
+      const post = await isValidObjectId({ _id: postId }, queryOptions);
+
+      if (post?.error) {
+        throw new Error(post?.message);
       }
 
-      const update = await Post.findAndUpdate(postId, { text });
+      if (!(userId == post?.userId))
+        throw new Error("your not the owner of this post");
+      const update = await Post.findByIdAndUpdate(postId, {
+        description,
+      });
       return update;
     } catch (error) {
       return {
@@ -207,6 +226,35 @@ class PostService {
       //      return res.status(500).json({message:"recursos no coinciden"})
       //   }
       // }
+    } catch (error) {
+      return {
+        error,
+        message: error.message,
+      };
+    }
+  }
+
+  static async editTimeExpire(object) {
+    try {
+      exits(object);
+      const { timeExpiration, userId, postId } = object;
+      console.log(timeExpiration, userId, postId);
+
+      const user = await isValidObjectId(
+        { _id: userId },
+        { model: "User", select: ["username"] }
+      );
+      if (user?.error) throw new Error("user is not valid");
+
+      const post = await isValidObjectId(
+        { _id: postId },
+        { model: "Post", select: ["expiresIn"] }
+      );
+      if (post?.error) throw new Error("post is not valid");
+
+      await Post.findByIdAndUpdate(postId, { ExpiresIn: timeExpiration });
+
+      return { message: "time expiration has been updated" };
     } catch (error) {
       return {
         error,

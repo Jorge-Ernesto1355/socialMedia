@@ -1,0 +1,7 @@
+.users-container{
+    margin-top: .5rem;
+    display: flex;
+    overflow-y: auto;
+    flex-direction: column;
+    max-height: 50vh;
+}

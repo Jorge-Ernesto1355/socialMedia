@@ -5,6 +5,7 @@ const UpdatePost = require("./UpdatePost");
 const createPost = require("./createPost/createPost");
 
 const findTimeLine = require("./find/FindTimeLinePost");
+const timeExpirationEdit = require("./mutation/timeExpirationEdit.js");
 
 const Votes = require("./interact/votes/Vote");
 const UsersVotes = require("../application/interact/votes/AllUserGivenVote");
@@ -25,14 +26,12 @@ module.exports = {
   UpdatePost,
   createPost,
   Share,
-
   allShared,
   Votes,
   UsersVotes,
   getVotes,
   favorite,
-
   AllFavorite,
-
   findTimeLine,
+  timeExpirationEdit,
 };

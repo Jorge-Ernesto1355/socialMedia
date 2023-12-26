@@ -20,6 +20,8 @@ import Loader from "../../../../utilities/Loader";
 import Reaction from "../../../Reaction/Reaction";
 import LikeComment from '../../../Reaction/LikeComment'
 import AuthProvider from "../../../../zustand/AuthProvider";
+import UserService from "../../../../services/UserService";
+import useUserRequest from "../../../../hooks/auth/useUserRequest";
 
 const More = lazy(() => import("./EllipsiComments/More"));
 
@@ -27,7 +29,7 @@ const Comment = ({ comment }) => {
   const { text, userId, image } = comment.comment;
   const { userId: currentUser } = AuthProvider()
   const commentId = comment?._id;
-
+  const privateRequest = useUserRequest()
   const commentsResponded = comment?.commentsResponded ?? [];
 
   const [makeComment, setMakeComment] = useState(false);
@@ -45,17 +47,13 @@ const Comment = ({ comment }) => {
     updateCommentMutate({ commentId, text: textValue });
   };
 
-  const { data: userData, isLoadingUser } = useQuery(
+  const { data: user, isLoadingUser } = useQuery(
     ["user", userId],
-    () => GetUser(userId),
+    () => UserService.getUser({privateRequest, userId}),
     {
       enabled: !!userId,
     },
   );
-
-
-
-  const user = userData?.data?.data ?? UserAdapterSucces();
 
 
   const { element, input } = UseImagePreview();
@@ -90,6 +88,7 @@ const Comment = ({ comment }) => {
             name={"comment"}
             nameView={"comment-view"}
             type="Comment"
+            className="reactionView-comment"
           />
         </div>
         {isHovered && (

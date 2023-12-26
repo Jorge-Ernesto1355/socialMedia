@@ -29,3 +29,9 @@
   height: 30px;
   object-fit: cover;
 }
+
+@media (max-width: 1000px){
+  .sidebar-text{
+    display: none;
+  }
+}

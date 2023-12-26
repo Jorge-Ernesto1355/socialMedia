@@ -8,9 +8,9 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import useInfiniteScroll from "../../../hooks/useInfiniteScroll/useInfiniteScroll";
 import PostLoader from "../post/post/postLoader/PostLoader";
 import useUserRequest from "../../../hooks/auth/useUserRequest";
-import useGetPosts from "./useGetposts";
 import PostServices from "../post/services/PostServices";
 import AuthProvider from "../../../zustand/AuthProvider";
+import ErrorPost from "../post/post/ErrorPost/ErrorPost";
 
 
 /**
@@ -34,7 +34,7 @@ export default function Feed() {
     });
 
   if (isError) {
-    return <div>error posible unuatiorized</div>;
+    return <ErrorPost/>
   }
 
 

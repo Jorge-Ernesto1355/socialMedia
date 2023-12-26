@@ -76,7 +76,7 @@ const ReactionsView = ({
                  type={type}
                  key={reactionView._id}/>
               ))}
-              <span className="lenght-reactions">{totalDocs}</span>
+              <p className="lenght-reactions">{totalDocs}</p>
             </ul>
           )}
         </>

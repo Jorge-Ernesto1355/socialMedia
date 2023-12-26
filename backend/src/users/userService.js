@@ -5,7 +5,7 @@ const Post = require("../Post/dominio/Post");
 const fs = require("fs-extra");
 
 const { default: mongoose } = require("mongoose");
-const { uploadImage } = require("../libs/cloudynary");
+
 const cloudinaryService = require("../libs/cloudynary");
 const { comparePassword } = require("../auth/application/auth");
 const UserModel = require("./domain/UserModel");
@@ -28,10 +28,18 @@ module.exports = class userService {
     try {
       exits(object);
 
-      const { userId } = object;
+      const { userId, options = [] } = object;
+
       const queryOptions = {
         model: "User",
-        select: ["username", "email", "imageProfile", "socketId", "status"],
+        select: [
+          "username",
+          "email",
+          "imageProfile",
+          "socketId",
+          "status",
+          ...options,
+        ],
       };
 
       const user = await isValidObjectId({ _id: userId }, queryOptions);
@@ -66,6 +74,7 @@ module.exports = class userService {
       const options = {
         limit,
         page,
+        select: ["username", "email", "imageProfile", "status", "socketId"],
       };
 
       const friendsIds = user.friends.map((friendId) => friendId);
@@ -194,7 +203,7 @@ module.exports = class userService {
 
       const queryOptions = {
         model: "User",
-        select: ["friends"],
+        select: ["friends", "friendsWaiting"],
       };
 
       const user = await isValidObjectId({ _id: userId }, queryOptions);
@@ -204,10 +213,17 @@ module.exports = class userService {
         throw new Error("document not found or objectId is not valid");
       }
 
-      if (user.friends.includes(addUserId))
+      if (
+        user.friends.includes(addUserId) ||
+        user.friendsWaiting.includes(addUserId) ||
+        addUser.friendsWaiting.includes(userId) ||
+        addUser.friends.includes(userId)
+      )
         throw new Error("you can't send twice");
-      await user.updateOne({ $push: { friendsWaiting: addUserId } });
-      await user.save();
+
+      await addUser.updateOne({ $push: { friendsWaiting: userId } });
+      await addUser.save();
+      return;
     } catch (error) {
       return {
         error,
@@ -224,7 +240,7 @@ module.exports = class userService {
 
       const queryOptions = {
         model: "User",
-        select: ["friendsWaiting"],
+        select: ["friendsWaiting", "friends"],
       };
 
       const user = await isValidObjectId({ _id: userId }, queryOptions);
@@ -238,8 +254,11 @@ module.exports = class userService {
         throw new Error("user is not into your friends requests");
 
       if (acceptBoolean) {
+        if (user.friends.includes(addUserId))
+          throw new Error("you already have it as a friend");
         await user.updateOne({ $pull: { friendsWaiting: addUserId } });
         await user.updateOne({ $push: { friends: addUserId } });
+        await addUser.updateOne({ $push: { friends: userId } });
         return;
       }
 
@@ -277,6 +296,23 @@ module.exports = class userService {
         error,
         message: error.message,
       };
+    }
+  }
+
+  static async getUsersOnline(object) {
+    try {
+      if (!object || !object.userId) {
+        throw new Error("Missing required parameter: userId");
+      }
+
+      const { userId, limit, page } = object;
+      const friends = await this.getFriends({ userId, limit, page });
+      const usersOnline =
+        friends?.docs?.filter((user) => user.status === "Online") ?? [];
+
+      return usersOnline;
+    } catch (error) {
+      throw new Error(`Error in getUsersOnline: ${error.message}`);
     }
   }
 

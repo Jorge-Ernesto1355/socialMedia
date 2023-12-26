@@ -1,7 +1,10 @@
 /* eslint-disable no-useless-computed-key */
 /* eslint-disable dot-notation */
 import "./login.css";
-
+import LoginImage from './icons/login-image.png'
+import cometa from './icons/cometa.png'
+import GoogleIcon from './icons/google.png'
+import Spinner from '../../stylesComponents/spinnerLoader/SpinnerLoader'
 // librerias
 
 import React, { useEffect } from "react";
@@ -9,20 +12,14 @@ import React, { useEffect } from "react";
 
 
 import Input from "../components/Input";
-// emoticons
-
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-
 
 
 import { useMutation } from "react-query";
 import AuthServices from "../services/AuthServices";
-import Loader from "../../utilities/Loader";
+
 import AuthProvider from "../../zustand/AuthProvider";
 import { useStoreLogin } from "./useStoreLogin";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 function Login() {
@@ -31,7 +28,7 @@ function Login() {
     const navigate = useNavigate()
 
 
-    const { mutate, isLoading } = useMutation({
+    const { mutate, isLoading, isError } = useMutation({
         mutationFn: AuthServices.Login,
         onSuccess: (data) => {
             const accessToken = data?.data?.accessToken || null
@@ -43,10 +40,7 @@ function Login() {
                 navigate('/')
             }
         },
-        onError: (error) => {
-            const messageError = error?.response?.data?.error ?? ''
-            toast.error(messageError)
-        }
+       
     })
 
     const handleMutate = () => {
@@ -55,6 +49,7 @@ function Login() {
             password: store['password']
         })
     }
+
     const [store, setStore] = useStoreLogin()
 
     const handleInputChange = (e) => {
@@ -75,71 +70,53 @@ function Login() {
 
 
     return (
-        <div className="cuadro1">
-            <ToastContainer />
-            <div className="login">
-                <i />
+        <div className="login">
+        <img src={LoginImage} alt="" />
+        
+        <div className="login-container">
+            <img className="login-icon" src={cometa} alt="" />
+            <h1 className="login-title">Welcome back!</h1>
+            <p className="login-description">Please enter your details</p>
+                <Input
+                    name="email"
+                    id='Correo'
+                    inputValue={store['email']}
+                    handleChange={handleInputChange}
+                  
+                />
+             
 
-                <h1 className="title">CBTA 81</h1>
-                <div className="logocbta81">
-
-                </div>
-                <div className="icon-atras">
-                 
-                </div>
-
-                <div className="logo" />
-
-                <div className="input">
-
-                    <h3 className="text">correo</h3>
-
-                    <Input
-                        placeholder="correo"
-                        name="email"
-
-                        inputValue={store['email']}
-                        handleChange={handleInputChange}
-
-                    >
-                        <div className="icon">
-                        
-                        </div>
-                    </Input>
-                </div>
-
-                <div className="input">
-                    <h3 className="text">contraseña</h3>
-
-
-                    <Input
-                        placeholder="contraseña"
-                        name="password"
-                        type="password"
-                        inputValue={store['password']}
-                        handleChange={handleInputChange}
-                    >
-                        <div className="icon">
-                         
-                        </div>
-                    </Input>
-                </div>
-                <div>
-                    <input type="checkbox" id="persits" onChange={(e) => Auth.setPersits(!Auth.persits)} checked={(Auth.persits === 'true')} />
-                    <label htmlFor="persits">Guardar sesion</label>
-
-                </div>
-
-                <div>
-                    <button className="submit" type="submit">
-                        {isLoading ? <Loader /> : <h2 className="register" onClick={() => handleMutate()}>login</h2>}
-
-                    </button>
-                </div>
-
-                <span className="recuperar">recuperar contraseña</span>
+                <Input
+                    isError={isError}
+                    placeholder="contraseña"
+                    id='Password'
+                    name="password"
+                    type="password"
+                    inputValue={store['password']}
+                    handleChange={handleInputChange}
+                    
+                />
+               
+            <div className="login-remember">
+           <div className="save-session-container">
+           <input type="checkbox" id="persits" onChange={(e) => Auth.setPersits(!Auth.persits)} checked={Boolean(Auth.persits)} />
+                <label htmlFor="persits" className="save-session">Remember me</label>
+           </div>
+           <p className="forgot-password">Forgot Password?</p>
             </div>
+
+            <div>
+                <button className="login-submit-button" type="submit" onClick={()=> handleMutate()}>
+                  {isLoading ? <Spinner/> : <> Log In</>}
+                </button>
+                <button className="login-submit-button-google" type="submit">
+                    <img src={GoogleIcon} className="google-icon" alt="google" />  Log In with Google
+                </button>
+            </div>
+
+            <span className="signUp-message">{"Don't"} have an account?  <span className="SignUp-link"><Link style={{color:'#000',}} to={'/signup'}>Sign Up</Link></span></span>
         </div>
+    </div>
     );
 }
 

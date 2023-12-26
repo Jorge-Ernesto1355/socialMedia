@@ -38,7 +38,7 @@ const MessageBoxActions = ({ conversation}) => {
 
                 await queryClient.cancelQueries(messageKey)
 
-                const previewsMessages = queryClient.getQueryData(messageKey,)
+                const previewsMessages = queryClient.getQueryData(messageKey)
 
                 queryClient.setQueryData(messageKey, (newMessage)=>{
               

@@ -1,66 +1,20 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import './search.css'
-
-import { useAutocomplete } from '../../../hooks/useAutocomplete';
-import algoliasearch from 'algoliasearch';
-import { getAlgoliaResults } from '@algolia/autocomplete-preset-algolia';
 import Users from './users/Users';
 import lupa from '../../../assets/lupa.png'
 import SpinnerLoader from '../../../stylesComponents/spinnerLoader/SpinnerLoader';
 
-const searchClient = algoliasearch(
-  "PZG4Z8HDRA",
-  "f4018b1d9b79e8cedc28fae6fb2bb44a",
-);
-const INDEX_NAME = "users";
-const Search = ({ props }) => {
+
+const Search = ({ autocomplete, inputProps, state}, inputRef) => {
+
+
   
-  const inputRef = useRef()
-
-  const { autocomplete, state} = useAutocomplete({
-    ...props,
-    defaultActiveItemId: 0,
-    insights: true,
-    getSources({ query }) {
-      if (query) {
-
-        return [
-          {
-            sourceId: "accounts",
-            getItems() {
-              return getAlgoliaResults({
-                searchClient,
-                queries: [
-                  {
-                    indexName: INDEX_NAME,
-                    query,
-                    params: {
-                      hitsPerPage: 8,
-                    },
-                  },
-                ],
-              });
-            },
-          },
-        ];
-      }
-      return [];
-    },
-  });
-
-  const inputProps = autocomplete.getInputProps({
-    inputElement: inputRef?.current,
-    autoFocus: true,
-    maxLength: 20,
-  });
-
-
   return (
     <div className="search-bar" {...autocomplete.getRootProps()}>
-      <i>
+ 
       {state.status === "stalled" && !state.isOpen ? <SpinnerLoader/> : <img src={lupa} alt="" style={{width:'20px', height:'20px'}} />}
       
-      </i>
+   
       <form className='search-form' {...autocomplete.getFormProps({
         inputElement: inputRef?.current
       })}>
@@ -95,4 +49,4 @@ const Search = ({ props }) => {
   )
 }
 
-export default Search
+export default React.forwardRef(Search)

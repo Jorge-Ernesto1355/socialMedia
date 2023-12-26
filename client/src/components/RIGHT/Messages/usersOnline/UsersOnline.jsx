@@ -1,36 +1,126 @@
-import React from 'react'
+import React, { useCallback, useEffect } from 'react'
 import Image from '../../../../utilities/Image'
 import './UsersOnline.css'
 import AliceCarousel from 'react-alice-carousel';
 import rem from '../../../../assets/rem.jpg'
 import 'react-alice-carousel/lib/alice-carousel.css';
+import userService from '../../../../services/UserService';
+import AuthProvider from '../../../../zustand/AuthProvider';
+import useUserRequest from '../../../../hooks/auth/useUserRequest';
+import UsersOnlineSkeletonLoader from './loader/UsersOnlineSkeletonLoader';
+import ComponentStateHandler from '../../../../hooks/stateManagmentComponent/ComponentStateHandler';
+import { responsive } from './utils/responsive';
+import { useSocket } from '../../../../hooks/useSocket';
+import { useQueryClient } from 'react-query';
+import { useCallbackRequest } from '../../../../hooks/useCallbackRequest/useCallbackRequest';
+
 const UsersOnline = () => {
 
-    const responsive = {
-        0: { items: 1 },
-        720: { items: 3 },
-        1024: { items: 5.5 },
-    };
-    const items = [1, 2, 3, 4,5 ,6, 7, 8, 9].map(({item, i})=>(
-        <li key={i} className='usersOnline-item'>
+    const {userId} = AuthProvider()
+    const privateRequest = useUserRequest()
+    const socket = useSocket()
+    const queryClient = useQueryClient()
+    const onlineQuery = ['usersOnline', userId]
+    const {data, isLoading, isError} = useCallbackRequest({request:userService.usersOnline, name:'usersOnline', id:userId, privateRequest})
+
+    const handleSocket = (friendId) => () => socket?.emit('open-conversation', {to:friendId, from:userId})
+    
+    
+   
+    const items = data?.map((user)=>(
+        
+        <li key={user?._id} className='usersOnline-item' onClick={handleSocket(user?._id)}>
             <div className='profile-photo'>
-                <Image src={rem}/>
-                
+                <Image src={user?.imageProfile?.url ? user?.imageProfile?.url : rem }/>
             </div>
             
         </li>
     ))
+
+    const usersOnline = useCallback( async (user)=>{
+
+        await queryClient.cancelQueries(onlineQuery)
+    
+         queryClient.setQueryData(['usersOnline', userId], (usersOnline)=>{
+            
+             const dataDocs = usersOnline?.pages[0]?.data?.docs ?? []
+             const exist = dataDocs.find((userOnline)=> userOnline._id === user?._id)
+             if(exist) return usersOnline
+             const newDocs = [...dataDocs, user]
+             const {docs, ...restData}  = usersOnline.pages[0].data
+           
+            return {
+                pages: [
+                   {
+                    data:{
+                        docs:newDocs, 
+                        ...restData
+                    }
+                   }
+                ]
+            }
+        })
+
+    }, [socket])
+
+    const usersDisconet = useCallback(async (user)=>{
+
+        await queryClient.cancelQueries(onlineQuery)
+    
+         queryClient.setQueryData(['usersOnline', userId], (usersOnline)=>{
+            
+             const dataDocs = usersOnline?.pages[0]?.data?.docs ?? []
+             const exist = dataDocs.find((userOnline)=> userOnline._id === user?._id)
+             const {docs, ...restData}  = usersOnline.pages[0].data
+             
+             if(exist) {
+                return {
+                    pages: [
+                       {
+                        data:{
+                            docs: dataDocs.filter((userOnline) => userOnline?._id !== user?._id) ?? [], 
+                            ...restData
+                        }
+                       }
+                    ]
+                }
+             }
+             if(!exist) return usersOnline
+            
+        })
+
+    }, [socket])
+
+    useEffect(()=>{
+
+        socket?.on('user-online', usersOnline)
+        socket?.on('user-disconect',usersDisconet )
+
+        return ()=>{
+            socket?.off('userOnline')
+            socket?.off('user-disconect')
+        }
+    }, [socket, usersOnline])
+
+
+
+
   return (
     <div className='usersOnline-container'>
-        <h5 className='usersOnline-title'>Contactos en linea <span className='usersOnline-length'>(5)</span></h5>
+       
+        <ComponentStateHandler isLoading={isLoading} isError={isError} Loader={<UsersOnlineSkeletonLoader/>} ErrorMessageComponent={<>error usersOnline</>} items={data} >
+        {data?.length > 0 && <h5 className='usersOnline-title'>Contacts online <span className='usersOnline-length'>({data?.length})</span></h5>}
+        {data?.length <= 0 && <p className='usersOnline-description'>no Contacts online</p>}
+       
         <AliceCarousel
-    mouseTracking
-    disableDotsControls
-    disableButtonsControls
-    items={items}
-    responsive={responsive}
-    controlsStrategy="alternate"
-/>
+         mouseTracking
+        disableDotsControls
+        disableButtonsControls
+        items={items}
+        responsive={responsive}
+        controlsStrategy="alternate"
+        />
+        </ComponentStateHandler>
     </div>
 
   )

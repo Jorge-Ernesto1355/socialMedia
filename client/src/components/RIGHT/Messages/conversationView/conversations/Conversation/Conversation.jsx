@@ -25,9 +25,8 @@ const Conversation = ({conversation}) => {
     const { checkConversation} = BoxMessagesStore()
     const friendId = conversation?.participants?.filter((participant)=> participant !==  userId)[0] ?? null
   
-    const { data: userData } = useQuery(["user", friendId], () => userService.getUser({ privateRequest, userId:friendId}));
-    
-    const user = userData?.data ?? {};
+    const { data: user, isLoadinguUser} = useQuery(["user", friendId], () => userService.getUser({ privateRequest, userId:friendId}));
+
  
     const {data:lastMessage, isLoading} = useCallbackRequest({request: messageService.lastMessage, id:conversation?._id, name:'lastMessage', privateRequest})
 
@@ -66,8 +65,8 @@ const Conversation = ({conversation}) => {
         })
 
         return ()=>{
-            socket.off('new-message')
-            socket.off('new-unRead-message')
+            socket?.off('new-message')
+            socket?.off('new-unRead-message')
         }
 
     }, [socket])
@@ -86,7 +85,6 @@ const Conversation = ({conversation}) => {
 
 
     const handleSocket = ()=>{
-    
         socket?.emit('open-conversation', {to:friendId, from:userId})
     }
     
@@ -102,9 +100,10 @@ const Conversation = ({conversation}) => {
         </div>
         <div className='conversation-information'>
             <div className='conversation-user-information'>
-                <h5 className='conversation-username'>
-                {user?.username ? user?.username :  "not Name"}
-                </h5>
+                {isLoadinguUser && <SimpleLineLoader/>}
+                {!isLoadinguUser &&  <h5 className='conversation-username'>
+                {user?.username ?? "not Name"}
+                </h5>}
                 <p className='conversation-time-message'>{fechaFormateada}</p>
             </div>
             <div className='conversation-message-info'>

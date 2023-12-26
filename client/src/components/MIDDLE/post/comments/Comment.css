@@ -26,7 +26,7 @@
 }
 
 .comment .head .username-text {
-  width: 100%;
+  min-width: 100px;
   width: max-content;
   border-radius: 10px;
   background: var(--color-light);
@@ -46,7 +46,7 @@
   width: 100%;
   max-width: 100%;
   display: flex;
-  margin-left: 1rem;
+  
   align-items: center;
 }
 
@@ -90,6 +90,7 @@
 
 .comment .actions-comments .text-muted {
   font-size: 0.7rem;
+  margin-left: .4rem;
   font-weight: 400;
   color: #bbbbbb;
 }

@@ -76,4 +76,25 @@ export default class PostServices {
       return error;
     }
   }
+
+  static async editTimeExpiration({
+    privateRequest,
+    postId,
+    timeExpiration,
+    userId,
+  }) {
+    try {
+      if (!privateRequest) {
+        throw new Error("could not load the request");
+      }
+      return await privateRequest.put(
+        `/post/timeExpiration/${postId}/${userId}`,
+        {
+          timeExpiration,
+        },
+      );
+    } catch (error) {
+      return error;
+    }
+  }
 }

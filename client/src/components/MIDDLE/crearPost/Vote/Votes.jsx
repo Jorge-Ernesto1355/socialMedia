@@ -33,14 +33,14 @@ const Votes = ({ VotesActive, hideVotes }) => {
   const [votes, setVotes] = useState([]);
 
   const vote = ({ value, name }) => {
-    // update the vote to new vote into a object to put it in the votes 
+   
     const updatedvote = {
       ...votes,
       [name]: value,
     };
     setVotes(updatedvote)
 
-    // we use "for" to turn the vote object into a array with key: uuid and text 
+  
     const convertVotesToArray = Object.keys(votes).map((vote) => ({
       uuid: vote,
       text: votes[vote]
