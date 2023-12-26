@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "algolia": "^0.0.0",
-    "algoliasearch": "^4.20.0",
     "bcrypt": "^5.1.1",
     "class-validator": "^0.14.0",
     "cloudinary": "^1.40.0",
@@ -39,6 +38,7 @@
     "redis": "^4.6.10",
     "socket.io": "^4.7.2",
     "socket.io-client": "^4.7.2",
+    "web-push": "^3.6.6",
     "zod": "^3.22.3"
   }
 }
