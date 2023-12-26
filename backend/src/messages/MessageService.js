@@ -2,6 +2,8 @@ const createImagen = require("../Post/application/createPost/createImagen");
 const cloudinaryService = require("../libs/cloudynary");
 const exits = require("../libs/exits");
 const isValidObjectId = require("../libs/isValidObjectId");
+const userService = require("../users/userService");
+const ConversationService = require("./ConversationService");
 
 const Message = require("./domain/Message");
 const { validateMessage } = require("./utils/validate/Message/MessageShema");
@@ -188,6 +190,53 @@ module.exports = class MessageService {
       );
 
       return result;
+    } catch (error) {
+      return {
+        error,
+        message: error.message,
+      };
+    }
+  }
+
+  static async sendToAll(object) {
+    try {
+      const { userId, friends, message } = object;
+
+      const user = await userService.get({ userId });
+      if (user?.error) throw new Error("user is not valid");
+
+      const sendToAll = await Promise.all(
+        await friends?.map(async (friendId) => {
+          const friend = await userService.get({ userId: friendId });
+          if (friend?.error) throw new Error(friend?.message);
+          const conversation = await isValidObjectId(
+            {
+              participants: {
+                $size: 2,
+                $all: [friendId, userId],
+              },
+            },
+            { model: "Conversation", select: ["_id"] }
+          );
+
+          if (conversation?.error) {
+            throw new Error(conversation?.message);
+          }
+
+          if (conversation?.error) throw new Error(conversation?.message);
+
+          const Createmessage = await this.create({
+            from: userId,
+            to: friendId,
+            message,
+            conversationId: conversation?._id,
+          });
+
+          return Createmessage;
+        })
+      );
+
+      return sendToAll;
     } catch (error) {
       return {
         error,
