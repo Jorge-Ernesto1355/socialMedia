@@ -80,6 +80,7 @@ img {
 
 .text-muted {
   color: var(--color-gray);
+  
 }
 
 main {
@@ -101,6 +102,26 @@ main {
 *::-webkit-scrollbar-thumb {
   background-color: #cccccc;
   border-radius: 100px;
+}
+
+.btn-colored{
+  width: max-content;
+  min-width: 67px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 17px;
+  font-size: .75rem;
+  padding: .3rem;
+  border-radius: 20px;
+  background-color: #C3E9FF;
+  color: var(--color-blue);
+  font-weight: 500;
+}
+
+.btn-colored img{
+  width: 10px;
+  height: 10px;
 }
 
 
