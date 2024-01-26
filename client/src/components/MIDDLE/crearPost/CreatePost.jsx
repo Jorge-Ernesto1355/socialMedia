@@ -23,6 +23,9 @@ import { toast } from "react-toastify";
 import { useQuery } from "react-query";
 import userService from "../../../services/UserService";
 import SimpleLineLoader from "../../Loaders/SimpleLineLoader";
+import { Avatar } from "antd";
+
+
 
 
 const Votes = lazy(() => import("./Vote/Votes"));
@@ -69,15 +72,14 @@ const CreatePost = () => {
         <BlueLoader><LoaderPost/></BlueLoader>
       )}
       <div className="info-createPost">
-        <div className="profile-photo">
-          <img src={rem} alt="" />
-        </div>
+      <Avatar src={rem} size={'large'} alt="user"/>
         <div className="info-name">
           {isLoading && <div style={{marginBottom:'.3rem'}}>
           <SimpleLineLoader/>
           </div>}
           {!isLoading && <h5>{user?.username}</h5>}
           <TimeExpiration/>
+          
         </div>
       </div>
       <div className="input-createPost">
