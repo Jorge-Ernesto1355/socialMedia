@@ -1,0 +1,20 @@
+.menu-container{
+    width: 625px;
+    height: 450px;
+    max-width: 625px;
+    max-height:450px;
+   
+}
+
+.menu-container-divider{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 65% 35%;
+    grid-column-gap: 1.5rem;
+
+}
+
+.title-menu{
+    font-size: x-large;
+}
