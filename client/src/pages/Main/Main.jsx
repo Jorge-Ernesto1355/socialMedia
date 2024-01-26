@@ -12,7 +12,7 @@ import ConversationView from '../../components/RIGHT/messages/conversationView/C
 
 import Sidebar from '../../components/LEFT/Sidebar/Sidebar'
 import WithSearch from '../../HOCs/WithSearch'
-import WebPush from '../../utilities/webPush/WebPush'
+
 
 
 
@@ -40,8 +40,8 @@ const Main = () => {
                 {/* ===== RIGHT =====  */}
                 <div className="rightd">
                     <div className="messages">
-                        <WebPush/>
-                        <ConversationViewWithSearch/>
+                        
+                        <ConversationViewWithSearch title="Message"/>
                         
                     </div>
                     <div className="friendsRequest">
