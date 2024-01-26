@@ -13,6 +13,7 @@ import { responsive } from './utils/responsive';
 import { useSocket } from '../../../../hooks/useSocket';
 import { useQueryClient } from 'react-query';
 import { useCallbackRequest } from '../../../../hooks/useCallbackRequest/useCallbackRequest';
+import { Col, Statistic } from 'antd';
 
 const UsersOnline = () => {
 
@@ -108,8 +109,10 @@ const UsersOnline = () => {
   return (
     <div className='usersOnline-container'>
        
-        <ComponentStateHandler isLoading={isLoading} isError={isError} Loader={<UsersOnlineSkeletonLoader/>} ErrorMessageComponent={<>error usersOnline</>} items={data} >
-        {data?.length > 0 && <h5 className='usersOnline-title'>Contacts online <span className='usersOnline-length'>({data?.length})</span></h5>}
+        <ComponentStateHandler isLoading={isLoading} isError={isError} Loader={<UsersOnlineSkeletonLoader/>} ErrorMessageComponent={<p className='text-muted' >erro users</p>} items={data} >
+        <Col span={12}>
+      <Statistic title="Active Users" value={data?.length} />
+    </Col>
         {data?.length <= 0 && <p className='usersOnline-description'>no Contacts online</p>}
        
         <AliceCarousel
