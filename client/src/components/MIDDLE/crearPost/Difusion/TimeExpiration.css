@@ -1,53 +1,26 @@
-.difusion-container{
-    width: max-content;
-    height: max-content;
-    border: 1px solid #CECACA;
-    border-radius: 10px;
-    padding: 0 .5rem;
-    display: flex;
-    justify-content: center;
+.time-expiration-default-hours{
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
     align-items: center;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 0.8rem;
-    
+    margin-bottom: .5rem;
+}
+.time-expiration-item{
+ display: grid;
+ place-content: center;
+  width: 40px;
+  height: 20px;
+  cursor: pointer;
+ 
 }
 
-.difusion-container img {
-    width: 15px;
-    height: 15px;
-}
-
-.expirePost-container{
-    width: 100px;
-    height: min-content;
-    box-shadow: var(--card-shadow);
-    border-radius: 5px;
-    background-color: var(--color-white);
-
-    
-}
-
-.expirePost-item{
-    padding: .3rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    border-bottom: 1.5px solid var(--color-light);
-  cursor:pointer;
-}
-
-.expirePost-item:hover{
+.time-expiration-item:hover{
+    border-radius: 20px;
     background-color: var(--color-light);
+   
 }
 
 .expirePost-text{
     font-weight: 500;
+    font-size: small;
     color: var(--color-black);
-}
-
-.expirePost-time{
-    width: 20px;
-    height: 20px;
 }
