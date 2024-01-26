@@ -21,6 +21,7 @@ import userService from "../../../../services/UserService";
 import useUserRequest from "../../../../hooks/auth/useUserRequest";
 import Image from "../../../../utilities/Image";
 import SimpleLineLoader from "../../../Loaders/SimpleLineLoader";
+import { Avatar } from "antd";
 const Post = ({ post, simple, editing }) => {
 
 	const { userId: currentUser } = AuthProvider()
@@ -50,10 +51,7 @@ const Post = ({ post, simple, editing }) => {
 		<div className={`feed ${simple ? 'simple' : ''} `}>
 			<div className="head">
 				<div className="user">
-					<div className="profile-photo">
-						<Image src={user?.ProfilePicture ?? rem}
-							alt="user"/>
-					</div>
+				<Avatar src={rem} size={'large'} alt="user"/>
 
 					<div className="ingo">
 						{isLoading && <SimpleLineLoader/>}
