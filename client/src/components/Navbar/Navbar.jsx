@@ -12,6 +12,7 @@ import MessengerIcon from "./messengericon/MessengerIcon";
 import Image from "../../utilities/Image";
 import NotificationIcon from "./notificationIcon/NotificationIcon";
 import MenuIcon from "./menuIcon/MenuIcon";
+import { Avatar } from "antd";
 
 
 
@@ -48,9 +49,7 @@ const Navbar = () => {
         <MenuIcon/>
         <MessengerIcon/>
         <NotificationIcon/>
-        <div className="profile-photo">
-          <Image src={rem} alt="user"/>
-          </div>
+        <Avatar src={rem} size={'large'} alt="user"/>
         </div>
       </div>
     </nav>
