@@ -11,9 +11,11 @@ import UsersOnline from "../usersOnline/UsersOnline";
 import SearchConversationView from "./SearchConversationView";
 import { useQueryClient } from "react-query";
 import GroupText from "../newGroup/GroupText";
+import ComponentStateHandler from "../../../../hooks/stateManagmentComponent/ComponentStateHandler";
+import EmptyMessage from "./EmptyMessage";
 
 
-const ConversationView = ({ autocomplete, inputProps, state}, inputRef) => {
+const ConversationView = ({ autocomplete, inputProps, state, title = "Messages"}, inputRef) => {
   const {userId } = AuthProvider()
   const privateRequest = useUserRequest()
   const queryClient = useQueryClient()
@@ -93,7 +95,7 @@ const ConversationView = ({ autocomplete, inputProps, state}, inputRef) => {
   return (
     <div {...autocomplete.getRootProps()}>
     <div className="conversation-title-container">
-      <h4>Messages</h4>
+      <h4>{title}</h4>
       <GroupText/>
     </div>
       <SearchConversationView stateFiltred={filtred} filtred={handleClickFiltrered} ref={inputRef} inputProps={inputProps} autocomplete={autocomplete}/>
@@ -109,7 +111,9 @@ const ConversationView = ({ autocomplete, inputProps, state}, inputRef) => {
       if(!filtred) fetchNextPageFiltred() 
     }}
     >
-      <Conversations conversations={filtred ? filtredConversations : results }/>
+      <ComponentStateHandler isLoading={isLoading} isError={isError} Loader={<Loader/>} ErrorMessageComponent={<>error conversations</>} items={results} EmptyMessage={<EmptyMessage/>}>
+        <Conversations conversations={filtred ? filtredConversations : results }/>
+      </ComponentStateHandler>
     </InfiniteScroll>
     </div>
   );

@@ -49,7 +49,8 @@ const Navbar = () => {
         <MenuIcon/>
         <MessengerIcon/>
         <NotificationIcon/>
-        <Avatar src={rem} size={'large'} alt="user"/>
+       
+       
         </div>
       </div>
     </nav>

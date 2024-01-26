@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useMemo } from 'react';
 import socketIOClient from 'socket.io-client';
 import AuthProvider from '../zustand/AuthProvider';
-import webPush from '../utilities/webPush/WebPush';
+import webPush from '../utilities/webPush/webPush';
 const ENDPOINT = 'http://localhost:3002';
 
 const SocketContext = createContext();

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./Post.css";
 
 import rem from "../../../../assets/rem.jpg";
-
 import more from "../comments/EllipsiComments/icons/ellipsis.png";
 import Comments from "../comments/Comments";
 import MakeAComment from "../comments/makeComment/MakeComment";

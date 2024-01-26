@@ -1,0 +1,20 @@
+.messengerPopover-container{
+   width: 250px;
+   height: 400px;
+   }
+
+.messengerPopover-options{
+    display: flex;
+  
+    width:  25%;
+    justify-content: space-around;
+    
+
+   
+}
+
+.messengerPopover-header{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}

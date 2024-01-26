@@ -11,6 +11,8 @@ import AuthProvider from '../../zustand/AuthProvider'
 import FiltersNotification from './filtersNotifications/FiltersNotification'
 import OptionsNotifications from './OptionsNotifications'
 import useUserRequest from '../../hooks/auth/useUserRequest'
+import ComponentStateHandler from '../../hooks/stateManagmentComponent/ComponentStateHandler'
+import EmptyMessage from './EmptyMessage'
 
 
 
@@ -39,10 +41,11 @@ const Notifications = () => {
     loader={<NotificationLoader/>}
     next={() => fetchNextPage()}
     >
-    <FillNotificationModal isError={isError} isLoading={isLoading}/>
+      <ComponentStateHandler isLoading={isLoading} isError={isError} ErrorComponent={<>error notifications</>} Loader={<FillNotificationModal/>} items={results} EmptyMessage={<EmptyMessage/>}>
      {results?.map((notification)=> (
        <Notification key={`notifiation-key=${notification?._id}`} Notification={notification}/>
        ))}
+      </ComponentStateHandler>
     </InfiniteScroll>
       
     </ul>

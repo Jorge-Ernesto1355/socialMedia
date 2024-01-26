@@ -1,19 +1,21 @@
 import React from 'react'
-import Popover from '../../../hooks/Popover/Popover'
 import Image from '../../../utilities/Image'
 import bell from './bell-black.png'
 import Notifications from '../../notifications/Notifications'
+import { Badge, Popover } from 'antd'
 
     
 const NotificationIcon = () => {
   return (
     <>
 
-        <Popover trigger={<div className='icon-navbar'>
+        <Popover trigger={"click"} content={<Notifications/>}   > 
+      
+        <Badge count={0} offset={[-12,35 ]} size="small">
+            <div className='icon-navbar'>
             <Image src={bell}/>
-        </div>}> 
-
-        <Notifications/>
+            </div>
+         </Badge>
 
         </Popover>
     </>

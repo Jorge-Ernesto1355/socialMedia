@@ -39,7 +39,6 @@ const Post = Schema(
     edit: { type: Boolean, default: false },
     points: { type: Number, default: 0 },
   },
-
   {
     timestamps: true,
   }

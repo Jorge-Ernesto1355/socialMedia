@@ -1,0 +1,44 @@
+.create-menu-container{
+        width: 80%;
+        margin-right: .5rem;
+        height: 60%;
+        background-color: #FBFBFB;
+        box-shadow: var(--card-shadow);
+        padding: 0.5rem;
+        border-radius: 5px;
+    
+}
+
+.create-menu-actions-container{
+    display: flex;
+    margin-top: 1rem;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    width: 100%;
+    height: 100%;
+}
+
+.create-menu-portal{
+    display: flex;
+    margin: .5rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.create-menu-circle{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: var(--color-light);
+}
+
+.create-menu-description{
+    margin-left: 1rem;
+    font-weight: 600;
+
+    
+}

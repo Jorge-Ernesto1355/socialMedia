@@ -29,7 +29,6 @@ const Friend = ({ addUser }) => {
         })
     }, [])
 
-    console.log(user)
 
    
 

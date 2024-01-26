@@ -9,6 +9,7 @@ import { ToastContainer } from "react-toastify";
 import ComponentStateHandler from "../../../hooks/stateManagmentComponent/ComponentStateHandler";
 import LoaderFriendRequest from "./Loader/LoaderFriendRequest";
 import ErrorMessageFriendRequest from "./ErrorMessage/ErrorMessageFriendRequest";
+import EmptyMessage from "./EmptyMessage";
 
 const FriendRequest = () => {
   const { userId } = AuthProvider()
@@ -20,7 +21,7 @@ const FriendRequest = () => {
   return (
     <div className="friend-request">
       <h4>Peticiones</h4>
-      <ComponentStateHandler Loader={<LoaderFriendRequest />} isError={isError} isLoading={isLoading} ErrorMessageComponent={<ErrorMessageFriendRequest reset={reset} />} items={results}  >
+      <ComponentStateHandler Loader={<LoaderFriendRequest />} isError={isError} isLoading={isLoading} ErrorMessageComponent={<ErrorMessageFriendRequest reset={reset} />} items={results} EmptyMessage={<EmptyMessage/>}  >
         <RequestFriends items={results} />
       </ComponentStateHandler>
       <ToastContainer />
