@@ -7,18 +7,16 @@ import group from './icons/grupo.png'
 import messenger  from '../../RIGHT/messages/icons/mensajero.png'
 import marcador from './icons/marcador.png'
 import { Tooltip, TooltipContent, TooltipTrigger } from "../../../hooks/Popover/Tooltip";
+import { Avatar } from "antd";
 
 const Sidebar = () => {
 
 
   return (
-  <ul className="sidebar-container">
+  <aside className="sidebar-container">
 
     <li className="sidebar-item">
-    <div className="profile-photo">
-						<Image src={ rem}
-							alt="user"/>
-		</div>
+    <Avatar src={rem} size={'large'} alt="user"/>
       <h5 className="sidebar-text">Jorge Ernesto</h5>
     </li>
 
@@ -43,7 +41,7 @@ const Sidebar = () => {
       <h5 className="sidebar-text">Messenger</h5>
     </li>
     
-  </ul>
+  </aside>
    
   );
 };
