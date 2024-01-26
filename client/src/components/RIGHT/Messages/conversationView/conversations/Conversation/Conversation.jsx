@@ -14,6 +14,7 @@ import { useQuery, useQueryClient } from 'react-query'
 import SimpleLineLoader from '../../../../../Loaders/SimpleLineLoader'
 import BoxMessagesStore from '../../../../../../zustand/BoxMessagesStore'
 import Image from '../../../../../../utilities/Image'
+import { Avatar } from 'antd'
 
 const Conversation = ({conversation}) => {
 
@@ -93,10 +94,7 @@ const Conversation = ({conversation}) => {
     <div className='conversation-container' onClick={()=> handleSocket()}>
         
         <div className='conversation-profile-picture '>
-        <div className='profile-photo'>
-                <Image src={rem}/>
-                
-            </div>
+        <Avatar src={rem} size={'large'} alt="user"/>
         </div>
         <div className='conversation-information'>
             <div className='conversation-user-information'>
