@@ -1,10 +1,9 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import User from '../User'
 import './users.css'
+import GroupStore from '../../../zustand/GroupStore'
 
-const Users = ({items = [], autocomplete, source}) => {
-    
-   
+const Users = ({items = [], autocomplete, source, children}) => {
   return (
     <ul className='users-container' {...autocomplete.getListProps()}>
         
@@ -13,9 +12,11 @@ const Users = ({items = [], autocomplete, source}) => {
                                 item, 
                                 source
                             })
-
+                             
                             return (
-                                <User key={`search-user-key-${item.objectID}`} hit={item} itemProps={itemProps}/>   
+                                <User key={`search-user-key-${item.objectID}`} hit={item} itemProps={itemProps}>
+                                  {children}
+                                </User>   
                             )
                         })}
        
