@@ -2,22 +2,19 @@ import React, { useMemo } from 'react'
 import './User.css'
 import rem from '../../assets/rem.jpg'
 import Image from '../../utilities/Image'
-import GroupStore from '../../zustand/GroupStore'
-const User = ({hit, itemsProps}) => {
 
-const {addParticipant} = GroupStore()
+const User = ({hit, itemsProps, children}) => {
 
+  
+  const user = useMemo(()=>{
+    return {
+        _id: hit?.objectID,
+        username: hit?.username,
+        imageProfile: hit?.imageProfile?.url
+        
+    }
+}, [hit.objectID]) ?? {}
 
-    
-
- const user = useMemo(()=>{
-        return {
-            _id: hit?.objectID,
-            username: hit?.username,
-            imageProfile: hit?.imageProfile?.url
-            
-        }
- }, [hit.objectID])
 
   return (
     <div className='user-container' {...itemsProps}>
@@ -31,7 +28,8 @@ const {addParticipant} = GroupStore()
             </div>
         </div>
         <div className='user-actions'>
-            <p onClick={()=> addParticipant(user)}>Agregar</p>
+          {React.isValidElement(children) ? React.cloneElement(children, {user}) : null}
+           
         </div>
          
     </div>
