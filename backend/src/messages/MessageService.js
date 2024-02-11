@@ -1,9 +1,7 @@
-const createImagen = require("../Post/application/createPost/createImagen");
 const cloudinaryService = require("../libs/cloudynary");
 const exits = require("../libs/exits");
 const isValidObjectId = require("../libs/isValidObjectId");
 const userService = require("../users/userService");
-const ConversationService = require("./ConversationService");
 
 const Message = require("./domain/Message");
 const { validateMessage } = require("./utils/validate/Message/MessageShema");
@@ -44,7 +42,7 @@ module.exports = class MessageService {
   static async messageWithOutPagination(object) {
     try {
       exits(object);
-      const { conversationId, limit, page } = object;
+      const { conversationId } = object;
       const queryOptions = {
         model: "Conversation",
       };
@@ -59,7 +57,7 @@ module.exports = class MessageService {
   static async create(object) {
     try {
       exits(object);
-      const { from, message, to, conversationId, reply, file } = object;
+      const { from, message, to, conversationId, reply, file, postId } = object;
       const result = validateMessage({ from, message, to });
 
       if (result.error) {
@@ -79,6 +77,7 @@ module.exports = class MessageService {
         from,
         text: message,
         to,
+        postId,
         conversationId,
         reply: ReplyValue,
         file: image,
