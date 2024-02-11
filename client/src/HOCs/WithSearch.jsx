@@ -45,14 +45,16 @@ const WithSearch = (Component, options) =>  (props) => {
 
       const inputProps = autocomplete.getInputProps({
         inputElement: inputRef?.current,
-        autoFocus: true,
         maxLength: 20,
+        
       });
 
 
 
     return (
-        <Component {...props} autocomplete={autocomplete} ref={inputRef} state={state} inputProps={inputProps}/>
+        <Component {...props} autocomplete={autocomplete} ref={inputRef} state={state} inputProps={inputProps} initialState={options?.initialState}>
+        {props.children}
+        </Component>
     )
 }
 
