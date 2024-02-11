@@ -25,6 +25,12 @@ const Message = new Schema(
       url: String,
       public_id: String,
     },
+    postId: {
+      ref: "Post",
+      default: null,
+      type: Schema.Types.ObjectId,
+    },
+
     readBy: [
       {
         ref: "User",
