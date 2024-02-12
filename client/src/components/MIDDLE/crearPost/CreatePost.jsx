@@ -23,7 +23,7 @@ import { toast } from "react-toastify";
 import { useQuery } from "react-query";
 import userService from "../../../services/UserService";
 import SimpleLineLoader from "../../Loaders/SimpleLineLoader";
-import { Avatar } from "antd";
+import { Avatar, message } from "antd";
 
 
 
@@ -59,7 +59,10 @@ const CreatePost = () => {
         if (store.current) store.current.value = "";
         clearImagePreview()
         clearStateActions()
-        toast.success(`se ha creado el post exitosamente \n ${get()}`)
+        message.open({
+          type:"success", 
+          content: <span>post created succefully  <button style={{marginTop: "10px"}} className="btn-colored">ver post</button></span>
+        })
       }
     })
 
