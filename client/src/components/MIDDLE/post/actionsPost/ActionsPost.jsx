@@ -28,7 +28,7 @@ const ActionsPost = ({ postId, userId }) => {
           <img className="icon icon-comment" src={comment} alt="" />
           <span className="interaction-button-text">Comment</span>
         </div>
-        <SharePost/>
+        <SharePost postId={postId} userId={userId}/>
       </div>
     </div>
   );
