@@ -1,12 +1,13 @@
-const { isValid } = require("zod");
 const cloudinaryService = require("../libs/cloudynary");
 const isValidObjectId = require("../libs/isValidObjectId");
+const MessageService = require("../messages/MessageService");
 const getTotalPoints = require("../reaction/utils/getTotalPoints");
-const { exists } = require("../users/domain/UserModel");
+
 const userService = require("../users/userService");
-const createImagen = require("./application/createPost/createImagen");
+
 const createVotes = require("./application/createPost/createVotes");
 const Post = require("./dominio/Post");
+
 function exits(object) {
   if (!object) throw new Error("not found parameters");
 }
@@ -31,6 +32,7 @@ class PostService {
     try {
       exits(object);
       const { postId } = object;
+
       const isValidPost = await validateObjectId(postId, "Post");
 
       if (isValidPost?.error) {
@@ -139,17 +141,18 @@ class PostService {
 
       votes > 0 && (await createVotes({ votes }));
       const user = await isValidObjectId({ _id: userId }, queryOptions);
-      console.log(timeExpiration);
+
       const newPost = new Post({
         userId,
         description,
         image,
-        expiresIn: timeExpiration ? timeExpiration : undefined,
+        expiresIn: timeExpiration > 0 ? timeExpiration : null,
       });
       if (postShared) newPost.postShared = postShared;
       newPost.usersTagged = usersTagged?.map((username) => ({
         username,
       }));
+
       user.posts = [...user.posts, newPost];
       await user.save();
       const postsaved = await newPost.save();
@@ -255,6 +258,50 @@ class PostService {
       await Post.findByIdAndUpdate(postId, { ExpiresIn: timeExpiration });
 
       return { message: "time expiration has been updated" };
+    } catch (error) {
+      return {
+        error,
+        message: error.message,
+      };
+    }
+  }
+
+  static async sharePostMessage(object) {
+    exits(object);
+
+    const { text, to, from, postId } = object;
+    const queryOptions = {
+      model: "Conversation",
+    };
+    try {
+      let conversation = await isValidObjectId(
+        {
+          participants: {
+            $size: 2,
+            $all: [to, from],
+          },
+        },
+        queryOptions
+      );
+
+      if (conversation?.error) {
+        if (conversation.error instanceof DocumentNotFound) {
+          conversation = await this.create({ to, from });
+        }
+        throw new Error(conversation?.message);
+      }
+
+      const messageCreated = await MessageService.create({
+        conversationId: conversation?._id,
+        to,
+        from,
+        message: text,
+        postId,
+      });
+
+      if (messageCreated.error) return messageCreated.error;
+
+      return messageCreated;
     } catch (error) {
       return {
         error,
