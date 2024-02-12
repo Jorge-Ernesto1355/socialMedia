@@ -105,6 +105,7 @@ main {
 }
 
 .btn-colored{
+  
   width: max-content;
   min-width: 67px;
   display: flex;
@@ -113,6 +114,7 @@ main {
   height: 17px;
   font-size: .75rem;
   padding: .3rem;
+  cursor: pointer;
   border-radius: 20px;
   background-color: #C3E9FF;
   color: var(--color-blue);
@@ -124,6 +126,18 @@ main {
   height: 10px;
 }
 
+.icon-circle{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+cursor: pointer;
+  display: flex;
+  justify-content:center ;
+  align-items: center;
+}
+.icon-circle:hover{
+  background-color: var(--color-light);
+}
 
 main .container {
     width: 100%;
