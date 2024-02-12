@@ -1,7 +1,8 @@
 import { useAutocomplete } from '../hooks/useAutocomplete';
 import algoliasearch from 'algoliasearch';
 import { getAlgoliaResults } from '@algolia/autocomplete-preset-algolia';
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
+import { useCallbackRequest } from '../hooks/useCallbackRequest/useCallbackRequest';
 
 const searchClient = algoliasearch(
     "PZG4Z8HDRA",
@@ -11,6 +12,8 @@ const searchClient = algoliasearch(
 const WithSearch = (Component, options) =>  (props) => {
 
     const inputRef = useRef()
+
+    const {data, isLoading: isLoadingInitialState, isError: isErrorInitialState} = useCallbackRequest({request: options?.initialStateRequest, name: options?.INDEX_NAME})
 
     const { autocomplete, state} = useAutocomplete({
         ...props,
