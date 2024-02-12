@@ -14,8 +14,7 @@
     "nodemon": "^3.0.1"
   },
   "dependencies": {
-    "@redis/client": "^1.5.14",
-    "@socket.io/redis-adapter": "^8.2.1",
+  
     "algolia": "^0.0.0",
     "algoliasearch": "^4.22.1",
     "bcrypt": "^5.1.1",

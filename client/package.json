@@ -1,5 +1,6 @@
 {
 	"name": "client",
+	
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
@@ -12,7 +13,6 @@
 		"algoliasearch": "^4.20.0",
 		"antd": "^5.13.2",
 		"clipboard-copy": "^4.0.1",
-		"copy-to-clipboard": "^3.3.3",
 		"emoji-picker-react": "^4.5.1",
 		"formik": "^2.2.9",
 		"framer-motion": "^6.3.4",
