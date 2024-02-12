@@ -1,6 +1,7 @@
 import React from 'react'
 
 
+
 const SingleComponent = ({isError, isLoading, loader, errorMessage, children, isSuccess, successMessage}) => {
 
     return (
