@@ -10,7 +10,7 @@ import useMutationRequest from "../../../../../hooks/useMutationRequest";
 import { useQuery } from "react-query";
 import AutoComplete from "../../../../Autocomplete/AutoComplete";
 import { useStore } from "../../../../../hooks/useStore/useStore";
-import { ThreeDotsLoader } from "./ThreeDotsLoader";
+
 import EmojiPickerWithIcon from "../../../../EmojiPicker/EmojiPickerWithIcon";
 import SendButton from "./styledComponentes/sendButton/SendButton";
 import ErrorButton from "./styledComponentes/ErrorButton/ErrorButton";
@@ -90,7 +90,7 @@ const MakeComment = (
               cols={40}
               ref={store}
               set={set}
-              username={user?.username}
+              initialText={user?.username}
               stateValue={get}
             />
           )}
@@ -113,7 +113,7 @@ const MakeComment = (
               {isError && <ErrorButton reset={reset} />}
               {!isError && (
                 <>
-                  {isLoadingMutation ? <ThreeDotsLoader /> : <SendButton />}
+                  {isLoadingMutation ? <div></div> : <SendButton />}
                 </>
               )}
             </div>
