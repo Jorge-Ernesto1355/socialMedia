@@ -66,11 +66,11 @@ const AutoComplete = (props, inputRef) => {
   });
 
   useEffect(() => {
-    if (typeof props.username !== "undefined") {
-      autocomplete.setQuery(`@${props.username}`);
-      props.set && props.set(inputRef.current.value + `@${props.username}`);
+    if (typeof props.initialText !== "undefined") {
+      autocomplete.setQuery(`@${props.initialText}`);
+      props.set && props.set(inputRef.current.value + `@${props.initialText}`);
     }
-  }, [props.username]);
+  }, [props.initialText]);
 
   const { top, height } = inputRef?.current
     ? getCaretCoordinates(inputRef?.current, inputRef?.current?.selectionEnd)
