@@ -22,7 +22,7 @@ const UsersOnline = () => {
     const socket = useSocket()
     const queryClient = useQueryClient()
     const onlineQuery = ['usersOnline', userId]
-    const {data, isLoading, isError} = useCallbackRequest({request:userService.usersOnline, name:'usersOnline', id:userId, privateRequest})
+    const {data, isLoading, isError} = useCallbackRequest({request:userService.usersOnline, name:"usersOnline", id:userId?.toString(), privateRequest})
 
     const handleSocket = (friendId) => () => socket?.emit('open-conversation', {to:friendId, from:userId})
     

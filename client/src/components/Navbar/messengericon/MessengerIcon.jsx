@@ -1,5 +1,6 @@
 import React from 'react'
 import './messengerPopover.css'
+import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import Image from '../../../utilities/Image'
 import messengerBlack from './messenger-black.png'
 import { IoIosExpand } from "react-icons/io";
@@ -18,7 +19,13 @@ const MessengerIcon = () => {
             <div className='messengerPopover-header'>
               <h3>Chats</h3>
               <div className='messengerPopover-options'>
-                <IoIosExpand/>
+                <div className='icon-circle'>
+                <IoIosExpand size={"1rem"}/>
+                </div>
+                <div className='icon-circle'>
+                <HiOutlineDotsHorizontal size={"1rem"}/>
+                </div>
+                
               </div>
             </div>
             <ConversationViewWithSearch title=""/>

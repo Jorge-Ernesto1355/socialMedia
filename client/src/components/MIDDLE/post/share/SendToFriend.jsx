@@ -11,6 +11,7 @@ import Post from '../post/Post';
 import WithSearch from '../../../../HOCs/WithSearch';
 import UsesWtihSearch from '../../../searchFriends/UsesWtihSearch';
 import ButtonSendPost from './ButtonSendPost';
+import UserService from '../../../../services/UserService';
 
 
 const SendToFriend = ({postId = ""}) => {
@@ -18,7 +19,7 @@ const SendToFriend = ({postId = ""}) => {
     const privateRequest = useUserRequest()
     const {data, isLoading, isError}  = useCallbackRequest({request: PostServices.get, id: postId, name:'sharedPost', privateRequest})
     const { store, set, get } = useStore()
-    const UsersWithSearchHOC = WithSearch(UsesWtihSearch, {INDEX_NAME:'users', initialState: 'jorge guapo'})
+    const UsersWithSearchHOC = WithSearch(UsesWtihSearch, {INDEX_NAME:'users', initialStateRequest: UserService.getFriends })
 
   const showModal = () => {
     setIsModalOpen(true);

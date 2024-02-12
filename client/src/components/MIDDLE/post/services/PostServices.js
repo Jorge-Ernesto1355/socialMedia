@@ -1,7 +1,9 @@
+import { ObjectErrosName } from "../../../../utilities/ObjectErrorsName";
+
 export default class PostServices {
   static async create(post) {
     if (!post?.privateRequest) {
-      throw new Error("could not load the request");
+      throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
     }
 
     const form = new FormData();
@@ -28,7 +30,7 @@ export default class PostServices {
   static async getTimeLine({ privateRequest, id: userId, limit, page }) {
     try {
       if (!privateRequest) {
-        throw new Error("could not load the request");
+        throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
       }
       return privateRequest?.get(
         `/post/timeLine/${userId}?limit=${limit}&page=${page}`,
@@ -41,9 +43,20 @@ export default class PostServices {
   static async delete({ privateRequest, postId, userId }) {
     try {
       if (!privateRequest) {
-        throw new Error("could not load the request");
+        throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
       }
       return await privateRequest.delete(`/post/${postId}?userId=${userId}`);
+    } catch (error) {
+      return error;
+    }
+  }
+
+  static async get({ privateRequest, id: postId }) {
+    try {
+      if (!privateRequest) {
+        throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+      }
+      return await privateRequest.get(`/post/${postId}`);
     } catch (error) {
       return error;
     }
@@ -52,7 +65,7 @@ export default class PostServices {
   static async update({ privateRequest, post }) {
     try {
       if (!privateRequest) {
-        throw new Error("could not load the request");
+        throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
       }
 
       const form = new FormData();
@@ -85,7 +98,7 @@ export default class PostServices {
   }) {
     try {
       if (!privateRequest) {
-        throw new Error("could not load the request");
+        throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
       }
       return await privateRequest.put(
         `/post/timeExpiration/${postId}/${userId}`,
@@ -93,6 +106,22 @@ export default class PostServices {
           timeExpiration,
         },
       );
+    } catch (error) {
+      return error;
+    }
+  }
+
+  static async sharePostMessage({ privateRequest, postId, to, from, text }) {
+    try {
+      if (!privateRequest) {
+        throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+      }
+
+      return await privateRequest.post(`/post/share/postMessage/${postId}`, {
+        text,
+        to,
+        from,
+      });
     } catch (error) {
       return error;
     }
