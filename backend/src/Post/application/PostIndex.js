@@ -14,6 +14,7 @@ const getVotes = require("./interact/votes/getVotes");
 //shares
 const allShared = require("../application/interact/shares/AllUserHasGivenShared");
 const Share = require("./interact/shares/Share");
+const sharePostMessage = require("./interact/shares/SharePostMessage.js");
 
 //favorites
 const favorite = require("./interact/favorites/Favorites");
@@ -34,4 +35,5 @@ module.exports = {
   AllFavorite,
   findTimeLine,
   timeExpirationEdit,
+  sharePostMessage,
 };
