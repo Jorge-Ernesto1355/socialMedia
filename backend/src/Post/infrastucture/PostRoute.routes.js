@@ -20,6 +20,7 @@ route.post("/", PostIndex.createPost);
 
 route.put("/:postId", PostIndex.UpdatePost);
 
+route.post("/share/postMessage/:postId", PostIndex.sharePostMessage);
 route.put("/share/:id", PostIndex.Share);
 
 route.put("/votes/add", PostIndex.Votes);
