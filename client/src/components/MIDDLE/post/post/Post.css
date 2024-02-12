@@ -18,6 +18,7 @@
 }
 
 .feed.simple {
+  padding: .5rem;
   box-shadow: none;
   border: .5px solid #B2B2B2;
 }
