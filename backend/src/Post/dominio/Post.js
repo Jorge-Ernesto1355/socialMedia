@@ -7,7 +7,7 @@ const Post = Schema(
       ref: "User",
       type: Schema.Types.ObjectId,
     },
-    expiresIn: { type: Date, expires: 20, default: Date.now },
+    expiresIn: { type: Date, expires: null, default: null },
     description: { type: String, max: 300 },
     image: { url: String, public_id: String },
     comments: [
