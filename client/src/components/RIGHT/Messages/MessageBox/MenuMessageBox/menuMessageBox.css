@@ -2,10 +2,8 @@
     width: 200px;
     max-width: 200px;
     height: 155px;
-    padding: .3rem;
-    border-radius: 10px;
-    background-color: #fff;
-     box-shadow: var(--card-shadow);
+    
+   
 }
 
 .menuMessageBox-item{
