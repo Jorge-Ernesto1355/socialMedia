@@ -1,31 +1,29 @@
-import React, { Suspense, lazy, useState } from "react";
+import React, {  useState } from "react";
 import "./Comment.css";
-import GetUser from "../../../../services/GetUser.service";
-import rem from "../../../../assets/rem.jpg";
-import more from "./EllipsiComments/icons/ellipsis.png";
 
+import rem from "../../../../assets/rem.jpg";
 import moment from "moment";
-import { UserAdapterSucces } from "../../../Profile/useAdapter";
+
 
 import MakeComment from "./makeComment/MakeComment";
-
-import { UpdateCommentMutate } from "../useQuery/mutation/Post";
 import ReactionsView from "../../../Reaction/Reactions/ReactionsView";
 
 import UseImagePreview from "../../../../hooks/useImagePreview/useImagePreview";
 import { useQuery } from "react-query";
 import ShowComments from "./ShowComments";
-
-import Loader from "../../../../utilities/Loader";
 import Reaction from "../../../Reaction/Reaction";
-import LikeComment from '../../../Reaction/LikeComment'
+
 import AuthProvider from "../../../../zustand/AuthProvider";
 import UserService from "../../../../services/UserService";
 import useUserRequest from "../../../../hooks/auth/useUserRequest";
+import LikePost from "../../../Reaction/LIkePost";
+import IconMoreHorizontal from "../../../../assets/icons/MoreHo";
+import { Input, Popover, Skeleton } from "antd";
+import EllipsisComment from "./EllipsiComments/EllipsisComment";
+import { updateCommentMutation } from "./EllipsiComments/Actions";
 
-const More = lazy(() => import("./EllipsiComments/More"));
 
-const Comment = ({ comment }) => {
+const Comment = ({ comment, postId, userId: userIdPost }) => {
   const { text, userId, image } = comment.comment;
   const { userId: currentUser } = AuthProvider()
   const commentId = comment?._id;
@@ -41,11 +39,16 @@ const Comment = ({ comment }) => {
   const [textValue, setTextValue] = useState("");
 
 
-  const updateCommentMutate = UpdateCommentMutate(commentId);
+  const toggleEditComment = ()=> setUpdateComment((prev)=> !prev)
 
-  const updateCommentFun = () => {
-    updateCommentMutate({ commentId, text: textValue });
-  };
+  const {mutate: mutateUpdateComment, isLoading: isLoadingUpdateComment} = updateCommentMutation({postId, commentId})
+
+  const handleUpdateComment = ()=>{
+    mutateUpdateComment({textCommentEdit: textValue, privateRequest, id:commentId})
+    toggleEditComment()
+  
+  }
+
 
   const { data: user, isLoadingUser } = useQuery(
     ["user", userId],
@@ -65,23 +68,32 @@ const Comment = ({ comment }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="head">
+      <div className="head-comment">
         {!isLoadingUser && <img className="photo" src={rem} alt="" />}
 
         <div className="username-text">
-          {!isLoadingUser && <h4>{user?.username ?? ""}</h4>}
+         <div className="username-comment">
+         {!isLoadingUser && <h4>{user?.username ?? ""}</h4>}
+         {isHovered && <Popover trigger={"click"} content={<EllipsisComment editComment={toggleEditComment} postId={postId} isYourPost={userIdPost === currentUser} idComment={commentId} isYours={currentUser === userId}/>}><IconMoreHorizontal /></Popover>}
+         </div>
 
           {updateComment ? (
             <>
-              <input
+              <Input
                 type="text"
                 value={textValue}
                 onChange={(e) => setTextValue(e.target.value)}
               />
-              <span onClick={() => updateCommentFun()}>listo</span>
+              <span style={{cursor: "pointer", marginTop: ".5rem"}} onClick={() => handleUpdateComment()}>Editar</span>
             </>
           ) : (
-            <p>{text}</p>
+            
+            <>
+
+            {isLoadingUpdateComment ? <Skeleton.Input active={true} size={"small"}  block/> : <span>{text}</span> }
+            
+            </>
+            
           )}
           <ReactionsView
             id={commentId}
@@ -91,23 +103,16 @@ const Comment = ({ comment }) => {
             className="reactionView-comment"
           />
         </div>
-        {isHovered && (
-          <Suspense fallback={<Loader />}>
-            <span className="more">
-              <More>
-                <img src={more} className="icon" alt="" />
-              </More>
-            </span>
-          </Suspense>
-        )}
+        
       </div>
       {image?.url && (
         <div className="container-image-comment">
           <img src={image?.url} alt="image-comment" className="image-comment" />
         </div>
       )}
+      
       <div className="body">
-        <div></div>
+        
         <div className="actions-comments">
           <Reaction
             type="Comment"
@@ -115,7 +120,7 @@ const Comment = ({ comment }) => {
             name={"comment-view"}
             userId={currentUser}
           >
-            <LikeComment />
+            <LikePost />
           </Reaction>
           <span
             onClick={() => setMakeComment(!makeComment)}
@@ -133,6 +138,7 @@ const Comment = ({ comment }) => {
         commentId={commentId}
         respondedLength={commentsResponded?.length}
       />
+      
 
       {makeComment && (
         <>
