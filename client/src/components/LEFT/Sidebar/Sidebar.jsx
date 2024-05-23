@@ -1,14 +1,12 @@
 import React from "react";
 import "./Sidebar.css";
-import Image from "../../../utilities/Image";
 import friends from './icons/amigos.png'
 import rem from '../../../assets/rem.jpg'
 import group from './icons/grupo.png'
-import messenger  from '../../RIGHT/messages/icons/mensajero.png'
+
 import marcador from './icons/marcador.png'
 import { Tooltip, TooltipContent, TooltipTrigger } from "../../../hooks/Popover/Tooltip";
 import { Avatar } from "antd";
-
 const Sidebar = () => {
 
 
@@ -37,7 +35,7 @@ const Sidebar = () => {
       <h5 className="sidebar-text">Guardados</h5>
     </li>
     <li  className="sidebar-item">
-      <img className="sidebar-icon" src={messenger} alt="Messenger" />
+     
       <h5 className="sidebar-text">Messenger</h5>
     </li>
     
