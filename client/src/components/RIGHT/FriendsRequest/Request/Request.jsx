@@ -8,13 +8,18 @@ import GetUser from '../../../../services/GetUser.service'
 import AcceptFriend from '../requestOptions/AcceptFriend'
 import DeclineFriend from '../requestOptions/DeclineFriend'
 import AuthProvider from '../../../../zustand/AuthProvider'
-const Request = ({ user }) => {
+import { AcceptFriendMutation } from '../requestOptions/requestOptions'
+
+const Request = ({ user , requestId}) => {
 
   const { userId: currentUser } = AuthProvider()
   const { data: userData } = useQuery(["user", currentUser], () => GetUser(currentUser));
 
   const ownUser = userData?.data?.data ?? {};
   const mutualFriends = MutualFriends({ friendsRequest: user?.friends, myFriends: ownUser?.friends })
+
+  const {mutate} = AcceptFriendMutation({userId: currentUser, requestId })
+
 
   return (
 
@@ -30,8 +35,10 @@ const Request = ({ user }) => {
       </div>
 
       <div className="request-options">
-        <AcceptFriend userRequestFriend={user?._id} currentUser={currentUser} />
-        <DeclineFriend userRequestFriend={user?._id} currentUser={currentUser} />
+        
+        
+        <AcceptFriend userRequestFriend={user?._id} currentUser={currentUser} requestId={requestId} acceptUser={mutate} />
+        <DeclineFriend userRequestFriend={user?._id} currentUser={currentUser} acceptUser={mutate} />
       </div>
     </li>
   )
