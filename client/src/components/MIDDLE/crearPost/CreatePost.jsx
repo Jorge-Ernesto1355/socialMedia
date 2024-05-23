@@ -1,4 +1,4 @@
-import React, { lazy, useCallback, useState } from "react";
+import React, { Suspense, lazy, useCallback, useState } from "react";
 import "./CreatePost.css";
 import rem from "../../../assets/rem.jpg";
 import poll from "./icons/poll.png";
@@ -19,11 +19,10 @@ import CreatePostStore from "../../../zustand/CreatePostStore";
 import PostServices from "../post/services/PostServices";
 import useUserRequest from "../../../hooks/auth/useUserRequest";
 import AuthProvider from "../../../zustand/AuthProvider";
-import { toast } from "react-toastify";
 import { useQuery } from "react-query";
 import userService from "../../../services/UserService";
 import SimpleLineLoader from "../../Loaders/SimpleLineLoader";
-import { Avatar, message } from "antd";
+import { Avatar, Card, Divider, message } from "antd";
 
 
 
@@ -45,6 +44,7 @@ const CreatePost = () => {
   const { votes, timeExpiration, delVotes } = CreatePostStore()
   const [actions, setActions] = useState(ACTIONS_INITIAL_STATE);
   const { userId } = AuthProvider()
+ 
   const { store, set, get } = useStore();
   const { element, input: inputFile, clearImagePreview } = UseImagePreview()
   const { mutate, isLoadingMutation, isError, reset, } = useMutationRequest(PostServices.create, { name: 'posts' })
@@ -97,11 +97,20 @@ const CreatePost = () => {
           />
         )}
 
-        <Votes VotesActive={actions.poll} hideVotes={setActions} />
-        <EmojiPickerComponent isOpen={actions.emoji} store={store} set={set} />
+        {actions?.poll && (
+          <Suspense fallback={<Card loading={true}></Card>}>
+            <Votes hideVotes={setActions} />
+          </Suspense>
+        )}
+
+        {actions?.emoji && (
+          <Suspense>
+            <EmojiPickerComponent isOpen={actions.emoji} store={store} set={set} />
+          </Suspense>
+        )}
       </div>
       <img ref={element} onClick={() => clearImagePreview()} />
-      <div className="divisor"></div>
+     <Divider/>
       <div className="down-createPost">
         <div className="options-createPost">
           <ImgInputFile ref={inputFile} />
