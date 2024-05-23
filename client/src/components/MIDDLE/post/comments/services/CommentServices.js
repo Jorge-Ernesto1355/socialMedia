@@ -49,5 +49,28 @@ export default class CommentService {
       return error;
     }
   }
+
+  static async delete({id, privateRequest}){
+    try {
+      if (!privateRequest) throw new Error("could not load the request");
+      return await privateRequest.delete(`/comment/${id}`);
+    } catch (error) {
+      return error;
+    }
+  }
+
+  static async update({id, privateRequest, textCommentEdit}){
+    try {
+      if (!privateRequest) throw new Error("could not load the request");
+      return await privateRequest.put(
+        `/comment/${id}`,
+        {text: textCommentEdit},
+      );
+    } catch (error) {
+      return error;
+    }
+  }
+
+  
   
 }
