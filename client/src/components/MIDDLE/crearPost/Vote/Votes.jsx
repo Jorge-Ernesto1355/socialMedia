@@ -1,6 +1,5 @@
 import "./Votes.css";
 import React, {
-  Suspense,
   useCallback,
   useEffect,
   useMemo,
@@ -9,25 +8,14 @@ import React, {
 import Vote from "./vote";
 
 import { v4 as uuidv4 } from "uuid";
-import { motion } from "framer-motion";
 import plus from "../icons/plus-sign.png";
-
-import Loader from "../../../../utilities/Loader";
 import CreatePostStore from "../../../../zustand/CreatePostStore";
+import { Card} from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
 
-const variants = {
-  show: {
-    scale: 1,
-    opacity: 1,
-  },
 
-  hide: {
-    scale: 0,
-    opacity: 0,
-  },
-};
 
-const Votes = ({ VotesActive, hideVotes }) => {
+const Votes = ({hideVotes }) => {
   const { addVotes, delVotes } = CreatePostStore()
   const [numForm, setNumForm] = useState([]);
   const [votes, setVotes] = useState([]);
@@ -63,7 +51,7 @@ const Votes = ({ VotesActive, hideVotes }) => {
   const expand = useMemo(() => numForm.length >= 4, [numForm]);
 
   const deletePoll = useCallback(() => {
-    hideVotes((prev) => (prev.poll = false));
+    hideVotes((prev) => !prev?.poll);
     // dellVotes is a zustand function 
     delVotes()
     setVotes([]);
@@ -76,19 +64,15 @@ const Votes = ({ VotesActive, hideVotes }) => {
     increase();
   }, [deletePoll]);
 
-
-
   return (
     <>
-      {VotesActive && (
-        <Suspense fallback={<Loader />}>
-          <div className="votes">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5 }}
-              variants={variants}
-              animate={`${VotesActive ? "show" : "hide"}`}
-              transition={{ duration: 0.2 }}
-            >
+         <Card className="votes"
+         bodyStyle={{padding: "5px"}}
+         style={{maxWidth: "90%"}} 
+         actions={[
+          <DeleteOutlined key={"delete"} onClick={()=> hideVotes()} />
+         ]}
+         >
               <div className={`poll-votes ${expand && "expand"} `}>
                 <form className="form-votes" onSubmit={(e) => submitForm(e)}>
                   <div>
@@ -111,13 +95,11 @@ const Votes = ({ VotesActive, hideVotes }) => {
                   </div>
                 )}
               </div>
-            </motion.div>
-            <div className="delete-votes" onClick={() => deletePoll()}>
-              Eliminar votos
-            </div>
-          </div>
-        </Suspense>
-      )}
+              
+             
+         </Card>
+        
+     
     </>
   );
 };
