@@ -4,11 +4,9 @@ import Navbar from '../../components/Navbar/Navbar'
 import CreatePost from '../../components/MIDDLE/crearPost/CreatePost'
 import Feed from '../../components/MIDDLE/feed/Feed'
 
-
-
 import FriendRequest from '../../components/RIGHT/FriendsRequest/FriendRequest'
 import MessageBoxPage from '../messages/MessagesBoxPages'
-import ConversationView from '../../components/RIGHT/messages/conversationView/ConversationView'
+import ConversationView from '../../components/RIGHT/Messages/conversationView/ConversationView'
 
 import Sidebar from '../../components/LEFT/Sidebar/Sidebar'
 import WithSearch from '../../HOCs/WithSearch'
