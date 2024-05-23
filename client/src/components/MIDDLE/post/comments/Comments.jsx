@@ -12,7 +12,7 @@ import ErrorMessageComment from "./ErrorMessage/ErrorMessageComment";
 import TypeComments from "./typeComments/TypeComments";
 
 
-const Comments = ({ id, name, className, type }) => {
+const Comments = ({ id, name, className, type, userId}) => {
 
   const privateRequest = useUserRequest()
   const [typeComments, setTypeComments] = useState(name || '')
@@ -23,13 +23,10 @@ const Comments = ({ id, name, className, type }) => {
     mostView: CommentService.mostView
   }
 
-
   useMemo(() => {
-    for (const r in requests) {
-      if (!(typeComments in requests)) {
-        return null
-      }
-    }
+    
+      if (!(typeComments in requests)) return null
+        
   }, [typeComments])
 
 
@@ -60,7 +57,7 @@ const Comments = ({ id, name, className, type }) => {
         <ComponentStateHandler Loader={<CommentsLoader />} isError={isError} isLoading={isLoading} ErrorMessageComponent={<ErrorMessageComment reset={reset} />}  >
           {comments?.map((comment) => (
             <>
-              <Comment key={comment.comment._id} comment={comment} postId={id} />
+              <Comment userId={userId} key={comment.comment._id} comment={comment} postId={id} />
             </>
           ))}
         </ComponentStateHandler>
