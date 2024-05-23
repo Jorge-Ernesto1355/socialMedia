@@ -20,6 +20,7 @@ const useMutationRequest = (request, { name } = {}) => {
     isSuccess,
     data
   } = useMutation({
+    mutationKey: [name],
     mutationFn: request,
     onMutate: async (newData) => {
 
@@ -33,7 +34,7 @@ const useMutationRequest = (request, { name } = {}) => {
 
       return { previousData }; // -----> context
     },
-    onError: (_error, variables, context) => {
+    onError: (_error, context) => {
       if (context?.previousComments != null) {
         queryClient.setQueryData([name], context.previousComments);
       }
