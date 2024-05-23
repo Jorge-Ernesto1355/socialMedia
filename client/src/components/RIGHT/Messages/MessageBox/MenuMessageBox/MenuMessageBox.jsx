@@ -1,5 +1,5 @@
 import React from 'react'
-import Popover from '../../../../../hooks/Popover/Popover'
+
 import menu from '../../icons/menu.png'
 import call from '../../icons/llamada-telefonica.png'
 import camara from '../../icons/camara.png'
@@ -10,6 +10,7 @@ import './menuMessageBox.css'
 import BlockContact from './BlockContact'
 import { useSocket } from '../../../../../hooks/useSocket'
 import AuthProvider from '../../../../../zustand/AuthProvider'
+import { Popover } from 'antd'
 
 
 const MenuMessageBox = ({conversation}) => {
@@ -17,10 +18,8 @@ const MenuMessageBox = ({conversation}) => {
   const socket = useSocket()
   const {userId} = AuthProvider()
   
-  return (
-    
-        <Popover trigger={<img src={menu} className='menu-message' alt="more"/>}>
-          <ul className='menuMessageBox-container'>
+  const content = (
+    <ul className='menuMessageBox-container'>
             <li className='menuMessageBox-item'>
                 <img  className='menuMessageBox-img' src={messenger} alt="" />
                 <p className='menuMessageBox-text'>Abrir en Messenger</p>
@@ -39,6 +38,12 @@ const MenuMessageBox = ({conversation}) => {
             </li>
             <BlockContact conversation={conversation}/>
           </ul>
+  )
+  
+  return (
+    
+        <Popover trigger={"click"} content={content}>
+            <img src={menu} className='menu-message' alt="more"/>
         </Popover>
     
    
