@@ -5,7 +5,6 @@ import RequestFriends from "./requestFriends/RequestFriends";
 import AuthProvider from "../../../zustand/AuthProvider";
 import userService from "../../../services/UserService";
 import useUserRequest from "../../../hooks/auth/useUserRequest";
-import { ToastContainer } from "react-toastify";
 import ComponentStateHandler from "../../../hooks/stateManagmentComponent/ComponentStateHandler";
 import LoaderFriendRequest from "./Loader/LoaderFriendRequest";
 import ErrorMessageFriendRequest from "./ErrorMessage/ErrorMessageFriendRequest";
@@ -24,7 +23,7 @@ const FriendRequest = () => {
       <ComponentStateHandler Loader={<LoaderFriendRequest />} isError={isError} isLoading={isLoading} ErrorMessageComponent={<ErrorMessageFriendRequest reset={reset} />} items={results} EmptyMessage={<EmptyMessage/>}  >
         <RequestFriends items={results} />
       </ComponentStateHandler>
-      <ToastContainer />
+     
     </div>
   );
 };
