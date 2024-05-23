@@ -1,15 +1,15 @@
 import "./RatingS.css";
 
-import { variantsAction } from "../MIDDLE/post/framerMotion/showActions";
 import React, {  useState } from "react";
-import { motion } from "framer-motion";
+
 
 
 import useUserRequest from "../../hooks/auth/useUserRequest";
 import useMutationRequest from "../../hooks/useMutationRequest";
 import ReactionService from './services/ReactionService'
 import { objetsImgs } from "../MIDDLE/post/post/objectImg";
-import useHideOnOutsideClick from "../../hooks/useHideOnCLickOutside";
+
+import { Popover } from "antd";
 
 
 const reactions = [
@@ -21,50 +21,40 @@ const reactions = [
 ];
 
 
-const Reaction = ({ id, userId, name, children, type, variantsOptions}) => {
-  const { isVisible, elementRef, show} = useHideOnOutsideClick(true);
+const Reaction = ({ id, userId, name, children, type}) => {
   const privateRequest = useUserRequest()
   const mutateRequest = useMutationRequest(ReactionService.React, {name})
-  const [showReactions, setShowReactions] = useState(false);
+
   const [reactionType, setReactionType] = useState(null);
 
 
   const MutateActionsFu = (value) => {
     setReactionType(value);
-    setShowReactions(false);
     mutateRequest.mutate({ userId, id, label:value, privateRequest, type});
   };
 
-
-  return (
-    <div ref={elementRef}>
-      {isVisible && (
-        <motion.div
-        className="ratings"
-        variants={variantsAction(variantsOptions)}
-        animate={`${showReactions ? "visible" : "hidden"}`}
-        transition={{
-          duration: 0.2,
-        }}
-      >
-        <div className="container-rating">
-          <div className="fbRating">
-            {reactions?.map((reaction, index) => (
+  const content = (
+    <div style={{display:"flex"}}>
+     {reactions?.map((reaction, index) => (
               <div className="icon-reaction-rating" key={index}>
                 <img
                   src={objetsImgs[reaction.label]}
-                  alt=""
+                  alt={`${reaction.label}`}
                   onClick={() => MutateActionsFu(reaction.label)}
                 />
               </div>
             ))}
-          </div>
-        </div>
-      </motion.div>
-      )}
-      {React.Children.map(children, (child) => {
-        return React.cloneElement(child, { reactionType, setShowReactions, isVisible:show });
-      })}
+    </div>
+  )
+
+  return (
+    <div >
+     
+      <Popover trigger={"click"} content={content} overlayInnerStyle={{borderRadius: "60px", padding: "8px"}}>
+          {React.Children.map(children, (child) => {
+            return React.cloneElement(child, { reactionType});
+          })}
+      </Popover>
     </div>
   );
 };
