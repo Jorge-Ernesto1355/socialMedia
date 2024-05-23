@@ -1,4 +1,4 @@
-import React, { useId } from "react";
+import React, { useEffect, useId } from "react";
 import "./Feed.css";
 
 // components
@@ -25,7 +25,8 @@ export default function Feed() {
   const uuid = uuidv4()
 
 
-  const { results, isLoading, isError, hasNextPage, fetchNextPage } =
+
+  const { results, isLoading, isError, error, hasNextPage, fetchNextPage, reset, refetch } =
     useInfiniteScroll({
       name: "posts",
       request: PostServices.getTimeLine,
@@ -33,8 +34,14 @@ export default function Feed() {
       id: userId
     });
 
+  useEffect(() => {
+    if (userId) {
+      refetch();
+    }
+  }, [userId, refetch]);
+
   if (isError) {
-    return <ErrorPost/>
+    return <ErrorPost reset={reset} />;
   }
 
 
@@ -49,7 +56,7 @@ export default function Feed() {
       <ul className="feeds" key={uuid}>
         {results?.map((post) => (
           <>
-            <Post key={`${uuid}-${post._id}`} post={post} />
+            <Post key={post._id} post={post} />
           </>
         ))}
       </ul>
