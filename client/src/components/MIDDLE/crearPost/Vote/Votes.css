@@ -1,9 +1,6 @@
 .votes {
-  width: 70%;
-  height: max-content;
-  border: 1px solid gray;
-  border-radius: 15px;
-  margin-top: 20px;
+ 
+  padding: 0px;
 }
 
 .poll-votes {
