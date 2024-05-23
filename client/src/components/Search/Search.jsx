@@ -1,6 +1,6 @@
 
 import React from 'react'
-import searchIcon from '../RIGHT/messages/icons/searchIcon.png'
+
 
 const Search = ({ inputProps = {}, autocomplete = {}, styles}, inputRef  ) => {
 
@@ -10,7 +10,7 @@ const Search = ({ inputProps = {}, autocomplete = {}, styles}, inputRef  ) => {
     return (
       <form className='searchConversation-container' style={styles}  >
       <div className='searchConversation-input'>
-          <img src={searchIcon} alt="search" className='searchConversation-searchIcon' />
+          
           <input type="text" placeholder='Search' />
       </div>
     
@@ -24,7 +24,7 @@ const Search = ({ inputProps = {}, autocomplete = {}, styles}, inputRef  ) => {
       placeholder:'Search'
     })}  >
       <div className='searchConversation-input'>
-          <img src={searchIcon} alt="search" className='searchConversation-searchIcon' />
+          
           <input type="text" placeholder='Search' ref={inputRef} {...inputProps}/>
       </div>
     
