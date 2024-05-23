@@ -8,8 +8,7 @@ import { useInfiniteQuery } from "react-query";
  * @param {Function} params.request - The function called to fetch the data.
  * @returns {Object} - An object containing the paginated results, loading state, error state, and pagination information.
  */
-const useInfiniteScroll = ({ name, id, request, label, privateRequest, type, options}) => {
-  // Check if the required parameters are provided
+const useInfiniteScroll = ({ name, id, request, label, privateRequest, type, options }) => {
   if (!name) {
     throw new Error("Missing name parameter");
   }
@@ -18,30 +17,26 @@ const useInfiniteScroll = ({ name, id, request, label, privateRequest, type, opt
     throw new Error("Missing request parameter");
   }
 
+  const enabled = Boolean(id);
+
   // Use the useInfiniteQuery hook to fetch the data
   const { data, isLoading, isError, hasNextPage, fetchNextPage, error, reset, refetch } =
     useInfiniteQuery(
       [name, id],
-      ({ pageParam = 1 }) =>{
-        return request({ name, id, label, limit: 10, page: pageParam, privateRequest, type })
+      ({ pageParam = 1 }) => {
+        return request({ name, id, label, limit: 10, page: pageParam, privateRequest, type });
       },
-      options,
-
       {
+        ...options,
+        enabled, // This makes sure the query only runs when id is available
         getNextPageParam: ({ data }) => {
-          
           if (!data || data?.page === data?.totalPages) {
-       
             return false;
           }
-         
-          return data?.nextPage
+          return data?.nextPage;
         },
-      },
+      }
     );
-
-
-
 
   const results = data?.pages?.flatMap((page) => page.data?.docs ?? []) ?? [];
 
