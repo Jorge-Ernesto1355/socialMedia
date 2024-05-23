@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react'
 import './MessageBoxPage.css'
 import ReactPortal from '../../components/modal/ReactPortal'
-import MessageBox from '../../components/RIGHT/messages/MessageBox/BoxMessage'
+import BoxMessage from '../../components/RIGHT/Messages/MessageBox/BoxMessage.jsx'
 import { useSocket } from '../../hooks/useSocket'
 import BoxMessagesStore from '../../zustand/BoxMessagesStore'
 
 
 const MessageBoxPage = () => {
 
-  const socket = useSocket() ?? {}
+  const socket = useSocket()
   const {setBoxMessages, boxMessages} = BoxMessagesStore()
 
 
@@ -29,7 +29,7 @@ const MessageBoxPage = () => {
       <div className='boxMessages-container'>
         <ul className='boxMessages-row'>
           {boxMessages?.map((conversation)=> (
-            <MessageBox key={`messagebox-key=${conversation?._id}`} conversationId={conversation?._id}/>
+            <BoxMessage key={`messagebox-key=${conversation?._id}`} conversationId={conversation?._id}/>
           ))}
         </ul>
       </div>
