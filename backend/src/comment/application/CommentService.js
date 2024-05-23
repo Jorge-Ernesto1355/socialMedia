@@ -209,13 +209,13 @@ class CommentService {
       exits(object);
 
       const { commentId } = object;
-      const Comment = await validateObjectId({_id: commentId}, {model:'Comment'})
+      const comment = await validateObjectId({_id: commentId}, {model:'Comment'})
 
-      if (validateComment?.error) {
-        throw new Error(validateComment?.error?.message);
+      if (comment?.error) {
+        throw new Error(comment.error?.message);
       }
 
-      await Comment.findByIdAndDelete(commentId);
+      await Comment.findByIdAndDelete(commentId)
     } catch (error) {
       return {
         error,
@@ -231,8 +231,8 @@ class CommentService {
       const { commentId, text } = object;
       const comment = await validateObjectId({_id: commentId}, {model:'Comment'})
 
-      if (validateComment?.error) {
-        throw new Error(validateContainer?.error?.message);
+      if (comment?.error) {
+        throw new Error(comment?.error?.message);
       }
 
 
