@@ -7,35 +7,30 @@ import 'react-toastify/dist/ReactToastify.css';
 import LoaderVote from '../../../MIDDLE/post/Votes/LoaderVote'
 import userService from '../../../../services/UserService';
 import useUserRequest from '../../../../hooks/auth/useUserRequest';
+import { message } from 'antd';
+import { useMutation } from 'react-query';
+import { AcceptFriendMutation } from './requestOptions';
 
 
-const AcceptFriend = ({ userRequestFriend, currentUser }) => {
+const AcceptFriend = ({ userRequestFriend, currentUser,  acceptUser }) => {
 
     const privateRequest = useUserRequest()
-    const { mutate, isLoadingMutation, isError } = useMutationRequest(userService.acceptFriend, { name: 'requestFriends' },)
+    
 
     const handleMutate = useCallback(() => {
-        mutate({
+        acceptUser({
             addUserId: userRequestFriend,
             userId: currentUser,
             accept: true,
             privateRequest
-        }, {
-            onSuccess: () => {
-                toast.success('New friend added')
-            },
-            onError: (data) => {
-                console.log(data)
-                toast.error('Something went wrong')
-            }
         })
-    })
+    },[])
 
     return (
         <>
             <button className="Accept-friend-accept" onClick={() => handleMutate()}>
-                {isLoadingMutation && <LoaderVote />}
-                {!isLoadingMutation && <span>Aceptar</span>}
+                
+                 <span>Aceptar</span>
 
             </button>
 
