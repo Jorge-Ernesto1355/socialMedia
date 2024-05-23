@@ -6,7 +6,8 @@ import messengerBlack from './messenger-black.png'
 import { IoIosExpand } from "react-icons/io";
 import { Badge, Popover } from 'antd'
 import WithSearch from '../../../HOCs/WithSearch'
-import ConversationView from '../../RIGHT/messages/conversationView/ConversationView'
+import ConversationView from '../../RIGHT/Messages/conversationView/ConversationView.jsx';
+
 const MessengerIcon = () => {
 
   const ConversationViewWithSearch = WithSearch(ConversationView, {INDEX_NAME:'conversations'})
