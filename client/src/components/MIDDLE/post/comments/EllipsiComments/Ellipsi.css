@@ -12,10 +12,18 @@
   z-index: 100;
   top: 2.5rem;
   left: -4.3rem;
+
 }
 
 .ellipsiComment-item {
   padding: 0.3rem;
+  cursor: pointer;
+}
+
+.ellipsiComment-item:hover{
+  background-color: var(--color-light);
+  border-radius: 5px;
+
 }
 
 .ellipsiComment-text {
@@ -23,13 +31,3 @@
   font-size: 0.9rem;
 }
 
-.ellipsiComment-container::before {
-  content: "";
-  position: absolute;
-  width: 0.8rem;
-  height: 0.8rem;
-  background-color: var(--color-white);
-  transform: rotate(45deg);
-  top: -0.6rem;
-  left: 5rem;
-}
