@@ -26,6 +26,14 @@ export default class UserService {
     });
   }
 
+  static async addFriend({ userId, addUserId, privateRequest }) {
+    return this.Request({
+      privateRequest,
+      endpoint: `/users/friend/add/${userId}?addUserId=${addUserId}`,
+      method: "put",
+    });
+  }
+
   static async requestFriends({ privateRequest, id, limit, page }) {
     try {
       if (!privateRequest)
@@ -37,14 +45,17 @@ export default class UserService {
       return error;
     }
   }
-
+  
   static async acceptFriend({ userId, addUserId, accept, privateRequest }) {
-    return this.Request({
-      privateRequest,
-      endpoint: `/users/friend/accept/${userId}`,
-      method: "put",
-      params: { addUserId, accept },
-    });
+    try {
+      if (!privateRequest)
+        throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+      return privateRequest.put(
+        `/users/friend/accept/${userId}?addUserId=${addUserId}&accept=${accept}`,
+      );
+    } catch (error) {
+      return error;
+    }
   }
 
   static async usersOnline({ id, privateRequest, limit, page }) {
@@ -56,14 +67,7 @@ export default class UserService {
     });
   }
 
-  static async addFriend({ userId, addUserId, privateRequest }) {
-    return this.Request({
-      privateRequest,
-      endpoint: `/users/friend/add/${userId}`,
-      method: "put",
-      params: { addUserId },
-    });
-  }
+
 
   static async getFriends({ privateRequest, id, limit, page }) {
     try {
