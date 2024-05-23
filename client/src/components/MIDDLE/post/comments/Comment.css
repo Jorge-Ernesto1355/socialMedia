@@ -1,5 +1,5 @@
 .comment {
-  padding: var(--card-padding);
+  padding: .3rem;
   background: var(--color-white);
   border-radius: var(--card-border-radius);
   width: 100%;
@@ -10,44 +10,54 @@
   position: relative;
 }
 
-.comment .head {
-  max-width: 50%;
-  max-width: fit-content;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+ .head-comment {
+  display: grid;
+  grid-template-columns: 10% 90%;
+  gap: .5rem;
+
 }
 
-.comment .head .photo {
+
+ .head-comment .photo {
   width: 45px;
   height: 45px;
   border-radius: 50%;
   object-fit: cover;
 }
 
-.comment .head .username-text {
+ .head-comment .username-text {
   min-width: 100px;
-  width: max-content;
+  max-width: max-content;
   border-radius: 10px;
   background: var(--color-light);
   padding: 7px;
   position: relative;
-  margin-left: 15px;
+  
+}
+
+.username-comment{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .comment .body {
   width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-left: 3rem;
   margin-top: 0.3rem;
-  display: grid;
-  grid-template-columns: 10% 90%;
+  
+
 }
 
 .comment .actions-comments {
   width: 100%;
   max-width: 100%;
   display: flex;
-  
-  align-items: center;
+  justify-content: start;
+
 }
 
 .comment .actions-comment-text {
@@ -60,7 +70,7 @@
 
 .comment .watchCommentsResponded {
   height: 10px;
-  top: 90px;
+  
   left: 85px;
   justify-content: flex-start;
   align-items: center;
