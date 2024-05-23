@@ -9,7 +9,7 @@ const RequestFriends = ({ items }) => {
       {!!items && (
         <ul className="request" >
           {items?.map((request) => (
-            <Request user={request} key={`request-user-key=${request?._id}`} />
+            <Request user={request} key={`request-user-key=${request?._id}`} requestId={request?._id} />
           ))}
         </ul>
       )}
