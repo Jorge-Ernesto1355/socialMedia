@@ -167,6 +167,7 @@ module.exports = class userService {
       const { userId, limit, page } = object;
 
       const friends = await this.getFriends({ userId, limit, page });
+     
 
       if (friends.error) throw new Error(friends.message);
 
@@ -177,14 +178,19 @@ module.exports = class userService {
             { model: "User", select: ["posts"] }
           );
           if (friendPost.error) throw new Error(friendPost.message);
-          return friend?.posts;
+          return friendPost?.posts;
         })
       );
+      const flattenedFriendsPostsIds = friendsPostsIds.flat();
 
+      
+      
       const friendsPosts = await Post.paginate(
-        { _id: { $in: friendsPostsIds } },
+        { _id: { $in: flattenedFriendsPostsIds } },
         { limit, page }
       );
+
+      
 
       return friendsPosts;
     } catch (error) {
