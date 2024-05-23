@@ -3,9 +3,10 @@ import React, {
 } from "react";
 
 
-import "./vote.css";
 
-const LIMIT_INPUT_TEXT = 30;
+import { Input } from "antd";
+
+
 
 const Vote = ({ updateVote = {}, votes = {}, uuid = "", index = 0 }) => {
   const [input, setInput] = useState([uuid] || "");
@@ -20,26 +21,15 @@ const Vote = ({ updateVote = {}, votes = {}, uuid = "", index = 0 }) => {
     updateVote({ value, name });
   };
 
-  const isWarning = useMemo(
-    () => (input || "").length > LIMIT_INPUT_TEXT,
-    [input],
-  );
+  
 
   return (
-    <div key={uuid} className={`vote ${isWarning && "warning"} `}>
-      <div className="vote-input">
-        <input
-          type="text"
-          value={input}
-          name={uuid}
-          onChange={handleFormChange}
-          placeholder={`Option ${index} `}
-        />
-        <span>
-          {input.length}/{LIMIT_INPUT_TEXT}
-        </span>
-      </div>
-    </div>
+   
+
+      <Input style={{marginTop:"10px"}} showCount maxLength={20} onChange={handleFormChange} value={input} name={uuid} placeholder={`option ${index + 1}`} />
+       
+      
+  
   );
 };
 
