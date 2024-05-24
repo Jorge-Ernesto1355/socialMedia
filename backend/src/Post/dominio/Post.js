@@ -35,9 +35,17 @@ const Post = Schema(
         type: Schema.Types.ObjectId,
       },
     ],
+    favorites: [{ref: "User",
+    type: Schema.Types.ObjectId,}],
     group: { type: String, default: "" },
     edit: { type: Boolean, default: false },
     points: { type: Number, default: 0 },
+    reports: [
+      {
+        ref: "User",
+        type: Schema.Types.ObjectId,
+      }
+    ],
   },
   {
     timestamps: true,
