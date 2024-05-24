@@ -99,7 +99,7 @@ const ConversationView = ({ autocomplete, inputProps, state, title = "Messages"}
       <GroupText/>
     </div>
       <SearchConversationView stateFiltred={filtred} filtred={handleClickFiltrered} ref={inputRef} inputProps={inputProps} autocomplete={autocomplete}/>
-    <UsersOnline/>  
+   
    {filtred && <p className="message-filter">Filtred by Unread</p>}
    <InfiniteScroll
    {...autocomplete.getPanelProps()}
