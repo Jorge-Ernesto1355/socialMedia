@@ -1,17 +1,12 @@
 .ellipsiPost-container {
-  position: absolute;
+
   width: 200px;
-  background-color: var(--color-white);
-  border-radius: var(--card-border-radius);
-  box-shadow: var(--card-shadow);
-  padding: 0.3rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-self: start;
-  z-index: 100;
-  top: 2.5rem;
-  left: -4.3rem;
+
+
 
 }
 
