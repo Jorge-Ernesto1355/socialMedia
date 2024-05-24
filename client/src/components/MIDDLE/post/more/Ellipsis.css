@@ -1,26 +1,26 @@
 .ellipsiPost-container {
-  position: absolute;
   width: max-content;
-  background-color: var(--color-white);
-  border-radius: 0.7rem;
-  box-shadow: var(--card-shadow);
   padding: 0.3rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-self: start;
-  z-index: 100;
   padding: 0.5rem;
-  left: -8.899999999999999rem;
-  top: 2.3rem;
-
 }
 
 .ellipsiPost-item {
+  display: flex;
+  align-items:center ;
   padding: 0.2rem;
   cursor: pointer;
   border-radius: 5px;
  
+}
+
+.ellipsis-body{
+  display: flex;
+  flex-direction: column;
+  margin-left: .5rem;
 }
 
 .ellipsiPost-description{
@@ -32,6 +32,7 @@
 
 
 .editPost-content{
+  margin-top: 5px;
   display: flex;
   align-items: center;
 
@@ -53,13 +54,3 @@
   font-size: 0.9rem;
 }
 
-.ellipsiPost-container::before {
-  content: "";
-  position: absolute;
-  width: 0.8rem;
-  height: 0.8rem;
-  background-color: var(--color-white);
-  transform: rotate(45deg);
-  top: -0.5rem;
-  left: 9.5rem;
-}
