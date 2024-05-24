@@ -67,6 +67,19 @@ export default class UserService {
     });
   }
 
+  static async hidePost({privateRequest, userId, postId}){
+    try {
+    
+      if (!privateRequest)
+        throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+      return privateRequest.put(
+        `/users/hide/post/${postId}/${userId}`,
+      );
+    } catch (error) {
+      return error;
+    }
+  }
+
 
 
   static async getFriends({ privateRequest, id, limit, page }) {
@@ -80,4 +93,42 @@ export default class UserService {
       return error;
     }
   }
+
+  static async hideAllPosts({privateRequest, userId, userIdToHide}){
+    try {
+      if (!privateRequest)
+        throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+      return privateRequest.put(
+        `/users/hide/all/post/${userId}/${userIdToHide}`,
+      );
+    } catch (error) {
+      return error;
+    }
+  }
+
+  static async report({privateRequest, userId, postId}){
+    try {
+      if (!privateRequest)
+        throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+      return privateRequest.put(
+        `/users/report/post/${postId}?userId=${userId}`,
+      );
+    } catch (error) {
+      return error;
+    }
+  }
+
+  
+  static async unFollow({privateRequest, userId, friendId}){
+    try {
+      if (!privateRequest)
+        throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+      return privateRequest.put(
+        `/users/unFollow/${userId}/${friendId}`,
+      );
+    } catch (error) {
+      return error;
+    }
+  }
+
 }
