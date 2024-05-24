@@ -15,6 +15,10 @@ const getRequestFriends = require("../application/makeFriends/friends/getRequest
 const deleteUser = require("./Delete/DeleteUserById");
 const getUsersOnline = require("./find/getUsersOnline.js");
 const getUsersTagged = require("./find/getUsersTagged");
+const hidePost = require("./interactions/hidePost.js");
+const hideAllPosts = require("./interactions/hideAllPost.js");
+const report = require("./interactions/report.js");
+const unFollow = require("./interactions/unFollow.js");
 module.exports = {
   query: {
     getUsers,
@@ -36,5 +40,9 @@ module.exports = {
     giveRoles,
     deleteRoles,
     deleteUser,
+    hidePost, 
+    hideAllPosts, 
+    report, 
+    unFollow
   },
 };
