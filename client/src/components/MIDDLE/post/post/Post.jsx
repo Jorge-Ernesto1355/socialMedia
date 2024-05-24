@@ -12,15 +12,15 @@ import CommentsShared from "./CommentsShared";
 import useImagePreview from "../../../../hooks/useImagePreview/useImagePreview";
 import ActionsPost from "../actionsPost/ActionsPost";
 import { useQuery } from "react-query";
-import More from "../more/More";
 import Votes from "../Votes/Votes";
 import ReactionsView from "../../../Reaction/Reactions/ReactionsView";
 import AuthProvider from "../../../../zustand/AuthProvider";
 import userService from "../../../../services/UserService";
 import useUserRequest from "../../../../hooks/auth/useUserRequest";
-import Image from "../../../../utilities/Image";
 import SimpleLineLoader from "../../../Loaders/SimpleLineLoader";
-import { Avatar } from "antd";
+import { Avatar, Popover } from "antd";
+import EllipsisPost from "../more/Ellipsis";
+import HiddenPost from "./hiddenPost/HiddenPost";
 const Post = ({ post, simple, editing }) => {
 
 	const { userId: currentUser } = AuthProvider()
@@ -37,14 +37,16 @@ const Post = ({ post, simple, editing }) => {
 		createdAt,
 		edit,
 		_id: postId,
-		votes
+		votes, 
 	} = post;
+
+	if(post?.hidden) return <HiddenPost postId={postId} postUserId={userId}/>
 
 	const { data: user, isLoading } = useQuery(["user", userId], () => userService.getUser({ privateRequest, userId }));
 
-
-
 	const { element, input, clearImagePreview } = useImagePreview();
+
+	
 
 	return (
 		<div className={`feed ${simple ? 'simple' : ''} `}>
@@ -63,9 +65,10 @@ const Post = ({ post, simple, editing }) => {
 
 				</div>
 				<span className="edit">
-					<More id={currentUser} postId={postId}>
-						<img src={more} alt="" />
-					</More>
+					
+					<Popover placement="bottom" overlayInnerStyle={{padding: "3px"}} trigger={"click"} content={<EllipsisPost  userId={userId} postId={postId} />}>
+					<img src={more} alt="" />
+					</Popover>
 				</span>
 			</div>
 
