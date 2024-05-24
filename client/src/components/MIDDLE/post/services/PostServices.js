@@ -126,4 +126,19 @@ export default class PostServices {
       return error;
     }
   }
+
+
+
+  static async saveFavorites({privateRequest, userId, postId}){
+    try {
+    
+      if (!privateRequest)
+        throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+      return privateRequest.put(
+        `/post/favorite/${postId}?userId=${userId}`,
+      );
+    } catch (error) {
+      return error;
+    }
+  }
 }
