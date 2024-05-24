@@ -1,0 +1,36 @@
+.post-hidden-container{
+    width: 100%;
+    max-height: max-content;
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    background: var(--color-white);
+    box-shadow: var(--card-shadow);
+    margin-top: 2rem;
+    overflow: hidden;
+}
+
+.post-hidden-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.post-hidden-title{
+    color: var(--color-black);
+    font-size: medium;
+    font-weight: 500;
+}
+
+.post-hidden-description{
+    font-size: small;
+    color: var(--color-gray);
+}
+
+.button-deshacer{
+    padding: .3rem;
+    border-radius: 5px;
+    background-color: var(--color-light);
+    cursor: pointer;
+}
