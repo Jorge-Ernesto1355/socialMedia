@@ -64,7 +64,9 @@ class PostService {
         userId,
         limit,
         page,
+        currentUser: userId
       });
+      console.log(friendPosts)
       if (friendPosts?.error) {
         throw new Error(friendPosts?.message);
       }
@@ -241,7 +243,7 @@ class PostService {
     try {
       exits(object);
       const { timeExpiration, userId, postId } = object;
-      console.log(timeExpiration, userId, postId);
+    
 
       const user = await isValidObjectId(
         { _id: userId },
@@ -308,6 +310,42 @@ class PostService {
         message: error.message,
       };
     }
+  }
+
+  static async saveFavorites(object){
+    try {
+      exits(object)
+      const {userId, postId} = object
+      const user = await  isValidObjectId({_id:userId}, {model: "User"})
+      const post = await isValidObjectId({_id: postId}, {model:"Post"})
+
+      if(user.error || post.error) throw new Error("someghing went wrong")
+
+
+        
+   if(!post.favorites.includes(userId)){
+      
+
+      await post.updateOne({$push: {favorites : userId}})
+      await user.updateOne({$push: {favorites : userId}})
+      return {message: "has been added to favorites"}
+    
+   }
+
+   if(post.favorites.includes(userId)){
+     await post.updateOne({$pull:{favorites:userId}})
+     await user.updateOne({$pull: {favorites : userId}})
+     return {message: "has been taken out to favorites"}
+   }
+    
+
+    } catch (error) {
+      return {
+        error,
+        message: error.message,
+      };
+    }
+
   }
 }
 
