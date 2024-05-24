@@ -80,6 +80,18 @@ const User = new Schema(
       type: String,
       enum: ["Online", "Offline"],
     },
+    usersPostHidden: [
+      {
+        ref: "User", 
+      type: Schema.Types.ObjectId
+      }
+    ],
+    postsHiden: [
+       {
+        ref: "Post", 
+        type: Schema.Types.ObjectId
+       }
+    ],
   },
   {
     timestamps: true,
