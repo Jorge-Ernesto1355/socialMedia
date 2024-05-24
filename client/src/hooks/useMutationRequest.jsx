@@ -34,7 +34,7 @@ const useMutationRequest = (request, { name } = {}) => {
 
       return { previousData }; // -----> context
     },
-    onError: (_error, context) => {
+    onError: (_error, variables, context) => {
       if (context?.previousComments != null) {
         queryClient.setQueryData([name], context.previousComments);
       }
