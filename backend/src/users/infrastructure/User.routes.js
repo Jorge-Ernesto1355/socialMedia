@@ -39,6 +39,15 @@ router.put("/roles/add", index.mutation.giveRoles);
 
 router.put("/relationShip/add", index.mutation.AcceptRelationShip);
 
+router.put('/hide/post/:postId/:userId', index.mutation.hidePost)
+
+router.put('/hide/all/post/:userId/:userIdToHide', index.mutation.hideAllPosts)
+
+router.put("/report/post/:postId", index.mutation.report)
+
+router.put("/unFollow/:userId/:friendId", index.mutation.unFollow)
+
+
 //mutation DElETE
 router.delete("/relationShip/del", index.mutation.deleteRelationShip);
 
