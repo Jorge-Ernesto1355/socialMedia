@@ -3,12 +3,11 @@ import "./Ellipsis.css";
 
 import { useQuery } from "react-query";
 import EllipsiOwner from "./ellipsiOwnUser/EllipsiOwner";
-import EllipsiNormalUser from "./EllipsiNormalUser";
+import EllipsiNormalUser from "./EllipsiNormalUser/EllipsiNormalUser";
 import AuthProvider from "../../../../zustand/AuthProvider";
 import userService from "../../../../services/UserService";
 import useUserRequest from "../../../../hooks/auth/useUserRequest";
-import { ToastContainer } from "react-toastify";
-const EllipsisPost = ({ isOpen, userId, postId, handleCloseEllipsi }) => {
+const EllipsisPost = ({  userId, postId, }) => {
 
   // userId is the  user that has uploaded the post that we trying to config
   // currentUser is our id, is our own user
@@ -23,8 +22,8 @@ const EllipsisPost = ({ isOpen, userId, postId, handleCloseEllipsi }) => {
 
   return (
     <>
-      {currentUser === userId ? <EllipsiOwner postId={postId} isOpen={isOpen} username={user.username ?? ''} handleCloseEllipsi={handleCloseEllipsi} isLoading={isLoading} /> : <EllipsiNormalUser postId={postId} isOpen={isOpen} isLoading={isLoading} username={user.username ?? ''} />}
-      <ToastContainer hideProgressBar={true} />
+      {currentUser === userId ? <EllipsiOwner postId={postId}  username={user.username ?? ''} isLoading={isLoading} /> : <EllipsiNormalUser postId={postId} postUserId={userId} isLoading={isLoading} username={user.username ?? ''} />}
+      
     </>
   );
 };
