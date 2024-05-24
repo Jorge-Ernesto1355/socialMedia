@@ -21,11 +21,12 @@ route.post("/", PostIndex.createPost);
 route.put("/:postId", PostIndex.UpdatePost);
 
 route.post("/share/postMessage/:postId", PostIndex.sharePostMessage);
+
 route.put("/share/:id", PostIndex.Share);
 
 route.put("/votes/add", PostIndex.Votes);
 
-route.put("/reaction/favorite/:postId", PostIndex.favorite);
+route.put("/favorite/:postId", PostIndex.favorite);
 
 route.put("/timeExpiration/:postId/:userId", PostIndex.timeExpirationEdit);
 
