@@ -1,7 +1,8 @@
+
 import { useMutation, useQueryClient } from "react-query";
 import CommentService from "../services/CommentServices";
 import { message } from "antd";
-import { UpdateCommentMutate } from "../../useQuery/mutation/Post";
+
 
 
 export const deleteCommentMutation = ({ postId, commentId }) => {
