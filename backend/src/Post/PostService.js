@@ -2,11 +2,15 @@ const cloudinaryService = require("../libs/cloudynary");
 const isValidObjectId = require("../libs/isValidObjectId");
 const MessageService = require("../messages/MessageService");
 const getTotalPoints = require("../reaction/utils/getTotalPoints");
+const { HfInference } = require("@huggingface/inference");
 
 const userService = require("../users/userService");
-
 const createVotes = require("./application/createPost/createVotes");
 const Post = require("./dominio/Post");
+const { detect } = require("langdetect");
+const { exists } = require("../users/domain/UserModel");
+const UserModel = require("../users/domain/UserModel");
+
 
 function exits(object) {
   if (!object) throw new Error("not found parameters");
@@ -33,7 +37,7 @@ class PostService {
       exits(object);
       const { postId } = object;
 
-      const isValidPost = await validateObjectId(postId, "Post");
+      const isValidPost = await isValidObjectId({_id: postId}, {model: "Post"});
 
       if (isValidPost?.error) {
         throw new Error(isValidPost?.error?.message);
@@ -66,7 +70,7 @@ class PostService {
         page,
         currentUser: userId
       });
-      console.log(friendPosts)
+     
       if (friendPosts?.error) {
         throw new Error(friendPosts?.message);
       }
@@ -132,22 +136,29 @@ class PostService {
       select: ["posts"],
     };
 
+  
+
     try {
       const file = req.files?.image;
+      console.log(file, "post")
       const image = await cloudinaryService.upload({
         filePath: file?.tempFilePath,
       });
 
+      console.log(image, "post image")
+
       if (image?.error)
         throw new Error("something went wrong to upload the photo");
-
-      votes > 0 && (await createVotes({ votes }));
+      
+      const  votesPost = await createVotes({ votes })
       const user = await isValidObjectId({ _id: userId }, queryOptions);
+
 
       const newPost = new Post({
         userId,
         description,
         image,
+        votes: votesPost,
         expiresIn: timeExpiration > 0 ? timeExpiration : null,
       });
       if (postShared) newPost.postShared = postShared;
@@ -347,6 +358,88 @@ class PostService {
     }
 
   }
+
+  static async showFavorites(object){
+    try {
+      
+      exits(object);
+      const {postId, limit, page} = object
+     
+      const post = await isValidObjectId({_id: postId}, {model: "Post", select:["favorites"]});
+   
+     
+      if (post?.error) {
+        throw new Error(isValidPost?.error?.message);
+      }
+      const usersId = post.favorites.map((userId)=> userId)
+
+      const friends = await UserModel.paginate(
+        { _id: { $in: usersId } },
+        {limit, page, select: ["username", "imageProfile"]}
+      );
+  
+      return friends
+      
+    } catch (error) {
+      return {
+        error, 
+        messag: error.message
+      }
+    }
+  }
+
+  static async traduceText(object){
+    try {
+      const { postId } = object;
+
+      // Verificar que `isValidObjectId` y `Post` model están configurados correctamente
+      const post = await isValidObjectId({ _id: postId }, { model: "Post" });
+    
+      if (post.error) throw new Error(post.message);
+    
+
+      if (post.description.length <= 3)  throw new Error("text too short to traduce")
+
+    
+      
+      let detectedLang;
+      try {
+        detectedLang = detect(post.description)[0].lang;
+      } catch (error) {
+        throw new Error('Could not detect language');
+      }
+
+  
+      if (!detectedLang || (detectedLang !== "en" && detectedLang !== "es")) {
+        throw new Error("Could not detect lenguaje");
+    }
+  
+      const hf = new HfInference("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");
+    
+      let model 
+      detectedLang == "es"  ? model = "Helsinki-NLP/opus-mt-es-en" : model =  "Helsinki-NLP/opus-mt-en-es" 
+      
+      const response = await hf.translation({
+        model,
+        inputs: post.description,
+        parameters: {
+          "src_lang": "en",
+          "tgt_lang": "es"
+        }
+      });
+    
+     
+    
+      return response.translation_text;
+    } catch (error) {
+      return {
+        error, 
+        message: error.message
+      }
+    }
+  }
+
+
 }
 
 module.exports = PostService;
