@@ -19,6 +19,8 @@ const sharePostMessage = require("./interact/shares/SharePostMessage.js");
 //favorites
 const favorite = require("./interact/favorites/Favorites");
 const AllFavorite = require("./interact/favorites/AllFavorites");
+const TraduceText = require("../AI/TraduceText.js");
+const getFavorites = require("./interact/favorites/AllFavorites");
 
 module.exports = {
   DeletePost,
@@ -36,4 +38,7 @@ module.exports = {
   findTimeLine,
   timeExpirationEdit,
   sharePostMessage,
+  TraduceText, 
+  getFavorites
+  
 };
