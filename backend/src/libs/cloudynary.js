@@ -12,8 +12,8 @@ class cloudinaryService {
     try {
       exits(object);
       const { filePath } = object;
-
-      if (!filePath) return;
+      
+      if (!filePath) return null;
       const resultImage = await cloudinary.uploader.upload(filePath, {
         folder: "prueba",
       });
@@ -36,7 +36,7 @@ class cloudinaryService {
     try {
       exits(object);
       const { imageId } = object;
-      await v2.uploader.destroy(imageId);
+      await cloudinary.uploader.destroy(imageId)
     } catch (error) {
       return {
         error,
