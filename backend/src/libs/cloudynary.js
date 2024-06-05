@@ -44,6 +44,35 @@ class cloudinaryService {
       };
     }
   }
+
+
+  static async getImageUrls({public_id}){
+    try {
+
+       const fullImageUrl = cloudinary.url(public_id, {
+        secure: true
+       })
+
+       const previewUrl = cloudinary.url(public_id, {
+        secure: true, 
+        quality: "auto:low", 
+        fetch_format: "auto"
+       })
+
+       return {
+        url: fullImageUrl,
+        previewUrl ,
+        public_id, 
+
+       }
+        
+    } catch (error) {
+      return {
+        error, 
+        message: error.message
+      }
+    }
+  }
 }
 
 module.exports = cloudinaryService;
