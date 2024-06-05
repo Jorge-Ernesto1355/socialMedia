@@ -140,12 +140,12 @@ class PostService {
 
     try {
       const file = req.files?.image;
-      console.log(file, "post")
+     
       const image = await cloudinaryService.upload({
         filePath: file?.tempFilePath,
       });
 
-      console.log(image, "post image")
+      
 
       if (image?.error)
         throw new Error("something went wrong to upload the photo");
