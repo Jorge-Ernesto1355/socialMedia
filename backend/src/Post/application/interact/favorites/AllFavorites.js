@@ -1,39 +1,18 @@
-const User = require("../../../../users/domain/UserModel");
-const Post = require("../../../dominio/Post")
 
-const allUsersHasGivenFavorite =  async (req, res)=>{
+const PostService = require("../../../PostService");
 
-  const {postId} = req.query
 
-  if(postId){
-    try {
+const getFavorites =  async (req, res)=>{
+
+  const {postId} = req.params
   
-      const post = await Post.findById(postId)
-      
-       
-     const allfavorites = await Promise.all(
-      post.favorites.map((userId) => {
-        return User.findById(userId);
-      })
-    );
-      const users = allfavorites.map(user => {
-       return {
-         _id:user._id, 
-         username:user.username, 
-         imageProfile:user.imageProfile
-       }
-      })
+  const limit = parseInt(req.query.limit, 10) || 10;
+  const page = parseInt(req.query.page, 10) || 1;
+  const favorites = await PostService.showFavorites({postId, limit, page})
 
-      return res.status(200).json(users)
-    } catch (error) {
-      return res.status(500).json({message:"algo salio mal"})
-    }
+  if(favorites.error) return res.status(500).json({error: favorites.error.message})
 
-  }
-
-  return res.status(400).json({message:'proporciona el id'})
-
-
+  if(!favorites.error) return res.status(200).json(favorites)
 }
 
-module.exports = allUsersHasGivenFavorite
+module.exports = getFavorites
