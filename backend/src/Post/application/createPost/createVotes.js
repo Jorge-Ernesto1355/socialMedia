@@ -22,7 +22,10 @@ const createVotes = async ({ req, res, votes }) => {
 
     return votesReady;
   } catch (error) {
-    // return res.status(500).json({ message: "algo salio maldd" });
+    return {
+      error,
+      message: error.message
+    }
   }
 };
 
