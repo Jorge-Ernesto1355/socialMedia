@@ -1,5 +1,4 @@
-const Post = require("../../dominio/Post");
-const UserModel = require('../../../users/domain/UserModel');
+
 const calculatePoints = require("../interact/utils/calculatePoints/calculatePoints");
 const PostService = require("../../PostService");
 const findTimeLine = async (req, res) => {
