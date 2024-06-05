@@ -10,7 +10,7 @@ const Favorites = async (req, res)=>{
 
   const favorites = await  PostService.saveFavorites({userId, postId})
 
-  console.log(favorites)
+
 
   if(favorites?.error) return res.status(500).json({message: favorites.message})
 
