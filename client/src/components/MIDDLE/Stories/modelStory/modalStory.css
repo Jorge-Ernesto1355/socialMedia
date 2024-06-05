@@ -1,0 +1,31 @@
+
+.modal-story-container{
+    width: 300px;
+    padding: 0px;
+    height: 300px;
+}
+
+.story-carousel-item{
+    width: 300px;
+    height: 750px;
+}
+
+.story-carousel-item-img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 1rem;
+}
+
+
+.story-item-container-img{
+    height: 100%;
+    position: relative;
+}
+
+
+.story-modal-avatar{
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+}

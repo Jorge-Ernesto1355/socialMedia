@@ -37,6 +37,9 @@ module.exports = class userService {
           "imageProfile",
           "socketId",
           "status",
+          "coverPicture",
+          "bio", 
+          "interests",
           ...options,
         ],
       };
@@ -55,6 +58,8 @@ module.exports = class userService {
       };
     }
   }
+
+  
   static async getFriends(object) {
     try {
       exits(object);
@@ -96,7 +101,7 @@ module.exports = class userService {
     try {
       exits(object);
       const { userId, limit, page } = object;
-      console;
+     
       const queryOptions = {
         model: "User",
         select: ["posts"],
@@ -122,6 +127,8 @@ module.exports = class userService {
       };
     }
   }
+
+  
 
   static async requestsFriends(object) {
     try {
@@ -339,15 +346,38 @@ module.exports = class userService {
     }
   }
 
+  static async editUserLocation(object){
+    try {
+      if (!object || !object.userId) {
+        throw new Error("Missing required parameter: userId");
+      }
+      const {userId, location} = object
+
+      const user = await isValidObjectId({_id: userId}, {model: "User"})
+      if(user.error) throw new Error(user.message)
+
+     const updatedUser =  await User.findByIdAndUpdate(userId, {city: location?.city, state: location?.state, country: location?.country, workAt: location.workAt}, {new: true})
+   
+     return updatedUser
+    } catch (error) {
+      return {
+        error, 
+        message: error.message
+      }
+    }
+  }
+
   static async uploadProfilePicture(object) {
     try {
       exits(object);
-      const { userId, image } = object;
+      const { userId, avatar } = object;
+     
       const queryOptions = {
         model: "User",
       };
 
-      if (!image) {
+      
+      if (!avatar) {
         throw new Error("file invalidate or undefined");
       }
 
@@ -356,14 +386,19 @@ module.exports = class userService {
         throw new Error(user?.message);
       }
 
+   
       const result = await cloudinaryService.upload({
-        filePath: image?.filePath,
+        filePath: avatar?.tempFilePath,
       });
-      await fs.remove(image.tempFilePath);
+
+      
+      await fs.remove(avatar?.tempFilePath);
       const ProfilePicture = {
-        url: result.secure_url,
+        url: result.url,
         public_id: result.public_id,
       };
+
+      if(user.imageProfile) await cloudinaryService.deleteImage({imageId: user.imageProfile.public_id})
 
       user.imageProfile = ProfilePicture;
 
@@ -377,25 +412,125 @@ module.exports = class userService {
     }
   }
 
-  static async updateInfo(object) {
+  static async uploadCoverPicture(object){
     try {
-      exits(object);
-      const { password, userId } = object;
+      exits(object)
+      const {userId, coverPicture} = object
+    
+      if (!coverPicture) {
+        throw new Error("file invalidate or undefined");
+      }
 
-      const options = {
-        model: "User",
+      const user = await isValidObjectId({ _id: userId }, { model: "User" } );
+      if (user?.error) {
+        throw new Error(user?.message);
+      }
+
+      const cover = await  cloudinaryService.upload({
+        filePath: coverPicture.tempFilePath
+     
+      })
+      
+      if(cover.error) throw new Error(cover.message)
+
+      const urls = await cloudinaryService.getImageUrls({public_id: cover.public_id})
+      console.log(urls)
+           
+      if(urls.error) throw new Error(urls.error.message)
+
+      const ProfilePicture = {
+        url: urls.url,
+        public_id: urls.public_id,
+        previewUrl: urls.previewUrl
       };
-      const user = await isValidObjectId({ _id: userId }, options);
+
+      if(user.coverPicture) await cloudinaryService.deleteImage({imageId: user.coverPicture.public_id})
+
+      
+      const updatedUser = await UserModel.findByIdAndUpdate(userId, {coverPicture: ProfilePicture}, {new: true})
+
+      return updatedUser.coverPicture
+    } catch (error) {
+      return {
+        error,
+        message: error.message,
+      };
+    }
+  }
+
+  
+
+  static async editProfilePictureFromImages(object){
+    try {
+      exits(object)
+      const {userId, objectImage} = object
+      
+      const user = await isValidObjectId({ _id: userId }, {model:"User", select:["imageProfile"]});
 
       if (user?.error) {
         throw new Error(user?.message);
       }
 
-      const correctPassword = await comparePassword(password, user.password);
+      const updatedUser = await UserModel.findByIdAndUpdate(
+        userId,
+        { imageProfile: objectImage },
+        { new: true }
+      );
 
-      if (!correctPassword) throw new Error("password is not correct");
+      return updatedUser.imageProfile;
+    } catch (error) {
+      return {
+        error,
+        message: error.message,
+      };
+    }
+  }
 
-      const userUpdatd = await UserModel.findByIdAndUpdate(user._id, {});
+  static async editCoverPicture(object){
+    try {
+      exits(object)
+      const {userId, objectImage} = object
+      
+      const user = await isValidObjectId({ _id: userId }, {model:"User", select:["coverPicture"]});
+
+      if (user?.error) {
+        throw new Error(user?.message);
+      }
+
+      const updatedUser = await UserModel.findByIdAndUpdate(
+        userId,
+        { coverPicture: objectImage },
+        { new: true }
+      );
+
+      return updatedUser.coverPicture;
+    } catch (error) {
+      return {
+        error,
+        message: error.message,
+      };
+    }
+  }
+
+  static async updateInfo(object) {
+    try {
+      exits(object);
+      const { userId, userInfo } = object;
+
+     
+
+      const options = {
+        model: "User",
+      };
+
+      const user = await isValidObjectId({ _id: userId }, options);
+
+      if (user?.error) {
+        throw new Error(user?.message);
+      }
+      
+
+      const userUpdatd = await UserModel.findByIdAndUpdate(user._id, {...userInfo}, {new : true});
 
       return userUpdatd;
     } catch (error) {
@@ -571,5 +706,36 @@ module.exports = class userService {
     }
   };
   
-  
+  static async getPhotos(object){
+    try {
+      exits(object)
+      const {userId, limit, page} = object
+      const user = await isValidObjectId({ _id: userId }, { model: "User", select: ["posts"] });
+      
+      if (user?.error) {
+        throw new Error(user?.message);
+      }
+
+      const posts = await this.getPosts({userId, limit: 99999, page: 1})
+      
+      if(posts.error) throw new Error(posts.message)
+    
+        const images = posts.docs
+        .filter((post) => {
+          return !post.hasOwnProperty('image')
+        }).map((post)=> post.image)
+       
+        
+        const filteredImages = images.filter(obj => JSON.stringify(obj) !== '{}');
+    
+       
+      return filteredImages
+
+    } catch (error) {
+      return {
+        error, 
+        messag: error.message
+      }
+    }
+  }
 };

@@ -3,6 +3,7 @@ const mongoosePaginate = require("mongoose-paginate-v2");
 const { AccessToken, RefreshToken } = require("../../auth/application/auth");
 const getUserInfo = require("../../libs/getUserInfo");
 
+
 const User = new Schema(
   {
     username: {
@@ -24,7 +25,14 @@ const User = new Schema(
       required: true,
       min: 6,
     },
-    coverPicture: { url: String, public_id: String },
+    bio: {
+      type:String, 
+      max: 100, 
+      min: 10, 
+      trim:true
+    },
+    interests: [  ],
+    coverPicture: { url: String, public_id: String, previewUrl: String },
     friends: {
       type: Array,
       default: [],
@@ -33,7 +41,10 @@ const User = new Schema(
       type: Array,
       default: [],
     },
-
+    state: {type: String, max: 20}, 
+    city: {type: String, max: 20},
+    country: {type: String, max: 20},
+    workAt: {type:String, max: 30},
     desription: {
       type: String,
       max: 80,
@@ -48,6 +59,7 @@ const User = new Schema(
     imageProfile: {
       url: String,
       public_id: String,
+      previewUrl: String
     },
     Admin: { type: Boolean, default: false },
     refreshToken: {
@@ -92,6 +104,13 @@ const User = new Schema(
         type: Schema.Types.ObjectId
        }
     ],
+    stories: [
+      {
+        ref: "Story",
+        type: Schema.Types.ObjectId 
+
+      }
+    ]
   },
   {
     timestamps: true,

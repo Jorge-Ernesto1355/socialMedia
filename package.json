@@ -20,6 +20,9 @@
     "testEnviroment": "node"
   },
   "dependencies": {
+    "@huggingface/inference": "^2.7.0",
+    "franc": "^6.2.0",
+    "langdetect": "^0.2.1",
     "zod": "^3.22.2"
   }
 }

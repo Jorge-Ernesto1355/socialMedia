@@ -141,4 +141,31 @@ export default class PostServices {
       return error;
     }
   }
+
+  static async translate({privateRequest,  postId}){
+    try {
+    
+      if (!privateRequest)
+        throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+      return privateRequest.get(
+        `/post/traduce/${postId}`,
+      );
+    } catch (error) {
+      return error;
+    }
+  }
+
+  static async favorites({privateRequest,  id, postId}){
+
+    try {
+    
+      if (!privateRequest)
+        throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+      return privateRequest.get(
+        `/post/favorites/${id}`,
+      );
+    } catch (error) {
+      return error;
+    }
+  }
 }

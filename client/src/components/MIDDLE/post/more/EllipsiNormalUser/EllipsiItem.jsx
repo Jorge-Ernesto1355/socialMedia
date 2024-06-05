@@ -2,7 +2,9 @@ import React from 'react'
 import { OptionsMoreObject } from '../optionsMoreObject/OptionsMoreObject'
 import AuthProvider from '../../../../../zustand/AuthProvider'
 import useUserRequest from '../../../../../hooks/auth/useUserRequest'
-import { Skeleton, message } from 'antd'
+
+import SpinnerLoader from '../../../../../stylesComponents/spinnerLoader/SpinnerLoader'
+import { message } from 'antd'
 
 
 const EllipsiItem = ({ postId, title, icon, successMessage, typeItem, ...props}) => {
@@ -22,11 +24,14 @@ const EllipsiItem = ({ postId, title, icon, successMessage, typeItem, ...props})
  
   return (
   <li onClick={()=> mutate({postId, userId, privateRequest, ...props})} className="ellipsiPost-item">
-        {icon}
+       <div className='ellipsi-body-item'>
+       {icon}
         <div className='ellipsis-body'>
-        {isLoadingMutation ? <Skeleton.Input active={isLoadingMutation} size={"small"} /> : <>{title}</>}
-        {props?.description}
+         {title}
+         {props?.description}
         </div>
+       </div>
+       
         
    </li>
   )

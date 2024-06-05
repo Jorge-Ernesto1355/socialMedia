@@ -40,7 +40,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             {/* protect this routes */}
             <Route element={<PersitsLogin />}>
-              <Route path="/profile/:userId/:postId" element={<Profile />} />
+              <Route path="/profile/:userId" element={<Profile />} />
               <Route path="/favorites/:userId" element={<FavoritesList />}></Route>
               <Route path="/" element={<Main />} />
             </Route>

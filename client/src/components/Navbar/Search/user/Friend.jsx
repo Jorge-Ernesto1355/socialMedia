@@ -6,6 +6,7 @@ import SpinnerLoader from '../../../../stylesComponents/spinnerLoader/SpinnerLoa
 import AuthProvider from '../../../../zustand/AuthProvider'
 import userService from '../../../../services/UserService'
 import useUserRequest from '../../../../hooks/auth/useUserRequest'
+
 import { useMutation, useQuery } from 'react-query'
 import { useSocket } from '../../../../hooks/useSocket'
 import ButtonStars from '../../../buttons/ButtonStarts/ButtonStars'
@@ -18,22 +19,23 @@ const Friend = ({ addUser }) => {
     const privateRequest = useUserRequest()
     const { mutate, isLoading, isError, isSuccess} = useMutation(['addFriend', addUser], ()=> userService.addFriend({userId, addUserId: addUser.objectID, privateRequest}))
 
-    
-    const { data: userData } = useQuery(["user", userId], () => userService.getUser({ privateRequest, userId, options:['friends'] }));
+ 
+    const { data: userData} = useQuery(["usertoFriend", userId], () => userService.getUser({ privateRequest, userId , options: ["friends"]}));
+ 
 
-    const user = userData?.data ?? {};
 
     const handleMutate = useCallback(() => {
         mutate({
             userId,
-            addUser: addUser?._id?.$oid
+            addUser: addUser?.objectID
         },{
             onError: ()=> message.error("Something went wrong"), 
             onSuccess: ()=> message.success("request sended")
         })
     }, [])
 
-    const isFriend = isYourFriend(user?.friends, addUser?._id?.$oid)
+    const isFriend = isYourFriend(userData?.friends, addUser?.objectID)
+       
 
 
     return (
@@ -42,7 +44,7 @@ const Friend = ({ addUser }) => {
 
             {!isLoading && !isError && (
                 <>
-                    {isFriend && <p>friend</p>}
+                    {isFriend && <p className='search-add-friend'>friend</p>}
                     {!isFriend && (
                         <>
                             {isSuccess ? <p className='search-add-friend'>Request sended</p> :  <p className='search-add-friend' onClick={() => handleMutate()}>Añadir amigo</p> }

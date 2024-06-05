@@ -16,6 +16,8 @@ route.get("/votes", PostIndex.UsersVotes);
 
 route.get("/votes/:id", PostIndex.getVotes);
 
+route.get('/traduce/:postId', PostIndex.TraduceText)
+
 route.post("/", PostIndex.createPost);
 
 route.put("/:postId", PostIndex.UpdatePost);
@@ -30,6 +32,7 @@ route.put("/favorite/:postId", PostIndex.favorite);
 
 route.put("/timeExpiration/:postId/:userId", PostIndex.timeExpirationEdit);
 
+route.get("/favorites/:postId", PostIndex.getFavorites)
 route.delete("/:id", PostIndex.DeletePost);
 
 module.exports = route;

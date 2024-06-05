@@ -1,6 +1,6 @@
 import React from "react";
 import "./likePost.css";
-import { motion } from "framer-motion";
+
 import like from "../../assets/likePost.png";
 import { objetsImgs } from "../MIDDLE/post/post/objectImg";
 
@@ -25,9 +25,8 @@ const LikePost = ({ reactionType}) => {
         </div>
       ) : (
         <div className="actionsActivated" >
-          <motion.img
-            initial={{ scale: 0 }}
-            animate={{ scale: 1.1 }}
+          <img
+          className="reacted-icon"
             src={objetsImgs[reactionType]}
             alt="reactiontype-likeSelected"
           />

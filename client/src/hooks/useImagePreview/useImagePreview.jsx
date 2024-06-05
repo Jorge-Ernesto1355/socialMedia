@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 function isRefLinkedToImg(ref) {
   // verificar si ref está vinculada a un elemento de imagen (img)
@@ -18,6 +18,7 @@ function isFileInputRef(ref) {
 const UseImagePreview = () => {
   const elementRef = useRef(null);
   const fileInputRef = useRef(null);
+  const [hasImage, setHasImage] = useState(false); // Nuevo estado para rastrear si hay una imagen
 
   const clearImagePreview = useCallback(() => {
     if (isRefLinkedToImg(elementRef)) {
@@ -32,6 +33,7 @@ const UseImagePreview = () => {
 
     if (!file.type.startsWith("image/")) {
       elementRef.current.src = null;
+      setHasImage(false); // No hay imagen cargada
       return;
     }
 
@@ -46,6 +48,7 @@ const UseImagePreview = () => {
       if (!isRefLinkedToImg(elementRef)) return undefined;
       if (elementRef.current && reader.result) {
         elementRef.current.src = reader.result;
+        setHasImage(true); // Imagen cargada correctamente
       } else {
         return undefined;
       }
@@ -69,6 +72,7 @@ const UseImagePreview = () => {
   }, [elementRef, fileInputRef]);
 
   return {
+    hasImage,
     element: elementRef,
     input: fileInputRef,
     clearImagePreview,

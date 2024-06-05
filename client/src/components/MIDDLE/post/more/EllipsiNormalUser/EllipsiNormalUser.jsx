@@ -7,13 +7,15 @@ import EllipsiItem from './EllipsiItem'
 import ReportIcon from '../icons/ReportIcon'
 import HideIcon from '../icons/HideIcon/HideIcon'
 import UnFollowIcon from '../icons/UnFollowIcon'
+import TranslateIcon from '../icons/TranslateIcon'
 
 export const OptionsMoreObject = {
   saveToFavorites: "saveToFavorites", 
   HidePost: "HidePost", 
   hideAll: "hideAll", 
   report: "report", 
-  unFollow: "unFollow"
+  unFollow: "unFollow", 
+  translate: "translate"
 }
 
 const EllipsiNormalUser = ({ username = '', isLoading, postId, postUserId})=>{
@@ -62,6 +64,14 @@ const EllipsiNormalUser = ({ username = '', isLoading, postId, postUserId})=>{
          description={<span style={{fontSize: "x-small"}}>not be her/his friend anymore</span>}
          icon={<UnFollowIcon></UnFollowIcon>}
          title={ <h4 className="ellipsiPost-text">UnFollow</h4>}/> 
+
+         <EllipsiItem
+         typeItem={OptionsMoreObject.translate}
+         postId={postId}
+         friendId={postUserId}
+         description={<span style={{fontSize: "x-small"}}>traduce the text of spanish to ingles or viceversa</span>}
+         icon={<TranslateIcon></TranslateIcon>}
+         title={ <h4 className="ellipsiPost-text">Traduce</h4>}/> 
 
         
       </ul>

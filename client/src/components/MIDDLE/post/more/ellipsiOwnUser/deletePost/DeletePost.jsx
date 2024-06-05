@@ -14,7 +14,6 @@ const DeletePost = ({ postId }) => {
     const privateRequest = useUserRequest()
 
     const { mutateDelete, isLoadingMutationDelete, isErrorDeletePost, resetDelete } = DeletePostRequest()
-
     const handleDelete = () => {
 
         mutateDelete({
@@ -30,9 +29,6 @@ const DeletePost = ({ postId }) => {
 
         
     }
-
-
-
 
     return (
         <>

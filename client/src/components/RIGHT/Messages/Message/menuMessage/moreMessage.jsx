@@ -1,15 +1,16 @@
 import React from 'react'
 import Reaction from '../../../../Reaction/Reaction'
-import LikeMessage from '../../../../Reaction/LikeMessage'
-import reply from './icons/reply.png'
 import moment from 'moment'
-import copy from './icons/copiar-alt.png'
+import './menuMessage.css'
 import clipboardCopy from 'clipboard-copy';
 import BoxMessagesStore from '../../../../../zustand/BoxMessagesStore'
 import AuthProvider from '../../../../../zustand/AuthProvider'
+import LikePost from '../../../../Reaction/LIkePost'
+import ReplyIcon from './icons/ReplyIcon'
+import CopyIcon from './icons/CopyIcon'
 
 
-const Component = ({message, hovered}) => {
+const MoreMessage = ({message}) => {
 
   const {MessageReply} = BoxMessagesStore()
   const {userId} = AuthProvider()
@@ -26,7 +27,7 @@ const Component = ({message, hovered}) => {
 
 
   return (
-    <ul className='popover-message' onMouseEnter={()=> hovered(true)} onMouseLeave={()=> hovered(false)}>
+    <ul className='popover-message' >
                 <li className='item-message'><h6 className='popover-text-hour'>{hour}</h6></li>
                 <li className='item-message'>
                 <Reaction
@@ -35,21 +36,23 @@ const Component = ({message, hovered}) => {
                   id={message?._id}
                   userId={userId}
                   type={'Message'}
-                >
-                    <LikeMessage/>
+                 >
+                    <LikePost/>
                 </Reaction>
                 </li>
+               
+
                 <li className='item-message' onClick={()=> MessageReply(message?._id)}>
+                    <ReplyIcon/>
                     <hp className='popover-text-message'>Reply</hp>
-                    <span><img src={reply} alt="reply" className='popover-img-message' /></span>
                 </li>
                 <li className='item-message'  onClick={()=> handleCopyClick()}>
+                    <CopyIcon/>
                     <p className='popover-text-message' >Copy</p>
-                    <img src={copy} alt="copy" className='popover-img-message' />
                 </li>
                 
             </ul>       
   )
 }
 
-export default Component
+export default MoreMessage

@@ -5,7 +5,7 @@ const UpdateCommentResponded = async (commentToSend) => {
     `/post/comment/responded/${commentToSend.commentId}?commentResponded=${commentToSend.commentsRespondedId}`,
     commentToSend,
   );
-  console.log(data);
+
   return data;
 };
 

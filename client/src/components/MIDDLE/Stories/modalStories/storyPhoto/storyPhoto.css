@@ -1,0 +1,15 @@
+.story-upload-img{
+    width: 90%;
+    height: 500px;
+    border-radius: 15px;
+    max-width: 90%;
+    max-height: 500px;
+    object-fit: cover;
+}
+
+.story-notStory-img{
+    width: 90%;
+    height: 500px;
+    border-radius: 15px;
+    background-color: var(--color-light);
+}

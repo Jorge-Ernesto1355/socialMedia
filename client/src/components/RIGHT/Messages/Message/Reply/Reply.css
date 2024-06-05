@@ -9,7 +9,7 @@
     padding: .2rem;
     justify-content: start;
     align-items: start;
-    background-color: #D9D9D9;
+    border: 1px solid var(--color-light);
     position: relative;
 }
 

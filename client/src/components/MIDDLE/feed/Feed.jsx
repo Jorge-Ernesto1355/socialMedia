@@ -11,6 +11,7 @@ import useUserRequest from "../../../hooks/auth/useUserRequest";
 import PostServices from "../post/services/PostServices";
 import AuthProvider from "../../../zustand/AuthProvider";
 import ErrorPost from "../post/post/ErrorPost/ErrorPost";
+import Skeleton from "../../Skeleton/Skeleton";
 
 
 /**
@@ -26,7 +27,7 @@ export default function Feed() {
 
 
 
-  const { results, isLoading, isError, error, hasNextPage, fetchNextPage, reset, refetch } =
+  const { results, isLoading, isError,  hasNextPage, fetchNextPage, reset, refetch } =
     useInfiniteScroll({
       name: "posts",
       request: PostServices.getTimeLine,
@@ -43,7 +44,8 @@ export default function Feed() {
   if (isError) {
     return <ErrorPost reset={reset} />;
   }
-
+  
+ 
 
 
   return (

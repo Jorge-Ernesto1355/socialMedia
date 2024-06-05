@@ -2,12 +2,13 @@ const userService = require("../../userService");
 
 const UploadProfilePicture = async (req, res) => {
   const { userId } = req.params;
+  const avatar = req.files?.avatar;
 
-  const image = req.files?.image;
+  
 
   const uploadProfilePicture = await userService.uploadProfilePicture({
     userId,
-    image,
+    avatar,
   });
 
   if (uploadProfilePicture?.error) {

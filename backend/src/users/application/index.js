@@ -19,6 +19,14 @@ const hidePost = require("./interactions/hidePost.js");
 const hideAllPosts = require("./interactions/hideAllPost.js");
 const report = require("./interactions/report.js");
 const unFollow = require("./interactions/unFollow.js");
+const getPhotos = require("./find/getPhotos.js");
+const editProfilePicture = require("./uploadImages/editProfilePictureFromImages.js");
+const uploadCoverPicture = require("./uploadImages/uploadCoverPicture.js");
+const editCoverPicture = require("./uploadImages/editCoverPicture.js");
+const updateUserProfile = require("./Update/UpdateUserProfile.js");
+const updateUserLocation = require("./Update/updateUserLocation.js");
+
+
 module.exports = {
   query: {
     getUsers,
@@ -28,6 +36,7 @@ module.exports = {
     getRequestFriends,
     getUsersTagged,
     getUsersOnline,
+    getPhotos
   },
   mutation: {
     AcceptFriends,
@@ -43,6 +52,11 @@ module.exports = {
     hidePost, 
     hideAllPosts, 
     report, 
-    unFollow
+    unFollow, 
+    editProfilePicture,
+    uploadCoverPicture, 
+    editCoverPicture, 
+    updateUserProfile, 
+    updateUserLocation
   },
 };

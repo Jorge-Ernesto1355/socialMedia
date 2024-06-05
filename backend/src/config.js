@@ -11,6 +11,7 @@ const ReactionRouter = require("./reaction/infratructure/Reaction.routes");
 const CommentRouter = require("./comment/infrastructure/Comment.routes");
 const ConversationRouter = require("./messages/infrastructure/Conversation.routes");
 const MessageRouter = require("./messages/infrastructure/Message.routes");
+const StoryRouter = require("./story/infrastructure/Story.routes.js")
 const fileUpload = require("express-fileupload");
 const cookieParser = require("cookie-parser");
 
@@ -104,6 +105,7 @@ class Server {
     this.app.use("/api/v1/comment", CommentRouter);
     this.app.use("/api/v1/conversation", ConversationRouter);
     this.app.use("/api/v1/message", MessageRouter);
+    this.app.use("/api/v1/story", StoryRouter);
   }
 
   socketIo() {

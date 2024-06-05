@@ -1,11 +1,9 @@
 .friend-request {
   margin-top: 2rem;
+
 }
 
-.friend-request h4 {
-  color: var(--color-gray);
-  padding: 10px;
-}
+
 
 .friend-request .request {
   background: var(--color-white);

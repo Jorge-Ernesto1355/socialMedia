@@ -23,7 +23,7 @@ module.exports =  class storyService {
 
             const urls = await cloudinaryService.getImageUrls({public_id: Image.public_id})
 
-            console.log(urls)
+           
             if(urls.error) throw new Error(urls.error.message)
             
 

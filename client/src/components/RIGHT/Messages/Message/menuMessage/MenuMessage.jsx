@@ -6,7 +6,7 @@ import Loader from '../../../../../utilities/Loader'
 
 const MoreMessage = lazy(()=> import('./moreMessage'))
 
-const MenuMessage = ({isHovered, message, hovered}) => {
+const MenuMessage = () => {
   return (
 
    <div>

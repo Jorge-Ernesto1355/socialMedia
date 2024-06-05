@@ -4,7 +4,7 @@ import useMutationRequest from "../../../../../hooks/useMutationRequest"
 
 import PostServices from "../../services/PostServices"
 import UserService from "../../../../../services/UserService";
-import { message } from "antd";
+import { Descriptions, message } from "antd";
 
 
 export const OptionsMoreObject = Object.freeze({
@@ -12,7 +12,8 @@ export const OptionsMoreObject = Object.freeze({
   HidePost: ({ userId, postId }) => hidePost({postId, userId}), 
   hideAll: ({userId, postId})=> hideAll({userId, postId}), 
   report: ({userId, postId})=> report({postId, userId}), 
-  unFollow: ({userId, postId})=> unFollow({userId})
+  unFollow: ({userId})=> unFollow({userId}), 
+  translate: ({postId, userId})=> translate({postId, userId})
 })
 
 
@@ -115,7 +116,41 @@ export const unFollow = ({userId})=>{
 }
 
 
+export const translate = ({postId, userId})=>{
 
+  const queryClient = useQueryClient()
+  const queryPost = ['traduce', postId]
+  const {mutate, isLoading, isError} = useMutation({
+    mutationFn: PostServices.translate, 
+    mutationKey: queryPost, 
+    onSuccess: (traducedText)=>{
+
+      queryClient.cancelQueries()
+      queryClient.setQueryData(['posts',userId], (posts) => {
+        if (!posts) return posts; 
+        const newPages = posts.pages.map((page) => {
+          const newDocs = page.data.docs.map((doc) => {
+            if (doc._id === postId) {
+              return { ...doc, description: traducedText?.data?.translationText };
+            }
+            return doc;
+          });
+          return { ...page, data: { ...page.data, docs: newDocs } };
+        });
+        
+        return { ...posts, pages: newPages };
+      });
+
+
+    }, 
+    onError: (error)=> {
+      console.log(error)
+      message.error(error.response.data.error)
+    }
+  })
+
+  return {mutate, isLoadingMutation: isLoading, isError}
+}
 
 
   

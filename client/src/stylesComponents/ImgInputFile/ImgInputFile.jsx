@@ -1,10 +1,10 @@
 import React from 'react'
 import './ImgInputFile.css'
 import gallery from '../../components/MIDDLE/crearPost/icons/gallery.png'
-const ImgInputFile = ({img}, inputFile) => {
+const ImgInputFile = ({icon}, inputFile) => {
     return (
         <div className='imgInputFile-container'>
-            <img className="imgInputFile-img" src={img ? img : gallery}  />
+            {icon}
 
             <input
                 type="file"

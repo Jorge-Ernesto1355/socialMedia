@@ -5,10 +5,10 @@
     position: relative;
     grid-template-rows: 10% 80% 10%;
     width: 100%;
-    width: 270px;
+    width: 350px;
     height: 100%;
-    max-width: 300px;
-    max-height: 400px;
+    max-width: 350px;
+    max-height: 450px;
     background-color: #fff;
 
 }

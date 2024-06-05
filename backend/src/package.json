@@ -14,7 +14,6 @@
     "nodemon": "^3.0.1"
   },
   "dependencies": {
-  
     "algolia": "^0.0.0",
     "algoliasearch": "^4.22.1",
     "bcrypt": "^5.1.1",
@@ -28,6 +27,7 @@
     "express-expeditious": "^5.1.1",
     "express-fileupload": "^1.4.1",
     "express-validator": "^7.0.1",
+    "franc": "^6.2.0",
     "fs-extra": "^11.1.1",
     "http": "^0.0.1-security",
     "http-error": "^0.0.6",

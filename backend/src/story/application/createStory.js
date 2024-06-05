@@ -12,7 +12,6 @@ const createStory = async (req, res)=>{
 
     const createStory = await  storyService.createStory({userId, image, text, expiresIn})
 
-    console.log(createStory)
 
     if(createStory?.error) return res.status(500).json({error: createStory?.message})
 

@@ -9,7 +9,6 @@
 }
 
 .ellipsiPost-item {
-  display: flex;
   align-items:center ;
   padding: 0.2rem;
   cursor: pointer;
@@ -20,6 +19,16 @@
 .ellipsis-body{
   display: flex;
   flex-direction: column;
+  margin-left: .5rem;
+}
+
+.ellipsi-body-item{
+  display: flex;
+
+  align-items: center;
+}
+
+.ellipsi-item-loader{
   margin-left: .5rem;
 }
 
@@ -54,3 +63,15 @@
   font-size: 0.9rem;
 }
 
+.favorite-length{
+  font-weight: 400;
+  margin-left: 30px;
+  color: var(--color-gray);
+}
+
+
+.ellipsi-item-head{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}

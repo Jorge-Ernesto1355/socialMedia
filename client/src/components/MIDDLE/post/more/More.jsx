@@ -19,7 +19,7 @@ const More = ({ children, id, postId, editing }) => {
         {children}
       </div>
       {isOpen && (
-        <Suspense fallback={<Loader box={'box'} />}><EllipsisPost isOpen={isOpen} userId={id} postId={postId} handleCloseEllipsi={setIsOpen} /></Suspense>
+        <Suspense fallback={<Loader box={'box'} />}></Suspense>
       )}
 
     </div>

@@ -13,6 +13,7 @@ import { useQueryClient } from "react-query";
 import GroupText from "../newGroup/GroupText";
 import ComponentStateHandler from "../../../../hooks/stateManagmentComponent/ComponentStateHandler";
 import EmptyMessage from "./EmptyMessage";
+import Title from "antd/es/typography/Title";
 
 
 const ConversationView = ({ autocomplete, inputProps, state, title = "Messages"}, inputRef) => {
@@ -95,7 +96,7 @@ const ConversationView = ({ autocomplete, inputProps, state, title = "Messages"}
   return (
     <div {...autocomplete.getRootProps()}>
     <div className="conversation-title-container">
-      <h4>{title}</h4>
+      <Title level={5}>Messages</Title>
       <GroupText/>
     </div>
       <SearchConversationView stateFiltred={filtred} filtred={handleClickFiltrered} ref={inputRef} inputProps={inputProps} autocomplete={autocomplete}/>

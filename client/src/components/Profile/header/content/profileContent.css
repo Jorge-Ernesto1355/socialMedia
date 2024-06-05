@@ -1,0 +1,52 @@
+.profile-card-content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.profile-content-information{
+    display: flex;
+    padding: 0 20px;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.profile-content-profilePicture{
+        position: relative;
+        bottom: 50px;
+}
+
+.profile-content-user-information{
+    margin-top: 1rem;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.profile-content-options{
+    display: flex;
+    
+   
+}
+
+.profile-flaticon{
+    display: flex;
+    justify-content: center;
+    align-items:center ;
+    background-color: var(--color-light);
+    padding: .5rem;
+    cursor: pointer;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 10px;
+    left: 80%;
+
+}
+
+
+.profile-content-avatar{
+   border: 3px solid white;
+   box-shadow: var(--card-shadow);
+}

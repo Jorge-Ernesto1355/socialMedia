@@ -83,12 +83,9 @@ img {
   
 }
 
-main {
-  position: relative;
-  top: 2.4rem;
-  
+
  
-}
+
 
 *::-webkit-scrollbar {
   width: 10px;
@@ -139,13 +136,16 @@ cursor: pointer;
   background-color: var(--color-light);
 }
 
+.main{
+  margin-top: 5.5rem;
+}
+
 main .container {
     width: 100%;
-    padding: 0 1rem;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 30% 40% 30%;
     grid-template-rows: 1fr;
-    grid-column-gap: 25px;
+    grid-column-gap: 2rem;
 
 }
 
@@ -156,6 +156,8 @@ main .container .middle {
 }
 
 .container .left {
+  display: flex;
+  justify-content: flex-end;
   height: max-content;
   top: 78px;
   position: sticky;
@@ -166,14 +168,16 @@ main .container .middle {
   height: max-content;
   max-height: 100vh;
   top: 78px;
+  
   position: sticky;
-  max-width: 325px;
+  max-width: 400px;
 
 }
 
 .rightd .messages {
   border-radius: var(--card-border-radius);
   padding: var(--card-padding);
+  height: 240px;
   box-shadow: var(--card-shadow);
   background-color: var(--color-white);
   
@@ -184,6 +188,7 @@ main .container .middle {
   background: var(--color-white);
   border-radius: var(--card-border-radius);
   box-shadow: var(--card-shadow);
+  height: 280px;
 }
 
 .left {

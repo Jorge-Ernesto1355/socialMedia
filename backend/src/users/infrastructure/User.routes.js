@@ -6,7 +6,7 @@ const verifyToken = require("../../auth/application/verifySignup");
 
 const router = Router();
 
-// querys
+
 router.get("/", index.query.getUsers);
 
 router.get("/posts/:userId", index.query.getPosts);
@@ -21,19 +21,25 @@ router.put("/friend/request/accept", index.mutation.AcceptFriends);
 
 router.get("/online/:userId", index.query.getUsersOnline);
 
-//mutations POST
+router.get("/photos/:userId", index.query.getPhotos)
+
 router.post("/upload/:userId", index.mutation.UploadImageProfile);
 
-router.post("/:userId", index.query.FindUserById);
-// router.post("/relationShip", index.mutation.addRelationShip);
+router.post('/upload/coverPicture/:userId', index.mutation.uploadCoverPicture)
 
-// mutation PUT
+router.post("/edit/profile/:userId", index.mutation.updateUserProfile)
+
+router.put('/upload/edit/coverPicture/:userId', index.mutation.editCoverPicture)
+
+router.post("/:userId", index.query.FindUserById);
 
 router.put("/friend/accept/:userId", index.mutation.AcceptFriends); //check
 
 router.put("/friend/add/:userId", index.mutation.addFriend); //check
 
-router.put("/:userId", UpdateUserProfile);
+router.put('/edit/location/:userId', index.mutation.updateUserLocation)
+
+
 
 router.put("/roles/add", index.mutation.giveRoles);
 
@@ -47,6 +53,7 @@ router.put("/report/post/:postId", index.mutation.report)
 
 router.put("/unFollow/:userId/:friendId", index.mutation.unFollow)
 
+router.put('/upload/edit/profilePicture/:userId', index.mutation.editProfilePicture)
 
 //mutation DElETE
 router.delete("/relationShip/del", index.mutation.deleteRelationShip);

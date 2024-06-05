@@ -10,6 +10,7 @@ import ConversationView from '../../components/RIGHT/Messages/conversationView/C
 
 import Sidebar from '../../components/LEFT/Sidebar/Sidebar'
 import WithSearch from '../../HOCs/WithSearch'
+import Stories from '../../components/MIDDLE/Stories/Stories'
 
 
 
@@ -21,7 +22,7 @@ const Main = () => {
     
 
     return (
-        <main>
+        <main className='main'>
             <Navbar/>
             <section className="container">
                 {/* ===== LEFT ======= */}
@@ -31,6 +32,7 @@ const Main = () => {
 
                 {/* ===== MIDDLE =====  */}
                 <div className="middle">
+                    <Stories/>
                     <CreatePost />
                     <Feed type="PostsFeed" />
                 </div>

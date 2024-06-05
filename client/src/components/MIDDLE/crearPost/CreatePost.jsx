@@ -49,9 +49,10 @@ const CreatePost = () => {
   const { element, input: inputFile, clearImagePreview } = UseImagePreview()
   const { mutate, isLoadingMutation, isError, reset, } = useMutationRequest(PostServices.create, { name: 'posts' })
   const { data: user, isLoading } = useQuery(["user", userId], () => userService.getUser({ privateRequest, userId }));
-
+  
   const handleMutate = useCallback(() => {
     if (!get()) return
+  
     mutate({ description: get(), votes, image: inputFile.current.files[0], privateRequest, userId, timeExpiration}, {
       onSuccess: () => {
         delVotes()

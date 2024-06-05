@@ -13,19 +13,21 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #fff;
-    box-shadow: var(--card-shadow);
-    border-radius: 10px;
+    
+   
 }
+
 
 .item-message{
     display: flex;
     padding: .3rem;
     width: 100%;
     justify-content: space-around;
-    border-bottom: 1px  solid #DBDBDB;
     cursor: pointer;
 }
+
+
+
 
 .popover-img-message{
     width: 1rem;

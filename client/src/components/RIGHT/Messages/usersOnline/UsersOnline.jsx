@@ -116,12 +116,12 @@ const UsersOnline = () => {
         {data?.length <= 0 && <p className='usersOnline-description'>no Contacts online</p>}
        
         <AliceCarousel
-         mouseTracking
-        disableDotsControls
-        disableButtonsControls
-        items={items}
-        responsive={responsive}
-        controlsStrategy="alternate"
+          mouseTracking
+          disableDotsControls
+          disableButtonsControls
+          items={items}
+           responsive={responsive}
+         controlsStrategy="alternate"
         />
         </ComponentStateHandler>
     </div>

@@ -13,10 +13,11 @@ const BoxMessagesDetails = ({friendUser}) => {
   const {userId} = AuthProvider()
   const privateRequest = useUserRequest()
   const { mutate, isLoading,  isSuccess} = useMutation(['addFriend', friendUser._id], ()=> userService.addFriend({userId, addUserId: friendUser._id, privateRequest}))
-  const { data: userData } = useQuery(["user", userId], () => userService.getUser({ privateRequest, userId, options:['friends'] }));
+  const { data: userData} = useQuery(["usertoFriend", userId], () => userService.getUser({ privateRequest, userId , options: ["friends"]}));
+ 
 
-    const user = userData?.data ?? {};
 
+  
   const handleAddFriend = ()=>{
      mutate({
         userId, 
@@ -31,7 +32,8 @@ const BoxMessagesDetails = ({friendUser}) => {
     })
 }
 
-const isFriend = isYourFriend(user?.friends, friendUser?._id)
+
+const isFriend = isYourFriend(userData?.friends, friendUser?._id)
 
 
 

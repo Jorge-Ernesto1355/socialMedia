@@ -11,16 +11,19 @@ import moment from "moment";
 import CommentsShared from "./CommentsShared";
 import useImagePreview from "../../../../hooks/useImagePreview/useImagePreview";
 import ActionsPost from "../actionsPost/ActionsPost";
-import { useQuery } from "react-query";
+
 import Votes from "../Votes/Votes";
 import ReactionsView from "../../../Reaction/Reactions/ReactionsView";
 import AuthProvider from "../../../../zustand/AuthProvider";
-import userService from "../../../../services/UserService";
+
 import useUserRequest from "../../../../hooks/auth/useUserRequest";
 import SimpleLineLoader from "../../../Loaders/SimpleLineLoader";
 import { Avatar, Popover } from "antd";
 import EllipsisPost from "../more/Ellipsis";
 import HiddenPost from "./hiddenPost/HiddenPost";
+
+import UserService from "../../../../services/UserService";
+import { useQuery } from "react-query";
 const Post = ({ post, simple, editing }) => {
 
 	const { userId: currentUser } = AuthProvider()
@@ -36,17 +39,24 @@ const Post = ({ post, simple, editing }) => {
 		image,
 		createdAt,
 		edit,
+		favorites,
+		reports,
 		_id: postId,
 		votes, 
 	} = post;
 
+
+
+
 	if(post?.hidden) return <HiddenPost postId={postId} postUserId={userId}/>
 
-	const { data: user, isLoading } = useQuery(["user", userId], () => userService.getUser({ privateRequest, userId }));
+	
 
 	const { element, input, clearImagePreview } = useImagePreview();
 
-	
+	const { data: user, isLoading } = useQuery(["user", userId], () => UserService.getUser({ privateRequest, userId}), {
+		enabled: !!userId
+	});
 
 	return (
 		<div className={`feed ${simple ? 'simple' : ''} `}>
@@ -66,7 +76,7 @@ const Post = ({ post, simple, editing }) => {
 				</div>
 				<span className="edit">
 					
-					<Popover placement="bottom" overlayInnerStyle={{padding: "3px"}} trigger={"click"} content={<EllipsisPost  userId={userId} postId={postId} />}>
+					<Popover placement="bottom" zIndex={100} overlayInnerStyle={{padding: "3px"}} trigger={"click"} content={<EllipsisPost reportsLength={reports.length} favoriteLength={favorites?.length} userId={userId} postId={postId} />}>
 					<img src={more} alt="" />
 					</Popover>
 				</span>

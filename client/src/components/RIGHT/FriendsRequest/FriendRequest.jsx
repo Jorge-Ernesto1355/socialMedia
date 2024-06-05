@@ -9,7 +9,9 @@ import ComponentStateHandler from "../../../hooks/stateManagmentComponent/Compon
 import LoaderFriendRequest from "./Loader/LoaderFriendRequest";
 import ErrorMessageFriendRequest from "./ErrorMessage/ErrorMessageFriendRequest";
 import EmptyMessage from "./EmptyMessage";
+import { Typography } from "antd";
 
+const { Text, Title} = Typography;
 const FriendRequest = () => {
   const { userId } = AuthProvider()
   const privateRequest = useUserRequest()
@@ -19,7 +21,7 @@ const FriendRequest = () => {
 
   return (
     <div className="friend-request">
-      <h4>Peticiones</h4>
+      <Title style={{padding: "10px"}} level={5}>Friend Request</Title>
       <ComponentStateHandler Loader={<LoaderFriendRequest />} isError={isError} isLoading={isLoading} ErrorMessageComponent={<ErrorMessageFriendRequest reset={reset} />} items={results} EmptyMessage={<EmptyMessage/>}  >
         <RequestFriends items={results} />
       </ComponentStateHandler>

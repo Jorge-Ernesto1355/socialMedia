@@ -1,11 +1,12 @@
 import React, { useCallback, useState } from 'react'
 import './vote.css'
-import { motion } from 'framer-motion'
+
 
 import useMutationRequest from '../../../../hooks/useMutationRequest';
 import voteService from './service/vote.service';
 import LoaderVote from './LoaderVote';
 import AuthProvider from '../../../../zustand/AuthProvider';
+import { Button } from 'antd';
 
 
 
@@ -22,7 +23,7 @@ const Vote = ({ vote, postId, totalVotes }) => {
    const {userId} = AuthProvider()
     const [porcentaje, setPorcentaje] = useState(0)
 
-    const { mutate, isLoading, isError } = useMutationRequest(voteService, { name: 'votes' })
+    const { mutate, isLoading} = useMutationRequest(voteService, { name: 'votes' })
 
 
 
@@ -37,11 +38,6 @@ const Vote = ({ vote, postId, totalVotes }) => {
                 if (!porcentaje) return
                 setPorcentaje(porcentaje)
             },
-            // eslint-disable-next-line n/handle-callback-err
-            onError: (err) => {
-
-                setPorcentaje(0)
-            }
         })
 
     }, [])
@@ -53,14 +49,10 @@ const Vote = ({ vote, postId, totalVotes }) => {
             {isLoading && <LoaderVote />}
             {!isLoading && (
                 <>
-                    {porcentaje > 0 && <motion.div className='expanded-var-vote' initial={{ width: '0%' }} animate={{ width: `${porcentaje}%` }} transition={{ duration: .5 }}>
-                        <span className='text-expand-var'>{vote?.text}</span>
-                        <p className='counter-expand-var'>{vote?.counter?.length}</p>
-                    </motion.div>}
-                    <div className={`vote-body ${porcentaje > 0 && 'expanded'}`}>
+                    <Button  block={true} className={`vote-body ${porcentaje > 0 && 'expanded'}`}>
                         <span>{vote?.text}</span>
-                        <p >{vote?.counter?.length}</p>
-                    </div>
+                       {isLoading ? <LoaderVote />  : <p >{vote?.counter?.length}</p>}
+                    </Button>
                 </>
             )}
 

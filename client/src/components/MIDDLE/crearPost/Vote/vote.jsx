@@ -7,7 +7,6 @@ import React, {
 import { Input } from "antd";
 
 
-
 const Vote = ({ updateVote = {}, votes = {}, uuid = "", index = 0 }) => {
   const [input, setInput] = useState([uuid] || "");
 

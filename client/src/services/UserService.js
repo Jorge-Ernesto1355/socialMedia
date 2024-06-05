@@ -1,3 +1,4 @@
+import axios from "axios";
 import { ObjectErrosName } from "../utilities/ObjectErrorsName";
 
 export default class UserService {
@@ -131,4 +132,140 @@ export default class UserService {
     }
   }
 
+  static async getPhotos({privateRequest, id }){
+    try {
+      if (!privateRequest)
+        throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+      return privateRequest.get(
+        `/users/photos/${id}`,
+      );
+    } catch (error) {
+      return error;
+    }
+  }
+
+  static async editProfilePicture({privateRequest, id, imageObject }){
+    try {
+      if (!privateRequest)
+        throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+        return privateRequest.put(
+          `/users/upload/edit/profilePicture/${id}`, imageObject
+        );
+    } catch (error) {
+      return error;
+    }
+  }
+
+  static async editCoverPicture({privateRequest, id, imageObject }){
+    try {
+      if (!privateRequest)
+        throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+        return privateRequest.put(
+          `/users/upload/edit/coverPicture/${id}`, imageObject
+        );
+    } catch (error) {
+      return error;
+    }
+  }
+
+  static async uploadUserProfile({privateRequest, id, userInfo }){
+    try {
+      if (!privateRequest)
+        throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+        return privateRequest.post(
+          `/users/edit/profile/${id}`, userInfo
+        );
+    } catch (error) {
+      return error;
+    }
+  }
+
+  static async editUserLocation({privateRequest, id, location }){
+    try {
+      if (!privateRequest)
+        throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+        return privateRequest.put(
+          `/users/edit/location/${id}`, location
+        );
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
+
+  static async getUserLocation({latitude, longitude}){
+    const options = {
+      method: 'GET',
+      url: 'https://api.opencagedata.com/geocode/v1/json',
+      params: {
+        q: `${latitude},${longitude}`,
+        key: 'ffeae186d7fa44329a97a217c6ddfd0a'
+      }
+    };
+
+    if(!latitude && !longitude) return null
+
+    try {
+      const response = await axios.request(options);
+      return response
+        
+    } catch (error) {
+       throw new Error(error)
+    }
+  };
+
+
+  static async getCountries({country}){
+
+    const options = {
+      method: 'GET',
+      url: 'https://wft-geo-db.p.rapidapi.com/v1/geo/countries',
+      params: {
+        namePrefix: country
+      },
+      headers: {
+        'X-RapidAPI-Key': '0ec7f10cd1msh8f0116595483ad6p1788acjsn1ddf6feb492f',
+        'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com'
+      }
+    };
+
+    
+
+    try {
+      const response = await axios.request(options);
+      return response.data
+     
+    } catch (error) {
+      throw new Error(error)
+    }
+
+  }
+
+  static async getCities({city}){
+
+    const options = {
+      method: 'GET',
+      url: `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?namePrefix=${city}`,
+      headers: {
+        'X-RapidAPI-Key': '0ec7f10cd1msh8f0116595483ad6p1788acjsn1ddf6feb492f',
+        'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com'
+      }
+    };
+    
+    try {
+      const response = await axios.request(options);
+     
+      return response.data
+      
+    } catch (error) {
+      throw new Error(error)
+    }
 }
+
+   
+
+
+}
+
+
+
+

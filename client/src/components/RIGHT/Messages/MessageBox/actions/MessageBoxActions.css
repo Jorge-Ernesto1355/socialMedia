@@ -1,12 +1,12 @@
 .MessageBox-actions-container {
     position: fixed;
     bottom: 0; /* Cambia esto a 'top: 0;' para que crezca hacia arriba */
-    width: 270px;
-    max-width: 270px;
+    width:350px;
+    max-width: 3590px;
     background-color: #fff; /* Cambia esto según tu diseño */
     transition: transform 0.3s ease-in-out;
     border-top: 1px solid #eeeeee;
-z-index: 100;
+ z-index: 100;
 }
 
 .actions-reply-container{

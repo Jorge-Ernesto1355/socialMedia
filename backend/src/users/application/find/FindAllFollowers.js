@@ -1,4 +1,4 @@
-const User = require("../../domain/UserModel")
+
 const userService = require("../../userService")
 
 const DEFAULT_LIMIT = 10;

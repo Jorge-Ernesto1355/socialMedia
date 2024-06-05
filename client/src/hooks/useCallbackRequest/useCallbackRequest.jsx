@@ -4,10 +4,10 @@ export const useCallbackRequest = ({ request, id, name, type, privateRequest}) =
 
 
   if (typeof id !== 'string' || typeof name !== "string") {
-    return {error: "si"}
+    return {error: "id or name is missing "}
   }
   if (typeof request !== "function") {
-    return {error: "so"}
+    return {error: "request must be a function"}
   }
 
   const callback = useCallback(() => request({id, type, privateRequest}), [request, id]);

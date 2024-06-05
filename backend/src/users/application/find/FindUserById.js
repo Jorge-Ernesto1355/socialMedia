@@ -4,6 +4,8 @@ const FindUserById = async (req, res) => {
   const { userId } = req.params;
   const { options } = req.body;
 
+  console.log(options)
+
   const user = await userService.get({ userId, options });
 
   if (user?.error) {
