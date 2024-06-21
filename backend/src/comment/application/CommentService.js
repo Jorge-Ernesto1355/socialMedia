@@ -3,6 +3,7 @@ const exits = require("../../libs/exits");
 const Comment = require("../domain/comments");
 const createImagen = require("../../Post/application/createPost/createImagen");
 const getTotalPoints = require("../../reaction/utils/getTotalPoints");
+const NotificationService = require("../../notification/NotificationService");
 
 
 class CommentService {
@@ -121,19 +122,16 @@ class CommentService {
     try {
       exits(object);
       const { containerId, userId, text, type, commentId } = object;
-      console.log(commentId)
-
       
       const optionsUser = {
         model:'User', 
         select:['username']
       }
+
       const optionsContainer = {
         model:type, 
-        select:['comments']
+        select:['comments', "userId"]
       }
-
- 
 
       const user = await validateObjectId({ _id: userId }, optionsUser);
     
@@ -142,7 +140,8 @@ class CommentService {
         const container = await validateObjectId({ _id:containerId }, optionsContainer);
         
         if (container?.error || user?.error) {
-          throw new Error("document not found or objectsfdsfsId is not valid");
+          
+          throw new Error("document not found or id is not valid");
         }
         
         const image = await createImagen(object.files);
@@ -153,6 +152,20 @@ class CommentService {
   
         await container.save();
         await commentCreated.save()
+
+        console.log("no coment")
+
+        await NotificationService.create({
+          message: `has commented your ${type}`, 
+          senderId: user?._id, 
+          receiverId: container?.userId, 
+          type: "Comment", 
+          containerId: container._id, 
+          containerModel: type
+        })
+
+       
+
         return commentCreated;
         
       }
@@ -161,7 +174,7 @@ class CommentService {
       if (userId && text &&  commentId !== 'undefined' ) {
         const image = await createImagen(object.files);
         const commentCreated = await this.createComment({...object, image, containerId:commentId})
-        const commentGot = await validateObjectId({_id: commentId}, {model:'Comment', select:['commentsResponded']})
+        const commentGot = await validateObjectId({_id: commentId}, {model:'Comment', select:['commentsResponded', "comment.userId"]})
         
         if(!Array.isArray(commentGot.commentsResponded)) throw new Error('something went wrong')
        
@@ -171,6 +184,18 @@ class CommentService {
         ];
         await commentGot.save();
         await commentCreated.save()
+
+        console.log({commentGot, user})
+        console.log("comment")
+        // creation of a notification
+        await NotificationService.create({
+          message: `has commented your ${type}`, 
+          senderId: user?._id, 
+          receiverId: commentGot?.comment.userId, 
+          type: "Comment", 
+          containerId: commentGot._id, 
+          containerModel: "Comment"
+        })
         return commentCreated
       }
 
