@@ -25,6 +25,16 @@
   --card-shadow: 1px 1px 11px 0px rgba(0, 0, 0, 0.14);
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Para Firefox */
+html {
+  scrollbar-width: none; /* Oculta la scrollbar */
+  -ms-overflow-style: none; /* Oculta la scrollbar en Internet Explorer 10+ */
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -138,6 +148,7 @@ cursor: pointer;
 
 .main{
   margin-top: 5.5rem;
+  position: relative;
 }
 
 main .container {
@@ -195,9 +206,56 @@ main .container .middle {
   z-index: 5;
 }
 
+@media (max-width:1000px){
+  main .container{
+    grid-template-columns: 35% 60%;
+    grid-column-gap: 1rem;
+  }
+}
 
-@media (max-width:910px){
+@media (max-width:822px){
+  main .container{
+    grid-template-columns: 39% 60%;
+    grid-column-gap: .1rem;
+  }
+
+  .container .left {
+    margin-left: .5rem;
+  }
+
+  .sidebar-container {
+    width: 100%;
+  }
+}
+
+@media (max-width: 677px){
+
+  main .container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: 100%;
+    grid-column-gap: .1rem;
+  }
+
+  .container .middle {
+    width: 90%;
+  }
+  .container .left {
+    display: none;
+  }
+}
+
+
+@media (max-width:1000px){
   .rightd{
     display: none;
   }
 }
+
+@media (max-width:480px){
+  .container .middle{
+    width: 100%;
+  }
+}
+
