@@ -1,9 +1,9 @@
 const z = require("zod");
 
 const NotificationSchema = z.object({
-  label: z
+  type: z
     .string({
-      required_error: "label is required",
+      required_error: "type is required",
     })
     .max(20),
   message: z
@@ -11,15 +11,15 @@ const NotificationSchema = z.object({
       required_error: "message is required",
     })
     .max(40),
-  userReceptorId: z
+  receiverId: z
     .string({
       required_error: "userReceptor is required",
     })
     .max(24)
     .min(24),
-  userConnectorId: z
+  senderId: z
     .string({
-      required_error: "message is required",
+      required_error: "senderId is required",
     })
     .max(24)
     .min(24),
