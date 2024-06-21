@@ -4,12 +4,12 @@ const mongoosePaginate = require("mongoose-paginate-v2");
 const Story = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     text: { type: String, required: true },
-    media: { url: {type: String}, previewUrl: {type: String}, public_id: {type: String} }, // URL to media file if any
+    media: { url: String, previewUrl:  String, public_id: String, resourceType: String, background: String }, // URL to media file if any
     createdAt: { type: Date, default: Date.now },
-    expiresIn: { type: Number, default: 86400 }
+    expiresIn: { type: Date, required: true}
 })
 
-Story.index({ createdAt: 1 }, { expireAfterSeconds: 'expiresIn' });
+Story.index({ expiresIn: 1 }, { expireAfterSeconds: 0 });
 
 Story.plugin(mongoosePaginate)
 
