@@ -43,3 +43,29 @@
     border-radius: 10px;
     object-fit:cover;
 }
+
+@media (max-width: 1400px){
+    .profile-card{
+        width: 80%;
+        
+    
+    }
+}
+
+@media (max-width: 1200px){
+    .profile-card{
+        width: 90%;
+        
+    
+    }
+  }
+
+  @media (max-width: 800px){
+    .profile-card{
+        width: 100%;
+        
+    
+    }
+  }
+  
+

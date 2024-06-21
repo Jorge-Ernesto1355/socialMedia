@@ -79,7 +79,7 @@ const MessageBoxBody = ({conversation, friendUser}) => {
     
     return (
         <div className='messages-container'  style={{
-            height: 300,
+            height: "100%",
             overflow: 'auto',
             display: 'flex',
             flexDirection: 'column-reverse',

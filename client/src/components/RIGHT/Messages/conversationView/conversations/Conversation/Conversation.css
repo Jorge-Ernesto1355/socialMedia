@@ -1,7 +1,6 @@
 .conversation-container{
  margin-top: .5rem;
  width: 100%;
- max-width: 273px;
  display: grid;
  grid-template-columns: 15% 85%;
  gap: .5rem;
@@ -21,19 +20,6 @@
   
 }
 
-
-.conversation-profile-picture::before{
-    content: '';
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background-color: var(--color-succes);
-    border: 2px solid white;
-    border-radius: 50%;
-    z-index: 10;
-    bottom: -2px;
-    right: 2px;   
-}
 
 .conversation-username{
  text-overflow: ellipsis;

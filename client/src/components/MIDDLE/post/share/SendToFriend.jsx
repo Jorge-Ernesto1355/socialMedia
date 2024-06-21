@@ -42,7 +42,7 @@ const SendToFriend = ({postId = ""}) => {
                 <p className='menuMessageBox-text'>Compartirlo con un amigo</p>
             </li>
             
-        <Modal  title="Compartelo con tus amigos" footer={null} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <Modal  title="share it with your friends" footer={null} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
 
        
         <SingleComponent isLoading={isLoading} isError={isError || data?.response?.status === 500} Loader={<>cargando post</>} ErrorMessageComponent={<>error post</>} >
@@ -52,7 +52,7 @@ const SendToFriend = ({postId = ""}) => {
             
         {store && (
             <AutoComplete
-              placeholder={"Comparte lo mejor para tu mejor amigo"}
+              placeholder={"Share the best to your friends"}
               rows={3}
               cols={25}
               ref={store}

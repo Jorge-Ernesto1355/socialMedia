@@ -6,8 +6,6 @@ import schedule from "./icons/calendar.png";
 import smile from "./icons/smile.png";
 import AutoComplete from "../../Autocomplete/AutoComplete";
 import { useStore } from "../../../hooks/useStore/useStore";
-import UseImagePreview from "../../../hooks/useImagePreview/useImagePreview";
-import ImgInputFile from "../../../stylesComponents/ImgInputFile/ImgInputFile";
 import ErrorButton from "../post/comments/makeComment/styledComponentes/ErrorButton/ErrorButton";
 import SendButtonCreatePost from "./senbButtonCreatePost/SendButtonCreatePost";
 import BlueLoader from "../../../stylesComponents/BlurLoader/BlueLoader";
@@ -22,7 +20,9 @@ import AuthProvider from "../../../zustand/AuthProvider";
 import { useQuery } from "react-query";
 import userService from "../../../services/UserService";
 import SimpleLineLoader from "../../Loaders/SimpleLineLoader";
-import { Avatar, Card, Divider, message } from "antd";
+import { Avatar, Button, Card, Divider, Flex, Skeleton, Upload, message } from "antd";
+import useUploader from "../../../hooks/useUploader";
+import imageGallery from './icons/gallery.png'
 
 
 
@@ -39,6 +39,7 @@ const ACTIONS_INITIAL_STATE = {
   schedule: false,
 };
 
+
 const CreatePost = () => {
   const privateRequest = useUserRequest()
   const { votes, timeExpiration, delVotes } = CreatePostStore()
@@ -46,19 +47,21 @@ const CreatePost = () => {
   const { userId } = AuthProvider()
  
   const { store, set, get } = useStore();
-  const { element, input: inputFile, clearImagePreview } = UseImagePreview()
   const { mutate, isLoadingMutation, isError, reset, } = useMutationRequest(PostServices.create, { name: 'posts' })
   const { data: user, isLoading } = useQuery(["user", userId], () => userService.getUser({ privateRequest, userId }));
+
+  const {imageUrl, imageUrlLoading, file, propsUploader, deleteImageUrl} = useUploader()
+
   
   const handleMutate = useCallback(() => {
     if (!get()) return
   
-    mutate({ description: get(), votes, image: inputFile.current.files[0], privateRequest, userId, timeExpiration}, {
+    mutate({ description: get(), votes, image: file.current, privateRequest, userId, timeExpiration}, {
       onSuccess: () => {
         delVotes()
+        deleteImageUrl()
         set("");
         if (store.current) store.current.value = "";
-        clearImagePreview()
         clearStateActions()
         message.open({
           type:"success", 
@@ -75,6 +78,7 @@ const CreatePost = () => {
       {isLoadingMutation && (
         <BlueLoader><LoaderPost/></BlueLoader>
       )}
+
       <div className="info-createPost">
       <Avatar src={rem} size={'large'} alt="user"/>
         <div className="info-name">
@@ -90,8 +94,8 @@ const CreatePost = () => {
         {store && (
           <AutoComplete
             placeholder={"Escribe algo..."}
-            rows={2}
-            cols={38}
+            rows={4}
+            cols={40}
             ref={store}
             set={set}
             stateValue={get}
@@ -110,11 +114,16 @@ const CreatePost = () => {
           </Suspense>
         )}
       </div>
-      <img ref={element} onClick={() => clearImagePreview()} />
+
+          {imageUrlLoading && <Skeleton.Image active={true} />}
+          {imageUrl && <img className="createPost-img-upload" src={imageUrl}></img>}
+          {imageUrl && <Button type="link" onClick={()=> deleteImageUrl()}>delete img</Button>}
      <Divider/>
       <div className="down-createPost">
-        <div className="options-createPost">
-          <ImgInputFile ref={inputFile} />
+        <Flex align="center" justify="center" className="options-createPost">
+          <Upload {...propsUploader}>
+            <img src={imageGallery} style={{marginTop:" 10px", marginRight: "10px"}}/>
+          </Upload>
           <img
             className="options-createPost-icon"
             src={poll}
@@ -128,13 +137,12 @@ const CreatePost = () => {
             alt=""
           />
           <img
-            style={{ width: '35px', height: '35px' }}
             className="options-createPost-icon"
             src={schedule}
             onClick={() => HandleStateActions("shedule", actions, setActions)}
             alt=""
           />
-        </div>
+        </Flex>
         <div style={{ marginTop: '15px' }} onClick={() => handleMutate()} aria-disabled={isError || isLoadingMutation}>
           {isError && <ErrorButton reset={reset} />}
           {!isError && <SendButtonCreatePost />}

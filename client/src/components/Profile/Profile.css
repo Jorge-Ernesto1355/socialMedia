@@ -20,5 +20,41 @@
 
 
 
+@media (max-width: 1400px){
+  .Profile .body {
+    padding-left: 11%;
+    grid-template-columns: 30vw 45vw;
+  }
+}
+
+
+@media (max-width: 1200px){
+  .Profile .body {
+    padding-left: 5%;
+    grid-template-columns: 35vw 50vw;
+  }
+}
+
+@media (max-width: 1000px){
+  .Profile .body {
+    padding-left: 5%;
+    grid-template-columns: 30vw 58vw;
+  }
+}
+
+@media (max-width: 1000px){
+  .Profile .body {
+    grid-template-columns:  90vw;
+  }
+}
+
+@media (max-width: 800px){
+  .Profile .body .left {
+    display: none;
+  }
+  
+}
+
+
 
 

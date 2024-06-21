@@ -19,3 +19,11 @@
   margin-left: 1.9rem;
 }
 
+@media (max-width:480px){
+  .icon.like{
+    display: none;
+  }
+
+  
+}
+

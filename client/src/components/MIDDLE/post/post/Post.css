@@ -15,6 +15,7 @@
   box-shadow: var(--card-shadow);
   margin-top: 2rem;
   overflow: hidden;
+ 
 }
 
 .feed.simple {
@@ -183,6 +184,7 @@
 
 .feed .caption {
   margin: 20px 0;
+ 
   word-break: break-word;
 }
 
@@ -291,9 +293,23 @@
 .post-imgToPost {
   width: 30%;
   height: 30%;
-  margin-top: 1rem;
+
 }
 
 .post-imgToPost img {
   border-radius: 1rem;
+}
+
+@media (max-width:480px){
+  .post-user-username{
+    font-size: x-small;
+  }
+  
+  
+  .feed{
+    margin-top: .5rem;
+    border-radius: 0;
+    padding: .5rem;
+  }
+  
 }

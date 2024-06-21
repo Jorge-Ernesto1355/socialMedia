@@ -1,15 +1,19 @@
 .story-upload-img{
-    width: 90%;
+    width: 100%;
     height: 500px;
     border-radius: 15px;
-    max-width: 90%;
-    max-height: 500px;
+    max-height: 480px;
     object-fit: cover;
 }
 
-.story-notStory-img{
-    width: 90%;
+
+
+
+.story-dragger-img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     height: 500px;
-    border-radius: 15px;
-    background-color: var(--color-light);
 }
+

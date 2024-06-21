@@ -1,12 +1,13 @@
 .MessageBox-actions-container {
-    position: fixed;
-    bottom: 0; /* Cambia esto a 'top: 0;' para que crezca hacia arriba */
-    width:350px;
-    max-width: 3590px;
+    width:100%;
+    position: relative;
     background-color: #fff; /* Cambia esto según tu diseño */
     transition: transform 0.3s ease-in-out;
     border-top: 1px solid #eeeeee;
- z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
 }
 
 .actions-reply-container{
@@ -25,7 +26,7 @@
 
 
 .messageBox-actions{
-    transform: translateY(0); 
+
     display: grid;
     grid-template-columns: 70% 10% 10% 10%;
     justify-content: center;
@@ -44,7 +45,8 @@
 }
 
 .MessageBox-actions-InputFile{
-    margin-left: .5rem;
+    margin-left: .6rem;
+    margin-top: .4rem;
 }
 
 
@@ -57,10 +59,10 @@
 
 
 
+
 .MessageBox-sendButton {
     width: 25px;
     height: 25px;
-    margin-left: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -71,10 +73,12 @@
     width: 50%;
     height: 50%;
     margin: .2rem;
+    z-index: 10;
     object-fit: cover;
-  
-    max-width: 100px;
-    max-height: 100px;
+    position: absolute;
+    top: -200%;
+    max-width: 200px;
+    max-height: 200px;
 }
  
 .actions-img-send img{

@@ -15,8 +15,10 @@ import SimpleLineLoader from '../../../../../Loaders/SimpleLineLoader'
 import BoxMessagesStore from '../../../../../../zustand/BoxMessagesStore'
 import Image from '../../../../../../utilities/Image'
 
-import { Avatar } from 'antd'
+import { Avatar, Badge, Typography } from 'antd'
+import { UserOutlined } from '@ant-design/icons'
 
+const { Text, Title, Paragraph} = Typography;
 const Conversation = ({conversation}) => {
 
     const {userId} = AuthProvider()
@@ -80,14 +82,16 @@ const Conversation = ({conversation}) => {
         })
 
         return ()=>{
-            socket?.off()
+            socket?.off("typing")
             setIsTyping(false)
         }
     }, [socket])
 
 
     const handleSocket = ()=>{
-        socket?.emit('open-conversation', {to:friendId, from:userId})
+      
+        if(socket?.connected) socket.emit('open-conversation', {to:friendId, from:userId})
+        
     }
     
     
@@ -95,15 +99,21 @@ const Conversation = ({conversation}) => {
     <div className='conversation-container' onClick={()=> handleSocket()}>
         
         <div className='conversation-profile-picture '>
-        <Avatar src={rem} size={'large'} alt="user"/>
+        <Badge status={user?.status === "Online" ? "success" :  "default" } dot={true} offset={[-10, 45]} size={30} style={{width: "9px", height: "9px"}}>
+          <Avatar  src={user?.imageProfile?.url} icon={<UserOutlined/>} size={50} alt="user"/>
+        </Badge>
         </div>
         <div className='conversation-information'>
             <div className='conversation-user-information'>
                 {isLoadinguUser && <SimpleLineLoader/>}
-                {!isLoadinguUser &&  <h5 className='conversation-username'>
-                {user?.username ?? "not Name"}
-                </h5>}
-                <p className='conversation-time-message'>{fechaFormateada}</p>
+                {!isLoadinguUser &&  
+                <Paragraph ellipsis style={{marginBottom: 0}}>
+                    <Title level={5} style={{marginBottom: "0px"}} className='conversation-username'>
+                        {user?.username ?? "UniVerse user"}
+                    </Title>
+                </Paragraph>
+                }
+                <Text className='conversation-time-message'>{fechaFormateada}</Text>
             </div>
             <div className='conversation-message-info'>
                 <div className='conversation-message'> 
@@ -111,7 +121,11 @@ const Conversation = ({conversation}) => {
                 {!isLoading &&
                  <>
                  {isTyping && <p>Typing...</p>}
-                {!isTyping && <p>{message?.text}</p>}
+                {!isTyping && (
+                    <Paragraph ellipsis>
+                        <Text>{message?.text}</Text>
+                    </Paragraph>
+                )}
                  </>
                  }
                 </div>

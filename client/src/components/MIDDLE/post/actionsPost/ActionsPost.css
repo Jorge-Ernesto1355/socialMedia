@@ -33,3 +33,14 @@
   width: 27px;
   height: 27px;
 }
+
+
+@media (max-width:480px){
+  .icon.icon-comment{
+    display: none;
+  }
+
+  .icon.sharePost{
+    display: none;
+  }
+}

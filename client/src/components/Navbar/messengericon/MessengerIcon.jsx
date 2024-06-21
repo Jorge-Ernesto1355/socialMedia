@@ -7,9 +7,12 @@ import { IoIosExpand } from "react-icons/io";
 import { Badge, Popover } from 'antd'
 import WithSearch from '../../../HOCs/WithSearch'
 import ConversationView from '../../RIGHT/Messages/conversationView/ConversationView.jsx';
+import { Link } from 'react-router-dom';
+import AuthProvider from '../../../zustand/AuthProvider.js';
 
 const MessengerIcon = () => {
 
+  const {userId} = AuthProvider()
   const ConversationViewWithSearch = WithSearch(ConversationView, {INDEX_NAME:'conversations'})
   
 
@@ -36,15 +39,17 @@ const MessengerIcon = () => {
   )
   return (
     <>
+    <Link to={`conversations/${userId}`}>
+      <Popover trigger={"click"} content={content} >
+          <Badge count={0} offset={[-12,35 ]} size="small">
+              <div className='icon-navbar'>
+              <Image src={messengerBlack}/>
+          </div>
+            </Badge>
 
-        <Popover trigger={"click"} content={content} >
-        <Badge count={0} offset={[-12,35 ]} size="small">
-             <div className='icon-navbar'>
-            <Image src={messengerBlack}/>
-        </div>
-          </Badge>
-
-        </Popover>
+          </Popover>
+    </Link>
+        
     </>
   )
 }

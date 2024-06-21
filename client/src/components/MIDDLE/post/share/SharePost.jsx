@@ -34,7 +34,7 @@ const SharePost = ({postId, userId}) => {
   return (
     <Popover trigger={"click"} content={content}>
      <div>
-      <img className="icon" src={share} alt="" />
+      <img className="icon sharePost" src={share} alt="" />
       <span className="interaction-button-text">Compartir</span>
     </div>
     </Popover>

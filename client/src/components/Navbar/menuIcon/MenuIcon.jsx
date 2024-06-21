@@ -23,7 +23,7 @@ const MenuIcon = () => {
   return (
     <>
 
-        <Popover trigger={"click"} content={content} color={"#F3F3F3"}> 
+        <Popover className='popover-menu-icon' trigger={"click"} content={content} color={"#F3F3F3"}> 
         
         <div className='icon-navbar'>
             <Image src={menu}/>

@@ -1,8 +1,8 @@
 .boxMessages-container {
     position: fixed;
-    width: max-content;
+    width: 400px;
     max-width: 900px;
-    height: 400px;
+    height: 500px;
     right: 0;
     overflow: hidden;
     bottom: 0;

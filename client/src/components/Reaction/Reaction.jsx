@@ -10,9 +10,10 @@ import ReactionService from './services/ReactionService'
 import { objetsImgs } from "../MIDDLE/post/post/objectImg";
 
 import { Popover } from "antd";
+import { useMediaQuery } from "react-responsive";
 
 
-const reactions = [
+export const reactions = [
   { label: "gusta" },
   { label: "encanta" },
   { label: "entristece" },
@@ -33,6 +34,8 @@ const Reaction = ({ id, userId, name, children, type}) => {
     mutateRequest.mutate({ userId, id, label:value, privateRequest, type});
   };
 
+ 
+
   const content = (
     <div style={{display:"flex"}}>
      {reactions?.map((reaction, index) => (
@@ -48,11 +51,10 @@ const Reaction = ({ id, userId, name, children, type}) => {
   )
 
   return (
-    <div >
-     
+    <div>
       <Popover trigger={"click"} content={content} overlayInnerStyle={{borderRadius: "60px", padding: "8px"}}>
           {React.Children.map(children, (child) => {
-            return React.cloneElement(child, { reactionType});
+            return React.cloneElement(child, {reactionType});
           })}
       </Popover>
     </div>

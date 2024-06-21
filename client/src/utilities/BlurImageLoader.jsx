@@ -6,7 +6,8 @@ const BlurImageLoader = ({
     alt,
     imageStyleClass,
     divStyleClass,
-    bgColor = 'transparent',}) => {
+    bgColor = 'transparent',
+...props}) => {
     const [currentImage, setCurrentImage] = useState(preview);
     const [loading, setLoading] = useState(true);
     const fetchImage = (src) => {
@@ -26,7 +27,7 @@ const BlurImageLoader = ({
 
 
   return (
-      <div className={divStyleClass} style={{ overflow: 'hidden',  }}>
+      <div className={divStyleClass} style={{ overflow: 'hidden',  }} {...props}>
       <img
         style={{
           filter: `${loading ? 'blur(20px)' : ''}`,

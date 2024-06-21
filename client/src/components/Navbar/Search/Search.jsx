@@ -19,7 +19,7 @@ const Search = ({ autocomplete, inputProps, state}, inputRef) => {
         inputElement: inputRef?.current
       })}>
         <input
-          placeholder='Busca a tus amigos'
+          placeholder='Search your friends'
           className='search-input'
           ref={inputRef}
           {...inputProps}

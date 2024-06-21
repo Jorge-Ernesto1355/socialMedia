@@ -2,7 +2,8 @@ import React from 'react'
 import './ErrroPost.css'
 import ErrorButton from '../../comments/makeComment/styledComponentes/ErrorButton/ErrorButton'
 import warning from '../../../../deleteComponent/icons/triangle-warning.png'
-
+import { Typography } from 'antd';
+const { Text, Title} = Typography;
 const ErrorPost = ({reset}) => {
   return (
     <div className='errorPost-container'>
@@ -14,8 +15,8 @@ const ErrorPost = ({reset}) => {
             </div>
         </div>
 
-        <h5>Something went wrong</h5>
-        <span>try to reload the page to fix it</span>
+        <Title level={4}>Upss... Something went wrong</Title>
+        <Text type='secondary'>try to reload the page to fix it</Text>
        <div className='reset-button'>
        <ErrorButton reset={reset}/>
        </div>

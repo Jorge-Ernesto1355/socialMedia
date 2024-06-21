@@ -1,8 +1,7 @@
 /* eslint-disable no-constant-condition */
-import React, { useCallback } from "react";
+import React, { useCallback, useRef, useState } from "react";
 
 import "./makeComment.css";
-import rem from "../../../../../assets/rem.jpg";
 import gallery from "../../../crearPost/icons/gallery.png";
 
 import GetUser from "../../../../../services/GetUser.service";
@@ -16,7 +15,16 @@ import SendButton from "./styledComponentes/sendButton/SendButton";
 import ErrorButton from "./styledComponentes/ErrorButton/ErrorButton";
 import CommentService from "../services/CommentServices";
 import useUserRequest from "../../../../../hooks/auth/useUserRequest";
-import Image from "../../../../../utilities/Image";
+import { Avatar, Upload } from "antd";
+import {  DeleteOutlined, UserOutlined } from "@ant-design/icons";
+import { useMediaQuery } from "react-responsive";
+import PaperPlaneButton from "../../../../buttons/PaperPlaneButton/PaperPlaneButton";
+import ImgInputFile from "../../../../../stylesComponents/ImgInputFile/ImgInputFile";
+import ImageIcon from "../icons/ImageIcon";
+import { validateFile } from "../../../Stories/utils/validateFile";
+import { getBase64 } from "../../../../Profile/header/modalProfilePicture/util/getBase64";
+
+
 
 const MakeComment = (
   {
@@ -27,16 +35,26 @@ const MakeComment = (
     type,
     componentId,
     showComments,
-    hideMakeComments,
+    hideMakeComments = ()=>{},
     notShowComments
   },
-  inputFile,
+
 ) => {
+
+
+  
   const privateRequest = useUserRequest()
+  const [imageUrl, setImageUrl] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const file = useRef()
+
   const { mutate, isLoadingMutation, isError, reset } = useMutationRequest(
     CommentService.comment,
     { id, name },
   );
+
+
+  const [isOpenEmoji, setIsOpenEmoji] = useState(false)
 
   const { store, set, get, state } = useStore();
 
@@ -47,6 +65,8 @@ const MakeComment = (
       enabled: !!userforDisplay,
     },
   );
+
+  
 
   const user = userData?.data?.data ?? {};
 
@@ -61,7 +81,7 @@ const MakeComment = (
           type,
           text: get(),
           commentId: componentId,
-          image: inputFile.current.files[0],
+          image: file.current,
         },
         {
           onSuccess: () => {
@@ -72,14 +92,44 @@ const MakeComment = (
           },
         },
       );
-  }, [state, inputFile]);
+  }, [state, file]);
+
+
+
+  const handleChange = (info) => {
+    if (info.file.status === 'uploading') {
+        setLoading(true);
+        return;
+    }
+
+    if (validateFile(info.file.originFileObj)) {
+        getBase64(info.file.originFileObj, (url) => {
+            file.current = info.file.originFileObj;
+            setLoading(false);
+            setImageUrl(url);
+            file.current = info.file.originFileObj
+        });
+    }
+};
+  
+
+  const props = {
+    className: "comment-img",
+    name: 'image',
+    onChange:(e)=> handleChange(e),
+    showUploadList: false
+  };
+
 
 
   return (
     <div className="comment-container">
+      <div>
+        {imageUrl && <button className="button-delete-upload-img" onClick={()=> setImageUrl(null)}><DeleteOutlined /></button>}
+        {imageUrl && <img className="makeComment-upload-img" src={imageUrl}></img>}
+      </div>
       <div className="photo-makeComment">
-      <Image src={rem}
-							alt="user"/>
+       <Avatar size={45} icon={<UserOutlined />}/>
       </div>
       <div className="field-write-card">
         <div className="field-write">
@@ -96,15 +146,12 @@ const MakeComment = (
           )}
 
           <div className="adjuncts">
-            <img src={gallery} alt="gallery emoticon" />
-            <input
-              type="file"
-              ref={inputFile}
-              id="fileInput"
-              className="input-file-makeComment"
-              accept="image/png, image/jpeg, image/jpg, /image.jfif"
-            />
-            <EmojiPickerWithIcon store={store} set={set} />
+            <Upload {...props}>
+              <ImageIcon></ImageIcon>
+            </Upload>           
+            <div >
+              <EmojiPickerWithIcon store={store} set={set} setIsOpenEmoji={setIsOpenEmoji}  isOpen={isOpenEmoji} />
+            </div>
             <div
               className="comment-button"
               onClick={() => CommentCallback()}
@@ -113,7 +160,7 @@ const MakeComment = (
               {isError && <ErrorButton reset={reset} />}
               {!isError && (
                 <>
-                  {isLoadingMutation ? <div></div> : <SendButton />}
+                 <PaperPlaneButton input={get()}></PaperPlaneButton>
                 </>
               )}
             </div>
@@ -124,4 +171,4 @@ const MakeComment = (
   );
 };
 
-export default React.forwardRef(MakeComment);
+export default MakeComment

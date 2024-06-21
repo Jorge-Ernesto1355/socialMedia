@@ -11,6 +11,9 @@
 .comment-container .photo-makeComment {
   width: 50px;
   height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
 }
 
@@ -29,7 +32,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   margin-left: 5px;
   border-radius: 10px;
 }
@@ -44,7 +46,8 @@
 .comment-container .field-write {
   width: 100%;
   height: max-content;
-  display: flex;
+  display: grid;
+  grid-template-columns: 70% 30%;
   align-items: center;
   background-color: var(--color-light);
   border-radius: 10px;
@@ -52,7 +55,7 @@
 }
 
 .comment-container .field-write input {
-  width: 70%;
+  width: 60%;
   background-color: transparent;
   overflow: hidden;
   border: none;
@@ -71,12 +74,10 @@
   outline: none;
 }
 
-.comment-container .field-write .adjuncts img {
-  width: 30px;
-  height: 30px;
-}
+
 
 .comment-container .field-write .adjuncts {
+  width: 100%;
   display: flex;
   cursor: pointer;
   justify-content: space-between;
@@ -89,11 +90,27 @@
   margin: 0 5px;
 }
 
-.comment-button {
-  margin-left: 5px;
-  background-color: transparent;
+.makeComment-upload-img{
+  position: absolute;
+  top: -110px;
+  left: 0;
+  width: 200px;
+  height: 100px;
+  border-radius: 10px;
+  object-fit: contain;
 }
 
-.comment-button img.rise-shake {
-  animation: jump-shaking 0.83s infinite;
+.button-delete-upload-img{
+  position: absolute;
+  top: -110px;
+  left: 200px;
+  border-radius: 50%;
+  background-color: var(--color-light);
+  width: 10px;
+  height: 10px;
+  padding: .3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }

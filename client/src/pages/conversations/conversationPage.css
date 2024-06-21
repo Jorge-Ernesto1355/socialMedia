@@ -1,0 +1,70 @@
+.conversationPage-container{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: var(--color-light);
+    display: grid;
+    place-items:center ;
+}
+
+.conversationPage-center{
+    border-radius: 1rem;
+    box-shadow: var(--card-shadow);
+    width: 70%;
+    height: 100%;
+    background-color: var(--color-white);
+    
+}
+
+.conversationPage-item{
+    height: 765px;
+    position: relative;
+   
+    
+}
+
+.conversationPage-item.box{
+    margin-left: 2.5rem;
+}
+
+
+@media (max-width: 1025px){
+
+    .conversationPage-container{
+        width: 100%;
+        height: 100%;
+    }
+    .conversationPage-center{
+        border-radius: 1rem;
+        box-shadow: var(--card-shadow);
+        width: 100%;
+        height: 100%;
+        background-color: var(--color-white);
+        
+    }
+}
+
+@media (max-width: 600px){
+
+    .conversationPage-container{
+        width: 100%;
+        height: 100vh;
+        position: relative;
+        background-color: var(--color-light);
+        display: block;
+    }
+
+    .conversationPage-center{
+        width: 100%;
+        height: 100%;
+    }
+
+    .conversationPage-item{
+        width: 100%;
+        height: 100vh;       
+    }
+
+    .conversationPage-item.box{
+        margin: 0;
+    }
+}

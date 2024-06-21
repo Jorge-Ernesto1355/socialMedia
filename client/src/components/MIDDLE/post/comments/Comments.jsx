@@ -10,6 +10,8 @@ import ComponentStateHandler from "../../../../hooks/stateManagmentComponent/Com
 import CommentsLoader from "./Loader/CommentsLoader";
 import ErrorMessageComment from "./ErrorMessage/ErrorMessageComment";
 import TypeComments from "./typeComments/TypeComments";
+import { Empty } from "antd";
+import { result } from "lodash";
 
 
 const Comments = ({ id, name, className, type, userId}) => {
@@ -54,7 +56,7 @@ const Comments = ({ id, name, className, type, userId}) => {
         className={className}
         style={{ overflow: "none" }}
       >
-        <ComponentStateHandler Loader={<CommentsLoader />} isError={isError} isLoading={isLoading} ErrorMessageComponent={<ErrorMessageComment reset={reset} />}  >
+        <ComponentStateHandler Loader={<CommentsLoader />} isError={isError} isLoading={isLoading} items={comments} ErrorMessageComponent={<ErrorMessageComment reset={reset} />} EmptyMessage={<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}   >
           {comments?.map((comment) => (
             <>
               <Comment userId={userId} key={comment.comment._id} comment={comment} postId={id} />

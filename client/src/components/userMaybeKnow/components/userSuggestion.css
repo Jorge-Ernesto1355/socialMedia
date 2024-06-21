@@ -1,0 +1,9 @@
+.userSuggestion-container{
+    width: 230px;
+    height: 280px;
+    max-width: 300px;
+    border-radius: 10px;
+    padding: .3rem;
+    border: 2px solid var(--color-light);
+
+}

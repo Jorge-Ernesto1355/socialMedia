@@ -1,0 +1,20 @@
+.commentMobile-Container-makeComment{
+    background-color: var(--color-white);
+    position: fixed;
+    bottom: 0;  
+   right: 0px; 
+    border-radius: 10px;
+    box-shadow: var(--card-shadow);
+}
+
+.commentMobile-container{
+    position: relative;
+}
+
+.commentMobile-img{
+    max-width: 380px;
+    height: 300px;
+    object-fit: cover;
+    margin-left: 1rem;
+    border-radius: 1rem;
+}

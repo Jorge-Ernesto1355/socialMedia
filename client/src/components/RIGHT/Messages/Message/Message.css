@@ -1,3 +1,4 @@
+
 .message-container {
  display: flex;
  flex-direction: column;
@@ -78,11 +79,9 @@
 
 
 .message-text {
-    font-size: x-small;
+    font-size: small;
     font-weight: 400;
-    color: #000000;
-    
-    
+    color: #000000;    
 }
 
 
@@ -133,4 +132,19 @@
     max-width: 200px;
     max-height: 200px;
     border-radius:6px;
+}
+
+.message-story-img{
+    width: 100px;
+    height: 200px;
+}
+
+.message-story-container{
+    width: 140px;
+    height: 200px;
+}
+
+.message-reactionShared{
+    width: 30px;
+    height: 30px;
 }

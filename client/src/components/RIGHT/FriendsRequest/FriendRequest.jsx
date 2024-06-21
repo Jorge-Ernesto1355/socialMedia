@@ -11,7 +11,7 @@ import ErrorMessageFriendRequest from "./ErrorMessage/ErrorMessageFriendRequest"
 import EmptyMessage from "./EmptyMessage";
 import { Typography } from "antd";
 
-const { Text, Title} = Typography;
+const {  Title} = Typography;
 const FriendRequest = () => {
   const { userId } = AuthProvider()
   const privateRequest = useUserRequest()

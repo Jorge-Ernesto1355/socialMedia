@@ -1,5 +1,5 @@
 import { EditOutlined,} from '@ant-design/icons';
-import {  Button, Divider, Flex, Input, Modal,  Skeleton,  Switch, Typography } from 'antd';
+import {  Button, Divider, Flex, Input, Modal,  Skeleton,  Switch, Typography, message } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import React, { useState } from 'react'
 import UserService from '../../../../../services/UserService';
@@ -51,18 +51,18 @@ const ModalEditProfile = ({userId}) => {
         setIsModalOpen(false);
       };
 
-      const {mutate, isLoading, isError} = useMutation({
+      const {mutate, isLoading} = useMutation({
         mutationFn: UserService.uploadUserProfile, 
         mutationKey: ['updatedProfile', userId], 
-        onSuccess: (data)=>{
-                console.log(data)
-        }
+        onSuccess: (data)=> message.success("Your profile has been edited succefully"), 
+        onError: ()=> message.error("Upss... Something went wrong")
+      
       })
 
   return (
     <>
      <Button onClick={showModal} type='primary' icon={<EditOutlined />}>Editar</Button>
-        <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel} confirmLoading={isLoading} width={500} >
+        <Modal open={isModalOpen} onOk={handleOk}  onCancel={handleCancel} confirmLoading={isLoading} width={500} >
            
                 
                     <Title style={{marginBottom: "0px"}} level={3}>Edit profile</Title>

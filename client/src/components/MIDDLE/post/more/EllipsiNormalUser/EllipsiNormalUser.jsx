@@ -68,6 +68,7 @@ const EllipsiNormalUser = ({ username = '', isLoading, postId, postUserId})=>{
          <EllipsiItem
          typeItem={OptionsMoreObject.translate}
          postId={postId}
+         successMessage={"has been traduced succefully"}
          friendId={postUserId}
          description={<span style={{fontSize: "x-small"}}>traduce the text of spanish to ingles or viceversa</span>}
          icon={<TranslateIcon></TranslateIcon>}

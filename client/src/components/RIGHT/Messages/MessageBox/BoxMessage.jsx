@@ -20,7 +20,7 @@ import userService from '../../../../services/UserService'
 import { toast } from 'react-toastify'
 
 
-const BoxMessage = ({conversationId}) => {
+const BoxMessage = ({conversationId, messenger, deleteConversation: deleteConversationMessenger}) => {
   
     const {userId} = AuthProvider()
     const socket = useSocket()
@@ -46,13 +46,14 @@ const BoxMessage = ({conversationId}) => {
 
    
     return (
-        <motion.div animate={`${minimize ? 'show' : 'hidden'}`} variants={variantsMessageBox} className='MessageBox-container'>
-            <ComponentStateHandler isLoading={isLoadingConversation} isError={isErrorConversation} Loader={<SpinnerLoader/>}  ErrorMessageComponent={<>errro Conversation</>} >
-            <MessageBoxHeader minimize={setMinimize} deleteConversation={deleteConversation} conversation={conversation} isLoading={isLoading} user={user} />
-            <MessageBoxBody conversation={conversation} friendUser={user} />
-            <MessageBoxActions conversation={conversation} userId={userId} />
-            </ComponentStateHandler>
-            
+        <motion.div animate={`${minimize ? 'show' : 'hidden'}`} variants={variantsMessageBox} className={`MessageBox-container ${messenger && "messenger"}`}>
+                <ComponentStateHandler isLoading={isLoadingConversation} isError={isErrorConversation} Loader={<SpinnerLoader/>}  ErrorMessageComponent={<>errro Conversation</>} >
+                    <div className='messageBox-grid'>
+                        <MessageBoxHeader minimize={setMinimize} deleteConversation={deleteConversationMessenger ?? deleteConversation } conversation={conversation} isLoading={isLoading} user={user} />
+                        <MessageBoxBody conversation={conversation} friendUser={user} />
+                        <MessageBoxActions conversation={conversation} userId={userId} />
+                    </div>
+                </ComponentStateHandler>
         </motion.div>
     )
 }

@@ -18,3 +18,11 @@
   .search-form{
     width: 100%;
   }
+
+@media (max-width: 500px){
+  .search-bar {
+   width: 63vw;
+   height: 2rem;
+  }
+
+}

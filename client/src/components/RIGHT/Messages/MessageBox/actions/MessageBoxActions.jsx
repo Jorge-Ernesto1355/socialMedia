@@ -1,9 +1,6 @@
 /* eslint-disable no-constant-condition */
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import './MessageBoxActions.css'
-import ImgInputFile from '../../../../../stylesComponents/ImgInputFile/ImgInputFile'
-import { useStore } from '../../../../../hooks/useStore/useStore'
-import AutoComplete from '../../../../Autocomplete/AutoComplete'
 import AuthProvider from '../../../../../zustand/AuthProvider'
 import { useSocket } from '../../../../../hooks/useSocket'
 import Reply from '../../Message/Reply/Reply'
@@ -12,26 +9,32 @@ import cross from '../../../../../assets/cross.png'
 import { useMutation,  useQueryClient } from 'react-query'
 import messageService from '../service/MessageService'
 import useUserRequest from '../../../../../hooks/auth/useUserRequest'
-import UseImagePreview from '../../../../../hooks/useImagePreview/useImagePreview'
 import LoaderVote from '../../../../MIDDLE/post/Votes/LoaderVote'
-import sendBlue from '../../icons/paperPlaneBlue.png'
-import sendGray from '../../icons/paperPlaneGray.png'
-import agregarPicture from '../../icons/agregar.png'
 import EmojiPickerComponent from '../../../../EmojiPicker/EmojiPicker'
-import emoji from '../../icons/feliz.png'
+import { Input, Upload } from 'antd'
+import PaperPlaneButton from '../../../../buttons/PaperPlaneButton/PaperPlaneButton'
+import ImageIcon from '../../../../MIDDLE/post/comments/icons/ImageIcon'
+import SmileIcon from '../../../../MIDDLE/post/comments/icons/SmileIcon'
+import { validateFile } from '../../../../MIDDLE/Stories/utils/validateFile'
+import { getBase64 } from '../../../../Profile/header/modalProfilePicture/util/getBase64'
 
 
 const MessageBoxActions = ({ conversation}) => {
     const {userId} = AuthProvider()
+    const queryClient = useQueryClient()
     const privateRequest = useUserRequest()
     const friendId  = conversation?.participants?.filter((participant)=> participant !==  userId)[0] ?? null
-    const [isOpen, setIsOpen] = useState(false)
-    const { store, set, get } = useStore();
-    const { element, input: inputFile, clearImagePreview } = UseImagePreview()
-    const socket = useSocket()
-    const queryClient = useQueryClient()
-    const messageKey = ['messages', conversation?._id]
+    const [imageUrl, setImageUrl] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const file = useRef()
     const {messageReply, deleteMessageReply, checkConversation} = BoxMessagesStore() 
+    const socket = useSocket()
+    const store = useRef(null)
+    const [isOpen, setIsOpen] = useState(false)
+    const [input, setInput] = useState("")
+    
+    const messageKey = ['messages', conversation?._id]
+
     const {mutateAsync, isLoading, isError} = useMutation({
         mutationFn:messageService.createMessage, 
         onMutate: async (message)=>{
@@ -73,19 +76,21 @@ const MessageBoxActions = ({ conversation}) => {
         }
       
     })
+
+
   
     const onClick = useCallback(async () => {
 
-        if(get().length <= 0) return 
+        if(input.length <= 0) return 
 
        const messageData = await mutateAsync({
             to:friendId,
             from:userId, 
             conversationId: conversation?._id, 
-            text:get(),   
+            text:input,   
             reply:messageReply,
             privateRequest,
-            image: inputFile.current.files[0]
+            image: file.current
         })
 
     
@@ -100,9 +105,9 @@ const MessageBoxActions = ({ conversation}) => {
            }
 
         }
-        clearImagePreview()
-        set('')
-    }, [get()])
+        
+        
+    }, [input])
 
     useEffect(()=>{
         socket?.on('block-conversation', (block)=>{
@@ -129,9 +134,32 @@ const MessageBoxActions = ({ conversation}) => {
         }
     }, [])
 
+    const handleChange = (info) => {
+        if (info.file.status === 'uploading') {
+            setLoading(true);
+            return;
+        }
+    
+        if (validateFile(info.file.originFileObj)) {
+            getBase64(info.file.originFileObj, (url) => {
+                file.current = info.file.originFileObj;
+                setLoading(false);
+                setImageUrl(url);
+                file.current = info.file.originFileObj
+            });
+        }
+    };
 
 
+    const props = {
+        className: "comment-img",
+        name: 'image',
+        onChange:(e)=> handleChange(e),
+        showUploadList: false
+      };
+    
 
+      
 
     return (
         <div className='MessageBox-actions-container'>
@@ -152,30 +180,23 @@ const MessageBoxActions = ({ conversation}) => {
              </div>
              ) } 
              <div className="actions-img-send">
-				<img ref={element} onClick={() => clearImagePreview()} />
+				<img src={imageUrl}  />
 			</div>
             <div className='messageBox-actions'>
             <div className='MessageBox-actions-form'>
-            {store && (
-            <AutoComplete
-              placeholder={"Aa"}
-              rows={1}
-              cols={25}
-              ref={store}
-              set={set}
-              stateValue={get}
-            />
-          )} 
+            <Input placeholder='Write something special' value={input} onChange={(e)=> setInput(e.target.value)} ref={store}/>
             </div>
             <div className='MessageBox-actions-InputFile'>
-            <ImgInputFile ref={inputFile} img={agregarPicture} />
+            <Upload {...props}>
+              <ImageIcon></ImageIcon>
+            </Upload>    
             </div>  
-            <img src={emoji} className='MessageBox-emoji' alt="emoji" onClick={()=> setIsOpen((prev)=> !prev)} />
-            <EmojiPickerComponent className={'absolute'} isOpen={isOpen} store={store} set={set}  />
+            <SmileIcon alt="emoji" onClick={()=> setIsOpen((prev)=> !prev)}  />
+            <EmojiPickerComponent className={'absolute'} isOpen={isOpen} setInput={setInput}  />
             <button className='MessageBox-sendButton' onClick={() => onClick()}>
               {isLoading && <LoaderVote/> }
               {!isLoading && (<>
-                {!isLoading && !isError && get()?.length ?  <img src={sendBlue} className='Messagebox-sendbutton'/> :  <img src={sendGray} className='Messagebox-sendbutton'/>}
+                {!isLoading && !isError && <PaperPlaneButton input={input}/>}
               </>)}
              
             </button>

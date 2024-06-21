@@ -26,7 +26,7 @@ module.exports = class userService {
     try {
       exits(object);
 
-      console.log(object)
+      
       const { userId, options = [] } = object;
 
       const queryOptions = {

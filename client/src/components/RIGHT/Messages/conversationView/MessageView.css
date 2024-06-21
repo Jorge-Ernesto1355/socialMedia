@@ -2,9 +2,16 @@
     height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-width: 100%;
-    max-width: 325px;
-    
+    width: 100%;
+    -webkit-overflow-scrolling: touch;  
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+
+
+}
+
+.conversationView-container::-webkit-scrollbar {
+    display: none;
 }
 
 .conversation-title-container{
@@ -12,8 +19,6 @@ width: 100%;
     width: 100%;
     justify-content: space-between;
     margin-bottom: .5rem;
- 
-
 }
 
 .conversation-newGroup{

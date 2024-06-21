@@ -28,18 +28,16 @@ nav .container {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  
 }
 
 
 
-nav .search-bar input[type="search"]::placeholder {
-  color: var(--color-gray);
-}
+
 
 nav .options {
   display: flex;
   justify-content: space-around;
-
   align-items: center;
 }
 
@@ -61,3 +59,25 @@ nav .options {
   margin: 0 .7rem;
 
 }
+
+
+@media(max-width:677px){
+  .actions-navbar{
+      display: none;
+
+  }
+
+  nav .container{
+    justify-content: flex-start;
+  }
+
+  .navbar-title{
+    margin: 0 1rem;
+    font-size: xx-small;
+  }
+  nav .container {
+   padding: .3rem;
+    
+  }
+}
+

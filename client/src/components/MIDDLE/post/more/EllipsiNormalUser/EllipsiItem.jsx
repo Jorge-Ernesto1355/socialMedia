@@ -28,7 +28,7 @@ const EllipsiItem = ({ postId, title, icon, successMessage, typeItem, ...props})
        {icon}
         <div className='ellipsis-body'>
          {title}
-         {props?.description}
+         {isLoadingMutation ? <SpinnerLoader/> : <>{props?.description}</>}   
         </div>
        </div>
        

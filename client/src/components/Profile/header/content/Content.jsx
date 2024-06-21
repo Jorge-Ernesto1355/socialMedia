@@ -28,16 +28,15 @@ const Content = ({userId}) => {
     <div className='profile-card-content'>
       <div className='profile-content-information'>
           <div className='profile-content-profilePicture'>
-             <Avatar className='profile-content-avatar' icon={<UserOutlined />}  size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 150, xxl: 150 }} src={user?.imageProfile?.url}/>
+             <Avatar className='profile-content-avatar' icon={<UserOutlined />}  size={{ xs: 140, sm:100, md: 120, lg: 120, xl: 150, xxl: 150 }} src={user?.imageProfile?.url}/>
                <ModalProfilePicture userId={userId}>
-               <span className='profile-flaticon'>
-                 <CameraOutlined/>
-               </span>
+                  <span className='profile-flaticon'>
+                    <CameraOutlined/>
+                  </span>
                </ModalProfilePicture>
-
           </div>
            <div className='profile-content-user-information'>
-               {isLoading ? <Skeleton.Input block size='small'/> : <h2>{user?.username}</h2>}
+               {isLoading ? <Skeleton.Input block size='small'/> : <h3>{user?.username}</h3>}
                {isLoading ? <Skeleton.Input block size='small'/> : <span className='text-muted'>{results?.length} friends</span> }
                {isLoadingFriend ? (
                     <Avatar.Group>

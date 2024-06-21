@@ -8,9 +8,10 @@ import comment from "./icons/comment.png";
 import Reaction from "../../../Reaction/Reaction";
 import LikePost from '../../../Reaction/LIkePost'
 import SharePost from "../share/SharePost";
+import CommentMobile from "../comments/makeComment/CommentMobile";
 
 
-const ActionsPost = ({ postId, userId }) => {
+const ActionsPost = ({ postId, userId , post}) => {
   return (
     <div className="action-buton">
       <div className="interacions-buttons">
@@ -26,7 +27,7 @@ const ActionsPost = ({ postId, userId }) => {
         </div>
         <div>
           <img className="icon icon-comment" src={comment} alt="" />
-          <span className="interaction-button-text">Comment</span>
+          <CommentMobile post={post}/>
         </div>
         <SharePost postId={postId} userId={userId}/>
       </div>

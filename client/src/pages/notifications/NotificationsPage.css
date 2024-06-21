@@ -1,0 +1,53 @@
+.notificationPage-container{
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    background-color: var(--color-light);
+    display: grid;
+    place-items:center ;
+}
+
+.notificationPage-float{
+    padding: var(--card-padding);
+    width: 40%;
+    height: max-content;
+    min-height: 90%;
+    border-radius: var(--card-border-radius);
+    background-color: var(--color-white);
+}
+
+@media(max-width: 1440px){
+    .notificationPage-float{
+        width: 60%;
+    }
+}
+
+@media(max-width: 900px ){
+    .notificationPage-float{
+        width: 70%;
+    }
+}
+
+@media(max-width: 700px ){
+    .notificationPage-float{
+        width: 80%;
+    }
+}
+
+@media(max-width: 600px ){
+
+    .notificationPage-container{
+        width: 100%;
+        height: 100vh;
+        position: relative;
+        background-color: var(--color-light);
+        
+        
+    }
+    .notificationPage-float{
+        height: 100%;
+        width: 100%;
+    }
+
+
+}

@@ -153,7 +153,7 @@ class CommentService {
         await container.save();
         await commentCreated.save()
 
-        console.log("no coment")
+       
 
         await NotificationService.create({
           message: `has commented your ${type}`, 
@@ -185,8 +185,7 @@ class CommentService {
         await commentGot.save();
         await commentCreated.save()
 
-        console.log({commentGot, user})
-        console.log("comment")
+       
         // creation of a notification
         await NotificationService.create({
           message: `has commented your ${type}`, 

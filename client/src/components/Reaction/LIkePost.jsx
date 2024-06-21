@@ -20,7 +20,7 @@ const LikePost = ({ reactionType}) => {
           className="reaction-div"
           
         >
-          <img className="icon" src={like} alt="like-post" />
+          <img className="icon like" src={like} alt="like-post" />
           <span className="reaction-text">me gusta</span>
         </div>
       ) : (

@@ -1,6 +1,5 @@
 import React  from "react";
 import "./Profile.css";
-
 import { useParams } from "react-router-dom"
 import CrearPost from "../MIDDLE/crearPost/CreatePost";
 import Feed from "../MIDDLE/feed/Feed";
@@ -29,7 +28,7 @@ const Profile = () => {
               <Friends userId={userId}/>
             </div>
         </div>
-        <div className="">
+        <div className="profile-right">
         {tab === 1 ? (
               <>
                 <CrearPost />

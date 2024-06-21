@@ -13,6 +13,8 @@ import OptionsNotifications from './OptionsNotifications'
 import useUserRequest from '../../hooks/auth/useUserRequest'
 import ComponentStateHandler from '../../hooks/stateManagmentComponent/ComponentStateHandler'
 import EmptyMessage from './EmptyMessage'
+import { Button } from 'antd'
+import { Link } from 'react-router-dom'
 
 
 
@@ -22,7 +24,6 @@ const Notifications = () => {
     const privateRequest = useUserRequest()
     const {results, isLoading, isError, fetchNextPage, hasNextPage} = useInfiniteScroll({request: NotificationService.getAll, name:'notification', id:userId, privateRequest})
   return (
-    
    <ul  
      className="notification-modal"
      >
@@ -33,7 +34,9 @@ const Notifications = () => {
    <FiltersNotification/>
    <div className='notifications-info'>
       <h6 className='notifications-new'>Nuevas</h6>
-      <p className='notification-seeAll' >Ver todo</p>
+      <Link to={`notifications/${userId}`}>
+        <Button type='link' className='notification-seeAll' >Ver todo</Button>
+      </Link>
    </div>
     <InfiniteScroll 
     dataLength={results.length}

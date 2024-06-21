@@ -23,11 +23,13 @@ import AuthProvider from "../../zustand/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import { validations } from "./validation";
 import { InitialValues } from "./InitialValues";
+import { useGeoLocations } from "../../hooks/GeoLocation/useGeoLocations";
 
 function Register() {
 
   const Auth = AuthProvider()
   const navigate = useNavigate()
+  const geometry = useGeoLocations()
 
   const { mutate, isLoading } = useMutation({
     mutationFn: AuthService.Register,
@@ -58,6 +60,7 @@ function Register() {
               email: correo,
               username: nombre,
               password: contraseña,
+              geometry: (!geometry.error ? {...geometry?.location} : {}),
             }, {
               onSuccess: () => {
                 resetForm()

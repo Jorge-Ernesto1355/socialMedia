@@ -7,37 +7,16 @@ import UserService from '../../../../services/UserService';
 import SelectCountry from './SelectCountry';
 import SelectCity from './SelectCity';
 import useUserRequest from '../../../../hooks/auth/useUserRequest';
+import useQueryLocation from '../../../../hooks/useQueryLocation';
 const { Text, Title} = Typography;
 const ModalEditDetails = ({userId}) => {
 
 
     const privateRequest = useUserRequest()
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [location, setLocation] = useState({})
-    const LonLat = useGeoLocations()
-    const [infoLocation, setInfoLocation] = useState({
-        city: "", 
-        state: "", 
-        country: "", 
-        workAt: ""
-    })
+   
 
-    const {isLoading} = useQuery(["userLocation", userId], async  ()=> UserService.getUserLocation({latitude:LonLat?.location?.latitude, longitude: LonLat?.location?.longitude}), {
-        onSuccess: (data)=>{
-            if(!data) return null
-            if(!data?.status === "200") return null
-            
-            
-            const userLocation = {
-                countryCode: data.data?.results[0]?.components?.country_code, 
-                country: data.data?.results[0]?.components?.country, 
-                city: data.data?.results[0]?.components?.county, 
-                state: data.data?.results[0]?.components?.state, 
-            } 
-            setLocation(userLocation)
-        }, 
-        enabled: !!LonLat.location.latitude && !!LonLat.location.longitude
-    })
+   const {isLoading, location, infoLocation, editInfoLocation} = useQueryLocation()
     
     const {mutate, isLoadingMutation} = useMutation({
         mutationFn: UserService.editUserLocation, 
@@ -49,11 +28,7 @@ const ModalEditDetails = ({userId}) => {
     
     
     
-    const handleInfoLocation = ({name, value})=>{
-        setInfoLocation((prev)=> {
-            return {...prev, [name]: value}
-        })
-    }
+   
 
     const showModal = () => {
       setIsModalOpen(true);
@@ -65,7 +40,6 @@ const ModalEditDetails = ({userId}) => {
         state: infoLocation.state, 
         country: infoLocation.country,
         workAt: infoLocation.workAt,},
-      
         id: userId, 
         privateRequest
     })
@@ -89,18 +63,18 @@ const ModalEditDetails = ({userId}) => {
        <Flex vertical={"column"} gap={"large"}>
                 <div>
                 <Title level={5}>Country</Title>
-                {isLoading ? <Skeleton.Input active={true} block/> : <SelectCountry country={location.country} handleInfoLocation={handleInfoLocation} /> }
+                {isLoading ? <Skeleton.Input active={true} block/> : <SelectCountry country={location.country} handleInfoLocation={editInfoLocation} /> }
                 </div>
                 
                 <div>
                 <Title level={5}>City</Title>
-                {isLoading ? <Skeleton.Input active={true} block/> : <SelectCity country={location.city} handleInfoLocation={handleInfoLocation} /> }
+                {isLoading ? <Skeleton.Input active={true} block/> : <SelectCity country={location.city} handleInfoLocation={editInfoLocation} /> }
                 </div>
 
                 <div>
     
                 <Title level={5}>Work at</Title>
-                <Input name='workAt' value={infoLocation.workAt}  placeholder='work at' onChange={(e)=> handleInfoLocation({name: e.target.name, value: e.target.value})}/>
+                <Input name='workAt' value={infoLocation.workAt}  placeholder='work at' onChange={(e)=> editInfoLocation({name: e.target.name, value: e.target.value})}/>
                 </div>
 
                 <Divider>Or</Divider>
@@ -109,15 +83,15 @@ const ModalEditDetails = ({userId}) => {
                 <Flex gap={"middle"}>
                     <Flex vertical="column">
                             <Text>City</Text>
-                            <Input value={infoLocation.city === ""  ? location.city :  infoLocation.city} name='city' placeholder='city'  onChange={(e)=> handleInfoLocation({name: e.target.name, value: e.target.value})}/>
+                            <Input value={infoLocation.city === ""  ? location.city :  infoLocation.city} name='city' placeholder='city'  onChange={(e)=> editInfoLocation({name: e.target.name, value: e.target.value})}/>
                     </Flex>
                     <Flex vertical="column">
                             <Text>State</Text>
-                            <Input value={infoLocation.state === ""  ? location.state :  infoLocation.state}  name='state' placeholder='state' onChange={(e)=> handleInfoLocation({name: e.target.name, value: e.target.value})}/>
+                            <Input value={infoLocation.state === ""  ? location.state :  infoLocation.state}  name='state' placeholder='state' onChange={(e)=> editInfoLocation({name: e.target.name, value: e.target.value})}/>
                     </Flex>
                     <Flex vertical="column">
                             <Text>Country</Text>
-                            <Input value={infoLocation.country === ""  ? location.country :  infoLocation.country} name='country' placeholder='country' onChange={(e)=> handleInfoLocation({name: e.target.name, value: e.target.value})}/>
+                            <Input value={infoLocation.country === ""  ? location.country :  infoLocation.country} name='country' placeholder='country' onChange={(e)=> editInfoLocation({name: e.target.name, value: e.target.value})}/>
                     </Flex>
                 </Flex>
        </Flex>

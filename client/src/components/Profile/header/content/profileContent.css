@@ -12,6 +12,8 @@
     justify-content: flex-start;
 }
 
+
+
 .profile-content-profilePicture{
         position: relative;
         bottom: 50px;
@@ -50,3 +52,24 @@
    border: 3px solid white;
    box-shadow: var(--card-shadow);
 }
+
+@media (max-width: 600px){
+    .profile-content-information{
+        flex-direction: column;
+    }
+
+    .profile-content-user-information{
+        margin-top: 0;
+        margin-bottom: 7rem;
+       
+    }
+
+    .profile-content-profilePicture{
+     bottom: 5px;
+    }
+
+    .profile-card-content{
+        justify-content: space-around;
+    }
+}
+

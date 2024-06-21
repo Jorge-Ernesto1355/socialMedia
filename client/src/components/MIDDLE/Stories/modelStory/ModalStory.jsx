@@ -1,39 +1,31 @@
 import { UserOutlined } from '@ant-design/icons';
-import { Avatar, Col, Modal, Typography, Carousel, Spin, Skeleton } from 'antd';
+import { Avatar, Col, Modal, Typography, Carousel, Spin, Skeleton, Card } from 'antd';
 import React, { useState, useEffect, useRef } from 'react';
 import "./modalStory.css";
 import { storyService } from '../services/storyService';
 import useUserRequest from '../../../../hooks/auth/useUserRequest';
 import { useCallbackRequest } from '../../../../hooks/useCallbackRequest/useCallbackRequest';
 import BlurImageLoader from '../../../../utilities/BlurImageLoader';
+import { useQuery } from 'react-query';
+import Story from './Story';
+import Video from './Video';
 
-const { Title } = Typography;
+const { Title, Paragraph, Text } = Typography;
 
 const ModalStory = ({ story }) => {
+
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [loadingSlides, setLoadingSlides] = useState(new Set());
-  const initialLoadRef = useRef(false);
   const privateRequest = useUserRequest();
 
-  const { data, isLoading} = useCallbackRequest({
-    name: "stories",
-    id: story?.userId?._id,
-    request: storyService.getStoriesFromUser,
-    privateRequest
-  });
+  const {data, isLoading, refetch, isError} = useQuery(['stories', story.userId._id], ()=> storyService.getStoriesFromUser({privateRequest, id: story.userId._id}), {
+    enabled: false
+  })
 
-  
 
-  useEffect(() => {
-    if (data?.data?.length > 0 && !initialLoadRef.current) {
-      const initialLoadingSlides = new Set(data.data.map((_, index) => index));
-      setLoadingSlides(initialLoadingSlides);
-      initialLoadRef.current = true;
-    }
-  }, [data]);
 
   const showModal = () => {
     setIsModalOpen(true);
+    refetch()
   };
 
   const handleOk = () => {
@@ -44,21 +36,36 @@ const ModalStory = ({ story }) => {
     setIsModalOpen(false);
   };
 
-  const handleImageLoad = (index) => {
-    setLoadingSlides((prev) => {
-      const newSet = new Set(prev);
-      newSet.delete(index);
-      return newSet;
-    });
-  };
+
 
   return (
     <>
-      <Col className='story-item' span={5} onClick={() => showModal()}>
-        <BlurImageLoader image={story?.media?.url} preview={story?.media?.previewUrl} alt={story?.text} imageStyleClass={"story-item-img"} divStyleClass={"story-item-container-img"} />
-        <Avatar size={40} className='story-modal-avatar' src={story?.userId?.imageProfie?.url} icon={<UserOutlined />} />
-        <Title style={{ color: "#ffffff" }} level={5} className='style-item-username'>{story?.userId?.username}</Title>
-      </Col>
+      {isError && <Text type='danger'>Upps... Something went wrong</Text>}
+      {!isError && 
+          <div style={{height: "100%", position: "relative"}} onClick={() => showModal()} >
+
+              {story.media.resourceType === "text" ? (
+                <Card style={{width: '100%', height: "100%", backgroundImage: story.media.background}} bodyStyle={{width: '100%', height: "80%", display: "flex", justifyContent: "center", alignContent: "center"}}>
+                   <Paragraph style={{ height: "100%"}} ellipsis={{rows: 8}} >
+                        <Title level={5} style={{color:"#ffffff"}}>{story.text}</Title>
+                   </Paragraph>              
+                </Card>
+              ) : (
+                <>
+                 {story.media.resourceType === "video" ? (
+                  
+                    <Video src={story.media.url} className='story-item-img' />
+                  ) : (
+                    <BlurImageLoader  image={story?.media?.url} preview={story?.media?.previewUrl} alt={story?.text} imageStyleClass={"story-item-img"} divStyleClass={"story-item-container-img"} />
+                  )}
+                </>
+              ) }
+            <Avatar size={40} className='story-modal-avatar' src={story?.userId?.imageProfie?.url} icon={<UserOutlined />} />
+            <Paragraph ellipsis={false}>
+              <Title style={{ color: "#ffffff" }} level={5} className='style-item-username'>{story?.userId?.username}</Title>
+            </Paragraph>
+          </div>
+      }
       <Modal
         style={{ height: "800px", padding: "0px" }}
         className='modal-story-container'
@@ -79,37 +86,8 @@ const ModalStory = ({ story }) => {
           infinite={false}
           autoplay
         >
-          {data?.data?.map((story, index) => (
-            <div className='story-carousel-item' key={story?._id} style={{ position: 'relative' }}>
-              {loadingSlides.has(index) && (
-                <div style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                  border: '2px solid #fff',
-                  zIndex: 1
-                }}>
-                  <Spin />
-                </div>
-              )}
-              <img
-                src={story?.media?.url}
-                className='story-carousel-item-img'
-                alt=""
-                onLoad={() => handleImageLoad(index)}
-                style={{
-                  width: '100%',
-                  filter: loadingSlides.has(index) ? 'brightness(0.5)' : 'none',
-                  transition: 'filter 0.3s ease'
-                }}
-              />
-            </div>
+          {data?.data?.map((story) => (
+             <Story story={story} key={story._id}></Story>
           ))}
         </Carousel>
         )}

@@ -20,12 +20,15 @@ import AuthServices from "../services/AuthServices";
 import AuthProvider from "../../zustand/AuthProvider";
 import { useStoreLogin } from "./useStoreLogin";
 import { Link, useNavigate } from "react-router-dom";
+import useQueryLocation from "../../hooks/useQueryLocation";
+import { useGeoLocations } from "../../hooks/GeoLocation/useGeoLocations";
 
 
 function Login() {
-
+    
     const Auth = AuthProvider()
     const navigate = useNavigate()
+   
 
 
     const { mutate, isLoading, isError } = useMutation({
@@ -64,9 +67,8 @@ function Login() {
     useEffect(() => {
         localStorage.setItem('persits', Auth.persits)
     }, [Auth.persits])
-
-
-
+  
+   
 
 
     return (

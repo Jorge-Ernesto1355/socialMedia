@@ -13,6 +13,7 @@ import Image from "../../utilities/Image";
 import NotificationIcon from "./notificationIcon/NotificationIcon";
 import MenuIcon from "./menuIcon/MenuIcon";
 import { Avatar } from "antd";
+import Title from "antd/es/typography/Title";
 
 
 
@@ -42,7 +43,7 @@ const Navbar = () => {
   return (
     <nav>
       <div className="container">
-        <h2 className="log">cbta 81</h2>
+        <Title className="navbar-title" level={3} style={{fontWeight: "bold", color: "#4098FF", marginBottom: 0}} > UniVerse </Title>
         <SearchHoc/>
         
         <div className="actions-navbar">

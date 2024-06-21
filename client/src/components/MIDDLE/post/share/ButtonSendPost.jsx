@@ -37,7 +37,7 @@ const ButtonSendPost = ({user, postId, text}) => {
              isSuccess={isSuccess}
              loader={<Button type='primary' size='small' className='btn-colored' loading={isLoading}></Button>}
              errorMessage={<Button type="primary" danger size='small'> Error </Button>}
-             successMessage={<Button type='primary' size='small' className='btn-colored' >Enviado</Button>
+             successMessage={<Button type='primary' size='small' className='btn-colored'>Enviado</Button>
    
             }>
                  

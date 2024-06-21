@@ -13,19 +13,13 @@
 
 }
 
-.MessageBox-header-info .profile-photo {
-    width: 35px;
-    height: 35px;
-}
 
 .header-username-container {
     margin-left: .5rem;
 }
 
 .online-status {
-    font-size: x-small;
-    font-weight: 400;
-    color: #525252;
+
 }
 
 .MessageBox-header-actions {

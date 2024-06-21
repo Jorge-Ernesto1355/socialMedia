@@ -33,7 +33,7 @@ const Sidebar = () => {
           </Flex>
          
           </Flex>
-      {/** Header */}
+        {/** Header */}
 
           <Flex  vertical={"column"} justify="center" align="center" style={{marginTop: "1rem", width: "100%"}}>
           <Title level={5}>Bio</Title>
