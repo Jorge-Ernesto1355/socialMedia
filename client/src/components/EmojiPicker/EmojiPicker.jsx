@@ -20,6 +20,7 @@ const variants = {
   store,
   set,
   className,
+  setInput
 }) {
   const onClickEmojis = (event) => {
     const { unified } = event;
@@ -34,6 +35,8 @@ const variants = {
     const end = store.current.value.substr(store.current.selectionStart);
     const text = start + emoji + end;
     set && set(text);
+    setInput && setInput(text)
+
   };
 
   return (
