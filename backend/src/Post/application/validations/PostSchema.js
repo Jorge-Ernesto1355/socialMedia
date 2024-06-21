@@ -14,7 +14,7 @@ const PostSchema = z.object({
     .string({
       required_error: "description is required",
     })
-    .max(200),
+    .max(300),
 
  
 });
