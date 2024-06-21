@@ -12,24 +12,16 @@ import Login from "./pages/Login/Login";
 import Main from "./pages/Main/Main";
 import Layout from "./components/layout/Layout";
 import PersitsLogin from "./utilities/auth/PersitsLogin";
-
 import Room from "./components/Room";
+import ConversationsPage from "./pages/conversations/ConversationsPage";
+import NotificationsPage from "./pages/notifications/NotificationsPage";
+import Requests from "./pages/request/Requests";
 
 function App() {
 
   
 
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/service-worker.js')
-        .then((registration) => {
-          console.log('Service Worker registered with scope:', registration.scope);
-        })
-        .catch((error) => {
-          console.error('Service Worker registration failed:', error);
-        });
-    });
-  }
+
   return (
     <>
       <Router>
@@ -40,6 +32,9 @@ function App() {
           <Route path="/" element={<Layout />}>
             {/* protect this routes */}
             <Route element={<PersitsLogin />}>
+              <Route path="/notifications/:userId" element={<NotificationsPage />} />
+              <Route path="/conversations/:userId" element={<ConversationsPage />} />
+              <Route path="/friends/:userId" element={<Requests/>}/> 
               <Route path="/profile/:userId" element={<Profile />} />
               <Route path="/favorites/:userId" element={<FavoritesList />}></Route>
               <Route path="/" element={<Main />} />
