@@ -10,23 +10,28 @@ class NotificationService {
       };
 
     const { limit, page, userId } = objectGet;
-    //userId is the id to the userReceptor notifications
 
     const options = {
       limit,
       page,
       sort: { date: -1 },
+      populate: [
+        {path: "containerId",  select:["description","comment.text"]}, 
+        {path: "sender", select: ["username", "imageProfile"]}, 
+        {path: "receiver", select: ["username", "imageProfile"]}
+      ], 
+      
     };
 
     try {
       const notifications = await Notification.paginate(
-        { "userReceptor.userId": userId },
+        { receiver: userId },
         options
       );
 
-      if (notifications) return notifications;
+     return notifications;
 
-      if (!notifications) return {};
+      
     } catch (error) {
       return {
         error,
@@ -38,38 +43,38 @@ class NotificationService {
     try {
       exits(objectCreate);
 
-      const { label, message, userConnectorId, userReceptorId } = objectCreate;
+      const { type, message, senderId, receiverId, containerId, containerModel} = objectCreate;
       const options = {
         model: "User",
         select: ["username", "_id", "imageProfile"],
       };
+     
 
-      const userReceptor = await isValidObjectId(
-        { _id: userReceptorId },
+      let container = null
+      if(containerId) container = await isValidObjectId({_id: containerId}, {model:containerModel})
+       
+      if(container?.error) throw new Error(container?.message)
+
+      const receiver = await isValidObjectId(
+        { _id: receiverId },
         options
       );
-      const userConnector = await isValidObjectId(
-        { _id: userConnectorId },
+      const sender = await isValidObjectId(
+        { _id: senderId },
         options
       );
 
-      if (userReceptor.error || userConnector.error) {
-        throw new Error("document not found or objecdtId is not valid");
+      if (receiver.error || sender.error ) {
+        throw new Error("document not found or id is not valid");
       }
 
       const notification = await new Notification({
-        userReceptor: {
-          username: userReceptor.username,
-          userId: userReceptor._id,
-          imageProfile: userReceptor.imageProfile,
-        },
-        userConnector: {
-          username: userConnector.username,
-          userId: userConnector._id,
-          imageProfile: userConnector.imageProfile,
-        },
+        sender: sender._id, 
+        receiver: receiver._id,
         message,
-        label,
+        containerId: container?._id ?? null,
+        containerModel,
+        type,
       });
       await notification.save();
       return notification;
