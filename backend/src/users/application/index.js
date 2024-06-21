@@ -25,6 +25,9 @@ const uploadCoverPicture = require("./uploadImages/uploadCoverPicture.js");
 const editCoverPicture = require("./uploadImages/editCoverPicture.js");
 const updateUserProfile = require("./Update/UpdateUserProfile.js");
 const updateUserLocation = require("./Update/updateUserLocation.js");
+const getNearUsers = require("./find/getNearUsers.js");
+const getSameInterestUsers = require("./find/getSameInterestUser.js");
+const getUsersFromFriends = require("./find/getUsersFromFriends.js");
 
 
 module.exports = {
@@ -36,7 +39,10 @@ module.exports = {
     getRequestFriends,
     getUsersTagged,
     getUsersOnline,
-    getPhotos
+    getPhotos, 
+    getNearUsers, 
+    getSameInterestUsers, 
+    getUsersFromFriends
   },
   mutation: {
     AcceptFriends,
