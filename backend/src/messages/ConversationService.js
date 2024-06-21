@@ -254,4 +254,20 @@ module.exports = class ConversationService {
       };
     }
   }
+
+  static async getConversationId({userId, friendId}){
+    try {
+      const conversation = await Conversation.findOne({
+        participants: { $all: [userId, friendId] },
+      })
+      
+      return {conversationId: conversation._id}
+    } catch (error) {
+     
+      return {
+        error, 
+        message: error.message
+      }
+    }
+  }
 };
