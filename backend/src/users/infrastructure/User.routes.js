@@ -23,6 +23,15 @@ router.get("/online/:userId", index.query.getUsersOnline);
 
 router.get("/photos/:userId", index.query.getPhotos)
 
+router.get('/nearby/:userId', index.query.getNearUsers)
+
+router.get('/common-interests/:userId', index.query.getSameInterestUsers)
+
+router.get('/usersFromFriends/:userId',index.query.getUsersFromFriends)
+
+
+
+
 router.post("/upload/:userId", index.mutation.UploadImageProfile);
 
 router.post('/upload/coverPicture/:userId', index.mutation.uploadCoverPicture)
