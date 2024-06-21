@@ -1,6 +1,6 @@
 import { ObjectErrosName } from "../../../../../utilities/ObjectErrorsName";
 
-export default class messageService {
+export default class MessageService {
   static async messages({ privateRequest, limit, page, id: conversationId }) {
     try {
       if (!privateRequest)
@@ -76,10 +76,7 @@ export default class messageService {
 
       return data;
     } catch (error) {
-      return {
-        error,
-        message: error.message,
-      };
+       throw new Error(error)
     }
   }
 
