@@ -5,7 +5,6 @@ const Post = require("../Post/dominio/Post");
 const fs = require("fs-extra");
 const { default: mongoose } = require("mongoose");
 const cloudinaryService = require("../libs/cloudynary");
-const { comparePassword } = require("../auth/application/auth");
 const UserModel = require("./domain/UserModel");
 
 
@@ -27,6 +26,7 @@ module.exports = class userService {
     try {
       exits(object);
 
+      console.log(object)
       const { userId, options = [] } = object;
 
       const queryOptions = {
@@ -63,7 +63,7 @@ module.exports = class userService {
   static async getFriends(object) {
     try {
       exits(object);
-      const { userId, limit, page } = object;
+      const { userId, limit, page, select = [] } = object;
       const queryOptions = {
         model: "User",
         select: ["friends"],
@@ -78,7 +78,7 @@ module.exports = class userService {
       const options = {
         limit,
         page,
-        select: ["username", "email", "imageProfile", "status", "socketId"],
+        select: ["username", "email", "imageProfile", "status", "socketId", ...select],
       };
 
       const friendsIds = user.friends.map((friendId) => friendId);
@@ -225,6 +225,69 @@ module.exports = class userService {
     }
   }
 
+  static async getUsersFromFriends({userId, limit, page}){
+    try {
+
+      const user = await isValidObjectId({ _id: userId }, {model: "User"});
+      if(user.error) throw new Error(user.message)
+
+      const friends = await this.getFriends({userId, limit, page, select: ["friends"]})
+
+      if(friends.error) throw new Error(friends.message)
+      
+      const friendsOfFriends = friends.docs.flatMap(friend => friend.friends);
+      const friendsOfFriendsSet = new Set(friendsOfFriends);
+
+        
+        const friendsUser = User.paginate({
+          _id: {$in: Array.from(friendsOfFriendsSet), $ne: userId}
+        }, {limit, page, select: ["username", "email", "imageProfile", "bio"]})      
+
+
+      return friendsUser
+      
+    } catch (error) {
+      return {
+        error, 
+        message: error.message
+      }
+    }
+  }
+
+  static async getSameInterestUsers({userId, limit, page}){
+    try {
+      const user = await isValidObjectId({ _id: userId }, {model: "User", select: ["interests"] });
+
+      const friends = await this.getFriends({userId, limit, page, select: ["friends"]})
+
+      if(friends.error) throw new Error(friends.message)
+
+      if(user.error) throw new Error(user.message)
+      
+      
+      const friendsId = friends.docs.map((friend)=> friend._id)
+       
+      const interestsSet = new Set(user.interests);  
+
+      const result = await UserModel.paginate({
+        _id: { $ne: userId, $nin: friendsId  }, 
+        interests: { $in: [...interestsSet]},
+      }, 
+      {limit, page, select: ["username", "email", "imageProfile", "interests", "bio"]}
+    )
+
+
+    
+    return result
+      
+    } catch (error) {
+      return {
+        error, 
+        message: error.message
+      }
+    }
+  }
+
   static async addFriend(object) {
     try {
       exits(object);
@@ -259,6 +322,57 @@ module.exports = class userService {
         error,
         message: error.message,
       };
+    }
+  }
+
+  static async nearUsers(object){
+    try {
+      const {userId, maxDistance, lat, lng, limit, page} = object
+      const user = await isValidObjectId({ _id: userId }, {model: "User"});
+
+      const friends = await this.getFriends({userId, limit, page, select: ["friends"]})
+
+      if(friends.error) throw new Error(friends.message)
+
+        
+      if(user.error) throw new Error(user.message)
+          
+      const friendsId = friends.docs.map((friend)=> friend._id)
+          
+      if (!lat || !lng) throw new Error('Latitude and longitude are required')
+
+
+      const maxDistanceInMeters = maxDistance ? maxDistance * 1000 : 20000; 
+
+      const query = {
+        _id: { $ne: userId, $nin: friendsId }, 
+        location: {
+          $geoWithin: {
+            $centerSphere: [[parseFloat(lng), parseFloat(lat)], maxDistanceInMeters / 6378137] // Radio en radianes
+          }
+        }
+      };
+
+      // Definimos las opciones de paginación
+      const options = {
+        page,
+        limit,
+        select: ['username', 'email', 'imageProfile', 'bio'], // Campos a retornar
+        lean: true // Convertimos los documentos Mongoose a objetos JS planos
+      };
+
+      // Ejecutamos la consulta paginada
+      const result = await User.paginate(query, options);
+
+
+      return result
+      
+
+    } catch (error) {
+      return {
+        error, 
+        message: error.message
+      }
     }
   }
 
