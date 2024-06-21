@@ -117,7 +117,7 @@ const AutoComplete = (props, inputRef) => {
             value={props.stateValue ? props.stateValue() : null}
             required
             placeholder={props.placeholder}
-            maxLength="280"
+            maxLength="300"
             rows={props.rows}
             cols={props.cols}
             className={`limited-textarea ${props.larger && props.larger}`}
