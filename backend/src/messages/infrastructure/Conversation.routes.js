@@ -10,6 +10,8 @@ router.get("/unReadConversations/:userId", index.query.getUnReadConversations);
 
 router.post("/", index.mutation.Conversation);
 
+router.get("/conversationId/:userId/:friendId", index.query.getConversationId)
+
 router.put("/block/:conversationId", index.mutation.blockContact);
 
 module.exports = router;
