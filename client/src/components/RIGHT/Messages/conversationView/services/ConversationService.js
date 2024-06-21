@@ -68,4 +68,18 @@ export default class ConversationService {
       };
     }
   }
+
+  static async getConversationId({ privateRequest, friendId, userId  }) {
+
+  
+    try {
+      if (!privateRequest)
+        throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+      return await privateRequest.get(
+        `/conversation/conversationId/${userId}/${friendId}`,
+      );
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
 }
