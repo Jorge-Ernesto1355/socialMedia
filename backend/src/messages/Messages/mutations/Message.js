@@ -22,6 +22,8 @@ const Message = async (req, res) => {
     isRead,
     reply,
     file,
+    storyId: req.body.storyId, 
+    reactionShared: req.body.reactionShared
   });
 
   if (message?.error) {
