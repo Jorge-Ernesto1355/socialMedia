@@ -5,34 +5,37 @@ const userService = require("../../users/userService.js")
 const Story = require('../model/Story.js')
 module.exports =  class storyService {
 
-    static async createStory({userId, expiresIn, text, image}){
+    static async createStory({userId, expiresIn, text, image, video, background}){
 
         try {
+
+            
                 
             const user = await isValidObjectId({_id: userId}, {model:"User", select: ["username", "stories"]})
             if(user.error) throw new Error(user.message)
 
-            if(user?.stories?.length > 10) throw new Error("stories limit exeeded")
+            this.checkStoryLimit(user)
 
-    
-            const Image = await cloudinaryService.upload({
-                filePath: image?.tempFilePath,
-            });
-            
-            if (Image?.error) throw new Error("something went wrong to upload the photo");
+            let media = null
 
-            const urls = await cloudinaryService.getImageUrls({public_id: Image.public_id})
+            if(image) media = await  this.uploadImage(image)
+            else if(video) media = await this.uploadVideo(video)
+            else if(background) {
+                        media = {
+                            resourceType: "text", 
+                            background
+                        }
 
-           
-            if(urls.error) throw new Error(urls.error.message)
-            
+                   }
 
-            const story = new Story({userId, expiresIn, text, media: {url: urls.url, public_id: Image.public_id, previewUrl: urls.previewUrl}})
-           
+            if(!media) throw new Error("media not found")
+  
+            const story = new Story({userId, expiresIn, text, media})
+                
             await story.save()
             
             if(!story) throw new Error("something went wrong")
-            
+                    
             
             await UserModel.findByIdAndUpdate(userId,
                  {
@@ -60,7 +63,6 @@ module.exports =  class storyService {
                if (userValidationResult.error) throw new Error(userValidationResult.message);
    
 
-               console.log(userValidationResult)
                // Obtener los amigos del usuario
                const friendsResult = await userService.getFriends({ limit, page, userId });
                if (friendsResult.error) throw new Error(friendsResult.message);
@@ -123,7 +125,7 @@ module.exports =  class storyService {
 
         const storiesId = user.stories.map((id)=> id.toString())
 
-        const stories = await Story.find({_id: {$in: storiesId}})
+        const stories = await Story.find({_id: {$in: storiesId}}).populate("userId", ["username", "imageProfile"])
 
         return stories
         
@@ -138,5 +140,55 @@ module.exports =  class storyService {
 
         
 
+    }
+
+    static checkStoryLimit(user) {
+        if (user?.stories?.length > 10) {
+            throw new Error("Stories limit exceeded");
+        }
+    }
+
+    static async uploadImage(file) {
+        
+        const media = await cloudinaryService.upload({
+            filePath: file?.tempFilePath,
+        });
+
+        if (media?.error) {
+            throw new Error(media.message);
+        }
+
+        const urls = await cloudinaryService.getImageUrls({
+            public_id: media.public_id,
+        });
+        if (urls.error) {
+            throw new Error(urls.error.message);
+        }
+         
+        return { url: urls.url, public_id: media.public_id, previewUrl: urls.previewUrl, resourceType: "image" };
+    }
+
+    static async uploadVideo(video){
+
+
+        const media = await cloudinaryService.uploadVideo({video})
+    
+
+        if(media?.error) throw new Error(media?.error?.message)
+
+        return {
+            url: media.url, 
+            public_id: media.public_id, 
+            resourceType: media.resource_type, 
+            previewUrl: media.eager[0].url
+        }
+        
+
+    }
+
+    static async updateUserStories(userId, storyId) {
+        await UserModel.findByIdAndUpdate(userId, {
+            $addToSet: { stories: storyId },
+        });
     }
 }
