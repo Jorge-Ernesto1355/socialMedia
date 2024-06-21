@@ -2,19 +2,22 @@ const NotificationService = require("../NotificationService");
 const validateNotification = require("../validations/NotificationSchema");
 
 const createNotification = async (req, res) => {
-  // const {label, userConector, userReceptor, message} = req.body
+  
   const result = validateNotification(req.body);
+
   if (result.error) {
     return res.status(400).json({ error: result.error.message });
   }
 
-  const { message, label, userReceptorId, userConnectorId } = req.body;
+  const { message, type, senderId, receiverId, containerId, containerModel} = req.body;
 
   const notification = await NotificationService.create({
     message,
-    label,
-    userReceptorId,
-    userConnectorId,
+    type,
+    senderId,
+    receiverId,
+    containerId, 
+    containerModel
   });
 
   if (notification.error) {
