@@ -1,4 +1,5 @@
 import { ObjectErrosName } from "../../../../utilities/ObjectErrorsName";
+import { convertToFile } from "../../../../utilities/convertToFile";
 
 export class storyService {
 
@@ -8,10 +9,9 @@ export class storyService {
             throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
 
         try {
-
             const form  = new FormData()    
             for(const  key in story){
-                form.append(story[key])
+                form.append(key, story[key])
             }
 
             const data = await  privateRequest.post(`/story/${userId}`, form, {
@@ -23,8 +23,8 @@ export class storyService {
             if(data.data) return data
              
             
-        } catch (error) {
-            throw new Error(error)
+        } catch (error) { 
+            throw new Error(error.response.data.error)
         }
     }
 
@@ -44,12 +44,12 @@ export class storyService {
     static async getStoriesFromUser({privateRequest, id}){
         if (!privateRequest)
             throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
-
         try {
-            const data = await  privateRequest.get(`story/storiesFromUser/${id}`)
-            if(data?.data) return data
+            return await privateRequest.get(`story/storiesFromUser/${id}`)
+
         } catch (error) {
             throw new Error(error)
         }
     }
+    
 }
