@@ -261,6 +261,48 @@ export default class UserService {
     }
 }
 
+static async getNearbyUsers({privateRequest, id, lng, lat, limit, page}){
+
+  
+
+  try {
+
+    if(!lng && !lat) throw new Error("lng and lat are not defined")
+
+    if (!privateRequest)
+      throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+      return privateRequest.get(
+        `/users/nearby/${id}?limit=${limit}&?page=${page}&lng=${lng}&lat=${lat}`, 
+      );
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+static async getUsersWithCommonInterests({privateRequest, id, limit, page}){
+  try {
+    if (!privateRequest)
+      throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+      return privateRequest.get(
+        `/users/common-interests/${id}?limit=${limit}&page=${page}`, 
+      );
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+static async getUserFromFriends({privateRequest, id, limit, page}){
+  try {
+    if (!privateRequest)
+      throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+      return privateRequest.get(
+        `/users/usersFromFriends/${id}?limit=${limit}&page=${page}`, 
+      );
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
    
 
 
