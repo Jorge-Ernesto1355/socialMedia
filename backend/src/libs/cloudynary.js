@@ -1,5 +1,6 @@
 const { v2: cloudinary } = require("cloudinary");
 const exits = require("./exits");
+const { createReadStream, statSync } = require('fs');
 
 cloudinary.config({
   cloud_name: "cbta",
@@ -15,7 +16,7 @@ class cloudinaryService {
       
       if (!filePath) return null;
       const resultImage = await cloudinary.uploader.upload(filePath, {
-        folder: "prueba",
+        folder: "images",
       });
 
       const image = {
@@ -31,6 +32,25 @@ class cloudinaryService {
       };
     }
   }
+
+ 
+static async uploadVideo({video}) {
+ 
+  try {
+   return await cloudinary.uploader.upload(video?.tempFilePath, {resource_type: "video", public_id: video.name, eager: [
+      { width: 300, height: 300, crop: "pad", audio_codec: "none" }, 
+      { width: 160, height: 100, crop: "crop", gravity: "south", audio_codec: "none" }
+    ], eager_async: true})
+  
+  } catch (error) {
+    return {
+      error, 
+      message: error.message
+    }
+  }  
+
+
+}
 
   static async deleteImage(object) {
     try {
