@@ -13,6 +13,10 @@ const Message = new Schema(
     from: {
       type: mongoose.Schema.ObjectId,
       ref: "User",
+
+    },
+    reactionShared: { 
+      type: String, 
     },
     type: {
       type: String,
@@ -24,6 +28,10 @@ const Message = new Schema(
     file: {
       url: String,
       public_id: String,
+    },
+    story: {
+      ref: "Story", 
+      type: Schema.Types.ObjectId 
     },
     postId: {
       ref: "Post",
