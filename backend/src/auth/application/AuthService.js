@@ -12,10 +12,11 @@ module.exports = class AuthService {
   static async Register(object) {
     try {
       exits(object);
-      const { username, email, password } = object;
+      const { username, email, password, geometry} = object;
+      
 
-      const usernameValid = await isValidObjectId({ username }, "User");
-      const emailValid = await isValidObjectId({ email }, "User");
+      const usernameValid = await isValidObjectId({ username }, {model:"User", select: ["username"]});
+      const emailValid = await isValidObjectId({ email }, {model: "User", select: ["email"]});
 
       if (!usernameValid.error) throw new Error("username is already taken");
 
@@ -23,10 +24,16 @@ module.exports = class AuthService {
 
       const passwordEncryped = await encryptPassword(password);
 
+      if(!geometry.latitude && !geometry.longitude) throw new Error("Something went wrong")
+
       const user = new UserModel({
         username,
         email,
         password: passwordEncryped,
+        location: {
+          type: "Point",
+          coordinates: [geometry?.longitude, geometry?.latitude]
+        }
       });
 
       const userCreated = await user.save();
