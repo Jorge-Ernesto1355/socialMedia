@@ -11,6 +11,7 @@ module.exports = class MessageService {
     try {
       exits(object);
       const { conversationId, limit, page } = object;
+
       const queryOptions = {
         model: "Conversation",
       };
@@ -27,7 +28,20 @@ module.exports = class MessageService {
 
       const messagesPagination = await Message.paginate(
         { _id: { $in: messagesIds } },
-        { limit, page, sort: { createdAt: "desc" } }
+        {
+          limit,
+          page,
+          sort: { createdAt: 'desc' },
+          populate: [
+            {
+              path: 'story',
+              populate: [
+                { path: 'userId', select: "_id username imageProfile" },
+                
+              ]
+            }
+          ]
+        }
       );
 
       return messagesPagination;
@@ -57,12 +71,15 @@ module.exports = class MessageService {
   static async create(object) {
     try {
       exits(object);
-      const { from, message, to, conversationId, reply, file, postId } = object;
+      const { from, message, to, conversationId, reply, file, postId, storyId, reactionShared } = object;
+
+    
       const result = validateMessage({ from, message, to });
 
       if (result.error) {
         throw new Error(result.error.message);
       }
+      
 
       const image = await cloudinaryService.upload({
         filePath: file?.tempFilePath,
@@ -81,8 +98,12 @@ module.exports = class MessageService {
         conversationId,
         reply: ReplyValue,
         file: image,
+        story: storyId, 
+        reactionShared
       });
+
       return newMessage.save();
+
     } catch (error) {
       return {
         error,
