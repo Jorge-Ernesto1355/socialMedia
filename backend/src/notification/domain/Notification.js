@@ -1,26 +1,24 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, trusted } = require("mongoose");
 const mongoosePaginate = require("mongoose-paginate-v2");
 
 const Notification = Schema(
   {
-    label: { type: String },
-    userReceptor: {
-      username: String,
-      userId: Schema.Types.ObjectId,
-      imageProfile: {
-        url: String,
-        public_id: String,
-      },
+    type: String, 
+    sender: {ref: "User", type: Schema.Types.ObjectId}, 
+    receiver: {ref: "User", type: Schema.Types.ObjectId}, 
+    message: String,     
+    containerId: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      refPath: 'containerModel' 
     },
-    userConnector: {
-      username: String,
-      userId: Schema.Types.ObjectId,
-      imageProfile: {
-        url: String,
-        public_id: String,
-      },
-    },
-    message: { type: String },
+    containerModel: {
+        type: String,
+        required: true,
+        enum: ['Post', 'Comment']  
+       },
+    read: { type: Boolean, default: false }
+    
   },
   {
     timestamps: true,
