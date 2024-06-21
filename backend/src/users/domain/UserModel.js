@@ -31,7 +31,7 @@ const User = new Schema(
       min: 10, 
       trim:true
     },
-    interests: [  ],
+    interests: [String],
     coverPicture: { url: String, public_id: String, previewUrl: String },
     friends: {
       type: Array,
@@ -49,6 +49,17 @@ const User = new Schema(
       type: String,
       max: 80,
       trim: true,
+    },
+    location: {
+      type: {
+        type: String,
+        enum: ['Point'], // 'location.type' debe ser 'Point'
+        required: true
+      },
+      coordinates: {
+        type: [Number],
+        required: true
+      }
     },
     posts: [
       {
@@ -72,13 +83,13 @@ const User = new Schema(
         type: Schema.Types.ObjectId,
       },
     ],
-
     relationShip: [
       {
         ref: "User",
         type: Schema.Types.ObjectId,
       },
     ],
+    phone: {type: Number},
     roles: [
       {
         ref: "Role",
@@ -116,6 +127,9 @@ const User = new Schema(
     timestamps: true,
   }
 );
+
+
+User.index({location: "2dsphere"})
 
 User.plugin(mongoosePaginate);
 
