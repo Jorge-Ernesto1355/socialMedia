@@ -2,11 +2,11 @@ const userService = require("../../userService");
 
 const FindUserById = async (req, res) => {
   const { userId } = req.params;
-  const { options } = req.body;
+  const { options, populate } = req.body;
 
-  console.log(options)
 
-  const user = await userService.get({ userId, options });
+
+  const user = await userService.get({ userId, options, populate});
 
   if (user?.error) {
     return res.status(500).json({ message: user.message });
