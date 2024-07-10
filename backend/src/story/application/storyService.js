@@ -1,3 +1,4 @@
+const getHashtags = require("../../Post/utils/Hashtags.js")
 const cloudinaryService = require("../../libs/cloudynary.js")
 const isValidObjectId = require("../../libs/isValidObjectId")
 const UserModel = require("../../users/domain/UserModel")
@@ -5,12 +6,12 @@ const userService = require("../../users/userService.js")
 const Story = require('../model/Story.js')
 module.exports =  class storyService {
 
-    static async createStory({userId, expiresIn, text, image, video, background}){
+    static async createStory({userId, expiresIn, text, media: mediaType, background}){
 
         try {
 
             
-                
+   
             const user = await isValidObjectId({_id: userId}, {model:"User", select: ["username", "stories"]})
             if(user.error) throw new Error(user.message)
 
@@ -18,33 +19,78 @@ module.exports =  class storyService {
 
             let media = null
 
-            if(image) media = await  this.uploadImage(image)
-            else if(video) media = await this.uploadVideo(video)
-            else if(background) {
-                        media = {
-                            resourceType: "text", 
-                            background
-                        }
+            if(background){
+                media = {
+                    resourceType: "text", 
+                    background
+                }
 
-                   }
+            } else {
+
+                if(this.isImage(mediaType)) media = await  this.uploadImage(mediaType)
+                else if(this.isVideo(mediaType)) media = await this.uploadVideo(mediaType)
+
+            }
+
 
             if(!media) throw new Error("media not found")
+
+            const hashTags = getHashtags(text)
   
-            const story = new Story({userId, expiresIn, text, media})
+            const story = new Story({userId, expiresIn, text, media, hashTags})
                 
             await story.save()
             
             if(!story) throw new Error("something went wrong")
                     
-            
-            await UserModel.findByIdAndUpdate(userId,
-                 {
-                $addToSet: {stories: story._id}
-                }, 
-            )
+            await this.updateUserStories({userId, storyId: story?._id})
 
            return {message: "created story"} 
 
+        } catch (error) {
+            return {
+                error, 
+                message: error.message
+            }
+        }
+    }
+
+    static async getStoriesId({userId, limit, page}){
+        try {
+              // Validar el ID del usuario
+              const userValidationResult = await isValidObjectId({ _id: userId }, { model: "User", select: ["username"] });
+              if (userValidationResult.error) throw new Error(userValidationResult.message);
+  
+
+              // Obtener los amigos del usuario
+              const friendsResult = await userService.getFriends({ limit, page, userId });
+              if (friendsResult.error) throw new Error(friendsResult.message);
+  
+              const friendsIds = friendsResult.docs.map(friend => friend._id);
+  
+              // Agregar el ID del usuario a la lista de IDs para obtener sus historias también
+             
+  
+              // Obtener historias de cada usuario y amigo
+              const stories = await Story.find({ userId: { $in: friendsIds} }).sort({ createdAt: -1 });
+  
+              // Crear un mapa de historias por usuario
+              const storiesMap = friendsIds.reduce((acc, id) => {
+                  acc[id.toString()] = null;
+                  return acc;
+              }, {});
+  
+              // Rellenar el mapa con las primeras historias de cada usuario
+              stories.forEach(story => {
+                  if (!storiesMap[story.userId.toString()]) {
+                      storiesMap[story.userId.toString()] = story._id.toString();
+                  }
+              });
+  
+              // Convertir el mapa en un array de IDs de historias
+              const storiesIds = Object.values(storiesMap).filter(id => id !== null);
+
+              return storiesIds
         } catch (error) {
             return {
                 error, 
@@ -58,39 +104,10 @@ module.exports =  class storyService {
 
         try {
 
-               // Validar el ID del usuario
-               const userValidationResult = await isValidObjectId({ _id: userId }, { model: "User", select: ["username"] });
-               if (userValidationResult.error) throw new Error(userValidationResult.message);
-   
+             
+              const storiesIds = await  this.getStoriesId({userId, limit, page})
 
-               // Obtener los amigos del usuario
-               const friendsResult = await userService.getFriends({ limit, page, userId });
-               if (friendsResult.error) throw new Error(friendsResult.message);
-   
-               const friendsIds = friendsResult.docs.map(friend => friend._id);
-   
-               // Agregar el ID del usuario a la lista de IDs para obtener sus historias también
-              
-   
-               // Obtener historias de cada usuario y amigo
-               const stories = await Story.find({ userId: { $in: friendsIds} }).sort({ createdAt: -1 });
-   
-               // Crear un mapa de historias por usuario
-               const storiesMap = friendsIds.reduce((acc, id) => {
-                   acc[id.toString()] = null;
-                   return acc;
-               }, {});
-   
-               // Rellenar el mapa con las primeras historias de cada usuario
-               stories.forEach(story => {
-                   if (!storiesMap[story.userId.toString()]) {
-                       storiesMap[story.userId.toString()] = story._id.toString();
-                   }
-               });
-   
-               // Convertir el mapa en un array de IDs de historias
-               const storiesIds = Object.values(storiesMap).filter(id => id !== null);
-              
+              if(storiesIds.error) throw new Error(storiesIds.message)
 
                const paginateStories = await Story.paginate(
                 { _id: { $in: storiesIds } },
@@ -186,9 +203,62 @@ module.exports =  class storyService {
 
     }
 
-    static async updateUserStories(userId, storyId) {
+    static async updateUserStories({userId, storyId}) {
         await UserModel.findByIdAndUpdate(userId, {
             $addToSet: { stories: storyId },
         });
     }
+    
+
+    static isVideo (file){
+        return file.mimetype.startsWith('video/');
+       
+
+    }
+    static isImage (file){
+        return file.mimetype.startsWith('image/');
+       
+
+    }
+
+    
+    static async storiesFeed({userId, limit, page}){
+        try {
+            const user = await isValidObjectId({ _id: userId }, { model: "User", select: ["interests"] });
+            
+            if (user?.error) throw new Error(user?.message);
+    
+            const stories = await Story.paginate(
+                {
+                    hashTags: { $in: user.interests },
+                    userId: { $ne: null }
+                }, 
+                {
+                    limit, 
+                    page, 
+                    populate: {
+                        path: "userId",
+                        select: ["username", "imageProfile"],
+                        match: { _id: { $ne: null } } 
+                    },
+                    lean: true 
+                }
+            );
+    
+            
+            stories.docs = stories.docs.filter(story => story.userId != null);
+    
+            return stories;
+    
+        } catch (error) {
+            return {
+                error, 
+                message: error.message
+            }   
+        }
+    }
+
+
+   
+   
 }
