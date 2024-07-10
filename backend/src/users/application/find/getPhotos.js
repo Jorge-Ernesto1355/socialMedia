@@ -10,7 +10,7 @@ const getPhotos = async (req, res) => {
   const limit = parseInt(req.query.limit, 10) || DEFAULT_LIMIT;
   const page = parseInt(req.query.page, 10) || DEFAULT_PAGE;
 
-  const getPhotos = await userService.getPhotos({ userId });
+  const getPhotos = await userService.getPhotos({ userId, limit, page});
 
   if (getPhotos?.error) {
     return res.status(500).json({ error: getPhotos.error.message });
