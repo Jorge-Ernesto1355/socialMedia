@@ -6,10 +6,14 @@ const Story = new Schema({
     text: { type: String, required: true },
     media: { url: String, previewUrl:  String, public_id: String, resourceType: String, background: String }, // URL to media file if any
     createdAt: { type: Date, default: Date.now },
-    expiresIn: { type: Date, required: true}
+    expiresIn: { 
+        type: Date, 
+        index: { expires: 0 }, 
+        default: null 
+      }, 
+    hashTags:[String]
 })
 
-Story.index({ expiresIn: 1 }, { expireAfterSeconds: 0 });
 
 Story.plugin(mongoosePaginate)
 
