@@ -7,9 +7,13 @@ const Post = Schema(
       ref: "User",
       type: Schema.Types.ObjectId,
     },
-    expiresIn: { type: Date, expires: null, default: null },
+    expiresIn: { 
+      type: Date, 
+      index: { expires: 0 }, 
+      default: null 
+    },
     description: { type: String, max: 300 },
-    image: { url: String, public_id: String },
+    image: { url: String, public_id: String, previewUrl: String },
     comments: [
       {
         ref: "Comment",
@@ -26,9 +30,11 @@ const Post = Schema(
     postShared: { ref: "Post", type: Schema.Types.ObjectId },
     usersTagged: [
       {
-        username: String,
+        ref: "User", 
+        type: Schema.Types.ObjectId
       },
     ],
+    hashTags:[String],
     reactions: [
       {
         ref: "Reaction",
