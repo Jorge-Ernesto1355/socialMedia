@@ -18,12 +18,12 @@ export default class UserService {
     }
   }
 
-  static async getUser({ privateRequest, userId, options }) {
+  static async getUser({ privateRequest, userId, options, populate }) {
     return this.Request({
       privateRequest,
       endpoint: `/users/${userId}`,
       method: "post",
-      params: { options },
+      params: { options, populate},
     });
   }
 
@@ -297,6 +297,81 @@ static async getUserFromFriends({privateRequest, id, limit, page}){
       throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
       return privateRequest.get(
         `/users/usersFromFriends/${id}?limit=${limit}&page=${page}`, 
+      );
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+
+static async getUserPosts({privateRequest, id, limit, page}){
+  try {
+    if (!privateRequest)
+      throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+      return privateRequest.get(
+        `/users/userPosts/${id}?limit=${limit}&page=${page}`, 
+      );
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+static async customizeFeed({privateRequest, id, interests}){
+  try {
+    if (!privateRequest)
+      throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+      return privateRequest.put(
+        `/users/customizedFeed/${id}`,{ interests }
+      );
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+static async getFavoritesPosts({privateRequest, id, limit, page}){
+  try {
+    if (!privateRequest)
+      throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+      return privateRequest.get(
+        `/users/favorites/post/${id}?limit=${limit}&page=${page}`, 
+      );
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+static async getPostsReaction({privateRequest, id, limit, page}){
+  try {
+    if (!privateRequest)
+      throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+      return privateRequest.get(
+        `/users/posts/reaction/${id}?limit=${limit}&page=${page}`, 
+      );
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+static async forbiddenFavoritesPosts({privateRequest, id,}){
+  try {
+    if (!privateRequest)
+      throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+      return privateRequest.put(
+        `/users/forbide/favoritesPosts/${id}`, 
+      );
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+
+
+static async forbiddenReactionsPosts({privateRequest, id,}){
+  try {
+    if (!privateRequest)
+      throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+      return privateRequest.put(
+        `/users/forbide/reactionsPosts/${id}`, 
       );
   } catch (error) {
     throw new Error(error)
