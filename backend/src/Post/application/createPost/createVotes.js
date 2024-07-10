@@ -1,6 +1,8 @@
 const Votess = require("../../dominio/Votess");
 
 const createVotes = async ({ req, res, votes }) => {
+
+  if(typeof votes === "undefined") return []
   const votesJson = JSON.parse(votes);
 
   if (votes.length === 0) {
