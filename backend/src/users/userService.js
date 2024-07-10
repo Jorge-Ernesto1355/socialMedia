@@ -6,6 +6,7 @@ const fs = require("fs-extra");
 const { default: mongoose } = require("mongoose");
 const cloudinaryService = require("../libs/cloudynary");
 const UserModel = require("./domain/UserModel");
+const { DocumentNotFound } = require("../handleErros/errors");
 
 
 module.exports = class userService {
@@ -27,7 +28,7 @@ module.exports = class userService {
       exits(object);
 
       
-      const { userId, options = [] } = object;
+      const { userId, options = []} = object;
 
       const queryOptions = {
         model: "User",
@@ -41,10 +42,20 @@ module.exports = class userService {
           "bio", 
           "interests",
           ...options,
-        ],
+        ], 
+        populate: [
+          {
+           path: "reactionsPosts.post", 
+           select: ["_id"] 
+          }, 
+          {path: "reactionsPosts.reaction"}
+        ]
+          
       };
 
       const user = await isValidObjectId({ _id: userId }, queryOptions);
+
+
 
       if (user?.error) {
         throw new Error(user.message);
@@ -58,6 +69,96 @@ module.exports = class userService {
       };
     }
   }
+  
+    static async getUserByUsername({username, options = []}){
+
+      const queryOptions = {
+        model: "User",
+        select: [
+          "username",
+          "email",
+          "imageProfile",
+          "socketId",
+          "status",
+          "coverPicture",
+          "bio", 
+          "interests",
+          ...options,
+        ],  
+      };
+
+   
+  
+      try {
+  
+        const user = await isValidObjectId({username}, queryOptions)
+        if(user.error) throw new Error(user.message)
+        return user
+
+         
+      } catch (error) {
+        return {
+          error, 
+          message: error.message
+        }
+      }
+    }
+
+  static async getUserPosts({userId, limit, page}){
+    try {
+
+        if(!userId) throw new Error("arguments required")
+
+        const user = await isValidObjectId({_id: userId}, {model: "User", select: ["posts"]})
+
+        const friendsPosts = await this.getFriendsPosts({ limit, page, userId, currentUser: userId})
+        if(user.error) throw new Error(user.message)
+
+        
+        if(friendsPosts.error) throw new Error(friendsPosts.message)
+          
+          // Filtrar los posts de los amigos para incluir solo aquellos en los que el usuario está etiquetado
+        const friendsPostsWithUsersTaggeds = friendsPosts.docs.filter(post => 
+          Array.isArray(post.usersTagged) && post.usersTagged.includes(userId)
+        );
+
+        const aggregatePipeline = [
+          {
+            $match: {
+              $or: [
+                { _id: { $in: user.posts } }, 
+                { _id: {$in: friendsPostsWithUsersTaggeds.map((post)=> post._id)} } 
+              ]
+            }
+          },
+          { $sort: { createdAt: -1 } }, 
+          { $skip: limit * (page - 1) },
+          { $limit: limit } 
+        ];
+        
+
+        const posts = await Post.aggregate(aggregatePipeline);
+
+        return {
+          docs: posts,
+          totalDocs: posts.length, // No es exacto cuando se usa skip y limit, puede necesitar ajustes según tu lógica
+          limit: limit,
+          page: page,
+          totalPages: Math.ceil(posts.length / limit),
+          pagingCounter: (page - 1) * limit + 1,
+          hasPrevPage: page > 1,
+          hasNextPage: page < Math.ceil(posts.length / limit),
+          prevPage: page > 1 ? page - 1 : null,
+          nextPage: page < Math.ceil(posts.length / limit) ? page + 1 : null
+        };
+    } catch (error) {
+      return {
+        error, 
+        message: error.message
+      }
+    }
+  }
+
 
   
   static async getFriends(object) {
@@ -225,6 +326,10 @@ module.exports = class userService {
     }
   }
 
+
+
+  // GET   get users from friends  //
+
   static async getUsersFromFriends({userId, limit, page}){
     try {
 
@@ -253,6 +358,12 @@ module.exports = class userService {
       }
     }
   }
+
+
+  // GET   get same interests  //
+  // GET   get all users that has all interests equal to you //
+
+
 
   static async getSameInterestUsers({userId, limit, page}){
     try {
@@ -548,7 +659,7 @@ module.exports = class userService {
       if(cover.error) throw new Error(cover.message)
 
       const urls = await cloudinaryService.getImageUrls({public_id: cover.public_id})
-      console.log(urls)
+   
            
       if(urls.error) throw new Error(urls.error.message)
 
@@ -631,17 +742,32 @@ module.exports = class userService {
       exits(object);
       const { userId, userInfo } = object;
 
-     
+      function isValidEmailFormat(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+      }
 
       const options = {
         model: "User",
       };
+
+      if(userInfo.username.length > 20) throw new Error("Username is too long")
+
+      if(!isValidEmailFormat(userInfo.email)) throw new Error("Email is not in a correct format")
 
       const user = await isValidObjectId({ _id: userId }, options);
 
       if (user?.error) {
         throw new Error(user?.message);
       }
+
+        const isValidUsername = await isValidObjectId({username: userInfo.username}, {model: "User", select: ["username"]})
+       
+        if(!isValidUsername.error) throw new Error("Username already exists")
+
+        const isValidEmail = await isValidObjectId({email: userInfo.email}, {model: "User", select: ["email"]})
+       
+        if(!isValidEmail.error ) throw new Error("Email already exists")
       
 
       const userUpdatd = await UserModel.findByIdAndUpdate(user._id, {...userInfo}, {new : true});
@@ -830,25 +956,136 @@ module.exports = class userService {
         throw new Error(user?.message);
       }
 
-      const posts = await this.getPosts({userId, limit: 99999, page: 1})
+      const options = {
+        page,
+        limit,
+        sort: { createdAt: -1 }, // Ordena por fecha de creación descendente
+      };
+
+      const posts = await Post.paginate({ 'image.url': { $exists: true, $ne: null } }, options)
+
+      const photos = posts.docs.map((post)=> post?.image)
+    
+      posts.docs = photos
       
-      if(posts.error) throw new Error(posts.message)
     
-        const images = posts.docs
-        .filter((post) => {
-          return !post.hasOwnProperty('image')
-        }).map((post)=> post.image)
-       
-        
-        const filteredImages = images.filter(obj => JSON.stringify(obj) !== '{}');
-    
-       
-      return filteredImages
+      return posts
 
     } catch (error) {
       return {
         error, 
         messag: error.message
+      }
+    }
+  }
+
+  static async customizedFeed({interests, userId}){
+    try {
+      
+      const user = await isValidObjectId({ _id: userId }, { model: "User", select: ["posts"] });
+      
+      if (user?.error) throw new Error(user?.message);
+        
+        const userUpdated = await UserModel.findByIdAndUpdate(userId, {interests})
+        await userUpdated.save()
+       
+       return {success: "customized feed succefully"}
+      
+    } catch (error) {
+      return {
+        error, 
+        message: error.message
+      }
+    }
+  }
+
+  static async getFavoritesPost({userId, limit, page}){
+    try {
+      const user = await isValidObjectId({ _id: userId }, { model: "User", select: ["favorites"] });
+      
+      if (user?.error) throw new Error(user?.message);
+
+      const posts = await Post.paginate({_id: {$in: user.favorites}}, {limit, page})
+
+      return posts
+        
+    } catch (error) {
+      return {
+        error, 
+        message: error.message
+      }
+    }
+  }
+
+  static async getPostsReaction({userId, limit, page}){
+    try {
+      const user = await isValidObjectId({ _id: userId }, { model: "User", select: ["reactionsPosts"] });
+      
+      if (user?.error) throw new Error(user?.message);
+
+      const posts = await Post.paginate({_id: {$in:  user?.reactionsPosts}}, {limit, page})
+
+      return posts
+        
+    } catch (error) {
+      return {
+        error, 
+        message: error.message
+      }
+    }
+  }
+
+  static async forbiddenFavorites({userId}){
+    try {
+
+      const user = await isValidObjectId({ _id: userId }, { model: "User", });
+      
+      if (user?.error) throw new Error(user?.message);
+
+      
+      const updatedUser = await UserModel.findByIdAndUpdate(
+        userId,
+        { $set: { forbiddenFavorites: !user.forbiddenFavorites } },
+        { new: true, select: 'forbiddenFavorites' }
+      );
+  
+      return {
+        message: "The reactions posts have been " + (updatedUser.forbiddenFavorites ? "forbidden" : "allowed"),
+        forbiddenReactions: updatedUser.forbiddenFavorites
+      };
+
+      
+      
+      
+    } catch (error) {
+      return {
+        error, 
+        message: error.message
+      }
+    }
+  }
+
+  static async forbiddenReactions({userId}){
+    try {
+      const user = await isValidObjectId({ _id: userId }, { model: "User", select: 'forbiddenReactions' });
+      
+      if (user?.error) throw new Error(user?.message);
+      
+      
+      const updatedUser = await UserModel.findByIdAndUpdate(
+        userId,
+        { $set: { forbiddenReactions: !user.forbiddenReactions } },
+        { new: true, select: 'forbiddenReactions' }
+      );
+  
+      return {
+        message: "The reactions posts have been " + (updatedUser.forbiddenReactions ? "forbidden" : "allowed"),
+        forbiddenReactions: updatedUser.forbiddenReactions
+      };
+    } catch (error) {
+      return {
+        error, 
+        message: error.message
       }
     }
   }
