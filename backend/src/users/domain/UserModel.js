@@ -25,6 +25,8 @@ const User = new Schema(
       required: true,
       min: 6,
     },
+    forbiddenFavorites: {type: Boolean, default: false},
+    forbiddenReactions: {type: Boolean, default: false},
     bio: {
       type:String, 
       max: 100, 
@@ -83,6 +85,10 @@ const User = new Schema(
         type: Schema.Types.ObjectId,
       },
     ],
+    reactionsPosts: [{
+      post: {ref: "Post", type: Schema.Types.ObjectId}, 
+      reaction: {ref: "Reaction", type: Schema.Types.ObjectId}
+    }], 
     relationShip: [
       {
         ref: "User",
