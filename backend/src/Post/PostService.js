@@ -3,13 +3,13 @@ const isValidObjectId = require("../libs/isValidObjectId");
 const MessageService = require("../messages/MessageService");
 const getTotalPoints = require("../reaction/utils/getTotalPoints");
 const { HfInference } = require("@huggingface/inference");
-
 const userService = require("../users/userService");
 const createVotes = require("./application/createPost/createVotes");
 const Post = require("./dominio/Post");
 const { detect } = require("langdetect");
-const { exists } = require("../users/domain/UserModel");
 const UserModel = require("../users/domain/UserModel");
+const extractMentions = require("./utils/extractMentions");
+const getHashtags = require("./utils/Hashtags");
 
 
 function exits(object) {
@@ -58,6 +58,12 @@ class PostService {
       exits(object);
       const { userId, limit, page } = object;
 
+     
+
+      const user = await isValidObjectId({ _id: userId }, { model: "User", });
+      
+      if (user?.error) throw new Error(user?.message);
+
       const userPosts = await userService.getPosts({ userId, limit, page });
 
       if (userPosts?.error) {
@@ -70,38 +76,36 @@ class PostService {
         page,
         currentUser: userId
       });
-     
-      if (friendPosts?.error) {
-        throw new Error(friendPosts?.message);
-      }
 
+    
+
+      const hashTagsPosts = await this.getPostsWithUserInterests({userId, limit, page})
+   
       const options = {
         limit,
         page,
       };
+      
+      const posts = [].concat(userPosts?.docs, friendPosts?.docs, hashTagsPosts?.docs)
 
-      const currentUserAndFriendsPosts =
-        Array.prototype.concat.apply(userPosts?.docs, friendPosts?.docs) ?? [];
-
-      const idsPosts = currentUserAndFriendsPosts.map(
+      
+      const idsPosts = posts?.map(
         (currentPost) => currentPost?._id
       );
 
       const results = await Post.paginate({ _id: { $in: idsPosts } }, options);
 
       const postsWithTotalPoints = await Promise.all(
-        results?.docs?.map(async (currentPost) => {
-          const totalPoints = await getTotalPoints(currentPost?.reactions);
-
-          if (totalPoints?.error) {
-            throw new Error(totalPoints?.message);
+        results.docs.map(async (currentPost) => {
+          try {
+            const totalPoints = await getTotalPoints(currentPost.reactions);
+            return {
+              ...currentPost.toObject(),
+              points: totalPoints
+            };
+          } catch (error) {
+            return currentPost.toObject(); // Devolvemos el post sin puntos en caso de error
           }
-
-          if (typeof totalPoints === "number") {
-            currentPost.points = totalPoints;
-          }
-
-          return currentPost;
         })
       );
 
@@ -113,10 +117,35 @@ class PostService {
 
       return results;
     } catch (error) {
+     
       return {
         error,
         message: error.message,
       };
+    }
+  }
+
+  static async getPostsWithUserInterests({userId, limit, page}){
+    try {
+      const user = await isValidObjectId({ _id: userId }, {model: "User", select:["interests","friends" ]});
+      if(user.error) throw new Error(user.message)
+       
+      
+        const posts = await Post.paginate(
+          { $and: [
+              { hashTags: { $in: user.interests } },
+              { userId: { $ne: userId, $nin: user.friends} }, 
+            ]
+          },
+          { limit, page }
+        );
+      return posts
+    
+    } catch (error) {
+      return {
+        error, 
+        message: error.message
+      }
     }
   }
 
@@ -128,15 +157,16 @@ class PostService {
       userId,
       votes,
       postShared,
-      usersTagged,
       timeExpiration,
     } = req.body;
+
+
     const queryOptions = {
       model: "User",
       select: ["posts"],
     };
 
-  
+ 
 
     try {
       const file = req.files?.image;
@@ -145,7 +175,9 @@ class PostService {
         filePath: file?.tempFilePath,
       });
 
-      
+     const urls = await cloudinaryService.getImageUrls({public_id: image?.public_id})
+
+      const usersTagged = extractMentions(description)
 
       if (image?.error)
         throw new Error("something went wrong to upload the photo");
@@ -153,25 +185,50 @@ class PostService {
       const  votesPost = await createVotes({ votes })
       const user = await isValidObjectId({ _id: userId }, queryOptions);
 
+      
+
+      if(user.error) throw new Error(user.message)
+      
+      const now = Date.now()
+      const expiresIn = timeExpiration > 0 ? new Date(now + timeExpiration * 1000) : null
 
       const newPost = new Post({
         userId,
         description,
-        image,
+        image: urls,
         votes: votesPost,
-        expiresIn: timeExpiration > 0 ? timeExpiration : null,
+        expiresIn,
       });
-      if (postShared) newPost.postShared = postShared;
-      newPost.usersTagged = usersTagged?.map((username) => ({
-        username,
-      }));
 
-      user.posts = [...user.posts, newPost];
+
+      if (postShared) newPost.postShared = postShared;
+
+      const usersTaggedPromise = usersTagged?.map(async (username)=> {
+        const user = await isValidObjectId({ username }, queryOptions);
+        if(user.error) return null
+
+        return user?._id
+      })
+
+      const usersTaggedId  = await Promise.all(usersTaggedPromise)
+      
+      const usersTaggedIdFiltred = usersTaggedId.filter(user => user !== null);
+      newPost.usersTagged = usersTaggedIdFiltred
+
+      const hashtags = getHashtags(description)
+      newPost.hashTags = hashtags
+
+      await UserModel.findByIdAndUpdate(userId, {
+        $push: {posts: newPost._id}
+      })
+      
       await user.save();
       const postsaved = await newPost.save();
 
       return postsaved;
     } catch (error) {
+
+      console.log(error)
       return {
         error,
         message: error.message,
@@ -338,14 +395,14 @@ class PostService {
       
 
       await post.updateOne({$push: {favorites : userId}})
-      await user.updateOne({$push: {favorites : userId}})
+      await user.updateOne({$push: {favorites : postId}})
       return {message: "has been added to favorites"}
     
    }
 
    if(post.favorites.includes(userId)){
      await post.updateOne({$pull:{favorites:userId}})
-     await user.updateOne({$pull: {favorites : userId}})
+     await user.updateOne({$pull: {favorites : postId}})
      return {message: "has been taken out to favorites"}
    }
     
