@@ -5,6 +5,7 @@ const Reaction = require("./domain/Reaction");
 const verifyExistingUser = require("./utils/verifyExistingUser");
 const exits = require("../libs/exits");
 const getLabelsView = require("./utils/getLabelsView");
+const UserModel = require("../users/domain/UserModel");
 
 module.exports = class ReactionService {
   static async getAll(object) {
@@ -147,12 +148,14 @@ module.exports = class ReactionService {
         userId
       );
 
+      
+
       if (error) {
         throw new Error(error.message);
       }
 
       if (!exitsUserId) {
-        return await this.createReaction({
+        const reaction =  await this.createReaction({
           label,
           value,
           user,
@@ -160,18 +163,34 @@ module.exports = class ReactionService {
           containerId,
           type,
         });
-      }
-      if (exitsUserId && reaction) {
-        if (reaction?.label === label)
-          throw new Error("same label not modified");
+       
+        if(type === "Post") {
+          await UserModel.findByIdAndUpdate(userId, {
+            $push:{reactionsPosts: {
+              post: containerId, 
+              reaction: reaction?._id
+            }}
+          })
+        }
 
+        return reaction
+
+       
+      }
+      if (exitsUserId && reaction ) {
+
+
+        if (reaction?.label === label) throw new Error("same label not modified");
+          
         const reactionSaved = await Reaction.findByIdAndUpdate(reaction._id, {
           label,
           value,
         });
+
         const reactionIndex = container.reactions.findIndex(
           (reactionIndex) => reactionIndex._id === reaction._id
-        );
+        ); 
+
         container.reactions[reactionIndex] = reactionSaved;
         await container.save();
         return reactionSaved;
