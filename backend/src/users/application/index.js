@@ -28,6 +28,14 @@ const updateUserLocation = require("./Update/updateUserLocation.js");
 const getNearUsers = require("./find/getNearUsers.js");
 const getSameInterestUsers = require("./find/getSameInterestUser.js");
 const getUsersFromFriends = require("./find/getUsersFromFriends.js");
+const getUserPosts = require("./find/getUserPosts.js");
+const getUserByUsername = require("./find/getUserByUsername.js");
+const customizedFeed = require("./interactions/customizedFeed.js");
+const getFavoritesPost = require("./find/findFavoritesPosts.js");
+const getPostsReaction = require("./find/getPostsReactioned.js");
+const forbidderFavorites = require("./interactions/forbiddenFavorites.js");
+const forbidderReactions = require("./interactions/forbiddenReactions.js");
+
 
 
 module.exports = {
@@ -42,7 +50,11 @@ module.exports = {
     getPhotos, 
     getNearUsers, 
     getSameInterestUsers, 
-    getUsersFromFriends
+    getUsersFromFriends, 
+    getUserPosts, 
+    getUserByUsername,
+    getFavoritesPost, 
+    getPostsReaction
   },
   mutation: {
     AcceptFriends,
@@ -63,6 +75,9 @@ module.exports = {
     uploadCoverPicture, 
     editCoverPicture, 
     updateUserProfile, 
-    updateUserLocation
+    updateUserLocation, 
+    customizedFeed, 
+    forbidderFavorites, 
+    forbidderReactions
   },
 };
