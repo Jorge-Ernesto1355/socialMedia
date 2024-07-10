@@ -2,7 +2,7 @@ const { validatePost } = require("../validations/PostSchema");
 const PostService = require("../../PostService");
 
 const createPost = async (req, res) => {
-  // const { description, userId, votes, difusion, postShared, usersTagged } = req.body;
+
 
   const result = validatePost(req.body);
 
