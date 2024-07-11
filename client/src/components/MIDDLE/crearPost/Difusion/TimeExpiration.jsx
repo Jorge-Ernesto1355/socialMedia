@@ -59,7 +59,6 @@ const TimeExpiration = () => {
     <Popover trigger={'click'} content={content}>
       <div className='btn-colored' >
         <span>{timeExpiration > 0 ?  formatTime(timeExpiration) : 'Always'}</span>
-        <img src={ArrowDown} alt="time expiration" />
       </div>
     </Popover>
   </React.Fragment>
