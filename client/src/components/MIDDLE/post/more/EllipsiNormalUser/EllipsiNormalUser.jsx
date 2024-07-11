@@ -37,7 +37,7 @@ const EllipsiNormalUser = ({ username = '', isLoading, postId, postUserId})=>{
 
         <EllipsiItem
           typeItem={OptionsMoreObject.HidePost} 
-          description={<span style={{fontSize: "x-small"}}>Wath less publication like this</span>}
+          description={<span style={{fontSize: "x-small"}}>Watch less publication like this</span>}
           postId={postId} title={<h4 className="ellipsiPost-text">Hide Publication </h4>}
           icon={<img style={{width: "20px", height: "20px"}} src={hide} alt="editar post" />}
           successMessage={"hidden"}/>
