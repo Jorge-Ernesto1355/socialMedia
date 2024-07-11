@@ -4,7 +4,7 @@ import ErrorButton from '../../comments/makeComment/styledComponentes/ErrorButto
 import warning from '../../../../deleteComponent/icons/triangle-warning.png'
 import { Typography } from 'antd';
 const { Text, Title} = Typography;
-const ErrorPost = ({reset}) => {
+const ErrorPost = ({refetch}) => {
   return (
     <div className='errorPost-container'>
         <div>
@@ -18,7 +18,7 @@ const ErrorPost = ({reset}) => {
         <Title level={4}>Upss... Something went wrong</Title>
         <Text type='secondary'>try to reload the page to fix it</Text>
        <div className='reset-button'>
-       <ErrorButton reset={reset}/>
+       <ErrorButton refetch={refetch}/>
        </div>
     </div>
   )
