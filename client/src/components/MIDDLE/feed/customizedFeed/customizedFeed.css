@@ -1,0 +1,21 @@
+.customizedFeed-container{
+    width: 100%;
+    height: max-content;
+    max-height: 600px;
+    overflow-y: auto;
+    background-color: var(--color-white);
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+    box-shadow: var(--card-shadow);
+    margin-top:1rem;
+}
+
+.selected-skills-container{
+    width: 100%;
+    border-radius: 10px;
+    min-height: 50px;
+    height: max-content;
+    border: 1px solid var(--color-light);
+    padding: .3rem;
+}
+
