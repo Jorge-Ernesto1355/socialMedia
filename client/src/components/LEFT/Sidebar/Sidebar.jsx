@@ -7,6 +7,7 @@ import UserService from "../../../services/UserService";
 import CoverAndProfile from "../../Profile/header/FrontPage/coverAndProfile/CoverAndProfile";
 import {  Button,  Divider, Flex, Tag, Typography } from "antd";
 import { Link } from "react-router-dom";
+import Skills from "../../skills/Skills";
 
 
 const { Text, Title} = Typography;
@@ -14,7 +15,7 @@ const Sidebar = () => {
 
   const {userId} = AuthProvider()
   const privateRequest = useUserRequest()
-  const { data: user, isLoading: isLoadingUser } = useQuery(["user", userId], () => UserService.getUser({ privateRequest, userId , options: ["coverPicture"]}));
+  const { data: user, isLoading: isLoadingUser, isError} = useQuery(["user", userId], () => UserService.getUser({ privateRequest, userId , options: ["coverPicture"]}));
   const sizeAvatar = { xs: 24, sm: 32, md: 40, lg: 64, xl: 100, xxl: 120 }
 
   return (
@@ -28,8 +29,8 @@ const Sidebar = () => {
         {/** Header */}
           <Flex justify="space-between" align="center">
           <Flex style={{marginTop: '3rem', width: "100%"}}  vertical="column" justify="center" align="center">
-            <Title level={4}>Jorge Ernesto</Title>
-            <Text type="secondary">lower.joerge@gmail.com</Text>
+            <Title level={4}>{user?.username}</Title>
+            <Text type="secondary">{user?.email}</Text>
           </Flex>
          
           </Flex>
@@ -38,7 +39,7 @@ const Sidebar = () => {
           <Flex  vertical={"column"} justify="center" align="center" style={{marginTop: "1rem", width: "100%"}}>
           <Title level={5}>Bio</Title>
           <Flex  justify="center" align="center">
-              <Text  type="secondary" style={{fontWeight: "500", textAlign:'center'}} >hello im ui designer because im hungry i hope you learn</Text>
+              <Text  type="secondary" style={{fontWeight: "500", textAlign:'center'}} >{!user?.bio ? "You haven't written anyting, write to the other people can know you" : user?.bio}</Text>
           </Flex>
           </Flex>
           <Divider></Divider>
@@ -47,16 +48,7 @@ const Sidebar = () => {
           </Button>
       </div>
       <br />
-      <Title level={3}>
-        Skills
-      </Title>
-        <div className="sidebar-tags">
-            {user?.interests?.map((tag)=> (
-                  <Tag className="sidebar-tag" key={tag}>
-                   <Text>{tag}</Text>
-                </Tag>
-             ))}
-        </div>
+     <Skills isLoading={isLoadingUser} Skills={user?.interests} isError={isError}/>
     
   </aside>
    
