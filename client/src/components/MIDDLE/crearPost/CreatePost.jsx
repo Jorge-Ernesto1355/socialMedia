@@ -23,6 +23,7 @@ import SimpleLineLoader from "../../Loaders/SimpleLineLoader";
 import { Avatar, Button, Card, Divider, Flex, Skeleton, Upload, message } from "antd";
 import useUploader from "../../../hooks/useUploader";
 import imageGallery from './icons/gallery.png'
+import PublishTimePost from "./Difusion/publicTime/PublishTimePost";
 
 
 
@@ -86,7 +87,10 @@ const CreatePost = () => {
           <SimpleLineLoader/>
           </div>}
           {!isLoading && <h5>{user?.username}</h5>}
-          <TimeExpiration/>
+          <Flex gap={10} style={{marginTop: "3px"}}>
+            <TimeExpiration/>
+            <PublishTimePost/>
+          </Flex>
           
         </div>
       </div>
