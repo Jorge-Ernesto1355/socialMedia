@@ -17,7 +17,7 @@ import AuthProvider from "../../../../zustand/AuthProvider";
 
 import useUserRequest from "../../../../hooks/auth/useUserRequest";
 import SimpleLineLoader from "../../../Loaders/SimpleLineLoader";
-import { Avatar, Popover, Typography } from "antd";
+import { Avatar, Descriptions, Popover, Typography } from "antd";
 import EllipsisPost from "../more/Ellipsis";
 import HiddenPost from "./hiddenPost/HiddenPost";
 
@@ -26,17 +26,24 @@ import { useQuery } from "react-query";
 import { useMediaQuery } from "react-responsive";
 import Paragraph from "antd/es/typography/Paragraph";
 import { UserOutlined } from "@ant-design/icons";
+import { HighlightedMentions } from "../../../../utilities/HighlightedMentions";
+import BlurImageLoader from "../../../../utilities/BlurImageLoader";
+import SpinnerLoader from "../../../../stylesComponents/spinnerLoader/SpinnerLoader";
+import { Link } from "react-router-dom";
 const { Text, Title} = Typography;
+
+
 
 const Comments = lazy(()=> import('../comments/Comments'))
 const Post = ({ post, simple, editing, vissibleComments }) => {
 
 	const { userId: currentUser } = AuthProvider()
 	const privateRequest = useUserRequest()
-    const [ellipsis, setEllipsis] = useState(true)
 	const [visibilityComment, setVisibilityComment] = useState(vissibleComments ?? false);
 
 	const showMakeComment = useMediaQuery({minWidth: 480})
+
+	
 	
 	const {
 		description,
@@ -54,17 +61,19 @@ const Post = ({ post, simple, editing, vissibleComments }) => {
 	
 	if(post?.hidden) return <HiddenPost postId={postId} postUserId={userId}/>
 	
-	const { data: user, isLoading } = useQuery(["user", userId], () => UserService.getUser({ privateRequest, userId}), {
+	const { data: user, isLoading } = useQuery(["user", userId], () => UserService.getUser({ privateRequest, userId, options: ["reactionsPosts"]}), {
 		enabled: !!userId
 	});
 
-
+	const reaction = user?.reactionsPosts?.find((reaction)=> reaction?.post._id === postId)
 
 	return (
 		<div className={`feed ${simple ? 'simple' : ''} `}>
 			<div className="head">
 				<div className="user">
-				<Avatar src={user?.imageProfile?.url} icon={<UserOutlined></UserOutlined>} size={'large'} alt="user"/>
+				<Link to={`profile/${userId}`}>
+					<Avatar src={user?.imageProfile?.url} icon={<UserOutlined></UserOutlined>} size={'large'} alt="user"/>
+				</Link>
 
 					<div className="ingo">
 						{isLoading && <SimpleLineLoader/>}
@@ -73,28 +82,24 @@ const Post = ({ post, simple, editing, vissibleComments }) => {
 						{edit ? <small>-</small> : null}
 						{edit ? <small className="edit">editado</small> : null}
 					</div>
-					<div className="roles"></div>
-
 				</div>
 				<span className="edit">
 					
-					<Popover placement="bottom" zIndex={100} overlayInnerStyle={{padding: "3px"}} trigger={"click"} content={<EllipsisPost reportsLength={reports.length} favoriteLength={favorites?.length} userId={userId} postId={postId} />}>
-					<img src={more} alt="" />
+					<Popover placement="bottom" zIndex={100} overlayInnerStyle={{padding: "3px"}} trigger={"click"} content={<EllipsisPost reportsLength={reports?.length} favoriteLength={favorites?.length} userId={userId} postId={postId} />}>
+					<img src={more} alt="options post" style={{cursor: "pointer"}} />
 					</Popover>
 				</span>
 			</div>
 
 			<div className="caption">
-				
-				<p>{editing ? editing() : description }</p>
-				
+			<HighlightedMentions text={editing ? editing() : description}/>
 			</div>
 
 			{votes?.length > 0 && <Votes id={postId} />}
 
 			{image?.url && (
 				<div className="photo">
-					<img src={image?.url} alt="" />
+					<BlurImageLoader preview={image?.previewUrl} image={image?.url} alt={"post image"} notImage={false}/>
 				</div>
 			)}
 			<div className="info-post">
@@ -110,16 +115,16 @@ const Post = ({ post, simple, editing, vissibleComments }) => {
 
 				<CommentsShared
 					commentsLength={comments?.length}
-					sharesLength={shares.length}
+					sharesLength={shares?.length}
 					showComments={setVisibilityComment}
 				/>
 			</div>
 
 			<div className="traze"></div>
-			<ActionsPost postId={postId} userId={currentUser} post={post}/>
+			<ActionsPost postId={postId} userId={currentUser} post={post} reactionUser={reaction}/>
 			<div className="traze"></div>
 			{visibilityComment && (
-				<Suspense fallback={<>loading comments</>}>
+				<Suspense fallback={<SpinnerLoader center={true}/>}>
 					<Comments
 					id={postId}
 					name="postComment"
