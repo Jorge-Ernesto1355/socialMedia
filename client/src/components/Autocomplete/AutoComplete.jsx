@@ -1,10 +1,10 @@
 import "./autoComplete.css";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import { getAlgoliaResults } from "@algolia/autocomplete-preset-algolia";
 import { getActiveToken, isValidUsername, replaceAt } from "./utils";
 import { useAutocomplete } from "../../hooks/useAutocomplete";
 import algoliasearch from "algoliasearch";
-import getCaretCoordinates from "textarea-caret";
+
 import AccountItem from "./Item/Item";
 import Loader from "../../utilities/Loader";
 
@@ -14,7 +14,68 @@ const searchClient = algoliasearch(
 );
 const INDEX_NAME = "users";
 
-const AutoComplete = (props, inputRef) => {
+function getCaretCoordinates(element) {
+  // Create a div off-screen with the same styles as the element
+  const div = document.createElement('div');
+  div.style.position = 'absolute';
+  div.style.top = '-9999px';
+  div.style.left = '-9999px';
+  div.style.width = element.clientWidth + 'px';
+  div.style.height = element.clientHeight + 'px';
+  div.style.fontSize = window.getComputedStyle(element).fontSize;
+  div.style.fontFamily = window.getComputedStyle(element).fontFamily;
+  div.style.fontWeight = window.getComputedStyle(element).fontWeight;
+  div.style.letterSpacing = window.getComputedStyle(element).letterSpacing;
+  div.style.whiteSpace = 'pre-wrap'; // To ensure the same wrapping as the element
+
+  // Copy the text up to the caret position into the div
+  const textBeforeCaret = element.value.substring(0, element.selectionStart);
+  const span = document.createElement('span');
+  span.textContent = textBeforeCaret;
+  div.appendChild(span);
+
+  // Insert a span at the caret position
+  const caretSpan = document.createElement('span');
+  caretSpan.textContent = '|'; // Using '|' as a visual indicator for the caret
+  div.appendChild(caretSpan);
+
+  // Copy the text after the caret position into the div
+  const textAfterCaret = element.value.substring(element.selectionStart);
+  const afterCaretSpan = document.createElement('span');
+  afterCaretSpan.textContent = textAfterCaret;
+  div.appendChild(afterCaretSpan);
+
+  // Append the div to the document body
+  document.body.appendChild(div);
+
+  // Get the caret span's position relative to the div
+  const caretRect = caretSpan.getBoundingClientRect();
+  const divRect = div.getBoundingClientRect();
+  const topOffset = caretRect.top - divRect.top;
+  const leftOffset = caretRect.left - divRect.left;
+  const height = caretRect.height;
+
+  // Remove the div from the document
+  document.body.removeChild(div);
+
+  // Return the caret's coordinates and height
+  return {
+    top: topOffset,
+    left: leftOffset,
+    height: height,
+  };
+}
+
+// Example usage
+
+
+
+// Example usage
+
+
+
+const AutoComplete = (props, ref) => {
+  const inputRef = ref || useRef();
   const { autocomplete, state } = useAutocomplete({
     ...props,
     defaultActiveItemId: 0,
@@ -30,12 +91,7 @@ const AutoComplete = (props, inputRef) => {
             onSelect({ item, setQuery }) {
               const [index] = range;
               const replacement = `@${item.username}`;
-              const newQuery = replaceAt(
-                query,
-                replacement,
-                index,
-                word.length,
-              );
+              const newQuery = replaceAt(query, replacement, index, word.length);
 
               props.set && props.set(newQuery);
               setQuery(newQuery);
@@ -72,9 +128,18 @@ const AutoComplete = (props, inputRef) => {
     }
   }, [props.initialText]);
 
-  const { top, height } = inputRef?.current
-    ? getCaretCoordinates(inputRef?.current, inputRef?.current?.selectionEnd)
-    : { top: 0, height: 0 };
+
+
+  const coordinates = useMemo(()=>{
+    if (inputRef.current) {
+      
+      const coordinates = getCaretCoordinates(inputRef.current);
+      return coordinates
+ 
+    }
+  }, [state.query]) ?? {top: 0, height: 0,left: 0}
+
+
 
   function onInputNavigate() {
     props.handleToComponent &&
@@ -89,11 +154,11 @@ const AutoComplete = (props, inputRef) => {
   const inputProps = autocomplete.getInputProps({
     inputElement: inputRef?.current,
     autoFocus: true,
-    maxLength: 280,
+    maxLength: 300,
   });
 
   return (
-    <div {...autocomplete.getRootProps({})}>
+    <div {...autocomplete.getRootProps({})} className="panel">
       <div>
         <form
           {...autocomplete.getFormProps({
@@ -126,7 +191,7 @@ const AutoComplete = (props, inputRef) => {
         <div
           {...autocomplete.getPanelProps({})}
           className="autocomplete-panel"
-        // style={{ top: `${top + height}px` }}
+          style={{top: `${coordinates?.top + coordinates.height}px`, left: coordinates.left}}
         >
           {state.status === "stalled" && !state.isOpen && <Loader />}
 
