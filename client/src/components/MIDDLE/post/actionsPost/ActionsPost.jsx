@@ -11,7 +11,7 @@ import SharePost from "../share/SharePost";
 import CommentMobile from "../comments/makeComment/CommentMobile";
 
 
-const ActionsPost = ({ postId, userId , post}) => {
+const ActionsPost = ({ postId, userId , post, reactionUser}) => {
   return (
     <div className="action-buton">
       <div className="interacions-buttons">
@@ -22,7 +22,7 @@ const ActionsPost = ({ postId, userId , post}) => {
             userId={userId}
             type={'Post'}
           >
-            <LikePost />
+            <LikePost reactionUser={reactionUser} />
           </Reaction>
         </div>
         <div>
