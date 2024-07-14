@@ -1,5 +1,5 @@
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Typography, Upload } from 'antd';
+import { Button, Typography, Upload, message } from 'antd';
 import React, { useState } from 'react'
 import './storyVide.css'
 import AuthProvider from '../../../../../zustand/AuthProvider';
@@ -12,23 +12,27 @@ const VideoInput = ({handleFile}) => {
     const [source, setSource] = React.useState();
   
     const handleFileChange = (event) => {
-      
-      const file = event.file;
-
+      const file = event.file.originFileObj || event.file; // Obtener el archivo desde originFileObj si está presente
+    
       if (file instanceof Blob) { // Verificar si el archivo es un Blob
-          setLoading(true); // Activar el estado de carga
-          handleFile(file)
+        setLoading(true); // Activar el estado de carga
+        handleFile(file);
+    
+        if (file.type.startsWith("video/")) { // Verificar si el archivo es un video
           const reader = new FileReader();
           reader.onload = (e) => {
-              
-              setSource(e.target.result); // Establecer la URL de la previsualización
-              setLoading(false); // Desactivar el estado de carga
+            setSource(e.target.result); // Establecer la URL de la previsualización
+            setLoading(false); // Desactivar el estado de carga
           };
           reader.readAsDataURL(file); // Leer el archivo como una URL base64
+        } else {
+          message.error("El archivo seleccionado no es un video.");
+          setLoading(false);
+        }
       } else {
-          console.error("El archivo seleccionado no es válido."); // Manejar el error si el archivo no es un Blob
+        message.error("El archivo seleccionado no es válido."); // Manejar el error si el archivo no es un Blob
       }
-  };
+    };
   
 
     

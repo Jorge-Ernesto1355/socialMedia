@@ -50,7 +50,7 @@ const StoryVideo = ({closeModal, expiresIn = 86400}) => {
        
        <Col xs={24} span={12} md={10} >
           <Flex vertical={"column"} style={{marginTop: "1rem"}} justify='center' align='center'>
-                   <VideoInput handleFile={setFile}/>
+                   <VideoInput handleFileToFather={setFile}/>
             </Flex>
        </Col>
 
