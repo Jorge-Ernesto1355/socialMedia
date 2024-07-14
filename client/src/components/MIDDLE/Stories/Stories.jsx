@@ -10,7 +10,10 @@ import ModalStory from './modelStory/ModalStory'
 import { useQuery } from 'react-query'
 import OwnStory from './OwnStory'
 import AliceCarousel from 'react-alice-carousel'
-
+import ComponentStateHandler from '../../../hooks/stateManagmentComponent/ComponentStateHandler'
+import UserMaybeKnow from '../../userMaybeKnow/UserMaybeKnow'
+import EmptyStories from './EmptyStories'
+const { Text, Title} = Typography;
 const Stories = () => {
 
     const {userId} = AuthProvider()
@@ -20,7 +23,7 @@ const Stories = () => {
       enabled: !!userId
     })
 
-    if(isError || isErrorStories ) return <div>error</div>
+    
     
     const responsive = {
       0: { items: 1 },
@@ -31,7 +34,7 @@ const Stories = () => {
   };
  
   const items = results?.map((story)=> (
-    <Col className='story-item' key={story._id}    xs={11} xl={8} xxl={6}  style={{height: '310px', width:"300px"}}>
+    <Col className='story-item' key={story._id}    xs={11} xl={8} xxl={6}  style={{height: '250px', width:"300px"}}>
       <ModalStory story={story} key={story?._id}/>
     </Col>
   ))
@@ -49,14 +52,24 @@ const Stories = () => {
                           {isLoadingStoriesUser && <Skeleton.Avatar active={true} size={40} shape={"square"} style={{width: "155px", height: '258px', borderRadius: "1rem",}} />}
                           {!isLoadingStoriesUser  &&  <OwnStory userStories={UserStories?.data ?? []} />}
                         </Col>
-                        <AliceCarousel
-                          mouseTracking
-                          disableDotsControls
-                          disableButtonsControls
-                          items={items}
-                          responsive={responsive}
-                          controlsStrategy="alternate"
-                        />  
+                        <ComponentStateHandler 
+                        isLoading={isLoading}
+                        isError={isErrorStories}
+                        Loader={<LoaderStories/>}
+                        ErrorMessageComponent={<Text type='danger'>Upps... something went wrong with stories</Text>}
+                        items={results}
+                        EmptyMessage={<EmptyStories/>}>
+           
+              
+                          <AliceCarousel
+                            mouseTracking
+                            disableDotsControls
+                            disableButtonsControls
+                            items={items}
+                            responsive={responsive}
+                            controlsStrategy="alternate"
+                          />  
+                        </ComponentStateHandler>
                     </Flex>
           </Row>
         )}
