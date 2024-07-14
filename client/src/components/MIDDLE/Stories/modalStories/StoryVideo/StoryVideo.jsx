@@ -33,7 +33,7 @@ const StoryVideo = ({closeModal, expiresIn = 86400}) => {
          privateRequest, 
           story: {
             text: input,
-            video: file,
+            media: file,
             expiresIn: expiresIn, 
           }, 
           userId
