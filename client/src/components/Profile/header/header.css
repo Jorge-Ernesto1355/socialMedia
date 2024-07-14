@@ -68,4 +68,12 @@
     }
   }
   
+  @media(max-width: 400px){
+    
+        .profile-card-fronPage-img {
+            border-radius: 0;
+        }
+      
+  }
+  
 
