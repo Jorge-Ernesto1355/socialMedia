@@ -55,6 +55,13 @@
   
 }
 
+@media(max-width: 400px){
+  .Profile .body{
+    padding-left: 0;
+    grid-template-columns: 100vw;
+  }
+}
+
 
 
 
