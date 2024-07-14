@@ -14,14 +14,12 @@ export class storyService {
                 form.append(key, story[key])
             }
 
-            const data = await  privateRequest.post(`/story/${userId}`, form, {
+            return await  privateRequest.post(`/story/${userId}`, form, {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 }
             })
-
-            if(data.data) return data
-             
+            
             
         } catch (error) { 
             throw new Error(error.response.data.error)
@@ -47,6 +45,16 @@ export class storyService {
         try {
             return await privateRequest.get(`story/storiesFromUser/${id}`)
 
+        } catch (error) {
+            throw new Error(error)
+        }
+    }
+
+    static async getFeedStories({privateRequest, id, limit, page}){
+        if (!privateRequest)
+            throw new Error(ObjectErrosName.PrivateRequestDoesNotExitst);
+        try {
+            return await privateRequest.get(`/story/feed/${id}?limit=${limit}&page=${page}`)
         } catch (error) {
             throw new Error(error)
         }
