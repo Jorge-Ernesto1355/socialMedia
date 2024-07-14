@@ -1,10 +1,16 @@
 .detailsProfile-container{
   width: 100%;
-  height: 100%;
+  height: max-content;
   border-radius: var(--card-border-radius);
   background-color: var(--color-white);
   padding: var(--card-padding);
   
+}
+
+@media(max-width:400px){
+  .detailsProfile-container{
+    height: max-content;
+  }
 }
 
 
