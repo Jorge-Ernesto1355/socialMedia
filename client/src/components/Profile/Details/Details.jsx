@@ -10,12 +10,14 @@ import HearthIcon from "./icons/HearthIcon";
 import { EditFilled } from "@ant-design/icons";
 import ModalEditDetails from "./modalEditDetails/ModalEditDetails";
 import WorkIcon from "./icons/WorkIcon";
+import Skills from "../../skills/Skills";
+
 
 const { Text, Title} = Typography;
 const Details = ({userId}) => {
 
   const privateRequest = useUserRequest()
-  const { data: user, isLoading} = useQuery(["user", userId], () => UserService.getUser({ privateRequest, userId, options: ["bio", "interests"]}));
+  const { data: user, isLoading, isError} = useQuery(["user", userId], () => UserService.getUser({ privateRequest, userId, options: ["bio", "interests"]}));
 
   
 
@@ -37,14 +39,7 @@ const Details = ({userId}) => {
                 <Divider></Divider>
                 <Title level={5}>Description</Title>
                 <Text >{user?.bio}</Text>
-                <Title level={5}>Interests</Title>
-                <div className="details-tags-container">
-                    {user?.interests?.map((tag)=> (
-                      <Tag key={tag}>
-                        {tag}
-                      </Tag>
-                    ))}
-                </div>
+                <Skills Skills={user?.interests} isError={isError} isLoading={isLoading}/>
                 <br />
                 <Title style={{marginBottom: "0"}} level={4}>More Information</Title>
                 <Text >you will see more especific information like city, state</Text>
