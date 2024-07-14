@@ -43,7 +43,7 @@ const StoryPhoto = ({expiresIn = 86400, closeModal}) => {
         privateRequest, 
           story: {
             text: input,
-            image: file.current,
+            media: file.current,
             expiresIn: expiresIn, 
           }, 
           userId
