@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 const profileProvider = create((set)=>({
-    tab: 1, 
+    tab: "usersPosts", 
     setTab: (tab)=> set({tab})
 }))
 
