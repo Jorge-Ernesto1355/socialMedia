@@ -17,10 +17,22 @@ const ModalStory = ({ story }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const privateRequest = useUserRequest();
 
-  const {data, isLoading, refetch, isError} = useQuery(['stories', story.userId._id], ()=> storyService.getStoriesFromUser({privateRequest, id: story.userId._id}), {
-    enabled: false
-  })
-
+  const {data, isLoading, refetch, isError} = useQuery(
+    ['stories', story?.userId?._id],
+    () => {
+      if (!story?.userId?._id) {
+        // Si no hay ID de usuario, devolvemos una promesa resuelta con un array vacío
+        return Promise.resolve([]);
+      }
+      return storyService.getStoriesFromUser({privateRequest, id: story.userId._id});
+    },
+    {
+      enabled: false,
+      // Añadimos una condición para que la query se considere lista solo si hay un ID de usuario
+      isDataEqual: (oldData, newData) => 
+        !story?.userId?._id || (oldData === newData)
+    }
+  );
 
 
   const showModal = () => {
