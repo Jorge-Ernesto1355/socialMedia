@@ -1,8 +1,10 @@
+import { Skeleton } from 'antd';
 import React, { useEffect, useState } from 'react'
 
 const BlurImageLoader = ({
     preview,
     image,
+    notImage,
     alt,
     imageStyleClass,
     divStyleClass,
@@ -23,12 +25,15 @@ const BlurImageLoader = ({
         fetchImage(image);
       }, []);
 
+      
 
 
 
   return (
       <div className={divStyleClass} style={{ overflow: 'hidden',  }} {...props}>
-      <img
+      {notImage && <Skeleton.Image rootClassName='root-skeleton-coverpicture' style={{width: '100%', height: '100%'}} className={imageStyleClass}></Skeleton.Image>}
+      {!notImage &&
+       <img
         style={{
           filter: `${loading ? 'blur(20px)' : ''}`,
           transition: '300ms filter linear',
@@ -38,7 +43,7 @@ const BlurImageLoader = ({
         src={currentImage}
         alt={alt}
         className={imageStyleClass}
-      />
+      />}
     </div>
   )
 }
