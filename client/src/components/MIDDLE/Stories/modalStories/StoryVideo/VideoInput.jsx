@@ -1,39 +1,40 @@
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Typography, Upload, message } from 'antd';
+import { Button, Typography, message } from 'antd';
 import React, { useState } from 'react'
 import './storyVide.css'
-import AuthProvider from '../../../../../zustand/AuthProvider';
 import { validateVideo } from '../../utils/validateVideo';
-const { Dragger } = Upload;
-
 const { Text } = Typography;
-const VideoInput = ({handleFile}) => {
+const VideoInput = ({handleFileToFather}) => {
     const [loading, setLoading] = useState(false);
-    const [source, setSource] = React.useState();
+    const [source, setSource] = React.useState(null);
   
     const handleFileChange = (event) => {
-      const file = event.file.originFileObj || event.file; // Obtener el archivo desde originFileObj si está presente
+        const file = event.file.originFileObj || event.file;
     
-      if (file instanceof Blob) { // Verificar si el archivo es un Blob
-        setLoading(true); // Activar el estado de carga
-        handleFile(file);
+        if (!(file instanceof Blo)) return message.error("the video is not valid")
     
-        if (file.type.startsWith("video/")) { // Verificar si el archivo es un video
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            setSource(e.target.result); // Establecer la URL de la previsualización
-            setLoading(false); // Desactivar el estado de carga
-          };
-          reader.readAsDataURL(file); // Leer el archivo como una URL base64
-        } else {
-          message.error("El archivo seleccionado no es un video.");
+        setLoading(true); 
+        handleFileToFather(file);
+    
+        if (!isValidVideo(file)) {
+          message.error("the file selected is not a valid video");
           setLoading(false);
+          return 
         }
-      } else {
-        message.error("El archivo seleccionado no es válido."); // Manejar el error si el archivo no es un Blob
-      }
-    };
+
+          const readerFileVideo = new FileReader();
+          readerFileVideo.onload = (e) => {
+            setSource(e.target.result); 
+            setLoading(false); 
+          };
+          
+          reader.readAsDataURL(file); 
+       
+        }
+    
   
+    
+    const isValidVideo = (file)=> file.type.startsWith("video/")
 
     
   const uploadButton = (
@@ -73,6 +74,6 @@ const VideoInput = ({handleFile}) => {
        </Dragger>
       </div>
     );
-}
+  }
 
 export default VideoInput
