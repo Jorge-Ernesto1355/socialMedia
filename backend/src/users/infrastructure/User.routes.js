@@ -29,6 +29,14 @@ router.get('/common-interests/:userId', index.query.getSameInterestUsers)
 
 router.get('/usersFromFriends/:userId',index.query.getUsersFromFriends)
 
+router.get('/userPosts/:userId', index.query.getUserPosts)
+
+router.get("/byUsername/:username", index.query.getUserByUsername)
+
+router.get("/favorites/post/:userId", index.query.getFavoritesPost)
+
+router.get('/posts/reaction/:userId', index.query.getPostsReaction)
+
 
 
 
@@ -38,9 +46,16 @@ router.post('/upload/coverPicture/:userId', index.mutation.uploadCoverPicture)
 
 router.post("/edit/profile/:userId", index.mutation.updateUserProfile)
 
+router.post("/:userId", index.query.FindUserById);
+
+
+
+
 router.put('/upload/edit/coverPicture/:userId', index.mutation.editCoverPicture)
 
-router.post("/:userId", index.query.FindUserById);
+router.put("/forbide/favoritesPosts/:userId", index.mutation.forbidderFavorites)
+
+router.put("/forbide/reactionsPosts/:userId", index.mutation.forbidderReactions)
 
 router.put("/friend/accept/:userId", index.mutation.AcceptFriends); //check
 
@@ -48,7 +63,7 @@ router.put("/friend/add/:userId", index.mutation.addFriend); //check
 
 router.put('/edit/location/:userId', index.mutation.updateUserLocation)
 
-
+router.put("/customizedFeed/:userId", index.mutation.customizedFeed)
 
 router.put("/roles/add", index.mutation.giveRoles);
 
