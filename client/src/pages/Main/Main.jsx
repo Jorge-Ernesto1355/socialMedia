@@ -13,6 +13,8 @@ import WithSearch from '../../HOCs/WithSearch'
 import Stories from '../../components/MIDDLE/Stories/Stories'
 import useWindowWidth from '../../hooks/useWindowWidth'
 import NavbarMobile from '../../components/NavbarMobile/NavbarMobile'
+import PostServices from '../../components/MIDDLE/post/services/PostServices'
+import AuthProvider from '../../zustand/AuthProvider'
 
 
 
@@ -21,7 +23,7 @@ import NavbarMobile from '../../components/NavbarMobile/NavbarMobile'
 const Main = () => {
   
     const ConversationViewWithSearch = WithSearch(ConversationView, {INDEX_NAME:'conversations'})
-  
+    const userId = AuthProvider((store)=> store.userId)
 
 
     return (
@@ -37,7 +39,7 @@ const Main = () => {
                 <div className="middle">
                     <Stories/>
                     <CreatePost />
-                    <Feed type="PostsFeed" />
+                    <Feed userId={userId} type="PostsFeed" service={PostServices.getTimeLine} name="posts"/>
                 </div>
 
                 {/* ===== RIGHT =====  */}
