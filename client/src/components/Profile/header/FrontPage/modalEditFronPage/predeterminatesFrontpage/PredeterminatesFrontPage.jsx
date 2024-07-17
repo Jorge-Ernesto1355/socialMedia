@@ -13,9 +13,8 @@ const PredeterminatesFrontPage = ({setImageUrl, userId}) => {
     const responsive = {
         0: { items: 1 },
         268: { items: 2 },
-        324: { items: 3 },
+        324: { items: 3 }, 
         524: { items: 4 },
-        
     };
 
     const privateRequest = useUserRequest()
@@ -24,30 +23,29 @@ const PredeterminatesFrontPage = ({setImageUrl, userId}) => {
         mutationKey: ['editCoverPicture', userId], 
         onSuccess: (data)=> {
             if(!data) return  
+            console.log(data)
             setImageUrl(data.data?.url)
             message.success("photo upladed succefully")
         }, 
         onError: ()=>  message.success("Something went wrong")
-    })
+    }) 
 
     const handleImage = (frontPage)=>{
         mutate({imageObject:frontPage , id: userId, privateRequest})
 
     }
     
-
-
-
-    const items = predeterminatesFrontPages?.map((frontPage)=>(
+    const items = predeterminatesFrontPages.map((frontPage)=>(
         <li key={frontPage.id} className='predeterminates-item' onClick={()=> handleImage(frontPage)}>
             <div className="predeterminates-image-container">
-                <img src={frontPage?.url} alt="suggested profile picture" className="profile-image" />
+                <img src={frontPage?.url} alt="" className="profile-image" />
                 <div className="overlay">
                      {isLoading ? <SpinnerLoader/> :  <p className="overlay-button" >Choose picture</p> }
                 </div>
             </div>
         </li>
     ))
+  
 
 
   return (
@@ -58,7 +56,7 @@ const PredeterminatesFrontPage = ({setImageUrl, userId}) => {
           disableButtonsControls
           items={items}
           responsive={responsive}
-          controlsStrategy="alternate"
+         controlsStrategy='responsive'
         />
     </div>
   )
