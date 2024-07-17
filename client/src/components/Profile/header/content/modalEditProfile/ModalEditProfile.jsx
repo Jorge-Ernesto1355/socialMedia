@@ -7,12 +7,16 @@ import { useMutation, useQuery } from 'react-query';
 import useUserRequest from '../../../../../hooks/auth/useUserRequest';
 import EditProfileTags from './editProfileTags/EditProfileTags';
 import InputNumber from './InputNumber';
+import { isValidEmail } from '../../../../../utilities/isValidEmail';
+import AuthProvider from '../../../../../zustand/AuthProvider';
+import ModalSetSkills from '../../../../skills/ModalSetSkills';
 const { Text, Title} = Typography;
-const ModalEditProfile = ({userId}) => {
+const ModalEditProfile = () => {
 
+    const {userId} = AuthProvider()
     const [userInfo, setUserInfo] = useState({})
     const [tags, setTags] = useState(["programming", "react", "javascript"])
-
+    
     const handleUserInfo = (e)=>{
         const {value, name} = e.target
         if(!value && !name) return 
@@ -30,39 +34,41 @@ const ModalEditProfile = ({userId}) => {
         })
     }
     
+  
 
     const privateRequest = useUserRequest()
     const { data: user, isLoading: isLoadingUser } = useQuery(["user", userId], () => UserService.getUser({ privateRequest, userId , options: ["coverPicture"]}));
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     
-    const showModal = () => {
-        setIsModalOpen(true);
-      };
-      const handleOk = () => {
-        setIsModalOpen(false);
-        mutate({
-            privateRequest, 
-            id: userId,
-            userInfo: {...userInfo, interests: tags} 
+    const showModal = () => setIsModalOpen(true);
+        
+    const handleCancel = () => setIsModalOpen(false);
+         
+        
+        
+    const {mutate, isLoading, error} = useMutation({
+            mutationFn: UserService.uploadUserProfile, 
+            mutationKey: ['updatedProfile', userId], 
+            onSuccess: (data)=> message.success("Your profile has been edited succefully"), 
+            onError: ()=> message.error("Upss... Something went wrong")
+            
         })
-      };
-      const handleCancel = () => {
-        setIsModalOpen(false);
-      };
-
-      const {mutate, isLoading} = useMutation({
-        mutationFn: UserService.uploadUserProfile, 
-        mutationKey: ['updatedProfile', userId], 
-        onSuccess: (data)=> message.success("Your profile has been edited succefully"), 
-        onError: ()=> message.error("Upss... Something went wrong")
-      
-      })
-
+        
+        const handleMutate = () => {
+          
+          mutate({
+              privateRequest, 
+              id: userId,
+              userInfo: {...userInfo, interests: tags} 
+          })
+        };
+        
+        
   return (
     <>
      <Button onClick={showModal} type='primary' icon={<EditOutlined />}>Editar</Button>
-        <Modal open={isModalOpen} onOk={handleOk}  onCancel={handleCancel} confirmLoading={isLoading} width={500} >
+        <Modal open={isModalOpen}  footer={null} onCancel={handleCancel} confirmLoading={isLoading} width={500} >
            
                 
                     <Title style={{marginBottom: "0px"}} level={3}>Edit profile</Title>
@@ -102,8 +108,16 @@ const ModalEditProfile = ({userId}) => {
                          placeholder={user?.bio ?? 'Example: Hey everyone im designer and blogger. i love to like  ski and valet' }/>
                          <Text>Brief description for your profile. Urls are hyperlinked.</Text>
                 </Flex>
-                <Title level={4}>Interests</Title>
-                <EditProfileTags handleTags={setTags}/>
+                <Flex vertical style={{marginTop: "1rem", width: "100%" }} >
+                        <Title level={4}>Interests</Title>
+                        <Text>Here you can customize your feed or even add more interests <ModalSetSkills><Button  type='link'>Set skills</Button></ModalSetSkills></Text>
+                </Flex>
+                
+                
+                <Flex vertical gap={10} style={{marginTop: "1rem"}} justify='start' >
+                  <Text type='danger'>{error?.response.data.error}</Text>
+                    <Button block type='primary' loading={isLoading} onClick={()=> handleMutate()}>Edit Profile</Button>
+                </Flex>
         </Modal>
     </>
   )
