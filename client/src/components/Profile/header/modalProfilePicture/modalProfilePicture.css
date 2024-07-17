@@ -21,10 +21,15 @@
     margin: .3rem;
 }
 
+.imageProfile-blurImage-container{
+  width: 100%;
+  height: 100%;
+}
+
 .modal-profile-photo img {
-    border-radius: 50%;
-    min-width: 100%;
-    min-height: 100%;
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     cursor: pointer;
 }
@@ -48,8 +53,8 @@
 .image-container {
     position: relative;
     display: inline-block;
-    width: 120px; /* Ajusta el tamaño según tus necesidades */
-    height: 120px; /* Ajusta el tamaño según tus necesidades */
+    width: 100%; /* Ajusta el tamaño según tus necesidades */
+    height: 100%; /* Ajusta el tamaño según tus necesidades */
   }
   
   .profile-image {
