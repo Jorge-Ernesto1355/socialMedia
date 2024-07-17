@@ -4,8 +4,11 @@ import UserService from '../../../../../services/UserService'
 import { message } from 'antd'
 import useUserRequest from '../../../../../hooks/auth/useUserRequest'
 import SpinnerLoader from '../../../../../stylesComponents/spinnerLoader/SpinnerLoader'
+import BlurImageLoader from '../../../../../utilities/BlurImageLoader'
 
 const ImageToProfilePicture = ({img, setImageUrl, userId}) => {
+
+  
 
     const privateRequest = useUserRequest()
     const {mutate, isLoading} = useMutation({
@@ -29,7 +32,7 @@ const ImageToProfilePicture = ({img, setImageUrl, userId}) => {
   return (
     <li className="modal-profile-photo" onClick={()=> handleImage()}>
      <div className="image-container">
-        <img src={img?.url} alt="suggested profile picture" className="profile-image" />
+        <BlurImageLoader preview={img.previewUrl} divStyleClass={"imageProfile-blurImage-container"} image={img.url} notImage={false} alt={"posible image profile"}/>
         <div className="overlay">
           {isLoading ? <SpinnerLoader center={true}/> :   <p className="overlay-button" >Choose picture</p> }
         </div>
