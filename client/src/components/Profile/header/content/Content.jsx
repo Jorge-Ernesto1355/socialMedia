@@ -1,17 +1,23 @@
 import React from 'react'
 import './profileContent.css'
-import { Avatar, Button, Skeleton } from 'antd'
-import {  CameraOutlined, EditOutlined, UserOutlined } from '@ant-design/icons';
+import { Avatar, Button, Flex, Skeleton } from 'antd'
+import {  CameraOutlined, EditOutlined, MoreOutlined, UserOutlined } from '@ant-design/icons';
 import ModalProfilePicture from '../modalProfilePicture/ModalProfilePicture';
 import { useQuery } from 'react-query';
 import UserService from '../../../../services/UserService';
 import useUserRequest from '../../../../hooks/auth/useUserRequest';
 import useInfiniteScroll from '../../../../hooks/useInfiniteScroll/useInfiniteScroll';
 import ModalEditProfile from './modalEditProfile/ModalEditProfile';
+import ModalProhibitFooterOptions from './modalProhibitFooterOptions/ModalProhibitFooterOptions';
+import AuthProvider from '../../../../zustand/AuthProvider';
 const Content = ({userId}) => {
 
+
+  const {userId: currentUser} = AuthProvider()
   const privateRequest = useUserRequest()
   const { data: user, isLoading} = useQuery(["user", userId], () => UserService.getUser({ privateRequest, userId, options: ["friends"] }));
+
+  
  
  
   const { results, isLoading:isLoadingFriend} =
@@ -56,7 +62,10 @@ const Content = ({userId}) => {
            </div>
       </div>
       <div className='profile-content-options'>
-        <ModalEditProfile userId={userId}/>
+        <Flex vertical gap={10} >
+            <ModalEditProfile userId={userId}/>
+           {userId === currentUser && <ModalProhibitFooterOptions/>}
+        </Flex>
       </div>
     </div>
   )
