@@ -15,6 +15,7 @@ const ModalEditFrontPage = ({userId, user, isLoadingUser}) => {
     const [imageUrl, setImageUrl] = useState(null);
     const [loading, setLoading] = useState(false);
     const sizeAvatar = { xs: 24, sm: 32, md: 40, lg: 64, xl: 150, xxl: 150 }
+
     
     const showModal = () => {
       setIsModalOpen(true);
@@ -72,7 +73,6 @@ const ModalEditFrontPage = ({userId, user, isLoadingUser}) => {
         name: 'coverPicture',
         action: `http://localhost:3001/api/v1/users/upload/coverPicture/${userId}`,
         showUploadList: false,
-        
       };
 
     
@@ -80,7 +80,7 @@ const ModalEditFrontPage = ({userId, user, isLoadingUser}) => {
     return (
       <>
        <Button  onClick={()=> showModal()} className='profile-frontPage-button-changeFront'><CameraOutlined/>Edit front page</Button>
-        <Modal  title={"Upload your front page"}  width={600} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <Modal footer={null}  title={"Upload your front page"}  width={600} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                 <div className='modal-frontPage'>
                     <CoverAndProfile isLoadingUser={isLoadingUser} style={{borderRadius:"1rem"}} user={user} imageUrl={imageUrl} sizeAvatar={sizeAvatar}/>
                 </div>
@@ -90,7 +90,7 @@ const ModalEditFrontPage = ({userId, user, isLoadingUser}) => {
                 <Divider plain>OR</Divider>
                 <div style={{marginBottom: "20px"}}>
                 <Title style={{marginTop:"20px", marginBottom: "0px"}} level={4}>choose one our predeterminates front pages</Title>
-                <Text style={{marginBottom: "20px"}} >you will see the diferrence</Text>
+                <Text style={{marginBottom: "20px"}} >you will see the diference</Text>
                 </div>
                 <Flex gap={'small'} >
                     <Title level={5}>Show profile picture</Title>
