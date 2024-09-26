@@ -5,17 +5,9 @@ import "./register.css";
 import React from "react";
 import logo  from './icons/cometaLogo.png'
 import googleIcon  from '../Login/icons/google.png'
-import { Formik, Form, ErrorMessage } from "formik";
+import { Formik, Form} from "formik";
+import Typography from "antd/es/typography/Typography";
 import facebokIcon from './icons/facebook.png'
-
-
-import 'react-toastify/dist/ReactToastify.css';
-
-import Cuadro from "../../components/cuadro/Cuadro";
-
-import Input from "../components/Input";
-
-
 import AuthService from "../services/AuthServices";
 import { useMutation } from "react-query";
 import SpinnerLoader from "../../stylesComponents/spinnerLoader/SpinnerLoader";
@@ -24,8 +16,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { validations } from "./validation";
 import { InitialValues } from "./InitialValues";
 import { useGeoLocations } from "../../hooks/GeoLocation/useGeoLocations";
+import Input from "antd/es/input";
+import { Checkbox } from "antd";
+const {Text} = Typography
 
-function Register() {
+function Register() { 
 
   const Auth = AuthProvider()
   const navigate = useNavigate()
@@ -45,6 +40,8 @@ function Register() {
     },
     
   })
+
+  const [passwordVisible, setPasswordVisible] = React.useState(false);
 
 
   return (
@@ -97,69 +94,54 @@ function Register() {
                 </div>
 
                 <div className="inputs-form">
-               
-                <ErrorMessage
-                  name="correo"
-                  component={() => (
-                    <Cuadro text={errors.correo} danger={"danger"} />
-                    )}
-                    />
-
-
-                <Input
-                  placeholder="correo"
-                  name="correo"
-                  id={'Email'}
-                  inputValue={values.correo}
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                >
-                 
-                </Input>
             
-              
-
-                <ErrorMessage
-                  name="nombre"
-                  component={() => (
-                    <Cuadro text={errors.nombre} danger={"danger"} />
-                    )}
+                    <Input
+                     placeholder="Write your email here"
+                     name="correo"
+                     id="Email"
+                     value={values.correo}
+                     onChange={handleChange}
+                     onBlur={handleBlur}
+                     className="input-register"
                     />
+                    
+                    {errors.correo && <Text className="error-text" type="danger" >{errors.correo}</Text>}
 
-                <Input
-                  id={'username'}
-                  placeholder="nombre"
-                  name="nombre"
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  inputValue={values.nombre}
-                  >
-                </Input>
+                  <Input.Password
+                  visibilityToggle={{ visible: passwordVisible, onVisibleChange: setPasswordVisible }}
+                    id={'username'}
+                    placeholder="Write your username here"
+                    name="nombre"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.nombre}
+                    className="input-register"
+
+                    >
+                  </Input.Password>
              
-              
+                  {errors.nombre && <Text type="danger" className="error-text" >{errors.nombre}</Text>}
 
-                <ErrorMessage
-                  name="contraseña"
-                  component={() => (
-                    <Cuadro text={errors.contraseña} danger={"danger"} />
-                    )}
-                    />
+                
 
-                <Input
-                  placeholder="contraseña"
+                <Input.Password
+                  visi
+                  placeholder="Write your password here"
                   name="contraseña"
                   id={'password'}
                   type="password"
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  inputValue={values.contraseña}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.contraseña}
+                  className="input-register"
                   >
                
-                </Input>
+                </Input.Password>
+                  {errors.contraseña && <Text type="danger" className="error-text" >{errors.contraseña}</Text>}
           </div>
           <div className="login-remember">
            <div className="save-session-container">
-           <input type="checkbox" id="persits" onChange={(e) => Auth.setPersits(!Auth.persits)} checked={Boolean(Auth.persits)} />
+           <Checkbox/>
                 <label htmlFor="persits" className="save-session">Remember me</label>
            </div>
            <p className="forgot-password">Forgot Password?</p>
