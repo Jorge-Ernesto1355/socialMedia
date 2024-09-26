@@ -1,7 +1,7 @@
-import React, { useState }  from "react";
+import React from "react";
 import "./Profile.css";
 import { useParams } from "react-router-dom"
-import CrearPost from "../MIDDLE/crearPost/CreatePost";
+
 import Feed from "../MIDDLE/feed/Feed";
 import Header from "./header/Header";
 import profileProvider from "./ProfileProvider";
@@ -11,7 +11,7 @@ import Friends from "./Friends/Friends";
 import UserService from "../../services/UserService";
 import { objectFooterProfile } from "./header/Footer";
 import StoriesProfile from "./storiesProfile/StoriesProfile";
-import PostReactioned from "./postReactioned/PostReactioned";
+
 
 
 
