@@ -26,7 +26,7 @@ function Register() {
   const navigate = useNavigate()
   const geometry = useGeoLocations()
 
-  const { mutate, isLoading } = useMutation({
+  const { mutate, isLoading, error } = useMutation({
     mutationFn: AuthService.Register,
     onSuccess: (data) => {
       const accessToken = data?.data?.accessToken || null
@@ -41,17 +41,9 @@ function Register() {
     
   })
 
-  const [passwordVisible, setPasswordVisible] = React.useState(false);
-
-
-  return (
-
-      <div className="register">
-        <Formik
-          validate={validations}
-          initialValues={InitialValues}
-          onSubmit={async (values, { resetForm }) => {
-            const { correo, nombre, contraseña } = values;
+  console.log(error)
+  const handleSubmit = async(values, {resetForm})=>{
+    const { correo, nombre, contraseña } = values;
 
             mutate({
               email: correo,
@@ -63,7 +55,19 @@ function Register() {
                 resetForm()
               }
             });
-          }}
+
+  }
+
+  const [passwordVisible, setPasswordVisible] = React.useState(false);
+
+
+  return (
+
+      <div className="register">
+        <Formik
+          validate={validations}
+          initialValues={InitialValues}
+          onSubmit={handleSubmit}
         >
           {({ handleBlur, handleChange, errors, values }) => (
             <Form className="register-container">
@@ -139,6 +143,12 @@ function Register() {
                 </Input.Password>
                   {errors.contraseña && <Text type="danger" className="error-text" >{errors.contraseña}</Text>}
           </div>
+
+          
+          <div style={{marginTop: "1rem"}}>
+          {error?.response?.data?.error && <Text type="danger" >{error?.response?.data?.error}</Text>}
+          </div>
+        
           <div className="login-remember">
            <div className="save-session-container">
            <Checkbox/>
