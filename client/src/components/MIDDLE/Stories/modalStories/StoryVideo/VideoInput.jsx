@@ -3,6 +3,7 @@ import { Button, Typography, message } from 'antd';
 import React, { useState } from 'react'
 import './storyVide.css'
 import { validateVideo } from '../../utils/validateVideo';
+import Dragger from 'antd/es/upload/Dragger';
 const { Text } = Typography;
 const VideoInput = ({handleFileToFather}) => {
     const [loading, setLoading] = useState(false);
@@ -11,7 +12,7 @@ const VideoInput = ({handleFileToFather}) => {
     const handleFileChange = (event) => {
         const file = event.file.originFileObj || event.file;
     
-        if (!(file instanceof Blo)) return message.error("the video is not valid")
+        if (!(file instanceof Blob)) return message.error("the video is not valid")
     
         setLoading(true); 
         handleFileToFather(file);
@@ -28,7 +29,7 @@ const VideoInput = ({handleFileToFather}) => {
             setLoading(false); 
           };
           
-          reader.readAsDataURL(file); 
+          readerFileVideo.readAsDataURL(file); 
        
         }
     
