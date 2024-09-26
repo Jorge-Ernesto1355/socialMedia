@@ -14,10 +14,13 @@ import SpinnerLoader from "../../stylesComponents/spinnerLoader/SpinnerLoader";
 import AuthProvider from "../../zustand/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import { validations } from "./validation";
+
 import { InitialValues } from "./InitialValues";
 import { useGeoLocations } from "../../hooks/GeoLocation/useGeoLocations";
 import Input from "antd/es/input";
 import { Checkbox } from "antd";
+import ErrorMessageText from "../../components/ErrorMessageText";
+import Background from "./background";
 const {Text} = Typography
 
 function Register() { 
@@ -41,7 +44,7 @@ function Register() {
     
   })
 
-  console.log(error)
+  
   const handleSubmit = async(values, {resetForm})=>{
     const { correo, nombre, contraseña } = values;
 
@@ -63,13 +66,17 @@ function Register() {
 
   return (
 
-      <div className="register">
+    
+    
+    <div className="register">
+        <Background/>
+          
         <Formik
           validate={validations}
           initialValues={InitialValues}
           onSubmit={handleSubmit}
-        >
-          {({ handleBlur, handleChange, errors, values }) => (
+          >
+          {({ handleBlur, handleChange, errors, values, isSubmitting }) => (
             <Form className="register-container">
 
                 <div className="logo-container">
@@ -107,29 +114,29 @@ function Register() {
                      onChange={handleChange}
                      onBlur={handleBlur}
                      className="input-register"
-                    />
+                     />
                     
                     {errors.correo && <Text className="error-text" type="danger" >{errors.correo}</Text>}
 
-                  <Input.Password
-                  visibilityToggle={{ visible: passwordVisible, onVisibleChange: setPasswordVisible }}
-                    id={'username'}
-                    placeholder="Write your username here"
-                    name="nombre"
-                    onChange={handleChange}
+                  <Input
+                  
+                  id={'username'}
+                  placeholder="Write your username here"
+                  name="nombre"
+                  onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.nombre}
                     className="input-register"
-
+                    
                     >
-                  </Input.Password>
+                  </Input>
              
                   {errors.nombre && <Text type="danger" className="error-text" >{errors.nombre}</Text>}
 
                 
 
                 <Input.Password
-                  visi
+                  visibilityToggle={{ visible: passwordVisible, onVisibleChange: setPasswordVisible }}
                   placeholder="Write your password here"
                   name="contraseña"
                   id={'password'}
@@ -146,7 +153,7 @@ function Register() {
 
           
           <div style={{marginTop: "1rem"}}>
-          {error?.response?.data?.error && <Text type="danger" >{error?.response?.data?.error}</Text>}
+          <ErrorMessageText error={error}/>
           </div>
         
           <div className="login-remember">
@@ -158,7 +165,7 @@ function Register() {
             </div>
 
             <button className="register-submit" type="submit" >
-                  {isLoading ? <SpinnerLoader/> : <> Log In</>}
+                  {isLoading || isSubmitting ? <SpinnerLoader/> : <> Log In</>}
             </button>
 
             <span className="register-link-message">You already hava an account?  <span className="SignUp-link"><Link style={{color:'#4098FF', marginLeft:'10px'}} to={'/signup'}> Log In</Link></span></span>
@@ -167,6 +174,7 @@ function Register() {
           )}
         </Formik>
       </div>
+          
    
   );
 }

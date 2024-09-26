@@ -3,7 +3,6 @@
 .register {
     width: 100vw;
     height: 100vh;
-    background-color: var(--color-light);
     display: grid;
     place-content: center;
    
@@ -12,11 +11,14 @@
 
 .register-container{
    
-    width: 25vw;
+    width: 30vw;
     height: 80vh;
     background-color: #fff;
     border-radius: var(--card-border-radius);
-     
+    border-radius: 10px;
+    -webkit-box-shadow: 2px 1px 20px -8px rgba(0,0,0,0.4);
+-moz-box-shadow: 2px 1px 20px -8px rgba(0,0,0,0.4);
+box-shadow: 2px 1px 20px -8px rgba(0,0,0,0.4);
     padding: var(--card-padding);
 
 }
@@ -144,7 +146,7 @@
     margin-top: 1rem;
 }
 .login-remember{
-    margin-top: 2rem;
+    margin-top: 1rem;
     display: flex;
     width: 100%;
     align-items: center;
