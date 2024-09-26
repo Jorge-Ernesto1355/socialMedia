@@ -1,37 +1,31 @@
 /* eslint-disable no-useless-computed-key */
 /* eslint-disable dot-notation */
 import "./login.css";
-import LoginImage from './icons/login-image.png'
 import cometa from './icons/cometa.png'
 import GoogleIcon from './icons/google.png'
 import Spinner from '../../stylesComponents/spinnerLoader/SpinnerLoader'
-// librerias
-
 import React, { useEffect } from "react";
-// components
-
-
-import Input from "../components/Input";
-
-
 import { useMutation } from "react-query";
 import AuthServices from "../services/AuthServices";
-
 import AuthProvider from "../../zustand/AuthProvider";
 import { useStoreLogin } from "./useStoreLogin";
 import { Link, useNavigate } from "react-router-dom";
-import useQueryLocation from "../../hooks/useQueryLocation";
-import { useGeoLocations } from "../../hooks/GeoLocation/useGeoLocations";
+import Background from "../Register/background";
+import { Input } from "antd";
+import Checkbox from "antd/es/checkbox/Checkbox";
+import ErrorMessageText from "../../components/ErrorMessageText";
+
 
 
 function Login() {
     
     const Auth = AuthProvider()
     const navigate = useNavigate()
-   
 
+    
+  const [passwordVisible, setPasswordVisible] = React.useState(false);
 
-    const { mutate, isLoading, isError } = useMutation({
+    const { mutate, isLoading, error } = useMutation({
         mutationFn: AuthServices.Login,
         onSuccess: (data) => {
             const accessToken = data?.data?.accessToken || null
@@ -45,6 +39,8 @@ function Login() {
         },
        
     })
+
+    
 
     const handleMutate = () => {
         mutate({
@@ -73,7 +69,7 @@ function Login() {
 
     return (
         <div className="login">
-        <img src={LoginImage} alt="" />
+        <Background/>
         
         <div className="login-container">
             <img className="login-icon" src={cometa} alt="" />
@@ -82,26 +78,31 @@ function Login() {
                 <Input
                     name="email"
                     id='Correo'
-                    inputValue={store['email']}
-                    handleChange={handleInputChange}
-                  
+                    placeholder="write your email"
+                    value={store['email']}
+                    onChange={handleInputChange}
+                    className="input-register"
                 />
+                
+                
              
 
-                <Input
-                    isError={isError}
-                    placeholder="contraseña"
+                <Input.Password
+                    visibilityToggle={{ visible: passwordVisible, onVisibleChange: setPasswordVisible }}
+                    placeholder="write your password"
                     id='Password'
                     name="password"
-                    type="password"
-                    inputValue={store['password']}
-                    handleChange={handleInputChange}
-                    
+                    value={store['password']}
+                    onChange={handleInputChange}
+                    className="input-register"
                 />
                
+               <div style={{marginTop: ".3rem"}}>
+               <ErrorMessageText error={error}/>
+               </div>
             <div className="login-remember">
            <div className="save-session-container">
-           <input type="checkbox" id="persits" onChange={(e) => Auth.setPersits(!Auth.persits)} checked={Boolean(Auth.persits)} />
+          <Checkbox/>
                 <label htmlFor="persits" className="save-session">Remember me</label>
            </div>
            <p className="forgot-password">Forgot Password?</p>
