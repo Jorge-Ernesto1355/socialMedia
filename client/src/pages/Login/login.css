@@ -54,8 +54,9 @@
 
 .save-session-container{
   display: flex;
-  justify-content: center;
+  justify-content:start ;
   align-items: center;
+
 }
 
 .save-session .checkBox{
@@ -70,7 +71,7 @@
 .forgot-password{
   font-size: x-small;
   color: #ACACAC;
- 
+  text-align: end;
   margin-left: 2rem;
 }
 

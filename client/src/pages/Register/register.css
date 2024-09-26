@@ -12,8 +12,8 @@
 
 .register-container{
    
-    width: 30vw;
-    height: 90vh;
+    width: 25vw;
+    height: 80vh;
     background-color: #fff;
     border-radius: var(--card-border-radius);
      
@@ -111,16 +111,23 @@
 
 }
 
+.error-text{
+    width: 100%;
+    text-align: start;
+}
+
 
 .inputs-form{
     margin-top: 1rem;
     width: 100%;
     display: flex;
     flex-direction: column;
+    
     justify-content: center;
     align-items: center;
 
 }
+
 
 
 
@@ -132,4 +139,39 @@
     font-size: small;
     font-weight: 400;
     justify-content: center;
+}
+.input-register{
+    margin-top: 1rem;
+}
+.login-remember{
+    margin-top: 2rem;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+   
+}
+
+
+@media (max-width: 900px){
+    .register-container {
+        width: 50vw;
+       
+
+    }
+}
+
+@media (max-width: 600px){
+    .register-container {
+        width: 70vw;
+        
+
+    }
+}
+@media (max-width: 400px){
+    .register-container {
+        width: 85vw;
+       
+
+    }
 }
