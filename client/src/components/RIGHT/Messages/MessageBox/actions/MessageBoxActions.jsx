@@ -93,9 +93,13 @@ const MessageBoxActions = ({ conversation}) => {
             image: file.current
         })
 
+        
+
     
         if(!isLoading && !isError){
             const message = messageData?.data ?? null
+            setInput("")
+            setImageUrl(null)
             
            if(message !== null)  {
             socket?.emit('new-message', {messageId:message?._id, to:friendId, from:userId})
