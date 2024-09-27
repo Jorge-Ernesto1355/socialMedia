@@ -24,6 +24,7 @@ import { Avatar, Button, Card, Divider, Flex, Skeleton, Upload, message } from "
 import useUploader from "../../../hooks/useUploader";
 import imageGallery from './icons/gallery.png'
 import PublishTimePost from "./Difusion/publicTime/PublishTimePost";
+import { UserOutlined } from "@ant-design/icons";
 
 
 
@@ -81,7 +82,7 @@ const CreatePost = () => {
       )}
 
       <div className="info-createPost">
-      <Avatar src={rem} size={'large'} alt="user"/>
+      <Avatar src={user?.imageProfile?.url} icon={<UserOutlined/>} size={'large'} alt="user"/>
         <div className="info-name">
           {isLoading && <div style={{marginBottom:'.3rem'}}>
           <SimpleLineLoader/>
