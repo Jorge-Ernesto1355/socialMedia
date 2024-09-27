@@ -17,6 +17,7 @@ import ImageIcon from '../../../../MIDDLE/post/comments/icons/ImageIcon'
 import SmileIcon from '../../../../MIDDLE/post/comments/icons/SmileIcon'
 import { validateFile } from '../../../../MIDDLE/Stories/utils/validateFile'
 import { getBase64 } from '../../../../Profile/header/modalProfilePicture/util/getBase64'
+import { LoadingOutlined } from '@ant-design/icons'
 
 
 const MessageBoxActions = ({ conversation}) => {
@@ -25,14 +26,13 @@ const MessageBoxActions = ({ conversation}) => {
     const privateRequest = useUserRequest()
     const friendId  = conversation?.participants?.filter((participant)=> participant !==  userId)[0] ?? null
     const [imageUrl, setImageUrl] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const [isLoadingImageUrl, setIsLoadingImageUrl] = useState(false);
     const file = useRef()
     const {messageReply, deleteMessageReply, checkConversation} = BoxMessagesStore() 
     const socket = useSocket()
     const store = useRef(null)
     const [isOpen, setIsOpen] = useState(false)
     const [input, setInput] = useState("")
-    
     const messageKey = ['messages', conversation?._id]
 
     const {mutateAsync, isLoading, isError} = useMutation({
@@ -76,9 +76,7 @@ const MessageBoxActions = ({ conversation}) => {
         }
       
     })
-
-
-  
+    
     const onClick = useCallback(async () => {
 
         if(input.length <= 0) return 
@@ -93,6 +91,8 @@ const MessageBoxActions = ({ conversation}) => {
             image: file.current
         })
 
+
+
         
 
     
@@ -100,23 +100,32 @@ const MessageBoxActions = ({ conversation}) => {
             const message = messageData?.data ?? null
             setInput("")
             setImageUrl(null)
+            file.current = null
             
            if(message !== null)  {
-            socket?.emit('new-message', {messageId:message?._id, to:friendId, from:userId})
-            const check = checkConversation()
-         
+               socket?.emit('new-message', {messageId:message?._id, to:friendId, from:userId})
+               const check = checkConversation()
+               
             if(!check) socket?.emit('new-unRead-message', {conversationId:conversation?._id, to:friendId, userId})
-           }
+            }
 
         }
         
         
     }, [input])
 
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+            onClick();
+        }
+    };
+    
+      
     useEffect(()=>{
         socket?.on('block-conversation', (block)=>{
 
-            console.log(block)
+           
             queryClient.setQueryData(['conversation', conversation?._id], (existingData) => {
            
                 const isBlocked = existingData?.data?.block || false;
@@ -140,14 +149,14 @@ const MessageBoxActions = ({ conversation}) => {
 
     const handleChange = (info) => {
         if (info.file.status === 'uploading') {
-            setLoading(true);
+            setIsLoadingImageUrl(true);
             return;
         }
     
         if (validateFile(info.file.originFileObj)) {
             getBase64(info.file.originFileObj, (url) => {
                 file.current = info.file.originFileObj;
-                setLoading(false);
+               setIsLoadingImageUrl(false)
                 setImageUrl(url);
                 file.current = info.file.originFileObj
             });
@@ -183,16 +192,18 @@ const MessageBoxActions = ({ conversation}) => {
                 <img onClick={deleteMessageReply} className='actions-reply-cross' src={cross} alt="eliminar" />
              </div>
              ) } 
-             <div className="actions-img-send">
-				<img src={imageUrl}  />
-			</div>
+            {imageUrl && (
+                 <div className="image-preview-container">
+                     <img src={imageUrl} className='img-preview-message' />
+                </div>
+            )}
             <div className='messageBox-actions'>
             <div className='MessageBox-actions-form'>
-            <Input placeholder='Write something special' value={input} onChange={(e)=> setInput(e.target.value)} ref={store}/>
+            <Input placeholder='Write something special' onKeyDown={handleKeyDown} value={input} onChange={(e)=> setInput(e.target.value)} ref={store}/>
             </div>
             <div className='MessageBox-actions-InputFile'>
             <Upload {...props}>
-              <ImageIcon></ImageIcon>
+              {isLoadingImageUrl ? <LoadingOutlined /> : <ImageIcon/>}
             </Upload>    
             </div>  
             <SmileIcon alt="emoji" onClick={()=> setIsOpen((prev)=> !prev)}  />
