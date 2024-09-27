@@ -23,6 +23,8 @@ const useUploader = (props) => {
                 file.current = info.file.originFileObj
             });
         }
+
+        if(!validateFile(info.file.originFileObj)) setLoading(false)
     };
 
     const deleteImageUrl = ()=> setImageUrl(null)
