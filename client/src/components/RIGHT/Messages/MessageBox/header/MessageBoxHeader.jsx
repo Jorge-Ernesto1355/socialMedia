@@ -17,8 +17,8 @@ const MessageBoxHeader = ({ minimize, deleteConversation, conversation, isLoadin
         <div className='MessageBox-header-container'>
             <div className='MessageBox-header-info'>
                 
-                <Badge status='success' dot={true} offset={[-10, 45]} size={20} style={{width: "9px", height: "9px"}}>
-                      <Avatar  src={user?.imageProfile?.url} icon={<UserOutlined/>} size={50} alt="user"/>
+                <Badge status='success' dot={true} offset={[-10, 35]} size={20} style={{width: "9px", height: "9px"}}>
+                      <Avatar  src={user?.imageProfile?.url} icon={<UserOutlined/>} size={40} alt="user"/>
                 </Badge>
                 
                 <div className='header-username-container'>
