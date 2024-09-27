@@ -34,8 +34,9 @@ function Register() {
     onSuccess: (data) => {
       const accessToken = data?.data?.accessToken || null
       const refreshToken = data?.data?.refreshToken || null
+      const userId = data?.data?.user?._id
       if (accessToken && refreshToken) {
-        Auth.saveUser({ accessToken, refreshToken })
+        Auth.saveUser({ accessToken, refreshToken, userId})
         navigate('/')
       }
 
