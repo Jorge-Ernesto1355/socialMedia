@@ -12,8 +12,8 @@ import { Button, message } from 'antd'
 const BoxMessagesDetails = ({friendUser}) => {
   const {userId} = AuthProvider()
   const privateRequest = useUserRequest()
-  const { mutate, isLoading,  isSuccess} = useMutation(['addFriend', friendUser._id], ()=> userService.addFriend({userId, addUserId: friendUser._id, privateRequest}))
-  const { data: userData} = useQuery(["usertoFriend", userId], () => userService.getUser({ privateRequest, userId , options: ["friends", "y mas"]}));
+  const { mutate, isLoading,  isSuccess} = useMutation(['addFriend', friendUser?._id], ()=> userService.addFriend({userId, addUserId: friendUser?._id, privateRequest}))
+  const { data: userData} = useQuery(["usertoFriend", userId], () => userService.getUser({ privateRequest, userId , options: ["friends"]}));
  
 
 
