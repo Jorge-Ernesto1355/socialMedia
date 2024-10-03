@@ -83,7 +83,7 @@ box-shadow: 2px 1px 37px -24px rgba(0,0,0,0.4);
 
 .login-submit-button {
   border: none;
-
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
