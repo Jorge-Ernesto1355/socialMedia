@@ -21,7 +21,7 @@ const Sidebar = () => {
   return (
   <aside className="sidebar-container">
     
-      <Flex style={{width: "85%", height: "250px"}}>
+      <Flex style={{width: "100%", height: "250px"}}>
           <CoverAndProfile isLoadingUser={isLoadingUser} user={user} style={{borderTopLeftRadius: "1rem", borderTopRightRadius: "1rem"}} sizeAvatar={sizeAvatar}/> 
       </Flex>
       <div className="sidebar-frontPage">
