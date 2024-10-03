@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 
 import './TimeExpiration.css'
-import ArrowDown from '../../../../assets/caret.png'
 import CreatePostStore from '../../../../zustand/CreatePostStore'
 
 

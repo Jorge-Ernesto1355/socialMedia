@@ -13,14 +13,12 @@
  
 }
 
-.time-expiration-item:hover{
-    border-radius: 20px;
-    background-color: var(--color-light);
-   
-}
 
 .expirePost-text{
     font-weight: 500;
     font-size: small;
     color: var(--color-black);
+    border-radius: 20px;
+    background-color: var(--color-light);
+    width: 40px;
 }
