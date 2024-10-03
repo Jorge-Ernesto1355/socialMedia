@@ -8,7 +8,8 @@ import PhoneIcon from '../icons/PhoneIcon';
 import PlaceMarker from '../../../components/Profile/Details/icons/PlaceMarker';
 import useUserRequest from '../../../hooks/auth/useUserRequest';
 import userService from '../../../services/UserService';
-
+import InformationUserSkeleton from './InformationUserSkeleton';
+import CoverAndProfile from '../../../components/Profile/header/FrontPage/coverAndProfile/CoverAndProfile';
 const { Text, Title } = Typography;
 
 const InformationUser = ({ userId }) => {
@@ -17,7 +18,7 @@ const InformationUser = ({ userId }) => {
     ["userToFriend", userId],
     () => userService.getUser({
       privateRequest,
-      userId,
+    userId,
     }),
     {
       retry: 3,
@@ -39,10 +40,16 @@ const InformationUser = ({ userId }) => {
 
   const renderContent = () => (
     <>
+      <div className='information-details'>
+        <Title level={4}>Details</Title>
+      </div>
       <Flex vertical className='informationUser-header'>
-        <Avatar src={user?.imageProfile?.url} size={80} icon={<UserOutlined />} />
-        <Title style={{ marginBottom: '0' }} level={5}>{user?.username ?? "UniVerse user"}</Title>
-        <Text type='secondary'>{user?.email}</Text>
+      <Flex style={{width: "100%", height: "200px"}}>
+          <CoverAndProfile isLoadingUser={isLoading} user={user} style={{borderTopLeftRadius: "1rem", borderTopRightRadius: "1rem"}} /> 
+      </Flex>
+        <Title style={{marginTop: '3rem'}} level={5}>{user?.username ?? "UniVerse user"}</Title>
+        <Text type='secondary'>{user?.status === "Online" ? <>Active(a) now</> : <>Offline</>}</Text>
+        
         {user?.bio && (
           <>
             <Text>Bio</Text>
@@ -70,24 +77,7 @@ const InformationUser = ({ userId }) => {
     </>
   );
 
-  const renderSkeleton = () => (
-    <Flex vertical align="center" style={{ width: "100%" }}>
-      <Skeleton.Avatar active size={80} style={{ marginBottom: '16px' }} />
-      <Skeleton.Input active size="small" style={{ width: 150, marginBottom: '8px' }} />
-      <Skeleton.Input active size="small" style={{ width: 200, marginBottom: '16px' }} />
-      <Skeleton.Input active size="small" style={{ width: '80%', marginBottom: '16px' }} />
-      <Divider />
-      <Skeleton.Input active size="small" style={{ width: '90%', marginBottom: '16px' }} />
-      <Skeleton.Input active size="small" style={{ width: '90%', marginBottom: '16px' }} />
-      <Skeleton.Input active size="small" style={{ width: '90%', marginBottom: '16px' }} />
-      <Skeleton.Input active size="small" style={{ width: 100, marginBottom: '16px' }} />
-      <Flex gap={8}>
-        <Skeleton.Button active size="small" />
-        <Skeleton.Button active size="small" />
-        <Skeleton.Button active size="small" />
-      </Flex>
-    </Flex>
-  );
+ 
 
   if (error) {
     return <div>Error loading user information. Please try again later.</div>;
@@ -95,7 +85,7 @@ const InformationUser = ({ userId }) => {
 
   return (
     <div className='informationUser-container'>
-      {isLoading ? renderSkeleton() : renderContent()}
+      {isLoading ? <InformationUserSkeleton/> : renderContent()}
     </div>
   );
 };
